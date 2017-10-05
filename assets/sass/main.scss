@@ -61,10 +61,6 @@ body {
 				background-color: $dark-blue-hover;
 				border-left: $thin $blue-hover solid;
 				padding-right: $thin; /* Offset $thin border indentation */
-
-				.label {
-					color: $grey-hover;
-				}
 			}
 
 			.fa {
@@ -78,6 +74,10 @@ body {
 
 				.fa {
 					color: $blue;
+				}
+				
+				.label {
+					color: $grey-hover;
 				}
 
 				&:hover {
