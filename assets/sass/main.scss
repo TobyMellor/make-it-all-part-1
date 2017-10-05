@@ -1,0 +1,191 @@
+$white: #ecf0f1;
+$black: #2c3e50;
+$black-hover: #000000;
+$grey: #999999;
+$grey-hover: #ecf0f1;
+$dark-blue: #34495e;
+$dark-blue-hover: #2c3e50;
+$blue: #3498db;
+$blue-hover: #2980b9;
+
+.side-nav-bar {
+	height: 100vh;
+	overflow-y: auto;
+
+	.btn {
+		width: 100px;
+		border-radius: 0;
+		border: 0;
+	}
+
+	.list {
+		padding: 0;
+		list-style: none;
+		margin: 0;
+		width: 100px;
+		background-color: $dark-blue;
+		height: 100vh;
+
+		.list-element {
+			color: $grey;
+			text-align: center;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			cursor: pointer;
+			transition: background-color .5s, color .5s;
+
+			&:first-child {
+				padding-top: 20px;
+			}
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+
+			&:hover:not(.bottom) {
+				background-color: $dark-blue-hover;
+				border-left: 2px $blue-hover solid;
+				padding-right: 2px; /* Offset 2px border indentation */
+
+				.label {
+					color: $grey-hover;
+				}
+			}
+
+			.fa {
+				width: 100%;
+			}
+
+			&.active {
+				background-color: $dark-blue-hover;
+				border-left: 2px $blue solid;
+				padding-right: 2px; /* Offset 2px border indentation */
+
+				.nested-list {
+					display: block;
+				}
+
+				.fa {
+					color: $blue;
+				}
+
+				&:hover {
+					border-left: 2px $blue solid;
+
+					.fa {
+						color: $blue;
+					}
+				}
+			}
+
+			.label {
+				margin-bottom: 0;
+				font-size: 15px;
+			}
+
+			&.bottom {
+				position: absolute;
+				bottom: 0;
+				width: 100px;
+				margin-bottom: 10px;
+
+				.fa {
+					display: block;
+					margin: 0 auto;
+				}
+			}
+	
+			.nested-list {
+				position: absolute;
+				left: 100px;
+				top: 0;
+				height: 100vh;
+				list-style: none;
+				padding: 20px;
+				text-align: left;
+				border-right: 1px solid $grey;
+				background-color: $white;
+				width: 225px;
+				display: none;
+
+				.nested-list-title, .nested-list-subtitle, .nested-list-element {
+					color: #2c3e50;
+				}
+
+				.nested-list-title {
+					font-size: 26px;
+				}
+
+				.nested-list-subtitle {
+					font-size: 18px;
+					opacity: .75;
+					margin-top: 15px;
+					text-align: right;
+				}
+
+				.nested-list-element {
+					font-size: 14px;
+					border-bottom: 1px solid $grey;
+					padding: 5px 0;
+
+					&:hover {
+						color: $black-hover;
+						font-weight: 600;
+
+						.fa {
+							color: $blue-hover;
+						}
+					}
+
+					&:last-child {
+						border-bottom: 0;
+					}
+
+					&.bottom {
+						position: absolute;
+						bottom: 15px;
+						width: 100%;
+						padding-right: 40px;
+
+						.btn {
+							width: 100%;
+							border-radius: 2px;
+
+							.fa {
+								color: $grey-hover;
+							}
+						}
+					}
+
+					.breaker {
+						height: 0;
+					}
+				}
+
+				.fa {
+					width: initial;
+				}
+			}
+		}
+
+		.breaker {
+			height: 1px;
+			margin: 20px;
+			background-color: $grey;
+		}
+	}
+}
+
+.btn {
+	cursor: pointer;
+
+	&.btn-info {
+		background-color: $blue;
+		color: $grey-hover !important;
+		font-size: 17px;
+
+		&:hover {
+			background-color: $blue-hover;
+		}
+	}
+}
