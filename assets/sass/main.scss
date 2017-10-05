@@ -144,19 +144,13 @@ body {
 			border-bottom: 0;
 		}
 
-		&.bottom {
-			position: absolute;
-			bottom: $comfortable;
+		&:last-child .btn {
+			margin-top: $cosy;
 			width: 100%;
-			padding-right: 40px;
+			border-radius: $thin;
 
-			.btn {
-				width: 100%;
-				border-radius: $thin;
-
-				.fa {
-					color: $grey-hover;
-				}
+			.fa {
+				color: $grey-hover;
 			}
 		}
 
