@@ -61,6 +61,10 @@ $blue-hover: #2980b9;
 				border-left: 2px $blue solid;
 				padding-right: 2px; /* Offset 2px border indentation */
 
+				.nested-list {
+					display: block;
+				}
+
 				.fa {
 					color: $blue;
 				}
@@ -102,6 +106,7 @@ $blue-hover: #2980b9;
 				border-right: 1px solid $grey;
 				background-color: $white;
 				width: 225px;
+				display: none;
 
 				.nested-list-title, .nested-list-subtitle, .nested-list-element {
 					color: #2c3e50;
@@ -150,6 +155,10 @@ $blue-hover: #2980b9;
 								color: $grey-hover;
 							}
 						}
+					}
+
+					.breaker {
+						height: 0;
 					}
 				}
 
