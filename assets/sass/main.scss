@@ -53,7 +53,7 @@ body {
 				margin-bottom: 0;
 			}
 
-			&:hover:not(.bottom) {
+			&:hover:not(:last-child) {
 				background-color: $dark-blue-hover;
 				border-left: $thin $blue-hover solid;
 				padding-right: $thin; /* Offset $thin border indentation */
