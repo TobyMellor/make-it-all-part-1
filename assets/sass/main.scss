@@ -11,6 +11,7 @@ $blue-hover: #2980b9;
 .side-nav-bar {
 	height: 100vh;
 	overflow-y: auto;
+	background-color: $dark-blue;
 
 	.btn {
 		width: 100px;
@@ -23,8 +24,6 @@ $blue-hover: #2980b9;
 		list-style: none;
 		margin: 0;
 		width: 100px;
-		background-color: $dark-blue;
-		height: 100vh;
 
 		.list-element {
 			color: $grey;
@@ -85,17 +84,6 @@ $blue-hover: #2980b9;
 				font-size: 15px;
 			}
 
-			&.bottom {
-				position: absolute;
-				bottom: 0;
-				width: 100px;
-				margin-bottom: 10px;
-
-				.fa {
-					display: block;
-					margin: 0 auto;
-				}
-			}
 	
 			.nested-list {
 				position: absolute;
