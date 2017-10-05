@@ -133,7 +133,7 @@ body {
 
 		&:hover {
 			color: $black-hover;
-			font-weight: 600;
+			cursor: pointer;
 
 			.fa {
 				color: $blue-hover;
