@@ -8,15 +8,20 @@ $dark-blue-hover: #2c3e50;
 $blue: #3498db;
 $blue-hover: #2980b9;
 
+// Component sizing
 $thin: 2px;
 $compact: 4px;
 $cosy: 8px;
 $comfortable: 16px;
 
+// Font sizing
+$standard: 14px;
+
 body {
+	height: 100vh;
 	display: flex;
 	flex-wrap: nowrap;
-	align-items: flex-start;
+	align-items: stretch;
 	align-content: flex-start;
 	
 	> nav, > section {
@@ -24,30 +29,32 @@ body {
 	}
 }
 
+nav ul {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
 .side-nav-bar {
-	height: 100vh;
 	overflow-y: auto;
 	background-color: $dark-blue;
+	width: 100px;
 
 	.btn {
-		width: 100px;
+		width: 100%;
 		border-radius: 0;
 		border: 0;
 	}
 
-	.list {
-		padding: 0;
-		list-style: none;
-		margin: 0;
-		width: 100px;
-
-		.list-element {
+	ul {
+		li {
 			color: $grey;
 			text-align: center;
 			padding-top: $cosy;
 			padding-bottom: $cosy;
 			cursor: pointer;
-			transition: background-color .5s, color .5s;
+			transition: background-color .2s ease-out, color .2s;
 
 			&:first-child {
 				padding-top: $comfortable;
@@ -76,7 +83,7 @@ body {
 					color: $blue;
 				}
 				
-				.label {
+				p {
 					color: $grey-hover;
 				}
 
@@ -89,7 +96,7 @@ body {
 				}
 			}
 
-			.label {
+			p {
 				margin-bottom: 0;
 				margin-right: $compact;
 				margin-left: $compact;
@@ -105,39 +112,38 @@ body {
 	}
 }
 
-.nested-list {
-	height: 100vh;
-	margin-bottom: 0;
-	list-style: none;
+.side-nav-bar-nested {
 	padding: $comfortable;
-	text-align: left;
 	background-color: $white;
 	width: 224px;
+	color: #2c3e50;
 
-	.nested-list-title, .nested-list-subtitle, .nested-list-element {
-		color: #2c3e50;
-	}
-
-	.nested-list-title {
-		font-size: $comfortable + $compact;
-	}
-
-	.nested-list-subtitle {
+	p {
 		font-size: $comfortable;
 		opacity: .75;
-		margin-top: 1$compact;
+		margin-top: $compact;
 		text-align: right;
 	}
-
-	.nested-list-element {
-		font-size: 14px;
+	
+	li {
+		font-size: $standard;
 		border-bottom: 1px solid $grey;
 		padding: $compact 0;
+		
+		.fa {
+			// Not all icons are the same width and they indent the text differently so align center
+			min-width: 16px;
+			text-align: center;
+		}
 
 		&:hover {
 			color: $black-hover;
 			cursor: pointer;
+		}
 
+		&.active {
+			font-weight: bold;
+			
 			.fa {
 				color: $blue-hover;
 			}
@@ -156,14 +162,6 @@ body {
 				color: $grey-hover;
 			}
 		}
-
-		.breaker {
-			height: 0;
-		}
-	}
-
-	.fa {
-		width: initial;
 	}
 }
 
