@@ -4,15 +4,22 @@ var gulp      = require('gulp'),
     uglify    = require('gulp-uglify'),
     sass      = require('gulp-sass'),
     path      = require('path'),
-    minifyCSS = require('gulp-minify-css');
+    minifyCSS = require('gulp-minify-css')
+    concat    = require('gulp-concat');
 
 gulp.task('scripts', function() {
-    gulp.src(['assets/js/**/*.js', '!assets/js/**/*.min.js'])
+    gulp.src(['assets/js/plugins/**/*.js'])
         .pipe(plumber())
         .pipe(rename({
             suffix: '.min'
         }))
         .pipe(uglify())
+        .pipe(gulp.dest('./public/js/plugins/'));
+
+    gulp.src(['assets/js/**/*.js', '!assets/js/plugins/**'])
+        .pipe(plumber())
+        // .pipe(uglify())
+        .pipe(concat('main.min.js'))
         .pipe(gulp.dest('./public/js/'));
 });
 
