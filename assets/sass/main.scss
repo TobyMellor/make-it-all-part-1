@@ -8,48 +8,66 @@ $dark-blue-hover: #2c3e50;
 $blue: #3498db;
 $blue-hover: #2980b9;
 
-.side-nav-bar {
+// Component sizing
+$thin: 2px;
+$compact: 4px;
+$cosy: 8px;
+$comfortable: 16px;
+
+// Font sizing
+$standard: 14px;
+
+body {
 	height: 100vh;
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: stretch;
+	align-content: flex-start;
+	
+	> nav, > section {
+		box-shadow: 1px 0 5px rgba(0, 0, 0, 0.26);
+	}
+}
+
+nav ul {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.side-nav-bar {
 	overflow-y: auto;
+	background-color: $dark-blue;
+	width: 100px;
 
 	.btn {
-		width: 100px;
+		width: 100%;
 		border-radius: 0;
 		border: 0;
 	}
 
-	.list {
-		padding: 0;
-		list-style: none;
-		margin: 0;
-		width: 100px;
-		background-color: $dark-blue;
-		height: 100vh;
-
-		.list-element {
+	ul {
+		li {
 			color: $grey;
 			text-align: center;
-			padding-top: 10px;
-			padding-bottom: 10px;
+			padding-top: $cosy;
+			padding-bottom: $cosy;
 			cursor: pointer;
-			transition: background-color .5s, color .5s;
+			transition: background-color .2s ease-out, color .2s;
 
 			&:first-child {
-				padding-top: 20px;
+				padding-top: $comfortable;
 			}
 
 			&:last-child {
 				margin-bottom: 0;
 			}
 
-			&:hover:not(.bottom) {
+			&:hover:not(:last-child) {
 				background-color: $dark-blue-hover;
-				border-left: 2px $blue-hover solid;
-				padding-right: 2px; /* Offset 2px border indentation */
-
-				.label {
-					color: $grey-hover;
-				}
+				border-left: $thin $blue-hover solid;
+				padding-right: $thin; /* Offset $thin border indentation */
 			}
 
 			.fa {
@@ -58,19 +76,19 @@ $blue-hover: #2980b9;
 
 			&.active {
 				background-color: $dark-blue-hover;
-				border-left: 2px $blue solid;
-				padding-right: 2px; /* Offset 2px border indentation */
-
-				.nested-list {
-					display: block;
-				}
+				border-left: $thin $blue solid;
+				padding-right: $thin; /* Offset $thin border indentation */
 
 				.fa {
 					color: $blue;
 				}
+				
+				p {
+					color: $grey-hover;
+				}
 
 				&:hover {
-					border-left: 2px $blue solid;
+					border-left: $thin $blue solid;
 
 					.fa {
 						color: $blue;
@@ -78,102 +96,71 @@ $blue-hover: #2980b9;
 				}
 			}
 
-			.label {
+			p {
 				margin-bottom: 0;
-				margin-right: 5px;
-				margin-left: 5px;
-				font-size: 15px;
-			}
-
-			&.bottom {
-				position: absolute;
-				bottom: 0;
-				width: 100px;
-				margin-bottom: 10px;
-
-				.fa {
-					display: block;
-					margin: 0 auto;
-				}
-			}
-	
-			.nested-list {
-				position: absolute;
-				left: 100px;
-				top: 0;
-				height: 100vh;
-				list-style: none;
-				padding: 20px;
-				text-align: left;
-				border-right: 1px solid $grey;
-				background-color: $white;
-				width: 225px;
-				display: none;
-
-				.nested-list-title, .nested-list-subtitle, .nested-list-element {
-					color: #2c3e50;
-				}
-
-				.nested-list-title {
-					font-size: 26px;
-				}
-
-				.nested-list-subtitle {
-					font-size: 18px;
-					opacity: .75;
-					margin-top: 15px;
-					text-align: right;
-				}
-
-				.nested-list-element {
-					font-size: 14px;
-					border-bottom: 1px solid $grey;
-					padding: 5px 0;
-
-					&:hover {
-						color: $black-hover;
-						font-weight: 600;
-
-						.fa {
-							color: $blue-hover;
-						}
-					}
-
-					&:last-child {
-						border-bottom: 0;
-					}
-
-					&.bottom {
-						position: absolute;
-						bottom: 15px;
-						width: 100%;
-						padding-right: 40px;
-
-						.btn {
-							width: 100%;
-							border-radius: 2px;
-
-							.fa {
-								color: $grey-hover;
-							}
-						}
-					}
-
-					.breaker {
-						height: 0;
-					}
-				}
-
-				.fa {
-					width: initial;
-				}
+				margin-right: $compact;
+				margin-left: $compact;
+				font-size: $comfortable;
 			}
 		}
 
 		.breaker {
 			height: 1px;
-			margin: 20px;
+			margin: $comfortable;
 			background-color: $grey;
+		}
+	}
+}
+
+.side-nav-bar-nested {
+	padding: $comfortable;
+	background-color: $white;
+	width: 224px;
+	color: #2c3e50;
+
+	p {
+		font-size: $comfortable;
+		opacity: .75;
+		margin-top: $compact;
+		text-align: right;
+	}
+	
+	li {
+		font-size: $standard;
+		border-bottom: 1px solid $grey;
+		padding: $compact 0;
+		
+		.fa {
+			// Not all icons are the same width and they indent the text differently so align center
+			min-width: 16px;
+			text-align: center;
+		}
+
+		&:hover {
+			color: $black-hover;
+			cursor: pointer;
+		}
+
+		&.active {
+			font-weight: bold;
+			
+			.fa {
+				color: $blue-hover;
+			}
+		}
+
+		&:last-child {
+			border-bottom: 0;
+		}
+
+		&:last-child .btn {
+			margin-top: $cosy;
+			width: 100%;
+			border-radius: $thin;
+
+			.fa {
+				color: $grey-hover;
+			}
 		}
 	}
 }
@@ -184,7 +171,7 @@ $blue-hover: #2980b9;
 	&.btn-info {
 		background-color: $blue;
 		color: $grey-hover !important;
-		font-size: 17px;
+		font-size: $comfortable;
 
 		&:hover {
 			background-color: $blue-hover;
