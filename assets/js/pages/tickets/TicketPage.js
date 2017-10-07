@@ -2,6 +2,10 @@ $(function() {
 	var ticketPage = new TicketPage();
 
 	$('.side-nav-bar-nested ul li[slug]').on('click', function() {
+		$('.side-nav-bar-nested ul li.active').removeClass('active');
+
+		$(this).addClass('active');
+
 		ticketPage.showFilteredTickets($(this).attr('slug'));
 	});
 
@@ -15,44 +19,24 @@ $(function() {
  * the TicketManager.
  */
 
-class TicketPage {
+class TicketPage extends DynamicPage {
 	constructor() {
-		this.ticketManager = new TicketManager();
+		super();
+
+		this.ticketManager    = new TicketManager();
+		this.currentlyShowing = null;
 	}
 
 	showFilteredTickets(filterSlug) {
 		var filter = this.ticketManager.getTickets(filterSlug);
 
-		if (filter !== null) {
-			var filteredTickets = filter.tickets,
-				ticketCount     = filteredTickets.length;
+		if (filter !== null && filter.id !== this.currentlyShowing) {
+			var filteredTickets = filter.tickets;
 
-			$('.top-nav .main-content-title').text(ticketCount + ' \'' + filter.name + '\' ' + (ticketCount === 1 ? 'ticket' : 'tickets'));
+			this.updateTopNavBar(filteredTickets.length + ' \'' + filter.name + '\' ' + (filteredTickets.length === 1 ? 'ticket' : 'tickets'));
+			this.updateTable(filteredTickets, true);
 
-			if (ticketCount > 0) {
-				var ticketsTableBody = $('#tickets tbody');
-
-				ticketsTableBody.html('');
-
-				for (var index in filteredTickets) {
-					var filteredTicket = filteredTickets[index];
-
-					ticketsTableBody.append(
-						'<tr>' +
-							'<th scope="row">' + index + '</th>' +
-							'<td>' + filteredTicket.title + '</td>' +
-						'</tr>'
-					);
-				}
-
-				$('#tickets-splash-screen').fadeOut(500, function() {
-					$('#tickets').fadeIn();
-				});
-			} else {
-				$('#tickets').fadeOut(500, function() {
-					$('#tickets-splash-screen').fadeIn();
-				});
-			}
+			this.currentlyShowing = filter.id;
 		}
 	}
 }

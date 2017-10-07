@@ -6,7 +6,8 @@
  */
 
 class Filter {
-	constructor(slug, name) {
+	constructor(id, slug, name) {
+		this.id      = id;
 		this.slug    = slug; // slug_example
 		this.name    = name; // Name Example!
 		this.tickets = [];
