@@ -7,9 +7,3 @@ $(function () {
 		$(this).parent().tooltip('enable');
 	});
 });
-
-class Testing {
-	test() {
-		console.log('test');
-	}
-}
