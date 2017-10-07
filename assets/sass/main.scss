@@ -1,4 +1,5 @@
-$white: #ecf0f1;
+$white: #ffffff;
+$cloudy-white: #ecf0f1;
 $black: #2c3e50;
 $black-hover: #000000;
 $grey: #999999;
@@ -68,7 +69,7 @@ nav ul {
 			&:hover:not(:last-child) {
 				background-color: $dark-blue-hover;
 				border-left: $thin $blue-hover solid;
-				padding-right: $thin; /* Offset $thin border indentation */
+				padding-right: $thin; // Offset $thin border indentation
 			}
 
 			.fa {
@@ -78,7 +79,7 @@ nav ul {
 			&.active {
 				background-color: $dark-blue-hover;
 				border-left: $thin $blue solid;
-				padding-right: $thin; /* Offset $thin border indentation */
+				padding-right: $thin; // Offset $thin border indentation
 
 				.fa {
 					color: $blue;
@@ -115,9 +116,10 @@ nav ul {
 
 .side-nav-bar-nested {
 	padding: $comfortable;
-	background-color: $white;
+	background-color: $cloudy-white;
 	width: 224px;
 	color: #2c3e50;
+	z-index: 2; // Make box shadow appear on top of all content to the right
 
 	p {
 		font-size: $comfortable;
@@ -191,6 +193,10 @@ section {
 		box-shadow: 0px 5px 5px -5px rgba(0,0,0,0.26);
 		width: 100%;
 		padding: $cosy $standard;
+		height: 45px;
+		position: fixed;
+		top: 0;
+		background-color: $white;
 
 		> .fa, h4 {
 			display: inline;
@@ -205,6 +211,7 @@ section {
 
 	.main-content {
 		padding: $comfortable;
+		padding-top: 45px; // Offset by the height of the top-nav
 		height: 100%;
 
 		.splash-screen {
@@ -218,7 +225,7 @@ section {
 			> .fa {
 				font-size: 200px;
 				color: $grey;
-				margin-top: -100px;
+				margin-top: -50px;
 			}
 
 			h1 {

@@ -59,19 +59,19 @@
 			</h1>
 			<p>Categories</p>
 			<ul>
-				<li>
+				<li class="active" slug="new">
 					<i class="fa fa-envelope-o"></i>
 					New
 				</li>
-				<li>
+				<li slug="pending_awaiting_staff">
 					<i class="fa fa-clock-o"></i>
 					Pending - Awaiting Staff
 				</li>
-				<li>
+				<li slug="pending_in_progress">
 					<i class="fa fa-clock-o"></i>
 					Pending - In Progress
 				</li>
-				<li>
+				<li slug="resolved">
 					<i class="fa fa-check"></i>
 					Resolved
 				</li>
@@ -87,11 +87,11 @@
 		<section>
 			<nav class="top-nav">
 				<i class="fa fa-ticket"></i>
-				<h4>0 New Tickets</h3>
+				<h4 class="main-content-title">Loading...</h3>
 			</nav>
 
 			<div class="main-content">
-				<div class="splash-screen tickets-splash-screen">
+				<div class="splash-screen" id="tickets-splash-screen">
 					<i class="fa fa-frown-o fa-5x"></i>
 					<h1>There's no tickets here yet!</h1>
 					<p>Get started, create a new ticket below.</p>
@@ -99,6 +99,17 @@
 						<i class="fa fa-plus"></i>
 						New Ticket
 					</button>
+				</div>
+				<div id="tickets">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Ticket Name</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
 				</div>
 			</div>
 		</section>
