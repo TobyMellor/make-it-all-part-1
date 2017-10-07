@@ -11,8 +11,8 @@
 	<body>
 		<nav class="side-nav-bar">
 			<a class="btn btn-info">
-			Logout
-			<i class="fa fa-sign-out"></i>
+				Logout
+				<i class="fa fa-sign-out"></i>
 			</a>
 			<div class="side-nav-bar-menu">
 				<ul>
@@ -57,9 +57,7 @@
 				<i class="fa fa-ticket"></i>
 				Tickets
 			</h1>
-			<p>
-				Categories
-			</p>
+			<p>Categories</p>
 			<ul>
 				<li>
 					<i class="fa fa-envelope-o"></i>
@@ -78,15 +76,26 @@
 					Resolved
 				</li>
 				<li>
-					<button class="btn btn-success">
-					<i class="fa fa-plus"></i>
-					New Ticket
+					<button class="btn btn-success new-ticket">
+						<i class="fa fa-plus"></i>
+						New Ticket
 					</button>
 				</li>
 			</ul>
 		</nav>
+
 		<section>
+			<div class="splash-screen tickets-splash-screen">
+				<i class="fa fa-frown-o fa-5x"></i>
+				<h1>There's no tickets here yet!</h1>
+				<p>Get started, create a new ticket below.</p>
+				<button class="btn btn-success btn-lg new-ticket">
+					<i class="fa fa-plus"></i>
+					New Ticket
+				</button>
+			</div>
 		</section>
+
 		<script src="js/plugins/jquery.min.js"></script>
 		<script src="js/plugins/popper.min.js"></script>
 		<script src="js/plugins/bootstrap.min.js"></script>
