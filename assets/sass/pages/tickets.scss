@@ -1,1 +1,15 @@
 @import "../main";
+
+.staff-information {
+	color: $black;
+
+	p {
+		margin-bottom: 0;
+		font-size: $standard;
+		color: $black;
+
+		strong {
+			float: right;
+		}
+	}
+}

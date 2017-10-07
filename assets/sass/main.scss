@@ -8,6 +8,7 @@ $dark-blue: #34495e;
 $dark-blue-hover: #2c3e50;
 $blue: #3498db;
 $blue-hover: #2980b9;
+$red: red;
 
 // Component sizing
 $thin: 2px;
@@ -248,5 +249,28 @@ section {
 		.loading-splash-screen {
 			display: flex;
 		}
+	}
+}
+
+label.required {
+	&::after {
+		content: "*";
+		color: $red;
+		padding-left: $thin;
+	}
+}
+
+.help-text {
+	color: $grey;
+	font-size: 10px;
+	display: inline-block;
+}
+
+.custom-checkbox {
+	display: block;
+
+	.custom-control-description {
+		display: block;
+		width: 100%;
 	}
 }
