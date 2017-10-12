@@ -276,6 +276,8 @@ label.required {
 }
 
 .bootstrap-select {
+	width: 100% !important;
+
 	& > button {
 		background-color: $white;
 		border: 1px solid rgba(0, 0, 0, .15);
@@ -301,4 +303,8 @@ label.required {
 			cursor: pointer;
 		}
 	}
+}
+
+button.close {
+	cursor: pointer;
 }

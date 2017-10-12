@@ -89,7 +89,7 @@ $(function () {
 	});
 
 	$('#new-staff-modal, #new-ticket-modal').on('show.bs.modal', function (e) {
-		$(this).find('input')
+		$(this).find('input, textarea')
 			   .not('.no-clear-on-show')
 			   .val('');
 
