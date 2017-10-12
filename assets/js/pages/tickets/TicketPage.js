@@ -9,9 +9,16 @@ $(function() {
 		ticketPage.showFilteredTickets($(this).attr('slug'));
 	});
 
+	$('#new-ticket-modal').on('shown.bs.modal', function () {
+		// $('#myInput').focus();
+	});
+
+	$('.selectpicker').selectpicker();
+
 	ticketPage.showFilteredTickets('new');
 });
 
+	$('.selectpicker').selectpicker();
 /**
  * TicketPage
  *

@@ -45,4 +45,77 @@ $(function () {
 			}
 		}
 	});
+
+	$('.selectpicker').selectpicker({
+		noneResultsText: 'Click to create {0}'
+	});
+
+	$('.timepicker').datetimepicker();
+
+	$(document).on('click', 'li.no-results', function() {
+		var newStaffName  = $('.bs-searchbox input').val(),
+			firstName     = newStaffName.split(" ")[0],
+			lastName      = newStaffName.split(firstName + " ")[1],
+			newStaffModal = $('#new-staff-modal');
+
+		newStaffModal.find('input[name="ticket[staff][first_name]"]').val(firstName);
+		newStaffModal.find('input[name="ticket[staff][last_name]"]').val(lastName);
+
+		newStaffModal.find('input[name="event_target"]').val($(this).closest('.bootstrap-select').find('select').attr('name')); // when the staff member is created, this is the input field it'll update
+
+		newStaffModal.modal('show');
+	});
+
+	$('#new-staff-modal #create-new-staff').on('click', function(e) {
+		e.preventDefault();
+
+		var formData = parseFormData($('#new-staff-modal form'));
+
+		// validate staff member here
+
+		// if validation passes:
+		//  - create staff member here /w AJAX
+		//  - retrieve new database ID and replace Math.random function below
+		//  - do following:
+		var staffId = Math.floor(Math.random() * (10000 + 1));
+
+		addItemToPicker(
+			$('.selectpicker.staff-picker[name="' + formData['event_target'] + '"]'),
+			staffId,
+			formData['ticket[staff][first_name]'] + ' ' + formData['ticket[staff][last_name]']
+		); // formData and staffId to be retrieved by AJAX call
+
+		$('#new-staff-modal').modal('hide');
+	});
+
+	$('#new-staff-modal, #new-ticket-modal').on('show.bs.modal', function (e) {
+		$(this).find('input')
+			   .not('.no-clear-on-show')
+			   .val('');
+
+		var flooredCurrentTime = new Date();
+
+	    flooredCurrentTime.setMilliseconds(Math.round(flooredCurrentTime.getMilliseconds() / 1000) * 1000);
+	    flooredCurrentTime.setSeconds(Math.round(flooredCurrentTime.getSeconds() / 60) * 60);
+	    flooredCurrentTime.setMinutes(Math.floor(flooredCurrentTime.getMinutes() / 15) * 15);
+
+		$(this).find('.timepicker').val((flooredCurrentTime.getMonth() + 1) + '/' + flooredCurrentTime.getDate() + '/' + flooredCurrentTime.getFullYear() + ' ' + flooredCurrentTime.getHours() + ':' + flooredCurrentTime.getMinutes()); // set time to last 15 minute interval e.g. 10:34 -> 10:30, 10:55 -> 10:45
+	});
 });
+
+function parseFormData(form) {
+	return form.serializeArray().reduce(function(obj, item) {
+		obj[item.name] = item.value;
+
+		return obj;
+	}, {});
+}
+
+function addItemToPicker(pickerElement, itemValue, itemName) {
+	$('.selectpicker.staff-picker').append('<option val="' + itemValue + '">' + itemName + '</option>');
+	$('.selectpicker.staff-picker').selectpicker('refresh'); 
+
+	if (pickerElement.length !== 0) {
+		pickerElement.selectpicker('val', itemName);
+	}
+}
