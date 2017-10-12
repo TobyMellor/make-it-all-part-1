@@ -27,7 +27,7 @@ $(function() {
 				formData['ticket[software][software]']
 			);
 
-		ticketPage.showFilteredTickets(formData['ticket[filter]']);
+		$('.side-nav-bar-nested ul li[' + formData['ticket[filter]'] + ']').click();
 
 		$('#new-ticket-modal').modal('hide');
 	});
