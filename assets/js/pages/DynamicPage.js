@@ -29,13 +29,31 @@ class DynamicPage {
 					newRow  = $('<tr></tr>');
 
 				tableHead.children('th').each(function() {
-					newRow.append(
-						'<td>' + element[$(this).attr('slug')] + '</td>'
-					);
+					if ($(this).attr('slug') === 'filter_name') {
+						newRow.append(
+							'<td>' +
+								'<span class="filter">' +
+									element[$(this).attr('slug')] +
+								'</span>' +
+							'</td>'
+						);
+					} else {
+						newRow.append(
+							'<td>' + element[$(this).attr('slug')] + '</td>'
+						);
+					}
 				});
+
+				newRow.append(
+					'<td>' +
+						'<i class="fa fa-eye"></i>' +
+					'</td>'
+				);
 
 				tableBody.append(newRow);
 			}
+
+			tableHead.append('<th></th>');
 
 			if (tableSection.is(':visible')) {
 				tableSection.hide().fadeIn(500);

@@ -1,5 +1,6 @@
 $white: #ffffff;
 $cloudy-white: #ecf0f1;
+$silver: #bdc3c7;
 $black: #2c3e50;
 $black-hover: #000000;
 $grey: #999999;
@@ -9,6 +10,8 @@ $dark-blue-hover: #2c3e50;
 $blue: #3498db;
 $blue-hover: #2980b9;
 $red: red;
+$green: #28a745;
+$green-hover: #218838;
 
 // Component sizing
 $thin: 2px;
@@ -27,9 +30,10 @@ body {
 	align-items: stretch;
 	align-content: flex-start;
 	
-	> nav, > section {
-		box-shadow: 1px 0 5px rgba(0, 0, 0, 0.26);
-	}
+	// I think this looks better with a 1px border, to discuss
+	// > nav, > section {
+	// 	box-shadow: 1px 0 5px rgba(0, 0, 0, 0.26);
+	// }
 }
 
 nav ul {
@@ -121,6 +125,7 @@ nav ul {
 	width: 224px;
 	color: #2c3e50;
 	z-index: 2; // Make box shadow appear on top of all content to the right
+	border-right: 1px solid $silver;
 
 	p {
 		font-size: $comfortable;
@@ -191,7 +196,8 @@ section {
 	}
 
 	.top-nav {
-		box-shadow: 0px 5px 5px -5px rgba(0,0,0,0.26);
+		// box-shadow: 0px 5px 5px -5px rgba(0,0,0,0.26);
+		border-bottom: 1px solid $silver;
 		width: 100%;
 		padding: $cosy $standard;
 		height: 45px;
@@ -244,6 +250,70 @@ section {
 
 		#table-section, .splash-screen {
 			display: none;
+		}
+
+		.table {
+			margin-top: 17px;
+
+			th:first-child, td:first-child {
+				padding-left: 20px;
+			}
+
+			th:last-child, td:last-child {
+				padding-right: 20px;
+			}
+
+			thead {
+				background-color: $cloudy-white;
+
+				th {
+					border-bottom: 2px solid $silver;
+					border-top: none;
+					color: $black;
+					cursor: pointer;
+
+					&:hover {
+						color: $black-hover;
+					}
+				}
+			}
+
+			tbody {
+				tr {
+					cursor: pointer;
+
+					&:hover {
+						background-color: $cloudy-white;
+
+						td:last-child i {
+							opacity: 1;
+						}
+					}
+
+					td:last-child {
+						width: 0;
+
+						i {
+							opacity: 0;
+						}
+					}
+				}
+			}
+		}
+
+		.table.table-blue {
+			thead {
+				background-color: $blue;
+
+				th {
+					border-bottom: 2px solid $dark-blue;
+					color: $cloudy-white;
+
+					&:hover {
+						color: $white;
+					}
+				}
+			}
 		}
 
 		.loading-splash-screen {
@@ -307,4 +377,17 @@ label.required {
 
 button.close {
 	cursor: pointer;
+}
+
+span.filter {
+	padding: 4px 8px;
+	background-color: $blue;
+	border-radius: 2px;
+	border: 0;
+	color: $cloudy-white;
+	font-weight: 600;
+
+	&.filter-green {
+		background-color: $green;
+	}
 }

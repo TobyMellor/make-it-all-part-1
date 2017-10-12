@@ -42,12 +42,13 @@ class TicketManager {
 						caller: 1,
 						assigned_to: 0,
 						serial_numbers: [
-							"B3253SFG",
-							"GAGT666G"
+							'B3253SFG',
+							'GAGT666G'
 						],
-						operating_system: "macOS",
-						software: "Terminal"
-
+						operating_system: 'macOS',
+						software: 'Terminal',
+						created_at: 'Yesterday',
+						updated_at: '1 hour ago'
 					},
 					{
 						id: 1,
@@ -58,7 +59,9 @@ class TicketManager {
 						assigned_to: 1,
 						serial_numbers: [],
 						operating_system: null,
-						software: null
+						software: null,
+						created_at: '4 days ago',
+						updated_at: '4 days ago'
 					},
 					{
 						id: 2,
@@ -69,7 +72,9 @@ class TicketManager {
 						assigned_to: 0,
 						serial_numbers: [],
 						operating_system: null,
-						software: null
+						software: null,
+						created_at: '1 day ago',
+						updated_at: 'Just now'
 					}
 				]
 			},
@@ -91,7 +96,9 @@ class TicketManager {
 						assigned_to: 1,
 						serial_numbers: [],
 						operating_system: null,
-						software: null
+						software: null,
+						created_at: '23 hours ago',
+						updated_at: '3 minutes ago'
 					}
 				]
 			},
@@ -108,7 +115,9 @@ class TicketManager {
 						assigned_to: 0,
 						serial_numbers: [],
 						operating_system: null,
-						software: null
+						software: null,
+						created_at: '4 hours ago',
+						updated_at: '4 hours ago'
 					}
 				]
 			}
@@ -123,13 +132,17 @@ class TicketManager {
 
 				filter.addTicket(new Ticket(
 					ticketResponse.id,
+					filter.name,
 					ticketResponse.title,
+					ticketResponse.description,
 					ticketResponse.date_of_call,
 					ticketResponse.caller,
 					ticketResponse.assigned_to,
 					ticketResponse.serial_numbers,
 					ticketResponse.operating_system,
-					ticketResponse.software
+					ticketResponse.software,
+					ticketResponse.created_at,
+					ticketResponse.updated_at
 				));
 			}
 
@@ -138,8 +151,6 @@ class TicketManager {
 	}
 
 	createTicket(filterSlug, title, description, dateOfCall, caller, assignedTo, serialNumbers, operatingSystem, software) {
-		console.log(filterSlug, title, description, dateOfCall, caller, assignedTo, serialNumbers, operatingSystem, software);
-		console.log(this.filters);
 		var filter = this.getFilter(filterSlug);
 
 		// AJAX call here, which returns a ticketId
@@ -154,7 +165,9 @@ class TicketManager {
 				assignedTo,
 				serialNumbers,
 				operatingSystem,
-				software
+				software,
+				'Just now',
+				'Just now'
 			);
 
 		filter.addTicket(ticket);
