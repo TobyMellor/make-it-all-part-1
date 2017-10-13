@@ -199,11 +199,12 @@ section {
 		// box-shadow: 0px 5px 5px -5px rgba(0,0,0,0.26);
 		border-bottom: 1px solid $silver;
 		width: 100%;
-		padding: $cosy $standard;
+		padding: 7px $standard 9px $standard;
 		height: 45px;
 		position: fixed;
 		top: 0;
 		background-color: $white;
+		z-index: 3;
 
 		> .fa, h4 {
 			display: inline;
@@ -213,6 +214,25 @@ section {
 		> .fa {
 			font-size: $h4;
 			padding-right: $compact;
+		}
+		
+		> p {
+			display: inline;
+			margin: 0;
+			margin-left: $comfortable;
+			vertical-align: middle;
+			font-weight: 600;
+		}
+
+		> .form-group {
+			width: 150px;
+			display: inline-block;
+			margin: 0;
+			margin-left: 5px;
+
+			.dropdown-toggle {
+				padding: 4px 28px 4px 8px;
+			}
 		}
 	}
 
@@ -379,15 +399,9 @@ button.close {
 	cursor: pointer;
 }
 
-span.filter {
-	padding: 4px 8px;
-	background-color: $blue;
-	border-radius: 2px;
-	border: 0;
-	color: $cloudy-white;
-	font-weight: 600;
-
-	&.filter-green {
-		background-color: $green;
-	}
+.breaker {
+	border-bottom: 1px solid #ecf0f1;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    width: 50%;
 }

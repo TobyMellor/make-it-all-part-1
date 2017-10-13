@@ -13,3 +13,117 @@
 		}
 	}
 }
+
+span.filter {
+	padding: 4px 8px;
+	background-color: $blue;
+	border-radius: 2px;
+	border: 0;
+	color: $cloudy-white;
+	font-weight: 600;
+	font-size: 15px;
+
+	&.filter-green {
+		background-color: $green;
+	}
+}
+
+#ticket-view {
+	margin-top: 25px;
+
+	.ticket-details {
+		margin-bottom: 5px;
+	}
+	
+	.ticket-description {
+		border: 1px solid $silver;
+		border-radius: 3px;
+		padding: 15px;
+		max-height: 250px;
+		overflow-y: scroll;
+
+		p {
+			margin-bottom: 0;
+		}
+	}
+
+	span.filter {
+		margin-bottom: 5px;
+		margin-left: 5px;
+		color: $white;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.ticket-number {
+		float: right;
+		color: $grey;
+		font-size: 14px;
+		margin-top: 12px;
+	}
+
+	#ticket-comments {
+		margin-top: $comfortable;
+		color: $black;
+
+		.media {
+			img {
+				border-radius: 50%;
+			}
+
+			.media-body {
+				.ticket-comment-date {
+					float: right;
+					font-size: 16px;
+					font-weight: 100;
+					margin-top: 4px;
+				}
+			}
+		}
+
+		.ticket-event {
+			width: 100%;
+			border-top: 1px solid $silver;
+			border-bottom: 1px solid $silver;
+			background-color: $cloudy-white;
+			padding: $thin $cosy;
+			color: $black;
+			font-weight: 600;
+			margin-top: 24px;
+
+			.ticket-event-details {
+				font-weight: 400;
+			}
+
+			.ticket-event-date {
+				font-weight: 100;
+				float: right;
+			}
+		}
+	}
+
+	#comment-block {
+		background-color: $cloudy-white;
+		padding: $comfortable $comfortable $cosy $comfortable;
+		border-radius: 3px;
+		border: 1px solid $silver;
+
+		img {
+			border-radius: 50%;
+		}
+
+		textarea {
+			width: 100%;
+			border: 1px solid $silver;
+			height: 150px;
+			border-radius: 3px;
+			resize: none;
+			padding: 12px $comfortable;
+		}
+
+		.btn {
+			float: right;
+			margin-top: $cosy;
+		}
+	}
+}

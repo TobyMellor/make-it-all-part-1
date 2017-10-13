@@ -87,9 +87,35 @@
 		</nav>
 
 		<section>
-			<nav class="top-nav">
+			<!-- <nav class="top-nav">
 				<i class="fa fa-ticket"></i>
-				<h4 class="main-content-title">Loading...</h3>
+				<h4 class="main-content-title">Loading...</h4>
+			</nav> -->
+			<nav class="top-nav">
+				<button class="btn btn-sm">
+					<i class="fa fa-chevron-left"></i>
+					Back
+				</button>
+
+				<p>Status: </p>
+				<div class="form-group">
+					<select class="selectpicker" name="ticket[filter]">
+						<option value="new">New</option>
+						<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
+						<option value="pending_in_progress">Pending - In Progress</option>
+						<option value="resolved">Resolved</option>
+					</select>
+				</div>
+
+				<p>Assigned to: </p>
+				<div class="form-group">
+					<select class="selectpicker" name="ticket[filter]">
+						<option value="new">New</option>
+						<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
+						<option value="pending_in_progress">Pending - In Progress</option>
+						<option value="resolved">Resolved</option>
+					</select>
+				</div>
 			</nav>
 
 			<div class="main-content">
@@ -107,7 +133,7 @@
 						New Ticket
 					</button>
 				</div>
-				<div id="table-section">
+				<!-- <div id="table-section">
 					<table class="table table-blue">
 						<thead>
 							<tr>
@@ -120,6 +146,76 @@
 						</thead>
 						<tbody></tbody>
 					</table>
+				</div> -->
+				<div id="ticket-view">
+					<div class="row">
+						<div class="col-md-8">
+							<h2>
+								Squeaky Chair
+								<span class="filter">New</span>
+								<span class="ticket-number">#12345</span>
+							</h2>
+							<p class="ticket-details">
+								<strong>Ticket Details:</strong></p>
+							<div class="ticket-description">
+								<p>
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <br /><br />
+
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <br /><br />
+
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+								</p>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<h3>Ticket Details:</h3>
+							<p class="ticket-details"><strong>Hardware:</strong> MacBook Pro</p>
+							<p class="ticket-details"><strong>Software:</strong> macOS</p>
+							<p class="ticket-details"><strong>Created:</strong> 3 hours ago</p>
+							<p class="ticket-details"><strong>Last updated:</strong> 3 hours ago</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-8">
+							<ul class="list-unstyled" id="ticket-comments">
+								<li class="media">
+									<img class="d-flex mr-3" src="https://placehold.it/64x64" alt="Generic placeholder image">
+									<div class="media-body">
+										<h5 class="mt-0 mb-1">
+											Toby Mellor <span class="ticket-comment-date">5 hours ago</span>
+										</h5>
+										<div class="breaker"></div>
+										Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+									</div>
+								</li>
+								<li class="ticket-event">
+									<i class="fa fa-ticket"></i>
+									Status Changed:
+									<span class="ticket-event-details">Pending - Awaiting Review</span>
+									<span class="ticket-event-date">Just now</span>
+								</li>
+								<li class="media my-4">
+									<img class="d-flex mr-3" src="https://placehold.it/64x64" alt="Generic placeholder image">
+									<div class="media-body">
+										<h5 class="mt-0 mb-1">
+											Toby Mellor <span class="ticket-comment-date">5 hours ago</span>
+										</h5>
+										<div class="breaker"></div>
+										Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+									</div>
+								</li>
+							</ul>
+							<div id="comment-block">
+								<li class="media">
+									<img class="d-flex mr-3" src="https://placehold.it/54x54" alt="Generic placeholder image">
+									<div class="media-body">
+										<textarea placeholder="Reply to the ticket thread here..."></textarea>
+										<button class="btn btn-success">Send Reply</button>
+									</div>
+								</li>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>
