@@ -57,7 +57,7 @@ class TicketPage extends DynamicPage {
 	}
 
 	showFilteredTickets(filterSlug) {
-		var filter = this.ticketManager.getTickets(filterSlug);
+		var filter = makeItAll.getTickets(filterSlug);
 
 		if (filter !== null && filter.id !== this.currentlyShowing) {
 			var filteredTickets = filter.tickets;
@@ -72,7 +72,7 @@ class TicketPage extends DynamicPage {
 	}
 
 	showTicketView(ticketId) {
-		var ticket = this.ticketManager.getTicket(ticketId);
+		var ticket = makeItAll.getTicket(ticketId);
 
 		if (ticket !== null) {
 			$('#ticket-view #ticket-number').text('#' + ticket.id);

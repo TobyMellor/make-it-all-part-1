@@ -10,23 +10,7 @@
 
 class TicketManager {
 	constructor() {
-		this.filters = {};
-
-		// TODO: Get staff from George's part
-		var staff = {
-			0: {
-				first_name: 'Toby',
-				last_name: 'Mellor',
-				email: 'tobymulberry@hotmail.com',
-				permission_level: 4, // super admin
-			},
-			1: {
-				first_name: 'Example',
-				last_name: 'User',
-				email: 'example@domain.com',
-				permission_level: 3 // analyst
-			}
-		};
+		makeItAll.filters = {};
 
 		// TODO: AJAX call for tickets here
 		var ticketsResponse = {
@@ -70,7 +54,7 @@ class TicketManager {
 								type: 'comment',
 								content: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
 								created_at: 'Just now'
-							},
+							}
 						]
 					},
 					{
@@ -163,7 +147,21 @@ class TicketManager {
 				filter         = new Filter(filterResponse.id, filterSlug, filterResponse.name);
 
 			for (var index in filterResponse.tickets) {
-				var ticketResponse = filterResponse.tickets[index]; // A ticket object from the AJAX request, e.g. ticketsResponse.new.tickets[x]
+				var ticketResponse = filterResponse.tickets[index], // A ticket object from the AJAX request, e.g. ticketsResponse.new.tickets[x]
+					eventIds       = [];
+
+				for (var j in ticketResponse.events) {
+					var eventResponse = ticketResponse.events[j],
+						event         = new Event(
+							eventResponse.id,
+							eventResponse.author,
+							eventResponse.type,
+							eventResponse.content,
+							eventResponse.created_at,
+						);
+
+					eventIds.push(event.id);
+				}
 
 				filter.addTicket(new Ticket(
 					ticketResponse.id,
@@ -177,8 +175,7 @@ class TicketManager {
 					ticketResponse.operating_system,
 					ticketResponse.software,
 					ticketResponse.created_at,
-					ticketResponse.updated_at,
-					ticketResponse.events
+					ticketResponse.updated_at
 				));
 			}
 
@@ -187,7 +184,7 @@ class TicketManager {
 	}
 
 	createTicket(filterSlug, title, description, dateOfCall, caller, assignedTo, serialNumbers, operatingSystem, software) {
-		var filter = this.getFilter(filterSlug);
+		var filter = makeItAll.getFilter(filterSlug);
 
 		// AJAX call here, which returns a ticketId
 		// validation here
@@ -212,35 +209,24 @@ class TicketManager {
 		return ticket;
 	}
 
+	createEvent(author, type, content, createdAt) {
+		// AJAX call here, which returns a eventId
+		// validation here
+		var eventId = Math.floor(Math.random() * (10000 + 1)),
+			event   = new Event(
+				eventId,
+				author,
+				type,
+				content,
+				createdAt
+			);
+
+		makeItAll[eventId] = event;
+
+		return event;
+	}
+
 	addFilter(filter) {
-		this.filters[filter.slug] = filter;
-	}
-
-	getFilter(filterSlug) {
-		return this.filters[filterSlug];
-	}
-
-	getTickets(filterSlug) {
-		if (this.filters.hasOwnProperty(filterSlug)) {
-			return this.filters[filterSlug];
-		}
-		
-		return null;
-	}
-
-	getTicket(ticketId) {
-		for (var filterSlug in this.filters) {
-			var filteredTickets = this.filters[filterSlug].tickets;
-
-			for (var index in filteredTickets) {
-				var ticket = filteredTickets[index];
-
-				if (ticket.id === ticketId) {
-					return ticket;
-				}
-			}
-		}
-
-		return null;
+		makeItAll.filters[filter.slug] = filter;
 	}
 }

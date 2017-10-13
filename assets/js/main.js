@@ -119,3 +119,64 @@ function addItemToPicker(pickerElement, itemValue, itemName) {
 		pickerElement.selectpicker('val', itemName);
 	}
 }
+
+class MakeItAll {
+	constructor() {
+		this.filters = {};
+		this.events = {};
+
+		// TODO: Get staff from George's part
+		this.staff = {
+			0: {
+				first_name: 'Toby',
+				last_name: 'Mellor',
+				email: 'tobymulberry@hotmail.com',
+				permission_level: 4, // super admin
+			},
+			1: {
+				first_name: 'Example',
+				last_name: 'User',
+				email: 'example@domain.com',
+				permission_level: 3 // analyst
+			}
+		};
+	}
+
+	getStaff(staffId) {
+		return this.staff[staffId];
+	}
+
+	getEvent(eventId) {
+		return this.events[eventId];
+	}
+
+	getFilter(filterSlug) {
+		return this.filters[filterSlug];
+	}
+
+	getTickets(filterSlug) {
+		if (this.filters.hasOwnProperty(filterSlug)) {
+			return this.filters[filterSlug];
+		}
+		
+		return null;
+	}
+
+	getTicket(ticketId) {
+		for (var filterSlug in this.filters) {
+			var filteredTickets = this.filters[filterSlug].tickets;
+
+			for (var index in filteredTickets) {
+				var ticket = filteredTickets[index];
+
+				if (ticket.id === ticketId) {
+					return ticket;
+				}
+			}
+		}
+
+		return null;
+	}
+}
+
+var makeItAll = new MakeItAll;
