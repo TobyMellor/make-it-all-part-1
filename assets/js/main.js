@@ -17,9 +17,9 @@ $(function () {
 	$('.staff-permissions .custom-checkbox').on('click', function(e) {
 		e.preventDefault();
 
-		var input     = $(this).find('input'),
-			fieldName = input.attr('name'),
-			isChecked = input.prop('checked');
+		var $input    = $(this).find('input'),
+			fieldName = $input.attr('name'),
+			isChecked = $input.prop('checked');
 
 		if (isChecked) {
 			switch (fieldName) {
@@ -53,17 +53,17 @@ $(function () {
 	$('.timepicker').datetimepicker();
 
 	$(document).on('click', 'li.no-results', function() {
-		var newStaffName  = $('.bs-searchbox input').val(),
-			firstName     = newStaffName.split(" ")[0],
-			lastName      = newStaffName.split(firstName + " ")[1],
-			newStaffModal = $('#new-staff-modal');
+		var $newStaffName  = $('.bs-searchbox input').val(),
+			firstName      = $newStaffName.split(" ")[0],
+			lastName       = $newStaffName.split(firstName + " ")[1],
+			$newStaffModal = $('#new-staff-modal');
 
-		newStaffModal.find('input[name="ticket[staff][first_name]"]').val(firstName);
-		newStaffModal.find('input[name="ticket[staff][last_name]"]').val(lastName);
+		$newStaffModal.find('input[name="ticket[staff][first_name]"]').val(firstName);
+		$newStaffModal.find('input[name="ticket[staff][last_name]"]').val(lastName);
 
-		newStaffModal.find('input[name="event_target"]').val($(this).closest('.bootstrap-select').find('select').attr('name')); // when the staff member is created, this is the input field it'll update
+		$newStaffModal.find('input[name="event_target"]').val($(this).closest('.bootstrap-select').find('select').attr('name')); // when the staff member is created, this is the input field it'll update
 
-		newStaffModal.modal('show');
+		$newStaffModal.modal('show');
 	});
 
 	$('#new-staff-modal #create-new-staff').on('click', function(e) {

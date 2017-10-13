@@ -48,7 +48,30 @@ class TicketManager {
 						operating_system: 'macOS',
 						software: 'Terminal',
 						created_at: 'Yesterday',
-						updated_at: '1 hour ago'
+						updated_at: '1 hour ago',
+						events: [
+							{
+								id: 0,
+								author: 0,
+								type: 'comment',
+								content: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
+								created_at: '1 hour ago'
+							},
+							{
+								id: 1,
+								author: 0,
+								type: 'event',
+								content: 'Pending - Awaiting Review',
+								created_at: '1 hour ago'
+							},
+							{
+								id: 2,
+								author: 1,
+								type: 'comment',
+								content: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
+								created_at: 'Just now'
+							},
+						]
 					},
 					{
 						id: 1,
@@ -61,7 +84,16 @@ class TicketManager {
 						operating_system: null,
 						software: null,
 						created_at: '4 days ago',
-						updated_at: '4 days ago'
+						updated_at: '4 days ago',
+						events: [
+							{
+								id: 3,
+								author: 0,
+								type: 'comment',
+								content: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
+								created_at: '1 hour ago'
+							}
+						]
 					},
 					{
 						id: 2,
@@ -74,7 +106,8 @@ class TicketManager {
 						operating_system: null,
 						software: null,
 						created_at: '1 day ago',
-						updated_at: 'Just now'
+						updated_at: 'Just now',
+						events: []
 					}
 				]
 			},
@@ -98,7 +131,8 @@ class TicketManager {
 						operating_system: null,
 						software: null,
 						created_at: '23 hours ago',
-						updated_at: '3 minutes ago'
+						updated_at: '3 minutes ago',
+						events: []
 					}
 				]
 			},
@@ -117,7 +151,8 @@ class TicketManager {
 						operating_system: null,
 						software: null,
 						created_at: '4 hours ago',
-						updated_at: '4 hours ago'
+						updated_at: '4 hours ago',
+						events: []
 					}
 				]
 			}
@@ -142,7 +177,8 @@ class TicketManager {
 					ticketResponse.operating_system,
 					ticketResponse.software,
 					ticketResponse.created_at,
-					ticketResponse.updated_at
+					ticketResponse.updated_at,
+					ticketResponse.events
 				));
 			}
 
@@ -167,7 +203,8 @@ class TicketManager {
 				operatingSystem,
 				software,
 				'Just now',
-				'Just now'
+				'Just now',
+				[]
 			);
 
 		filter.addTicket(ticket);
@@ -188,6 +225,22 @@ class TicketManager {
 			return this.filters[filterSlug];
 		}
 		
+		return null;
+	}
+
+	getTicket(ticketId) {
+		for (var filterSlug in this.filters) {
+			var filteredTickets = this.filters[filterSlug].tickets;
+
+			for (var index in filteredTickets) {
+				var ticket = filteredTickets[index];
+
+				if (ticket.id === ticketId) {
+					return ticket;
+				}
+			}
+		}
+
 		return null;
 	}
 }

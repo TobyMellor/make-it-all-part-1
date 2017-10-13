@@ -234,6 +234,10 @@ section {
 				padding: 4px 28px 4px 8px;
 			}
 		}
+
+		&.with-content {
+			display: none;
+		}
 	}
 
 	.main-content {

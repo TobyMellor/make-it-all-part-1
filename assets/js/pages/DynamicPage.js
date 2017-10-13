@@ -1,6 +1,6 @@
 class DynamicPage {
 	updateTopNavBar(text) {
-		$('.top-nav .main-content-title').text(text);
+		$('.top-nav.with-title .main-content-title').text(text);
 	}
 
 	updateTable(object, shouldDisplaySplashScreen = false) {
@@ -26,7 +26,7 @@ class DynamicPage {
 
 			for (var index in object) {
 				var element = object[index],
-					newRow  = $('<tr></tr>');
+					newRow  = $('<tr row-id="' + element.id + '"></tr>');
 
 				tableHead.children('th').each(function() {
 					if ($(this).attr('slug') === 'filter_name') {

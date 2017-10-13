@@ -30,12 +30,17 @@ span.filter {
 
 #ticket-view {
 	margin-top: 25px;
+	display: none;
 
 	.ticket-details {
 		margin-bottom: 5px;
+
+		#ticket-serial-numbers {
+			margin: 0;
+		}
 	}
 	
-	.ticket-description {
+	#ticket-description {
 		border: 1px solid $silver;
 		border-radius: 3px;
 		padding: 15px;
@@ -55,7 +60,7 @@ span.filter {
 		vertical-align: middle;
 	}
 
-	.ticket-number {
+	#ticket-number {
 		float: right;
 		color: $grey;
 		font-size: 14px;
@@ -67,6 +72,12 @@ span.filter {
 		color: $black;
 
 		.media {
+			margin-top: $comfortable;
+
+			&:first-child {
+				margin-top: 0;
+			}
+
 			img {
 				border-radius: 50%;
 			}

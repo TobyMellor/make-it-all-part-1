@@ -11,7 +11,8 @@ class Ticket {
 		operatingSystem,
 		software,
 		createdAt,
-		updatedAt
+		updatedAt,
+		events
 	) {
 		this.id               = id;
 		this.filter_name      = filterName;
@@ -25,5 +26,6 @@ class Ticket {
 		this.software         = software;
 		this.created_at       = createdAt;
 		this.updated_at       = updatedAt;
+		this.events           = events;
 	}
 }
