@@ -4,7 +4,9 @@
 		<meta charset="UTF-8">
 		<title>Tickets - Make-It-All</title>
 		<link rel="stylesheet" type="text/css" href="css/plugins/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="css/main.min.css">
+		<link rel="stylesheet" type="text/css" href="css/plugins/bootstrap-select.min.css">
+		<link rel="stylesheet" type="text/css" href="css/plugins/jquery-ui.min.css">
+		<link rel="stylesheet" type="text/css" href="css/plugins/jquery-ui-timepicker-addon.min.css">
 		<link rel="stylesheet" type="text/css" href="css/pages/tickets.min.css">
 		<link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
 	</head>
@@ -76,7 +78,7 @@
 					Resolved
 				</li>
 				<li>
-					<button class="btn btn-success new-ticket">
+					<button class="btn btn-success new-ticket" data-toggle="modal" data-target="#new-ticket-modal">
 						<i class="fa fa-plus"></i>
 						New Ticket
 					</button>
@@ -85,39 +87,319 @@
 		</nav>
 
 		<section>
-			<nav class="top-nav">
+			<nav class="top-nav with-title">
 				<i class="fa fa-ticket"></i>
-				<h4 class="main-content-title">Loading...</h3>
+				<h4 class="main-content-title">Loading...</h4>
+			</nav>
+			<nav class="top-nav with-content">
+				<button class="btn btn-sm ticket-back-button">
+					<i class="fa fa-chevron-left"></i>
+					Back
+				</button>
+
+				<p>Status: </p>
+				<div class="form-group">
+					<select class="selectpicker" name="ticket[filter]">
+						<option value="new">New</option>
+						<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
+						<option value="pending_in_progress">Pending - In Progress</option>
+						<option value="resolved">Resolved</option>
+					</select>
+				</div>
+
+				<p>Assigned to: </p>
+				<div class="form-group">
+					<select class="selectpicker" name="ticket[filter]">
+						<option value="new">New</option>
+						<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
+						<option value="pending_in_progress">Pending - In Progress</option>
+						<option value="resolved">Resolved</option>
+					</select>
+				</div>
 			</nav>
 
 			<div class="main-content">
-				<div class="splash-screen" id="tickets-splash-screen">
+				<div class="splash-screen loading-splash-screen">
+					<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+					<h1>Loading...</h1>
+					<p>We're just getting everything setup for you.</p>
+				</div>
+				<div class="splash-screen">
 					<i class="fa fa-frown-o fa-5x"></i>
 					<h1>There's no tickets here yet!</h1>
 					<p>Get started, create a new ticket below.</p>
-					<button class="btn btn-success btn-lg new-ticket">
+					<button class="btn btn-success btn-lg new-ticket" data-toggle="modal" data-target="#create-ticket-modal">
 						<i class="fa fa-plus"></i>
 						New Ticket
 					</button>
 				</div>
-				<div id="tickets">
-					<table class="table table-striped">
+				<div id="table-section">
+					<table class="table">
 						<thead>
 							<tr>
-								<th>#</th>
-								<th>Ticket Name</th>
+								<th slug="id">ID</th>
+								<th slug="title">TICKET TITLE</th>
+								<th slug="filter_name">STATUS</th>
+								<th slug="created_at">CREATED</th>
+								<th slug="updated_at">LAST UPDATED</th>
 							</tr>
 						</thead>
 						<tbody></tbody>
 					</table>
 				</div>
+				<div id="ticket-view">
+					<div class="row">
+						<div class="col-md-8">
+							<h2>
+								<span id="ticket-title">Loading</span>
+								<span class="filter">Loading...</span>
+								<span id="ticket-number"></span>
+							</h2>
+							<p class="ticket-details">
+								<strong>Ticket Details:</strong>
+							</p>
+							<div id="ticket-description">
+								<p></p>
+							</div>
+
+							<ul class="list-unstyled" id="ticket-comments"></ul>
+							<div id="comment-block">
+								<li class="media">
+									<img class="d-flex mr-3" src="https://placehold.it/54x54" alt="Generic placeholder image">
+									<div class="media-body">
+										<textarea placeholder="Reply to the ticket thread here..."></textarea>
+										<button class="btn btn-success" id="create-new-event">
+											<i class="fa fa-paper-plane"></i>
+											Send Reply
+										</button>
+									</div>
+								</li>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<h3>Ticket Details:</h3>
+							<p class="ticket-details">
+								<strong>Software:</strong>
+								<span id="ticket-software">Loading...</span>
+							</p>
+							<p class="ticket-details">
+								<strong>Operating System:</strong>
+								<span id="ticket-operating-system">Loading...</span>
+							</p>
+							<p class="ticket-details">
+								<strong>Serial Numbers:</strong>
+							</p>
+							<ul id="ticket-serial-numbers"></ul>
+							<p class="ticket-details">
+								<strong>Created:</strong>
+								<span id="ticket-created-at">Loading...</span>
+							</p>
+							<p class="ticket-details">
+								<strong>Last updated:</strong>
+								<span id="ticket-updated-at">Loading...</span>
+							</p>
+						</div>
+					</div>
+				</div>
 			</div>
 		</section>
 
+		<div class="modal fade" id="new-ticket-modal" tabindex="-1" role="dialog" aria-labelledby="new-ticket-modal" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Create a new Ticket</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="row">
+								<div class="col-md-8">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="required">Status</label>
+												<br />
+												<select class="selectpicker" name="ticket[filter]">
+													<option value="new">New</option>
+													<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
+													<option value="pending_in_progress">Pending - In Progress</option>
+													<option value="resolved">Resolved</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Date of Call</label>
+												<input class="form-control timepicker" name="ticket[date_of_call]" />
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="required">Caller</label>
+												<br />
+												<select class="selectpicker staff-picker" data-live-search="true" name="ticket[caller]">
+													<option>Mustard</option>
+													<option>Ketchup</option>
+													<option>Relish</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="required">Assigned To</label>
+												<br />
+												<select class="selectpicker staff-picker" data-live-search="true" name="ticket[assigned_to]">
+													<option>Mustard</option>
+													<option>Ketchup</option>
+													<option>Relish</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="required">Ticket Title</label>
+										<input class="form-control" name="ticket[title]" />
+									</div>
+									<div class="form-group">
+										<label class="required">Ticket Description</label>
+										<textarea class="form-control" name="ticket[description]"></textarea>
+									</div>
+									<div class="form-group">
+										<label>Serial Number(s) of Hardware Affected</label>
+										<textarea class="form-control" name="ticket[hardware][serial_numbers]"></textarea>
+										<span class="help-text">Each serial number to be separated by a new line</span>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Operating System</label>
+												<input class="form-control" name="ticket[software][operating_system]" />
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Software</label>
+												<input class="form-control" name="ticket[software][software]" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<h4>Staff Information</h4>
+									<div class="staff-information">
+										<p>ID Number: <strong id="staff-id">B619693</strong></p>
+										<p>Name: <strong id="staff-name">Toby Mellor</strong></p>
+										<p>Job Title: <strong id="staff-job-title">Student</strong></p>
+										<p>Department: <strong id="staff-department">Lboro</strong></p>
+										<p>Telephone Number: <strong id="staff-telephone-number">01234567890</strong></p>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-success" id="create-new-ticket">Create Ticket</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="new-staff-modal" tabindex="-1" role="dialog" aria-labelledby="new-staff-modal" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Create a new Staff Member</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<input type="text" class="no-clear-on-show" name="event_target" hidden />
+							<div class="row">
+								<div class="col-md-8">
+									<div class="form-group">
+										<label class="required">Staff Name</label>
+										<div class="row">
+											<div class="col-md-6">
+												<input class="form-control no-clear-on-show" name="ticket[staff][first_name]" placeholder="First Name" />
+											</div>
+											<div class="col-md-6">
+												<input class="form-control no-clear-on-show" name="ticket[staff][last_name]" placeholder="Last Name" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="required">Staff Email</label>
+										<input class="form-control" name="ticket[staff][email]" />
+									</div>
+								</div>
+								<div class="col-md-4">
+									<label class="required">Staff Permissions</label>
+									<div class="staff-permissions">
+										<label class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input" name="ticket[staff][permissions][ticket_read_only]" checked="checked">
+											<span class="custom-control-indicator"></span>
+											<span class="custom-control-description">Ticket Read Only</span>
+											<span class="help-text">
+												Can VIEW <a href="/tickets" target="_blank">tickets</a> and RECIEVE email status updates.
+											</span>
+										</label>
+										<label class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input" name="ticket[staff][permissions][helpdesk_operator]">
+											<span class="custom-control-indicator"></span>
+											<span class="custom-control-description">Helpdesk Operator</span>
+											<span class="help-text">
+												All permissions from 'Ticket Read Access'.<br />
+												They can also CREATE, UPDATE and DELETE <a href="/tickets" target="_blank">tickets</a> and VIEW <a href="/staff" target="_blank">staff</a>
+											</span>
+										</label>
+										<label class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input" name="ticket[staff][permissions][analyst]">
+											<span class="custom-control-indicator"></span>
+											<span class="custom-control-description">Analyst</span>
+											<span class="help-text">
+												All permissions from 'Ticket Read Access' and 'Helpdesk Operator'.<br />
+												They can also VIEW <a href="/metrics" target="_blank">metrics</a>.
+											</span>
+										</label>
+										<label class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input" name="ticket[staff][permissions][super_admin]">
+											<span class="custom-control-indicator"></span>
+											<span class="custom-control-description">Super Admin</span>
+											<span class="help-text">
+												All permissions from 'Ticket Read Access', 'Helpdesk Operator' and 'Analyst'<br />
+												They can also CREATE, UPDATE and DELETE <a href="/staff">staff</a>.
+											</span>
+										</label>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-success" id="create-new-staff">Create Staff Member</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<script src="js/plugins/jquery.min.js"></script>
+		<script src="js/plugins/jquery-ui.min.js"></script>
+		<script src="js/plugins/jquery-ui-timepicker-addon.min.js"></script>
 		<script src="js/plugins/popper.min.js"></script>
 		<script src="js/plugins/bootstrap.min.js"></script>
+		<script src="js/plugins/bootstrap-select.min.js"></script>
 		<script src="js/main.min.js"></script>
-		<script src="js/pages/tickets.min.js"></script>
+		<script>
+			var makeItAll = new MakeItAll;
+		</script>
 	</body>
 </html>

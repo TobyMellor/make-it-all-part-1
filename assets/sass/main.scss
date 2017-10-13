@@ -1,5 +1,6 @@
 $white: #ffffff;
 $cloudy-white: #ecf0f1;
+$silver: #bdc3c7;
 $black: #2c3e50;
 $black-hover: #000000;
 $grey: #999999;
@@ -8,6 +9,9 @@ $dark-blue: #34495e;
 $dark-blue-hover: #2c3e50;
 $blue: #3498db;
 $blue-hover: #2980b9;
+$red: red;
+$green: #28a745;
+$green-hover: #218838;
 
 // Component sizing
 $thin: 2px;
@@ -26,9 +30,10 @@ body {
 	align-items: stretch;
 	align-content: flex-start;
 	
-	> nav, > section {
-		box-shadow: 1px 0 5px rgba(0, 0, 0, 0.26);
-	}
+	// I think this looks better with a 1px border, to discuss
+	// > nav, > section {
+	// 	box-shadow: 1px 0 5px rgba(0, 0, 0, 0.26);
+	// }
 }
 
 nav ul {
@@ -120,6 +125,7 @@ nav ul {
 	width: 224px;
 	color: #2c3e50;
 	z-index: 2; // Make box shadow appear on top of all content to the right
+	border-right: 1px solid $silver;
 
 	p {
 		font-size: $comfortable;
@@ -190,13 +196,15 @@ section {
 	}
 
 	.top-nav {
-		box-shadow: 0px 5px 5px -5px rgba(0,0,0,0.26);
+		// box-shadow: 0px 5px 5px -5px rgba(0,0,0,0.26);
+		border-bottom: 1px solid $silver;
 		width: 100%;
-		padding: $cosy $standard;
+		padding: 7px $standard 9px $standard;
 		height: 45px;
 		position: fixed;
 		top: 0;
 		background-color: $white;
+		z-index: 3;
 
 		> .fa, h4 {
 			display: inline;
@@ -207,6 +215,29 @@ section {
 			font-size: $h4;
 			padding-right: $compact;
 		}
+		
+		> p {
+			display: inline;
+			margin: 0;
+			margin-left: $comfortable;
+			vertical-align: middle;
+			font-weight: 600;
+		}
+
+		> .form-group {
+			width: 150px;
+			display: inline-block;
+			margin: 0;
+			margin-left: 5px;
+
+			.dropdown-toggle {
+				padding: 4px 28px 4px 8px;
+			}
+		}
+
+		&.with-content {
+			display: none;
+		}
 	}
 
 	.main-content {
@@ -215,7 +246,6 @@ section {
 		height: 100%;
 
 		.splash-screen {
-			display: flex;
 		    align-items: center;
 		    height: 100%;
 		    justify-content: center;
@@ -241,5 +271,141 @@ section {
 				width: 250px;
 			}
 		}
+
+		#table-section, .splash-screen {
+			display: none;
+		}
+
+		.table {
+			margin-top: 17px;
+
+			th:first-child, td:first-child {
+				padding-left: 20px;
+			}
+
+			th:last-child, td:last-child {
+				padding-right: 20px;
+			}
+
+			thead {
+				background-color: $cloudy-white;
+
+				th {
+					border-bottom: 2px solid $silver;
+					border-top: none;
+					color: $black;
+					cursor: pointer;
+
+					&:hover {
+						color: $black-hover;
+					}
+				}
+			}
+
+			tbody {
+				tr {
+					cursor: pointer;
+
+					&:hover {
+						background-color: $cloudy-white;
+
+						td:last-child i {
+							opacity: 1;
+						}
+					}
+
+					td:last-child {
+						width: 0;
+
+						i {
+							opacity: 0;
+						}
+					}
+				}
+			}
+		}
+
+		.table.table-blue {
+			thead {
+				background-color: $blue;
+
+				th {
+					border-bottom: 2px solid $dark-blue;
+					color: $cloudy-white;
+
+					&:hover {
+						color: $white;
+					}
+				}
+			}
+		}
+
+		.loading-splash-screen {
+			display: flex;
+		}
 	}
+}
+
+label.required {
+	&::after {
+		content: "*";
+		color: $red;
+		padding-left: $thin;
+	}
+}
+
+.help-text {
+	color: $grey;
+	font-size: 10px;
+	display: inline-block;
+}
+
+.custom-checkbox {
+	display: block;
+
+	.custom-control-description {
+		display: block;
+		width: 100%;
+	}
+}
+
+.bootstrap-select {
+	width: 100% !important;
+
+	& > button {
+		background-color: $white;
+		border: 1px solid rgba(0, 0, 0, .15);
+	}
+
+	.bs-searchbox {
+		padding-top: 0;
+		padding-bottom: 8px;
+	}
+
+	.dropdown-menu {
+		.active, .selected, .dropdown-item:active, .dropdown-item:focus {
+			background-color: $blue;
+			color: $white;
+
+			&:hover {
+				background-color: $blue-hover;
+				color: $cloudy-white;
+			}
+		}
+
+		.no-results {
+			cursor: pointer;
+		}
+	}
+}
+
+button.close {
+	cursor: pointer;
+}
+
+.breaker {
+	border-bottom: 1px solid #ecf0f1;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    width: 50%;
 }
