@@ -178,5 +178,3 @@ class MakeItAll {
 		return null;
 	}
 }
-
-var makeItAll = new MakeItAll;

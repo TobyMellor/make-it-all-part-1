@@ -32,6 +32,23 @@ $(function() {
 		$('#new-ticket-modal').modal('hide');
 	});
 
+	$('#create-new-event').on('click', function (e) {
+		e.preventDefault();
+
+		var $commentBox = $(this).parent().find('textarea'),
+			event       = ticketPage.ticketManager.createEvent(
+				ticketPage.currentTicketId,
+				'Toby Mellor', // TODO: Replace with ID of logged in user
+				'comment',
+				$commentBox.val(),
+				'Just Now'
+			);
+
+		$commentBox.val('');
+
+		ticketPage.showTicketView(ticketPage.currentTicketId); // refresh to get new comment
+	});
+
 	$(document).on('click', '#table-section .table tr', function() {
 		ticketPage.showTicketView(parseInt($(this).attr('row-id')));
 	});
@@ -54,6 +71,7 @@ class TicketPage extends DynamicPage {
 
 		this.ticketManager    = new TicketManager();
 		this.currentlyShowing = null;
+		this.currentTicketId  = null;
 	}
 
 	showFilteredTickets(filterSlug) {
@@ -75,6 +93,8 @@ class TicketPage extends DynamicPage {
 		var ticket = makeItAll.getTicket(ticketId);
 
 		if (ticket !== null) {
+			this.currentTicketId = ticketId;
+
 			$('#ticket-view #ticket-number').text('#' + ticket.id);
 			$('#ticket-view #ticket-title').text(ticket.title);
 			$('#ticket-view .filter').text(ticket.filter_name);

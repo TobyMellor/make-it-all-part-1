@@ -147,21 +147,7 @@ class TicketManager {
 				filter         = new Filter(filterResponse.id, filterSlug, filterResponse.name);
 
 			for (var index in filterResponse.tickets) {
-				var ticketResponse = filterResponse.tickets[index], // A ticket object from the AJAX request, e.g. ticketsResponse.new.tickets[x]
-					eventIds       = [];
-
-				for (var j in ticketResponse.events) {
-					var eventResponse = ticketResponse.events[j],
-						event         = new Event(
-							eventResponse.id,
-							eventResponse.author,
-							eventResponse.type,
-							eventResponse.content,
-							eventResponse.created_at,
-						);
-
-					eventIds.push(event.id);
-				}
+				var ticketResponse = filterResponse.tickets[index]; // A ticket object from the AJAX request, e.g. ticketsResponse.new.tickets[x]
 
 				filter.addTicket(new Ticket(
 					ticketResponse.id,
@@ -175,7 +161,8 @@ class TicketManager {
 					ticketResponse.operating_system,
 					ticketResponse.software,
 					ticketResponse.created_at,
-					ticketResponse.updated_at
+					ticketResponse.updated_at,
+					ticketResponse.events,
 				));
 			}
 
@@ -209,21 +196,29 @@ class TicketManager {
 		return ticket;
 	}
 
-	createEvent(author, type, content, createdAt) {
-		// AJAX call here, which returns a eventId
-		// validation here
-		var eventId = Math.floor(Math.random() * (10000 + 1)),
-			event   = new Event(
-				eventId,
-				author,
-				type,
-				content,
-				createdAt
-			);
+	createEvent(ticketId, author, type, content, createdAt) {
+		var ticket = makeItAll.getTicket(ticketId);
 
-		makeItAll[eventId] = event;
+		if (ticket !== null) {
+			// AJAX call here, which returns a eventId
+			// validation here
+			var eventId = Math.floor(Math.random() * (10000 + 1)),
+				event   = new Event(
+					eventId,
+					author,
+					type,
+					content,
+					createdAt
+				);
 
-		return event;
+			ticket.addEventId(eventId);
+
+			makeItAll.events[eventId] = event;
+
+			return event;
+		}
+
+		return null;
 	}
 
 	addFilter(filter) {

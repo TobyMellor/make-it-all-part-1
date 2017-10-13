@@ -7,7 +7,7 @@ class Event {
 		createdAt
 	) {
 		this.id         = id;
-		this._author    = author;
+		this.author     = author;
 		this.type       = type;
 		this.content    = content;
 		this.created_at = createdAt;

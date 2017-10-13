@@ -19,14 +19,14 @@ class Ticket {
 		this.title            = title;
 		this.description      = description;
 		this.date_of_call     = dateOfCall;
-		this._caller          = caller;
-		this._assigned_to     = assignedTo;
+		this.caller           = caller;
+		this.assigned_to      = assignedTo;
 		this.serial_numbers   = serialNumbers;
 		this.operating_system = operatingSystem;
 		this.software         = software;
 		this.created_at       = createdAt;
 		this.updated_at       = updatedAt;
-		this._events          = events;
+		this.events           = events;
 	}
 
 	get caller() {
@@ -58,6 +58,23 @@ class Ticket {
 	}
 
 	set events(events) {
-		this._events = events;
+		this._events = [];
+
+		for (var index in events) {
+			var event = new Event(
+				events[index].id,
+				events[index].author,
+				events[index].type,
+				events[index].content,
+				events[index].created_at,
+			);
+
+			makeItAll.events[event.id] = event;
+			this._events.push(event.id);
+		}
+	}
+
+	addEventId(eventId) {
+		this._events.push(eventId);
 	}
 }
