@@ -16,11 +16,26 @@ gulp.task('scripts', function() {
         .pipe(uglify())
         .pipe(gulp.dest('./public/js/plugins/'));
 
-    gulp.src(['assets/js/**/*.js', '!assets/js/plugins/**'])
+    // The Main files used on every page
+    gulp.src(['assets/js/main.js', 'assets/js/pages/DynamicPage.js'])
         .pipe(plumber())
         // .pipe(uglify())
         .pipe(concat('main.min.js'))
         .pipe(gulp.dest('./public/js/'));
+
+    // The Tickets page
+    gulp.src(['assets/js/pages/tickets/**/*.js'])
+        .pipe(plumber())
+        // .pipe(uglify())
+        .pipe(concat('tickets.min.js'))
+        .pipe(gulp.dest('./public/js/pages/'));
+
+    // The Global Metrics page
+    gulp.src(['assets/js/pages/global_metrics/**/*.js'])
+        .pipe(plumber())
+        // .pipe(uglify())
+        .pipe(concat('global_metrics.min.js'))
+        .pipe(gulp.dest('./public/js/pages/'));
 });
 
 gulp.task('styles', function() {
