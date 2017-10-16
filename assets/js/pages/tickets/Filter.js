@@ -14,7 +14,6 @@ class Filter {
 	}
 
 	get tickets() {
-		console.log(this.slug);
 		return makeItAll.ticketManager.getTickets(this.slug);
 	}
 

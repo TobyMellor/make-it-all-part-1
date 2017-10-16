@@ -142,6 +142,7 @@
 								<th slug="filter_name">STATUS</th>
 								<th slug="created_at">CREATED</th>
 								<th slug="updated_at">LAST UPDATED</th>
+								<th slug="eye"></th> <!-- If you want the eye when hovering over a table row, keep this -->
 							</tr>
 						</thead>
 						<tbody></tbody>
@@ -417,7 +418,7 @@
 			makeItAll.ticketManager = new TicketManager(
 				[
 					{
-						id: 1,
+						id: 0,
 						slug: 'new',
 						name: 'New',
 						tickets: [0, 1, 2]
@@ -429,13 +430,13 @@
 						tickets: []
 					},
 					{
-						id: 1,
+						id: 2,
 						slug: 'pending_in_progress',
 						name: 'Pending - Awaiting Staff',
 						tickets: [3]
 					},
 					{
-						id: 1,
+						id: 3,
 						slug: 'resolved',
 						name: 'Resolved',
 						tickets: [4]

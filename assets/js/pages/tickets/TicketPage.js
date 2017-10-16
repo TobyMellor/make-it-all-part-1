@@ -20,7 +20,21 @@ class TicketPage extends DynamicPage {
 			var filteredTickets = filter.tickets;
 
 			this.updateTopNavBar(filteredTickets.length + ' \'' + filter.name + '\' ' + (filteredTickets.length === 1 ? 'ticket' : 'tickets'));
-			this.updateTable(filteredTickets, true);
+			this.clearTable();
+
+			for (var i = 0; i < filteredTickets.length; i++) {
+				var ticket = filteredTickets[i];
+
+				this.appendTableRow({
+					id: ticket.id,
+					title: ticket.title,
+					filter_slug: '<span class="filter">' + ticket.filter.name + '</span>',
+					created_at: ticket.created_at,
+					updated_at: ticket.updated_at
+				});
+			}
+
+			this.updateSplashScreen();
 
 			this.currentlyShowing = filter.id;
 		}
