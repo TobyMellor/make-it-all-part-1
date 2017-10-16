@@ -135,6 +135,7 @@ class TicketManager {
 			
 			this.events.push(new Event(
 				eventId,
+				ticketId,
 				author,
 				type,
 				content,
