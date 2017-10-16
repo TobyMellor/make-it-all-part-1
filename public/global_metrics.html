@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Tickets - Make-It-All</title>
+		<link rel="stylesheet" type="text/css" href="css/plugins/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/plugins/bootstrap-select.min.css">
+		<link rel="stylesheet" type="text/css" href="css/plugins/jquery-ui.min.css">
+		<link rel="stylesheet" type="text/css" href="css/plugins/jquery-ui-timepicker-addon.min.css">
+		<link rel="stylesheet" type="text/css" href="css/main.min.css">
+		<link rel="stylesheet" type="text/css" href="css/pages/global_metrics.min.css">
+		<link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
+	</head>
+	<body>
+		<nav class="side-nav-bar">
+			<a class="btn btn-info">
+				Logout
+				<i class="fa fa-sign-out"></i>
+			</a>
+			<div class="side-nav-bar-menu">
+				<ul>
+					<li class="active">
+						<i class="fa fa-line-chart fa-2x"></i>
+						<p>Global Metrics</p>
+					</li>
+					<li>
+						<i class="fa fa-ticket fa-2x"></i>
+						<p>Tickets</p>
+					</li>
+					<li>
+						<i class="fa fa-file-code-o fa-2x"></i>
+						<p>Software</p>
+					</li>
+					<li>
+						<i class="fa fa-laptop fa-2x"></i>
+						<p>Hardware</p>
+					</li>
+					<li>
+						<i class="fa fa-question fa-2x"></i>
+						<p>Help</p>
+					</li>
+					<li>
+						<i class="fa fa-user-circle-o fa-2x"></i>
+						<p>Staff</p>
+					</li>
+					<li>
+						<i class="fa fa-line-chart fa-2x"></i>
+						<p>My Metrics</p>
+					</li>
+					<li>
+						<div class="breaker"></div>
+						<i class="fa fa-cog fa-2x"></i>
+						<p>Settings</p>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<section>
+			<nav class="top-nav">
+				<i class="fa fa-line-chart"></i>
+				<h4 class="main-content-title">Global Metrics of Staff</h4>
+			</nav>
+			<div class="main-content">
+				<div id="metrics-content">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<input class="form-control" placeholder="Name of Staff" name="" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+							<div class="form-group">
+								<label> Customers Served</label>
+								<select class="selectpicker" name="">
+									<option>Mustard</option>
+									<option>Ketchup</option>
+									<option>Relish</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label> Tickets</label>
+								<select class="selectpicker" name="">
+									<option>Mustard</option>
+									<option>Ketchup</option>
+									<option>Relish</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label> Average Replies Per Ticket</label>
+								<select class="selectpicker" name="">
+									<option>Mustard</option>
+									<option>Ketchup</option>
+									<option>Relish</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3 col-md-offset-3">
+							<div class="form-group">
+								<label> Average Time Response</label>
+								<select class="selectpicker" name="">
+									<option>Mustard</option>
+									<option>Ketchup</option>
+									<option>Relish</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label> Average Time Per Ticket</label>
+								<select class="selectpicker" name="">
+									<option>Mustard</option>
+									<option>Ketchup</option>
+									<option>Relish</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card mb-3">
+								<div class="card-header">
+									<h4 class="main-content-title">Tickets Solved</h4>
+								</div>
+								<div class="card-body" style="position:relative; margin:auto; height:20vh; width:90vw;">
+									<canvas id="operatorStatistics"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header">
+									<h4 class="main-content-title">Problem Type</h4>
+								</div>
+								<div class="card-body" style="position:relative; width:30vw;">
+									<canvas id="problemTypeSolved"></canvas>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header">
+									<h4 class="main-content-title">Top Operators</h4>
+								</div>
+								<div class="card-body">
+									<p>Operators Here</p>
+									<p>Operators Here</p>
+									<p>Operators Here</p>
+									<p>Operators Here</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+
+		<script src="js/plugins/jquery.min.js"></script>
+		<script src="js/plugins/jquery-ui.min.js"></script>
+		<script src="js/plugins/jquery-ui-timepicker-addon.min.js"></script>
+		<script src="js/plugins/popper.min.js"></script>
+		<script src="js/plugins/bootstrap.min.js"></script>
+		<script src="js/plugins/bootstrap-select.min.js"></script>
+		<script src="js/plugins/Chart.min.js"></script>
+		<script src="js/main.min.js"></script>
+		<script src="js/pages/global_metrics.min.js"></script>
+		<script>
+			var makeItAll = new MakeItAll;
+		</script>
+	</body>
+</html>
