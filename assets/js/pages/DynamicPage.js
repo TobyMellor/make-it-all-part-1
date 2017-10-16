@@ -1,3 +1,12 @@
+/**
+ * DynamicPage
+ *
+ * Extended by every page, e.g. TicketPage.
+ * Contains functions that are repeated often among
+ * pages, such as updating tables or updating the
+ * navbar
+ */
+
 class DynamicPage {
 	updateTopNavBar(text) {
 		$('.top-nav.with-title .main-content-title').text(text);

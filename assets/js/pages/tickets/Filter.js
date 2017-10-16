@@ -6,18 +6,19 @@
  */
 
 class Filter {
-	constructor(id, slug, name) {
+	constructor(id, slug, name, tickets) {
 		this.id      = id;
 		this.slug    = slug; // slug_example
 		this.name    = name; // Name Example!
-		this.tickets = [];
+		this.tickets = tickets;   // ID of tickets, get method returns Ticket instances
 	}
 
-	addTicket(ticket) {
-		this.tickets.push(ticket);
+	get tickets() {
+		console.log(this.slug);
+		return makeItAll.ticketManager.getTickets(this.slug);
 	}
 
-	getTickets() {
-		return this.tickets;
+	set tickets(tickets) {
+		this._tickets = tickets;
 	}
 }

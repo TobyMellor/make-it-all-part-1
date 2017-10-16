@@ -9,165 +9,66 @@
  */
 
 class TicketManager {
-	constructor() {
-		makeItAll.filters = {};
+	constructor(filters, tickets, events) {
+		this.filters = [];
+		this.tickets = [];
+		this.events  = [];
 
-		// TODO: AJAX call for tickets here
-		var ticketsResponse = {
-			new: {
-				id: 0,
-				name: 'New',
-				tickets: [
-					{
-						id: 0,
-						title: 'Printer Queue not working',
-						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
-						date_of_call: '21/04/2017 12:32',
-						caller: 1,
-						assigned_to: 0,
-						serial_numbers: [
-							'B3253SFG',
-							'GAGT666G'
-						],
-						operating_system: 'macOS',
-						software: 'Terminal',
-						created_at: 'Yesterday',
-						updated_at: '1 hour ago',
-						events: [
-							{
-								id: 0,
-								author: 0,
-								type: 'comment',
-								content: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
-								created_at: '1 hour ago'
-							},
-							{
-								id: 1,
-								author: 0,
-								type: 'event',
-								content: 'Pending - Awaiting Review',
-								created_at: '1 hour ago'
-							},
-							{
-								id: 2,
-								author: 1,
-								type: 'comment',
-								content: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
-								created_at: 'Just now'
-							}
-						]
-					},
-					{
-						id: 1,
-						title: 'Coffee machine needs refilling',
-						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
-						date_of_call: '21/04/2017 12:32',
-						caller: 1,
-						assigned_to: 1,
-						serial_numbers: [],
-						operating_system: null,
-						software: null,
-						created_at: '4 days ago',
-						updated_at: '4 days ago',
-						events: [
-							{
-								id: 3,
-								author: 0,
-								type: 'comment',
-								content: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
-								created_at: '1 hour ago'
-							}
-						]
-					},
-					{
-						id: 2,
-						title: 'Squeeky chair',
-						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
-						date_of_call: '21/04/2017 12:32',
-						caller: 0,
-						assigned_to: 0,
-						serial_numbers: [],
-						operating_system: null,
-						software: null,
-						created_at: '1 day ago',
-						updated_at: 'Just now',
-						events: []
-					}
-				]
-			},
-			pending_awaiting_staff: {
-				id: 1,
-				name: 'Pending - Awaiting Staff',
-				tickets: []
-			},
-			pending_in_progress: {
-				id: 2,
-				name: 'Pending - In Progress',
-				tickets: [
-					{
-						id: 3,
-						title: 'Spilt water on macbook',
-						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
-						date_of_call: '21/04/2017 12:32',
-						caller: 0,
-						assigned_to: 1,
-						serial_numbers: [],
-						operating_system: null,
-						software: null,
-						created_at: '23 hours ago',
-						updated_at: '3 minutes ago',
-						events: []
-					}
-				]
-			},
-			resolved: {
-				id: 3,
-				name: 'Resolved',
-				tickets: [
-					{
-						id: 4,
-						title: 'Computer wont turn on',
-						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
-						date_of_call: '21/04/2017 12:32',
-						caller: 1,
-						assigned_to: 0,
-						serial_numbers: [],
-						operating_system: null,
-						software: null,
-						created_at: '4 hours ago',
-						updated_at: '4 hours ago',
-						events: []
-					}
-				]
-			}
-		}; // Response from the AJAX request, contains filters which contain tickets
+		for (var i = 0; i < filters.length; i++) {
+			var filter = filters[i];
 
-		for (var filterSlug in ticketsResponse) {
-			var filterResponse = ticketsResponse[filterSlug], // A filter object from the AJAX request, e.g. ticketsResponse.new
-				filter         = new Filter(filterResponse.id, filterSlug, filterResponse.name);
-
-			for (var index in filterResponse.tickets) {
-				var ticketResponse = filterResponse.tickets[index]; // A ticket object from the AJAX request, e.g. ticketsResponse.new.tickets[x]
-
-				filter.addTicket(new Ticket(
-					ticketResponse.id,
-					filter.name,
-					ticketResponse.title,
-					ticketResponse.description,
-					ticketResponse.date_of_call,
-					ticketResponse.caller,
-					ticketResponse.assigned_to,
-					ticketResponse.serial_numbers,
-					ticketResponse.operating_system,
-					ticketResponse.software,
-					ticketResponse.created_at,
-					ticketResponse.updated_at,
-					ticketResponse.events,
-				));
-			}
-
-			this.addFilter(filter);
+			this.filters.push(new Filter(
+				filter.id,
+				filter.slug,
+				filter.name,
+				filter.tickets
+			));
 		}
+
+		for (var i = 0; i < tickets.length; i++) {
+			var ticket = tickets[i];
+
+			this.tickets.push(new Ticket(
+				ticket.id,
+				ticket.filter,
+				ticket.title,
+				ticket.description,
+				ticket.date_of_call,
+				ticket.caller,
+				ticket.assigned_to,
+				ticket.serial_numbers,
+				ticket.operating_system,
+				ticket.software,
+				ticket.created_at,
+				ticket.updated_at,
+				ticket.events
+			));
+		}
+
+		for (var i = 0; i < events.length; i++) {
+			var event = events[i];
+
+			this.events.push(new Event(
+				event.id,
+				event.ticket_id,
+				event.author,
+				event.type,
+				event.content,
+				event.created_at
+			));
+		}
+	}
+
+	getFilter(filterSlug) {
+		for (var i = 0; i < this.filters.length; i++) {
+			var filter = this.filters[i];
+
+			if (filter.slug === filterSlug) {
+				return filter;
+			}
+		}
+
+		return null;
 	}
 
 	createTicket(filterSlug, title, description, dateOfCall, caller, assignedTo, serialNumbers, operatingSystem, software) {
@@ -175,53 +76,90 @@ class TicketManager {
 
 		// AJAX call here, which returns a ticketId
 		// validation here
-		var ticketId = Math.floor(Math.random() * (10000 + 1)),
-			ticket   = new Ticket(
-				ticketId,
-				title,
-				description,
-				dateOfCall,
-				caller,
-				assignedTo,
-				serialNumbers,
-				operatingSystem,
-				software,
-				'Just now',
-				'Just now',
-				[]
-			);
+		var ticketId = Math.floor(Math.random() * (10000 + 1));
 
-		filter.addTicket(ticket);
+		this.tickets.push(new Ticket(
+			ticketId,
+			filterSlug,
+			title,
+			description,
+			dateOfCall,
+			caller,
+			assignedTo,
+			serialNumbers,
+			operatingSystem,
+			software,
+			'Just now',
+			'Just now',
+			[]
+		));
 
-		return ticket;
+		this.filters.push(ticketId);
+
+		return this.tickets[this.tickets.length - 1];
 	}
 
-	createEvent(ticketId, author, type, content, createdAt) {
-		var ticket = makeItAll.getTicket(ticketId);
+	getTickets(filterSlug) {
+		var tickets = [];
 
-		if (ticket !== null) {
-			// AJAX call here, which returns a eventId
-			// validation here
-			var eventId = Math.floor(Math.random() * (10000 + 1)),
-				event   = new Event(
-					eventId,
-					author,
-					type,
-					content,
-					createdAt
-				);
+		for (var i = 0; i < this.tickets.length; i++) {
+			var ticket = this.tickets[i];
 
-			ticket.addEventId(eventId);
+			if (ticket.filter.slug === filterSlug) {
+				tickets.push(ticket);
+			}
+		}
 
-			makeItAll.events[eventId] = event;
+		return tickets;
+	}
 
-			return event;
+	getTicket(ticketId) {
+		for (var i = 0; i < this.tickets.length; i++) {
+			var ticket = this.tickets[i];
+
+			if (ticket.id === ticketId) {
+				return ticket;
+			}
 		}
 
 		return null;
 	}
 
-	addFilter(filter) {
-		makeItAll.filters[filter.slug] = filter;
+	createEvent(ticketId, author, type, content, createdAt) {
+		var ticket = this.getTicket(ticketId);
+
+		if (ticket !== null) {
+			// AJAX call here, which returns a eventId
+			// validation here
+			var eventId = Math.floor(Math.random() * (10000 + 1));
+			
+			this.events.push(new Event(
+				eventId,
+				author,
+				type,
+				content,
+				createdAt
+			));
+
+			ticket.events.push(eventId);
+
+			return this.events[this.events.length - 1];
+		}
+
+		return null;
+	}
+
+	getEvents(ticketId) {
+		var events = [];
+
+		for (var i = 0; i < this.events.length; i++) {
+			var event = this.events[i];
+
+			if (event.ticket.id === ticketId) {
+				events.push(event);
+			}
+		}
+
+		return events;
 	}
 }

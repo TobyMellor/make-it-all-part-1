@@ -23,14 +23,21 @@ gulp.task('scripts', function() {
         .pipe(concat('main.min.js'))
         .pipe(gulp.dest('./public/js/'));
 
-    // The Tickets page
+    // Tickets
     gulp.src(['assets/js/pages/tickets/**/*.js'])
         .pipe(plumber())
         // .pipe(uglify())
         .pipe(concat('tickets.min.js'))
         .pipe(gulp.dest('./public/js/pages/'));
 
-    // The Global Metrics page
+    // Staff
+    gulp.src(['assets/js/pages/staff/**/*.js'])
+        .pipe(plumber())
+        // .pipe(uglify())
+        .pipe(concat('staff.min.js'))
+        .pipe(gulp.dest('./public/js/pages/'));
+
+    // Global Metrics
     gulp.src(['assets/js/pages/global_metrics/**/*.js'])
         .pipe(plumber())
         // .pipe(uglify())

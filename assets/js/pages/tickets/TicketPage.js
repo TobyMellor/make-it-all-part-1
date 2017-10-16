@@ -1,63 +1,3 @@
-$(function() {
-	var ticketPage = new TicketPage();
-
-	$('.side-nav-bar-nested ul li[slug]').on('click', function() {
-		$('.side-nav-bar-nested ul li.active').removeClass('active');
-
-		$(this).addClass('active');
-
-		ticketPage.showFilteredTickets($(this).attr('slug'));
-	});
-
-	ticketPage.showFilteredTickets('new');
-
-	$('#new-ticket-modal #create-new-ticket').on('click', function (e) {
-		e.preventDefault();
-
-		var formData = parseFormData($('#new-ticket-modal form')),
-			ticket   = ticketPage.ticketManager.createTicket(
-				formData['ticket[filter]'],
-				formData['ticket[title]'],
-				formData['ticket[description]'],
-				formData['ticket[date_of_call]'],
-				formData['ticket[caller]'],
-				formData['ticket[assigned_to]'],
-				formData['ticket[hardware][serial_numbers]'],
-				formData['ticket[software][opearting_system]'],
-				formData['ticket[software][software]']
-			);
-
-		$('.side-nav-bar-nested ul li[' + formData['ticket[filter]'] + ']').click();
-
-		$('#new-ticket-modal').modal('hide');
-	});
-
-	$('#create-new-event').on('click', function (e) {
-		e.preventDefault();
-
-		var $commentBox = $(this).parent().find('textarea'),
-			event       = ticketPage.ticketManager.createEvent(
-				ticketPage.currentTicketId,
-				'Toby Mellor', // TODO: Replace with ID of logged in user
-				'comment',
-				$commentBox.val(),
-				'Just Now'
-			);
-
-		$commentBox.val('');
-
-		ticketPage.showTicketView(ticketPage.currentTicketId); // refresh to get new comment
-	});
-
-	$(document).on('click', '#table-section .table tr', function() {
-		ticketPage.showTicketView(parseInt($(this).attr('row-id')));
-	});
-
-	$('.ticket-back-button').on('click', function() {
-		ticketPage.showListView();
-	});
-});
-
 /**
  * TicketPage
  *
@@ -69,13 +9,12 @@ class TicketPage extends DynamicPage {
 	constructor() {
 		super();
 
-		this.ticketManager    = new TicketManager();
 		this.currentlyShowing = null;
 		this.currentTicketId  = null;
 	}
 
 	showFilteredTickets(filterSlug) {
-		var filter = makeItAll.getTickets(filterSlug);
+		var filter = makeItAll.ticketManager.getFilter(filterSlug);
 
 		if (filter !== null && filter.id !== this.currentlyShowing) {
 			var filteredTickets = filter.tickets;
@@ -90,14 +29,14 @@ class TicketPage extends DynamicPage {
 	}
 
 	showTicketView(ticketId) {
-		var ticket = makeItAll.getTicket(ticketId);
+		var ticket = makeItAll.ticketManager.getTicket(ticketId);
 
 		if (ticket !== null) {
 			this.currentTicketId = ticketId;
 
 			$('#ticket-view #ticket-number').text('#' + ticket.id);
 			$('#ticket-view #ticket-title').text(ticket.title);
-			$('#ticket-view .filter').text(ticket.filter_name);
+			$('#ticket-view .filter').text(ticket.filter.name);
 			$('#ticket-view #ticket-description p').text(ticket.description);
 
 			$('#ticket-view #ticket-software').text(ticket.software || 'N/A');
