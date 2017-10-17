@@ -1,12 +1,6 @@
 $(function () {
 	$('[data-toggle="tooltip"]').tooltip();
 
-	$('[data-toggle="tooltip"] > .nested-list').hover(function() {
-		$(this).parent().tooltip('disable');
-	}, function() {
-		$(this).parent().tooltip('enable');
-	});
-
 	// TODO: Move to assets/js/pages/staff/x.js (george)
 	$('#new-staff-modal').on('shown.bs.modal', function () {
 		// When the staff modal is shown
