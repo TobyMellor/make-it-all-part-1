@@ -29,11 +29,20 @@ span.filter {
 }
 
 #ticket-view {
-	margin-top: 25px;
-	display: none;
+	padding: $comfortable;
+
+	h2, h4 {
+		color: $black;
+	}
+
+	h4 {
+		margin-top: $comfortable;
+	}
 
 	.ticket-details {
 		margin-bottom: 5px;
+		text-justify: right;
+		position: relative;
 
 		#ticket-serial-numbers {
 			margin: 0;
@@ -60,11 +69,11 @@ span.filter {
 		vertical-align: middle;
 	}
 
-	#ticket-number {
-		float: right;
+	#ticket-overview {
 		color: $grey;
 		font-size: 14px;
-		margin-top: 12px;
+		position: absolute;
+		right: 0;
 	}
 
 	#ticket-comments {
@@ -135,6 +144,17 @@ span.filter {
 		.btn {
 			float: right;
 			margin-top: $cosy;
+		}
+	}
+}
+
+#single-view {
+	.top-nav {
+		.main-content-title {
+			.filter {
+				margin-left: $cosy;
+				margin-right: $cosy;
+			}
 		}
 	}
 }

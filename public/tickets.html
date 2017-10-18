@@ -86,36 +86,10 @@
 			</ul>
 		</nav>
 
-		<section>
+		<section id="list-view">
 			<nav class="top-nav with-title">
 				<i class="fa fa-ticket"></i>
 				<h4 class="main-content-title">Loading...</h4>
-			</nav>
-			<nav class="top-nav with-content">
-				<button class="btn btn-sm ticket-back-button">
-					<i class="fa fa-chevron-left"></i>
-					Back
-				</button>
-
-				<p>Status: </p>
-				<div class="form-group">
-					<select class="selectpicker" name="ticket[filter]">
-						<option value="new">New</option>
-						<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
-						<option value="pending_in_progress">Pending - In Progress</option>
-						<option value="resolved">Resolved</option>
-					</select>
-				</div>
-
-				<p>Assigned to: </p>
-				<div class="form-group">
-					<select class="selectpicker" name="ticket[filter]">
-						<option value="new">New</option>
-						<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
-						<option value="pending_in_progress">Pending - In Progress</option>
-						<option value="resolved">Resolved</option>
-					</select>
-				</div>
 			</nav>
 
 			<div class="main-content">
@@ -133,7 +107,7 @@
 						New Ticket
 					</button>
 				</div>
-				<div id="table-section">
+				<div id="table-section" class="scrollable">
 					<table class="table">
 						<thead>
 							<tr>
@@ -148,59 +122,64 @@
 						<tbody></tbody>
 					</table>
 				</div>
-				<div id="ticket-view">
-					<div class="row">
-						<div class="col-md-8">
-							<h2>
-								<span id="ticket-title">Loading</span>
-								<span class="filter">Loading...</span>
-								<span id="ticket-number"></span>
-							</h2>
-							<p class="ticket-details">
-								<strong>Ticket Details:</strong>
-							</p>
-							<div id="ticket-description">
-								<p></p>
-							</div>
+			</div>
+		</section>
+		<section id="single-view">
+			<nav class="top-nav with-content">
+				<h4 class="main-content-title">Loading...</h4>
+				<button class="btn btn-sm close-button ticket-close-button">
+					<i class="fa fa-times"></i>
+					Close
+				</button>
+			</nav>
 
-							<ul class="list-unstyled" id="ticket-comments"></ul>
-							<div id="comment-block">
-								<li class="media">
-									<img class="d-flex mr-3" src="https://placehold.it/54x54" alt="Generic placeholder image">
-									<div class="media-body">
-										<textarea placeholder="Reply to the ticket thread here..."></textarea>
-										<button class="btn btn-success" id="create-new-event">
-											<i class="fa fa-paper-plane"></i>
-											Send Reply
-										</button>
-									</div>
-								</li>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<h3>Ticket Details:</h3>
-							<p class="ticket-details">
-								<strong>Software:</strong>
-								<span id="ticket-software">Loading...</span>
-							</p>
-							<p class="ticket-details">
-								<strong>Operating System:</strong>
-								<span id="ticket-operating-system">Loading...</span>
-							</p>
-							<p class="ticket-details">
-								<strong>Serial Numbers:</strong>
-							</p>
-							<ul id="ticket-serial-numbers"></ul>
-							<p class="ticket-details">
-								<strong>Created:</strong>
-								<span id="ticket-created-at">Loading...</span>
-							</p>
-							<p class="ticket-details">
-								<strong>Last updated:</strong>
-								<span id="ticket-updated-at">Loading...</span>
-							</p>
+			<div id="ticket-view" class="scrollable">
+
+				<div class="row">
+					<div class="col-md-7">
+						<p class="ticket-details">
+							<strong>Description:</strong>
+							<span id="ticket-overview"></span>
+						</p>
+						<div id="ticket-description">
+							<p></p>
 						</div>
 					</div>
+					<div class="col-md-5">
+						<p class="ticket-details">
+							<strong>Software:</strong>
+							<span id="ticket-software">Loading...</span>
+						</p>
+						<p class="ticket-details">
+							<strong>Operating System:</strong>
+							<span id="ticket-operating-system">Loading...</span>
+						</p>
+						<p class="ticket-details">
+							<strong>Serial Numbers:</strong>
+						</p>
+						<ul id="ticket-serial-numbers"></ul>
+						<p class="ticket-details">
+							<strong>Updated:</strong>
+							<span id="ticket-updated-at">Loading...</span>
+						</p>
+					</div>
+				</div>
+
+				<h4>Comments:</h4>
+
+				<ul class="list-unstyled" id="ticket-comments"></ul>
+
+				<div id="comment-block">
+					<li class="media">
+						<img class="d-flex mr-3" src="https://placehold.it/54x54" alt="Generic placeholder image">
+						<div class="media-body">
+							<textarea placeholder="Reply to the ticket thread here..."></textarea>
+							<button class="btn btn-success" id="create-new-event">
+								<i class="fa fa-paper-plane"></i>
+								Send Reply
+							</button>
+						</div>
+					</li>
 				</div>
 			</div>
 		</section>
@@ -617,8 +596,8 @@
 					ticketPage.showTicketView(parseInt($(this).attr('row-id')));
 				});
 
-				$('.ticket-back-button').on('click', function() {
-					ticketPage.showListView();
+				$('.ticket-close-button').on('click', function() {
+					ticketPage.hideTableRowDetails();
 				});
 			});
 		</script>

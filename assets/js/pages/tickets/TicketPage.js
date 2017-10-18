@@ -19,7 +19,7 @@ class TicketPage extends DynamicPage {
 		if (filter !== null && filter.id !== this.currentlyShowing) {
 			var filteredTickets = filter.tickets;
 
-			this.updateTopNavBar(filteredTickets.length + ' \'' + filter.name + '\' ' + (filteredTickets.length === 1 ? 'ticket' : 'tickets'));
+			this.updateListViewNavbar(filteredTickets.length + ' \'' + filter.name + '\' ' + (filteredTickets.length === 1 ? 'ticket' : 'tickets'));
 			this.clearTable();
 
 			for (var i = 0; i < filteredTickets.length; i++) {
@@ -39,7 +39,7 @@ class TicketPage extends DynamicPage {
 			this.currentlyShowing = filter.id;
 		}
 
-		this.showListView();
+		this.hideTableRowDetails();
 	}
 
 	showTicketView(ticketId) {
@@ -48,14 +48,13 @@ class TicketPage extends DynamicPage {
 		if (ticket !== null) {
 			this.currentTicketId = ticketId;
 
-			$('#ticket-view #ticket-number').text('#' + ticket.id);
-			$('#ticket-view #ticket-title').text(ticket.title);
-			$('#ticket-view .filter').text(ticket.filter.name);
+			this.updateSingleViewNavbar(ticket.title + '<span class="filter">' + ticket.filter.name + '</span>');
+
+			$('#ticket-view #ticket-overview').text('#' + ticket.id + ' | ' + ticket.created_at);
 			$('#ticket-view #ticket-description p').text(ticket.description);
 
 			$('#ticket-view #ticket-software').text(ticket.software || 'N/A');
 			$('#ticket-view #ticket-operating-system').text(ticket.operating_system || 'N/A');
-			$('#ticket-view #ticket-created-at').text(ticket.created_at);
 			$('#ticket-view #ticket-updated-at').text(ticket.updated_at);
 
 			var $ticketComments      = $('#ticket-comments'),
@@ -109,23 +108,7 @@ class TicketPage extends DynamicPage {
 				}
 			}
 
-			$('.top-nav.with-title').fadeOut(500, function() {
-				$('.top-nav.with-content').fadeIn();
-			});
-
-			$('#table-section').fadeOut(500, function() {
-				$('#ticket-view').fadeIn();
-			});
+			this.showTableRowDetails();
 		}
-	}
-
-	showListView() {
-		$('.top-nav.with-content').fadeOut(500, function() {
-			$('.top-nav.with-title').fadeIn();
-		});
-
-		$('#ticket-view').fadeOut(500, function() {
-			$('#table-section').fadeIn();
-		});
 	}
 }

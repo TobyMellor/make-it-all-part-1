@@ -8,8 +8,12 @@
  */
 
 class DynamicPage {
-	updateTopNavBar(text) {
-		$('.top-nav.with-title .main-content-title').text(text);
+	updateListViewNavbar(html) {
+		$('.top-nav.with-title .main-content-title').html(html);
+	}
+
+	updateSingleViewNavbar(html) {
+		$('#single-view .top-nav .main-content-title').html(html);
 	}
 
 	/**
@@ -90,5 +94,16 @@ class DynamicPage {
 	 */
 	clearTable() {
 		$('#table-section tbody').html('');
+	}
+
+	showTableRowDetails() {
+		$('#list-view').css('flex-grow', 'initial');
+		$('#single-view').css({'flex-grow': 1, 'display': 'block'});
+		$('#single-view > div').hide().fadeIn();
+	}
+
+	hideTableRowDetails() {
+		$('#single-view').css({'flex-grow': 'initial', 'display': 'none'});
+		$('#list-view').css('flex-grow', 1);
 	}
 }
