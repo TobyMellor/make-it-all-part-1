@@ -8,11 +8,25 @@
  * TicketManager should never know about the DOM
  */
 
-class TicketManager {
-	constructor(filters, tickets, events) {
+class TicketManager extends Manager {
+	constructor(calls, filters, tickets, events) {
+		super();
+
+		this.calls   = [];
 		this.filters = [];
 		this.tickets = [];
 		this.events  = [];
+
+		for (var i = 0; i < calls.length; i++) {
+			var call = calls[i];
+
+			this.calls.push(new Call(
+				calls.id,
+				calls.date_of_call,
+				calls.caller,
+				calls.tickets
+			));
+		}
 
 		for (var i = 0; i < filters.length; i++) {
 			var filter = filters[i];
@@ -33,15 +47,14 @@ class TicketManager {
 				ticket.filter,
 				ticket.title,
 				ticket.description,
-				ticket.date_of_call,
-				ticket.caller,
 				ticket.assigned_to,
 				ticket.serial_numbers,
 				ticket.operating_system,
 				ticket.software,
 				ticket.created_at,
 				ticket.updated_at,
-				ticket.events
+				ticket.events,
+				ticket.calls
 			));
 		}
 
@@ -60,15 +73,7 @@ class TicketManager {
 	}
 
 	getFilter(filterSlug) {
-		for (var i = 0; i < this.filters.length; i++) {
-			var filter = this.filters[i];
-
-			if (filter.slug === filterSlug) {
-				return filter;
-			}
-		}
-
-		return null;
+		return this.findFirstWhere(this.filters, filter => filter.slug === filterSlug);
 	}
 
 	createTicket(filterSlug, title, description, dateOfCall, caller, assignedTo, serialNumbers, operatingSystem, software) {
@@ -83,8 +88,6 @@ class TicketManager {
 			filterSlug,
 			title,
 			description,
-			dateOfCall,
-			caller,
 			assignedTo,
 			serialNumbers,
 			operatingSystem,
@@ -100,29 +103,11 @@ class TicketManager {
 	}
 
 	getTickets(filterSlug) {
-		var tickets = [];
-
-		for (var i = 0; i < this.tickets.length; i++) {
-			var ticket = this.tickets[i];
-
-			if (ticket.filter.slug === filterSlug) {
-				tickets.push(ticket);
-			}
-		}
-
-		return tickets;
+		return this.findAllWhere(this.tickets, ticket => ticket.filter.slug === filterSlug);
 	}
 
 	getTicket(ticketId) {
-		for (var i = 0; i < this.tickets.length; i++) {
-			var ticket = this.tickets[i];
-
-			if (ticket.id === ticketId) {
-				return ticket;
-			}
-		}
-
-		return null;
+		return this.findFirstWhere(this.tickets, ticket => ticket.id === ticketId);
 	}
 
 	createEvent(ticketId, author, type, content, createdAt) {
@@ -151,16 +136,6 @@ class TicketManager {
 	}
 
 	getEvents(ticketId) {
-		var events = [];
-
-		for (var i = 0; i < this.events.length; i++) {
-			var event = this.events[i];
-
-			if (event.ticket.id === ticketId) {
-				events.push(event);
-			}
-		}
-
-		return events;
+		return this.findAllWhere(this.events, event => event.ticket.id === ticketId);
 	}
 }

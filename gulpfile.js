@@ -9,7 +9,7 @@ var gulp      = require('gulp'),
 
 gulp.task('scripts', function() {
     // The Main files used on every page
-    gulp.src(['assets/js/main.js', 'assets/js/pages/DynamicPage.js'])
+    gulp.src(['assets/js/main.js', 'assets/js/pages/DynamicPage.js', 'assets/js/pages/Manager.js'])
         .pipe(plumber())
         // .pipe(uglify())
         .pipe(concat('main.min.js'))

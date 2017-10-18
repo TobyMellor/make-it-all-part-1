@@ -11,22 +11,19 @@ class Ticket {
 		filter,
 		title,
 		description,
-		dateOfCall,
-		caller,
 		assignedTo,
 		serialNumbers,
 		operatingSystem,
 		software,
 		createdAt,
 		updatedAt,
-		events
+		events,
+		calls
 	) {
 		this.id               = id;
 		this.filter           = filter; // slug of filter, get method returns instance of Filter
 		this.title            = title;
 		this.description      = description;
-		this.date_of_call     = dateOfCall;
-		this.caller           = caller;     // ID of caller, get method returns instance of Staff
 		this.assigned_to      = assignedTo; // ID of caller, get method returns instance of Staff
 		this.serial_numbers   = serialNumbers;
 		this.operating_system = operatingSystem;
@@ -34,6 +31,7 @@ class Ticket {
 		this.created_at       = createdAt;
 		this.updated_at       = updatedAt;
 		this.events           = events; // ID of events, get method returns instances of Event's
+		this.calls            = calls; // ID of calls, get method returns instances of Call's
 	}
 
 	get filter() {
@@ -45,7 +43,7 @@ class Ticket {
 	}
 
 	get caller() {
-		return makeItAll.staffManager.getStaff(this._caller); // TODO: return name of caller instead from George's part
+		return makeItAll.staffManager.getStaff(this._caller);
 	}
 
 	set caller(caller) {
@@ -53,7 +51,7 @@ class Ticket {
 	}
 
 	get assigned_to() {
-		return makeItAll.staffManager.getStaff(this._assigned_to); // TODO: return name of assigned person instead from George's part
+		return makeItAll.staffManager.getStaff(this._assigned_to);
 	}
 
 	set assigned_to(assignedTo) {
@@ -66,5 +64,13 @@ class Ticket {
 
 	set events(events) {
 		this._events = events;
+	}
+
+	get calls() {
+		return makeItAll.ticketManager.getCalls(this.id);
+	}
+
+	set calls(calls) {
+		this._calls = calls;
 	}
 }

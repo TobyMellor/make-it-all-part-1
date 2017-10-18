@@ -8,8 +8,10 @@
  * StaffManager should never know about the DOM
  */
 
-class StaffManager {
+class StaffManager extends Manager {
 	constructor(staffMembers) {
+		super();
+		
 		this.staffMembers = [];
 
 		// loop through staffMembers, create instances and push to this.staffMembers
