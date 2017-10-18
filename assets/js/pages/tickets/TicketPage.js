@@ -28,7 +28,7 @@ class TicketPage extends DynamicPage {
 				this.appendTableRow({
 					id: ticket.id,
 					title: ticket.title,
-					filter_slug: '<span class="filter">' + ticket.filter.name + '</span>',
+					filter_name: '<span class="filter">' + ticket.filter.name + '</span>',
 					created_at: ticket.created_at,
 					updated_at: ticket.updated_at
 				});
