@@ -101,6 +101,24 @@ $(function () {
 
 		$(this).find('.timepicker').val((flooredCurrentTime.getMonth() + 1) + '/' + flooredCurrentTime.getDate() + '/' + flooredCurrentTime.getFullYear() + ' ' + flooredCurrentTime.getHours() + ':' + flooredCurrentTime.getMinutes()); // set time to last 15 minute interval e.g. 10:34 -> 10:30, 10:55 -> 10:45
 	});
+
+	$(document).on('click', '#accordion .card .card-header .view-accordion', function() {
+		$(this).siblings('a[data-toggle="collapse"]').click();
+	});
+
+	$(document).on('click', '#accordion .card .card-header .remove-accordion', function() {
+		$(this).closest('.card').fadeOut(200, function() {
+			$(this).remove();
+		});
+	});
+
+	$(document).on('hide.bs.collapse', '#accordion .collapse', function () {
+		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-eye-slash').addClass('fa-eye');
+	});
+
+	$(document).on('show.bs.collapse', '#accordion .collapse', function () {
+		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-eye').addClass('fa-eye-slash');
+	});
 });
 
 function parseFormData(form) {

@@ -80,7 +80,7 @@
 				<li>
 					<button class="btn btn-success new-ticket" data-toggle="modal" data-target="#new-ticket-modal">
 						<i class="fa fa-plus"></i>
-						New Ticket
+						New Ticket(s)
 					</button>
 				</li>
 			</ul>
@@ -188,7 +188,7 @@
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Create a new Ticket</h5>
+						<h5 class="modal-title" id="exampleModalLabel">Create one or more new Ticket(s)</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -197,26 +197,6 @@
 						<form>
 							<div class="row">
 								<div class="col-md-8">
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="required">Status</label>
-												<br />
-												<select class="selectpicker" name="ticket[filter]">
-													<option value="new">New</option>
-													<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
-													<option value="pending_in_progress">Pending - In Progress</option>
-													<option value="resolved">Resolved</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Date of Call</label>
-												<input class="form-control timepicker" name="ticket[date_of_call]" />
-											</div>
-										</div>
-									</div>
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
@@ -231,46 +211,119 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="required">Assigned To</label>
-												<br />
-												<select class="selectpicker staff-picker" data-live-search="true" name="ticket[assigned_to]">
-													<option>Mustard</option>
-													<option>Ketchup</option>
-													<option>Relish</option>
-												</select>
+												<label>Date of Call</label>
+												<input class="form-control timepicker" name="ticket[date_of_call]" />
 											</div>
 										</div>
 									</div>
-									<div class="form-group">
-										<label class="required">Ticket Title</label>
-										<input class="form-control" name="ticket[title]" />
-									</div>
-									<div class="form-group">
-										<label class="required">Ticket Description</label>
-										<textarea class="form-control" name="ticket[description]"></textarea>
-									</div>
-									<div class="form-group">
-										<label>Serial Number(s) of Hardware Affected</label>
-										<textarea class="form-control" name="ticket[hardware][serial_numbers]"></textarea>
-										<span class="help-text">Each serial number to be separated by a new line</span>
-									</div>
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Operating System</label>
-												<input class="form-control" name="ticket[software][operating_system]" />
+									<div id="accordion" role="tablist">
+										<div class="card" card-id="1">
+											<div class="card-header" role="tab" id="heading-1">
+												<h5 class="mb-0">
+													<a data-toggle="collapse" data-parent="#accordion" href="#collapse-1">
+														Ticket #1
+													</a>
+													<i class="fa fa-eye-slash view-accordion"></i>
+												</h5>
+											</div>
+
+											<div id="collapse-1" class="collapse show" role="tabpanel">
+												<div class="card-block">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="required">Status</label>
+																<br />
+																<select class="selectpicker" name="ticket[filter]">
+																	<option value="new">New</option>
+																	<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
+																	<option value="pending_in_progress">Pending - In Progress</option>
+																	<option value="resolved">Resolved</option>
+																</select>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="required">Assigned To</label>
+																<br />
+																<select class="selectpicker staff-picker" data-live-search="true" name="ticket[assigned_to]">
+																	<option>Mustard</option>
+																	<option>Ketchup</option>
+																	<option>Relish</option>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="required">Ticket Title</label>
+														<input class="form-control" name="ticket[title]" />
+													</div>
+													<div class="form-group">
+														<label class="required">Ticket Description</label>
+														<textarea class="form-control" name="ticket[description]"></textarea>
+													</div>
+													
+													<div class="form-group">
+													<label>Serial Number of Hardware Affected</label>
+														<div class="input-group">
+															<input class="form-control" name="ticket[hardware][serial_number]" />
+															<span class="input-group-btn">
+																<button class="btn btn-success" type="button">
+																	<i class="fa fa-plus"></i> 
+																	Add
+																</button>
+															</span>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12">
+															<ul class="hardware-list">
+																<li>
+																	<h4>Sonos</h4>
+																	<p>Latest Firmware</p>
+																	<button class="btn btn-danger">
+																		<i class="fa fa-minus"></i>
+																		Remove
+																	</button>
+																</li>
+																<li>
+																	<h4>MacBook Pro</h4>
+																	<p>macOS 10.13</p>
+																	<button class="btn btn-danger">
+																		<i class="fa fa-minus"></i>
+																		Remove
+																	</button>
+																</li>
+																<li>
+																	<h4>Vending Machine</h4>
+																	<p>N/A</p>
+																	<button class="btn btn-danger">
+																		<i class="fa fa-minus"></i>
+																		Remove
+																	</button>
+																</li>
+																<li>
+																	<h4>Security Camera</h4>
+																	<p>10.2.1</p>
+																	<button class="btn btn-danger">
+																		<i class="fa fa-minus"></i>
+																		Remove
+																	</button>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Software</label>
-												<input class="form-control" name="ticket[software][software]" />
-											</div>
-										</div>
 									</div>
+									<button type="button" class="btn btn-success" id="add-another-ticket">
+										<i class="fa fa-plus"></i> 
+										Add another Ticket
+									</button>
 								</div>
 								<div class="col-md-4">
-									<h4>Staff Information</h4>
+									<h4>Caller Information</h4>
 									<div class="staff-information">
 										<p>ID Number: <strong id="staff-id">B619693</strong></p>
 										<p>Name: <strong id="staff-name">Toby Mellor</strong></p>
@@ -284,7 +337,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-success" id="create-new-ticket">Create Ticket</button>
+						<button type="button" class="btn btn-success" id="create-new-ticket">Create new Ticket(s)</button>
 					</div>
 				</div>
 			</div>
@@ -625,6 +678,81 @@
 
 				$('.ticket-close-button').on('click', function() {
 					ticketPage.hideTableRowDetails();
+				});
+
+				$('#add-another-ticket').on('click', function() {
+					var $accordion = $(this).siblings('#accordion'),
+						cardId     = parseInt($accordion.find('.card:last-child').attr('card-id')) + 1;
+						
+					$accordion.append(
+						'<div class="card" card-id="' + cardId + '">' +
+							'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
+								'<h5 class="mb-0">' +
+									'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
+										'Ticket #' + cardId +
+									'</a>' +
+									'<i class="fa fa-eye view-accordion"></i>' +
+									'<i class="fa fa-trash-o remove-accordion"></i>' +
+								'</h5>' +
+							'</div>' +
+							'<div id="collapse-' + cardId + '" class="collapse" role="tabpanel">' +
+								'<div class="card-block">' +
+									'<div class="row">' +
+										'<div class="col-md-6">' +
+											'<div class="form-group">' +
+												'<label class="required">Status</label>' +
+												'<br />' +
+												'<select class="selectpicker" name="ticket[filter]">' +
+													'<option value="new">New</option>' +
+													'<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>' +
+													'<option value="pending_in_progress">Pending - In Progress</option>' +
+													'<option value="resolved">Resolved</option>' +
+												'</select>' +
+											'</div>' +
+										'</div>' +
+										'<div class="col-md-6">' +
+											'<div class="form-group">' +
+												'<label class="required">Assigned To</label>' +
+												'<br />' +
+												'<select class="selectpicker staff-picker" data-live-search="true" name="ticket[assigned_to]">' +
+													'<option>Mustard</option>' +
+													'<option>Ketchup</option>' +
+													'<option>Relish</option>' +
+												'</select>' +
+											'</div>' +
+										'</div>' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<label class="required">Ticket Title</label>' +
+										'<input class="form-control" name="ticket[title]" />' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<label class="required">Ticket Description</label>' +
+										'<textarea class="form-control" name="ticket[description]"></textarea>' +
+									'</div>' +
+									'<div class="form-group">' +
+									'<label>Serial Number of Hardware Affected</label>' +
+										'<div class="input-group">' +
+											'<input class="form-control" name="ticket[hardware][serial_number]" />' +
+											'<span class="input-group-btn">' +
+												'<button class="btn btn-success" type="button">' +
+													'<i class="fa fa-plus"></i> ' +
+													'Add' +
+												'</button>' +
+											'</span>' +
+										'</div>' +
+									'</div>' +
+									'<div class="row">' +
+										'<div class="col-md-12">' +
+											'<ul class="hardware-list"></ul>' +
+										'</div>' +
+									'</div>' +
+								'</div>' +
+							'</div>' +
+						'</div>'
+					);
+
+					$('.selectpicker').selectpicker('refresh');
 				});
 			});
 		</script>

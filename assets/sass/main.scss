@@ -426,3 +426,48 @@ button.close {
 .close-button {
 	float: right;
 }
+
+#accordion {
+	.card {
+		border: 1px solid $silver;
+		margin-bottom: $comfortable;
+
+		&:first-child {
+			.card-header {
+				i {
+					&.fa-eye, &.fa-eye-slash {
+						right: 15px;
+					}
+				}
+			}
+		}
+
+		.card-header {
+			border: none;
+			background-color: $cloudy-white;
+
+			a {
+				color: $black;
+			}
+
+			i {
+				position: absolute;
+				right: 15px;
+				cursor: pointer;
+
+				&.fa-eye, &.fa-eye-slash {
+					right: 45px;
+				}
+
+				&.fa-trash-o {
+					right: 15px;
+				}
+			}
+		}
+
+		.card-block {
+			padding: $comfortable;
+			border-top: 1px solid $silver;
+		}
+	}
+}

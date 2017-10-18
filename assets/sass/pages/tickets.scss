@@ -158,3 +158,39 @@ span.filter {
 		}
 	}
 }
+
+#new-ticket-modal {
+	#add-another-ticket {
+		float: right;
+	}
+}
+
+.hardware-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+
+	li {
+		width: 152px;
+		height: 152px;
+		border: 1px solid $silver;
+		border-radius: 3px;
+		padding: $cosy;
+		text-align: center;
+		display: inline-block;
+		position: relative;
+		overflow: hidden;
+		background-color: $cloudy-white;
+
+		h4, p {
+			color: $black;
+		}
+
+		button {
+			position: absolute;
+			bottom: $cosy;
+			left: calc(50% - 65px);
+    		width: 130px;
+		}
+	}
+}
