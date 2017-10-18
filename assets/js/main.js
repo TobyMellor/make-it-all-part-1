@@ -151,7 +151,9 @@ function addItemToPicker(pickerElement, itemValue, itemName) {
  */
 class MakeItAll {
 	constructor() {
-		this.ticketManager = null;
-		this.staffManager  = null;
+		this.ticketManager   = null;
+		this.staffManager    = null;
+		this.hardwareManager = null;
+		this.softwareManager = null;
 	}
 }

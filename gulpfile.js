@@ -29,6 +29,20 @@ gulp.task('scripts', function() {
         .pipe(concat('staff.min.js'))
         .pipe(gulp.dest('./public/js/pages/'));
 
+    // Hardware
+    gulp.src(['assets/js/pages/hardware/**/*.js'])
+        .pipe(plumber())
+        // .pipe(uglify())
+        .pipe(concat('hardware.min.js'))
+        .pipe(gulp.dest('./public/js/pages/'));
+
+    // Software
+    gulp.src(['assets/js/pages/software/**/*.js'])
+        .pipe(plumber())
+        // .pipe(uglify())
+        .pipe(concat('software.min.js'))
+        .pipe(gulp.dest('./public/js/pages/'));
+
     // Global Metrics
     gulp.src(['assets/js/pages/global_metrics/**/*.js'])
         .pipe(plumber())

@@ -433,6 +433,8 @@
 		<script src="js/main.min.js"></script>
 		<script src="js/pages/tickets.min.js"></script>
 		<script src="js/pages/staff.min.js"></script>
+		<script src="js/pages/hardware.min.js"></script>
+		<script src="js/pages/software.min.js"></script>
 		<script>
 			/**
 			 * makeItAll is global, and contains "managers".
@@ -619,6 +621,12 @@
 
 			// StaffManager(staffMembers)
 			makeItAll.staffManager = new StaffManager(null); // TODO: Pass in some fake data
+
+			// HardwareManager(devices)
+			makeItAll.hardwareManager = new HardwareManager(null); // TODO: Pass in some fake data
+
+			// SoftwareManager(programs)
+			makeItAll.softwareManager = new SoftwareManager(null); // TODO: Pass in some fake data
 		</script>
 		<script type="text/javascript">
 			$(function() {
