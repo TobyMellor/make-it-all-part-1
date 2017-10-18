@@ -58,26 +58,26 @@
 			</h1>
 			<p>Categories</p>
 			<ul>
-				<li class="active" slug="new">
+				<li class="active" data-slug="new">
 					<i class="fa fa-envelope-o"></i>
 					New
 				</li>
-				<li slug="pending_awaiting_staff">
+				<li data-slug="pending_awaiting_staff">
 					<i class="fa fa-clock-o"></i>
 					Pending - Awaiting Staff
 				</li>
-				<li slug="pending_in_progress">
+				<li data-slug="pending_in_progress">
 					<i class="fa fa-clock-o"></i>
 					Pending - In Progress
 				</li>
-				<li slug="resolved">
+				<li data-slug="resolved">
 					<i class="fa fa-check"></i>
 					Resolved
 				</li>
 				<li>
 					<button class="btn btn-success new-ticket" data-toggle="modal" data-target="#new-ticket-modal">
 						<i class="fa fa-plus"></i>
-						New Ticket(s)
+						New Ticket
 					</button>
 				</li>
 			</ul>
@@ -86,13 +86,13 @@
 		<section id="list-view">
 			<nav class="top-nav with-title">
 				<i class="fa fa-ticket"></i>
-				<h4 class="main-content-title">Loading...</h4>
+				<h4 class="main-content-title">Loading…</h4>
 			</nav>
 
 			<div class="main-content">
 				<div class="splash-screen loading-splash-screen">
 					<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-					<h1>Loading...</h1>
+					<h1>Loading…</h1>
 					<p>We're just getting everything setup for you.</p>
 				</div>
 				<div class="splash-screen">
@@ -108,12 +108,12 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th slug="id">ID</th>
-								<th slug="title">TICKET TITLE</th>
-								<th slug="filter_name">STATUS</th>
-								<th slug="created_at">CREATED</th>
-								<th slug="updated_at">UPDATED</th>
-								<th slug="eye"></th> <!-- If you want the eye when hovering over a table row, keep this -->
+								<th data-slug="id">ID</th>
+								<th data-slug="title">TICKET TITLE</th>
+								<th data-slug="filter_name">STATUS</th>
+								<th data-slug="created_at">CREATED</th>
+								<th data-slug="updated_at">UPDATED</th>
+								<th data-slug="eye"></th> <!-- If you want the eye when hovering over a table row, keep this -->
 							</tr>
 						</thead>
 						<tbody></tbody>
@@ -123,7 +123,7 @@
 		</section>
 		<section id="single-view">
 			<nav class="top-nav with-content">
-				<h4 class="main-content-title">Loading...</h4>
+				<h4 class="main-content-title">Loading…</h4>
 				<button class="btn btn-sm close-button ticket-close-button">
 					<i class="fa fa-times"></i>
 					Close
@@ -232,7 +232,7 @@
 										</div>
 									</div>
 									<div id="accordion" role="tablist">
-										<div class="card" card-id="1">
+										<div class="card" data-cardid="1">
 											<div class="card-header" role="tab" id="heading-1">
 												<h5 class="mb-0">
 													<a data-toggle="collapse" data-parent="#accordion" href="#collapse-1">
@@ -352,11 +352,11 @@
 										</div>
 									</div>
 									<div id="accordion" role="tablist">
-										<div class="card" card-id="1">
+										<div class="card" data-cardid="1">
 											<input type="text" name="tickets[this][id]" hidden />
 											<div class="card-header highlight" role="tab" id="heading-this-call">
 												<h5 class="mb-0">
-													<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-this-call">Loading...</a>
+													<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-this-call">Loading…</a>
 													<i class="fa fa-eye view-accordion"></i>
 												</h5>
 											</div>
@@ -826,9 +826,9 @@
 		<script type="text/javascript">
 				var ticketPage = new TicketPage();
 
-				$('.side-nav-bar-nested ul li[slug]').on('click', function() {
-					if (ticketPage.currentlyShowing !== $(this).attr('slug')) {
-						ticketPage.refreshPage($(this).attr('slug'));
+				$('.side-nav-bar-nested ul li[data-slug]').on('click', function() {
+					if (ticketPage.currentlyShowing !== this.dataset.slug) {
+						ticketPage.refreshPage(this.dataset.slug);
 					}
 				});
 
@@ -875,7 +875,7 @@
 				});
 
 				$(document).on('click', '#table-section .table tr:not(.highlight)', function() {
-					ticketPage.showTicketView(parseInt($(this).attr('row-id')));
+					ticketPage.showTicketView(parseInt(this.dataset.rowid));
 				});
 
 				$('.ticket-close-button').on('click', function() {
@@ -891,7 +891,7 @@
 						cardId     = Math.floor(Math.random() * (10000 + 1));
 
 					$accordion.append(
-						'<div class="card" card-id="' + cardId + '">' +
+						'<div class="card" data-cardid="' + cardId + '">' +
 							'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
 								'<h5 class="mb-0">' +
 									'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
@@ -954,7 +954,7 @@
 						'</div>'
 					);
 
-					ticketPage.populateSelectField($accordion.find('.card[card-id="' + cardId + '"] select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
+					ticketPage.populateSelectField($accordion.find('.card[data-cardid="' + cardId + '"] select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
 
 					$('.selectpicker').selectpicker('refresh');
 				});
@@ -967,7 +967,7 @@
 							ticket     = makeItAll.ticketManager.getTicket(ticketId);
 
 						$accordion.append(
-							'<div class="card" card-id="' + cardId + '">' +
+							'<div class="card" data-cardid="' + cardId + '">' +
 								'<input type="text" name="tickets[' + cardId + '][id]" value="' + ticketId + '" hidden />' +
 								'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
 									'<h5 class="mb-0">' +
@@ -1017,7 +1017,7 @@
 							'</div>'
 						);
 
-						ticketPage.appendHardwareDevices($accordion.find('.card[card-id="' + cardId + '"] .hardware-list'), ticket, cardId);
+						ticketPage.appendHardwareDevices($accordion.find('.card[data-cardid="' + cardId + '"] .hardware-list'), ticket, cardId);
 
 						$(this).find('option[value="' + ticketId + '"]').remove();
 
@@ -1034,7 +1034,7 @@
 
 				$(document).on('click', '.add-hardware-device', function() {
 					var $inputField       = $(this).closest('.form-group').find('input'),
-						successfullyAdded = ticketPage.appendHardwareDevice($(this).closest('.form-group').find('.hardware-list'), $inputField.val(), $(this).closest('card').attr('card-id'));
+						successfullyAdded = ticketPage.appendHardwareDevice($(this).closest('.form-group').find('.hardware-list'), $inputField.val(), $(this).closest('card').data('cardid'));
 
 					if (successfullyAdded) {
 						$inputField.val('');
@@ -1050,13 +1050,13 @@
 				});
 
 				$(document).on('click', '#ticket-view #call-history-table tbody tr', function() {
-					var callId = parseInt($(this).attr('row-id'));
+					var callId = parseInt(this.dataset.rowid);
 					
 					ticketPage.showCallTicketsModal(callId);
 				});
 
 				$(document).on('click', '#view-call-history-modal #call-tickets-table tbody tr:not(.highlight)', function() {
-					var ticketId = parseInt($(this).attr('row-id')),
+					var ticketId = parseInt(this.dataset.rowid),
 						ticket   = makeItAll.ticketManager.getTicket(ticketId);
 
 					$('#view-call-history-modal').modal('hide');

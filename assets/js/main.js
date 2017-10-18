@@ -200,6 +200,16 @@ function addItemToPicker(pickerElement, itemValue, itemName) {
 }
 
 /**
+ * Resolve a dot notation path string through an object
+ * From https://stackoverflow.com/a/22129960/1549818
+ */
+Object.resolve = function(path, obj) {
+	return path.split('.').reduce(function(prev, curr) {
+		return prev ? prev[curr] : undefined
+	}, obj || self)
+}
+
+/**
  * MakeItAll
  *
  * Responsible for managing the managers.

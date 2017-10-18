@@ -76,7 +76,7 @@ class TicketPage extends DynamicPage {
 					var device = devices[i];
 
 					$ticketHardwareSoftwareBody.append(
-						'<tr row-id="' + device.id + '">' +
+						'<tr data-rowid="' + device.id + '">' +
 							'<td class="truncate">' + device.serial_number + '</td>' +
 							'<td class="truncate">' + device.name + '</td>' +
 							'<td class="truncate">' + device.operating_system + '</td>' +
@@ -94,7 +94,7 @@ class TicketPage extends DynamicPage {
 				var call = calls[i];
 
 				$ticketCallHistoryBody.append(
-					'<tr row-id="' + call.id + '">' +
+					'<tr data-rowid="' + call.id + '">' +
 						'<td>' + call.id + '</td>' +
 						'<td>' + call.caller.name + '</td>' +
 						'<td>' + call.date_of_call + '</td>' +
@@ -199,7 +199,7 @@ class TicketPage extends DynamicPage {
 			var ticket = callTickets[i];
 
 			$callTicketTable.append(
-				'<tr row-id="' + ticket.id + '" ' + (ticket.id === this.currentTicket.id ? 'class="highlight"' : '') + '>' +
+				'<tr data-rowid="' + ticket.id + '" ' + (ticket.id === this.currentTicket.id ? 'class="highlight"' : '') + '>' +
 					'<td>' + ticket.id + '</td>' +
 					'<td>' + ticket.title + '</td>' +
 					'<td>' +
@@ -218,7 +218,7 @@ class TicketPage extends DynamicPage {
 
 	refreshPage(filterSlug, ticketId = null) {
 		$('.side-nav-bar-nested ul li.active').removeClass('active');
-		$('.side-nav-bar-nested ul li[slug="' + filterSlug + '"]').addClass('active');
+		$('.side-nav-bar-nested ul li[data-slug="' + filterSlug + '"]').addClass('active');
 
 		this.showFilteredTickets(filterSlug);
 		this.showTicketView(ticketId);

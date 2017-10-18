@@ -10,13 +10,13 @@
 class DynamicPage {
 	constructor({
 		sectionSelector = "#table-section",
-		navSelector = "#table-section .top-nav",
-		detailSelector = "#single-view"
+		navSelector,
+		detailSelector
 	} = {}) {
 		this.sectionSelector = sectionSelector;
 		// Set navigation selector to first component of section selector with ‘-nav’ appended, otherwise default CSS selector
 		this.navSelector = navSelector ? navSelector : (sectionSelector !== "#table-section" ? sectionSelector.split(" ")[0] + "-nav" : ".side-nav-bar-nested");
-		this.detailSelector = detailSelector ? detailSelector : (sectionSelector !== "#table-section" ? sectionSelector.split(" ")[0] + "-detail" : null);
+		this.detailSelector = detailSelector ? detailSelector : (sectionSelector !== "#table-section" ? sectionSelector.split(" ")[0] + "-detail" : "#single-view");
 	}
 	
 	updateListViewNavbar(html) {
@@ -77,26 +77,30 @@ class DynamicPage {
 	 * splashscreen on your page
 	 */
 	appendTableRow(object) {
-		var tableSection = $(this.sectionSelector),
-		    tableHead    = tableSection.find('table thead tr'),
-		    tableBody    = tableSection.find('table tbody'),
-		    newRow       = $('<tr row-id="' + object.id + '"></tr>');
+		var $tableSection = $(this.sectionSelector),
+		    $tableHead     = $tableSection.find('table thead tr'),
+		    $tableBody     = $tableSection.find('table tbody'),
+		    $newRow       = $(document.createElement("tr"));
 
-		tableHead.children('th').each(function() {
-			var slug = $(this).attr('slug');
+		// Set ID on row to reference later
+		$newRow[0].dataset.rowid = object.id;
+
+		$tableHead.children('th').each(function() {
+			var slug = this.dataset.slug, td = document.createElement("td");
 
 			if (slug === 'eye') { // the on-hover eye invisible row
-				newRow.append(
-					'<td>' +
-						'<i class="fa fa-eye"></i>' +
-					'</td>'
-				);
+				td.innerHTML = '<i class="fa fa-eye"></i>';
+			} else if (slug ? slug.includes("access") : false) {
+				// Boolean value support
+				td.textContent = Object.resolve(slug, object) ? "Yes" : "No";
 			} else {
-				newRow.append('<td>' + object[$(this).attr('slug')] + '</td>');
+				td.innerHTML = object[slug];
 			}
+			
+			$newRow.append(td);
 		});
-
-		tableBody.append(newRow);
+		
+		$tableBody.append($newRow);
 	}
 
 	/**
@@ -109,7 +113,7 @@ class DynamicPage {
 	showTableRowDetails(id = null) {
 		if (id !== null) {
 			$(this.sectionSelector).find('tbody tr').removeClass('highlight');
-			$(this.sectionSelector).find('tbody tr[row-id="' + id + '"]').addClass('highlight');
+			$(this.sectionSelector).find('tbody tr[data-rowid="' + id + '"]').addClass('highlight');
 		}
 
 		$('#list-view').css('flex-grow', 'initial');
