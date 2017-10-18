@@ -14,6 +14,7 @@ class SoftwareManager extends Manager {
 		this.programs = [];
 
 		// loop through programs, create instances and push to this.programs
+		// TODO: Likely need an "OperatingSystem" class, Michael TODO
 	}
 
 	createprogram() {

@@ -14,7 +14,7 @@ class Device {
 		programs
 	) {
 		this.id                = id;
-		this.serial_number     = serialNumber;
+		this.serial_number     = serialNumber; // TODO: Turn into uppercase serial number
 		this.name              = name;
 		this.operating_system  = operatingSystem;
 		this.programs          = programs; // ID of programs, get method returns instances of Program

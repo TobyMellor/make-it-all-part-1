@@ -111,4 +111,36 @@ class TicketPage extends DynamicPage {
 			this.showTableRowDetails();
 		}
 	}
+
+	appendHardwareDevice($hardwareList, serialNumber) {
+		serialNumber = serialNumber.toUpperCase();
+
+		var existingSerialNumbers = [];
+
+		$hardwareList.children().each(function() {
+			existingSerialNumbers.push($(this).attr('serial-number'));
+		});
+
+		if (existingSerialNumbers.indexOf(serialNumber) === -1) {
+			var device = makeItAll.hardwareManager.getDevice(serialNumber);
+
+			if (device !== null) {
+				$hardwareList.append(
+					' <li serial-number="' + serialNumber + '"">' +
+						'<input type="text" name="" value="' + serialNumber + '" hidden />' +
+						'<h4>' + device.name + '</h4>' +
+						'<p>' + device.programs[0].name + '</p>' +
+						'<a class="btn btn-danger remove-hardware-device" href="javascript: void(0);">' +
+							'<i class="fa fa-minus"></i> ' +
+							'Remove' +
+						'</a>' +
+					'</li>'
+				);
+
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
