@@ -2,3 +2,5 @@ node_modules
 .DS_Store
 public/css
 public/js
+!public/css/plugins/*
+!public/js/plugins/*
