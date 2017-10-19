@@ -36,7 +36,7 @@ span.filter {
 	}
 
 	h4 {
-		margin-top: $comfortable;
+		margin-top: $cosy;
 	}
 
 	.ticket-details {
@@ -51,10 +51,11 @@ span.filter {
 	
 	#ticket-description {
 		border: 1px solid $silver;
-		border-radius: 3px;
+		border-bottom: 2px solid $silver;
 		padding: 15px;
 		max-height: 250px;
 		overflow-y: scroll;
+		margin-bottom: $comfortable;
 
 		p {
 			margin-bottom: 0;
@@ -125,7 +126,6 @@ span.filter {
 	#comment-block {
 		background-color: $cloudy-white;
 		padding: $comfortable $comfortable $cosy $comfortable;
-		border-radius: 3px;
 		border: 1px solid $silver;
 
 		img {
@@ -144,6 +144,24 @@ span.filter {
 		.btn {
 			float: right;
 			margin-top: $cosy;
+		}
+	}
+
+	.col-md-6 {
+		&:first-child {
+			padding-right: $cosy;
+		}
+
+		&:last-child {
+			padding-left: $cosy;
+		}
+	}
+
+	.table {
+		tbody {
+			tr:last-child {
+				border-bottom: 2px solid $silver;
+			}
 		}
 	}
 }

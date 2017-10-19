@@ -53,25 +53,56 @@ class TicketPage extends DynamicPage {
 			$('#ticket-view #ticket-overview').text('#' + ticket.id + ' | ' + ticket.created_at);
 			$('#ticket-view #ticket-description p').text(ticket.description);
 
-			// $('#ticket-view #ticket-software').text(ticket.software || 'N/A');
-			// $('#ticket-view #ticket-operating-system').text(ticket.operating_system || 'N/A');
-			$('#ticket-view #ticket-updated-at').text(ticket.updated_at);
 
-			var $ticketComments      = $('#ticket-comments'),
-				$ticketSerialNumbers = $('#ticket-serial-numbers');
+			var $ticketComments           = $('#ticket-comments'),
+				$ticketHardwareSoftware   = $('#ticket-view #hardware-software-table'),
+				$ticketNoHardwareSoftware = $('#ticket-view #no-hardware-software'),
+				$ticketCallHistoryBody    = $('#ticket-view #call-history-table tbody'),
+				devices	                  = ticket.devices,
+				calls                     = ticket.calls;
 
-			if (ticket.devices.length === 0) {
-				$ticketSerialNumbers.text('N/A')
+			if (devices.length === 0) {
+				$ticketHardwareSoftware.hide();
+				$ticketNoHardwareSoftware.show();
 			} else {
-				$ticketSerialNumbers.text('');
+				$ticketHardwareSoftware.show();
+				$ticketNoHardwareSoftware.hide();
+				
+				var $ticketHardwareSoftwareBody = $ticketHardwareSoftware.find('tbody');
 
-				for (var index in ticket.devices) {
-					var serialNumber = ticket.devices[index].serial_number;
+				$ticketHardwareSoftwareBody.html('');
 
-					$ticketSerialNumbers.append(
-						'<li>' + serialNumber + '</li>'
-					);
+				for (var i = 0; i < devices.length; i++) {
+					var device = devices[i];
+
+					$ticketHardwareSoftwareBody.append(
+						'<tr row-id="' + device.id + '">' +
+							'<td class="truncate">' + device.serial_number + '</td>' +
+							'<td>' + device.name + '</td>' +
+							'<td>' + device.operating_system + '</td>' +
+							'<td>' +
+								'<i class="fa fa-eye"></i>' +
+							'</td>' +
+						'</tr>'
+					); // TODO: href to show on hardware page
 				}
+			}
+
+			$ticketCallHistoryBody.html('');
+
+			for (var i = 0; i < calls.length; i++) {
+				var call = calls[i];
+
+				$ticketCallHistoryBody.append(
+					'<tr row-id="' + call.id + '">' +
+						'<td>' + call.id + '</td>' +
+						'<td>' + call.caller.name + '</td>' +
+						'<td>' + call.date_of_call + '</td>' +
+						'<td>' +
+							'<i class="fa fa-eye"></i>' +
+						'</td>' +
+					'</tr>'
+				);
 			}
 
 			if (ticket.events.length === 0) {

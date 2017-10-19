@@ -30,8 +30,7 @@ class StaffManager extends Manager {
 		// return staff member instance from this.staffMembers, return null if not found
 
 		return {
-			first_name: 'Example',
-			last_name: 'User',
+			name: 'Toby Mellor',
 			email: 'example@domain.com',
 			permission_level: 3 // analyst
 		};

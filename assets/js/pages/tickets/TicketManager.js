@@ -21,10 +21,10 @@ class TicketManager extends Manager {
 			var call = calls[i];
 
 			this.calls.push(new Call(
-				calls.id,
-				calls.date_of_call,
-				calls.caller,
-				calls.tickets
+				call.id,
+				call.date_of_call,
+				call.caller,
+				call.tickets
 			));
 		}
 
@@ -70,6 +70,10 @@ class TicketManager extends Manager {
 		}
 	}
 
+	getCalls(ticketId) {
+		return this.findAllWhere(this.calls, call => call._tickets.indexOf(ticketId) > -1);
+	}
+
 	getFilter(filterSlug) {
 		return this.findFirstWhere(this.filters, filter => filter.slug === filterSlug);
 	}
@@ -98,7 +102,7 @@ class TicketManager extends Manager {
 
 			ticketIds.push(ticketId);
 		}
-		
+
 		call.tickets = ticketIds;
 
 		return call;

@@ -134,9 +134,8 @@
 			</nav>
 
 			<div id="ticket-view" class="scrollable">
-
 				<div class="row">
-					<div class="col-md-7">
+					<div class="col-md-12">
 						<p class="ticket-details">
 							<strong>Description:</strong>
 							<span id="ticket-overview"></span>
@@ -145,27 +144,45 @@
 							<p></p>
 						</div>
 					</div>
-					<div class="col-md-5">
+				</div>
+
+				<div class="row">
+					<div class="col-md-6">
 						<p class="ticket-details">
-							<strong>Software:</strong>
-							<span id="ticket-software">Loading...</span>
+							<strong>Hardware/Software:</strong>
 						</p>
+						<table class="table compact" id="hardware-software-table">
+							<thead>
+								<tr>
+									<th>SERIAL</th>
+									<th>NAME</th>
+									<th>OS</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+					<div class="col-md-6">
 						<p class="ticket-details">
-							<strong>Operating System:</strong>
-							<span id="ticket-operating-system">Loading...</span>
+							<strong>Call History:</strong>
 						</p>
-						<p class="ticket-details">
-							<strong>Serial Numbers:</strong>
-						</p>
-						<ul id="ticket-serial-numbers"></ul>
-						<p class="ticket-details">
-							<strong>Updated:</strong>
-							<span id="ticket-updated-at">Loading...</span>
-						</p>
+
+						<table class="table compact" id="call-history-table">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>CALLER</th>
+									<th>DATE</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
 					</div>
 				</div>
 
-				<h4>Comments:</h4>
+				<h4>Updates:</h4>
 
 				<ul class="list-unstyled" id="ticket-comments"></ul>
 
