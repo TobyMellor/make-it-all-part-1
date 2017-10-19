@@ -31,31 +31,13 @@ class DynamicPage {
 	 * You should call this function using "appendTable"
 	 */
 	updateSplashScreen() {
-		if ($('.loading-splash-screen').is(':visible')) {
-			$('.loading-splash-screen').fadeOut(200);
-
-			var scope = this; // unable to access 'this' in closure
-
-			setTimeout(function() {
-				scope.updateSplashScreen();
-			}, 201);
-		} else {
-			var resultsCount = $(this.sectionSelector).find('tbody tr').length,
-				splashScreen = $('.splash-screen').not('.loading-splash-screen'),
-				tableSection = $(this.sectionSelector);
-
-			if (resultsCount > 0) {
-				splashScreen.fadeOut(200, function() {
-					tableSection.fadeIn(200);
-				});
-			} else {
-				tableSection.fadeOut(200, function() {
-					splashScreen.css('display', 'flex')
-					   			.hide()
-					   			.fadeIn(200); // fadeIn/Out doesn't support display: flex; so set it immediately
-				});
-			}
-		}
+		var $section = $(this.sectionSelector),
+		    resultsCount = $section.find('tbody tr').filter((i, el) => $(el).css("display") !== "none").length,
+		    $splashScreen = $('.splash-screen');
+		
+		var [$show, $hide] = resultsCount ? [$section, $splashScreen] : [$splashScreen, $section];
+		$hide.hide();
+		$show.fadeIn(100);
 		
 		// Set navbar text as number of items in table then append currently selected filter
 		var navText = resultsCount + " " + $(this.navSelector).find("li.active").first().text().replace("All ", "");

@@ -88,37 +88,30 @@
 				<i class="fa fa-ticket"></i>
 				<h4 class="main-content-title">Loading…</h4>
 			</nav>
-
-			<div class="main-content">
-				<div class="splash-screen loading-splash-screen">
-					<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-					<h1>Loading…</h1>
-					<p>We're just getting everything setup for you.</p>
-				</div>
-				<div class="splash-screen">
-					<i class="fa fa-frown-o fa-5x"></i>
-					<h1>There's no tickets here yet!</h1>
-					<p>Get started, create a new ticket below.</p>
-					<button class="btn btn-success btn-lg new-ticket" data-toggle="modal" data-target="#create-ticket-modal">
-						<i class="fa fa-plus"></i>
-						New Ticket
-					</button>
-				</div>
-				<div id="table-section" class="scrollable">
-					<table class="table">
-						<thead>
-							<tr>
-								<th data-slug="id">ID</th>
-								<th data-slug="title">TICKET TITLE</th>
-								<th data-slug="filter_name">STATUS</th>
-								<th data-slug="created_at">CREATED</th>
-								<th data-slug="updated_at">UPDATED</th>
-								<th data-slug="eye"></th> <!-- If you want the eye when hovering over a table row, keep this -->
-							</tr>
-						</thead>
-						<tbody></tbody>
-					</table>
-				</div>
+			
+			<div class="splash-screen" style="display: none;">
+				<h1>No tickets</h1>
+				<p>Get started, create a new ticket below.</p>
+				<button class="btn btn-success btn-lg new-ticket" data-toggle="modal" data-target="#create-ticket-modal">
+					<i class="fa fa-plus"></i>
+					New Ticket
+				</button>
+			</div>
+			
+			<div id="table-section" class="scrollable">
+				<table class="table">
+					<thead>
+						<tr>
+							<th data-slug="id">ID</th>
+							<th data-slug="title">TICKET TITLE</th>
+							<th data-slug="filter_name">STATUS</th>
+							<th data-slug="created_at">CREATED</th>
+							<th data-slug="updated_at">UPDATED</th>
+							<th data-slug="eye"></th> <!-- If you want the eye when hovering over a table row, keep this -->
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
 			</div>
 		</section>
 		<section id="single-view">
