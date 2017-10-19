@@ -14,10 +14,10 @@ class TicketPage extends DynamicPage {
 	}
 
 	showFilteredTickets(filterSlug) {
-		var filter = makeItAll.ticketManager.getFilter(filterSlug);
+		var filter 		    = makeItAll.ticketManager.getFilter(filterSlug),
+			filteredTickets = filter.tickets;
 
-		if (filter !== null && filter.id !== this.currentlyShowing) {
-			var filteredTickets = filter.tickets;
+		if (filter !== null && (filter.id !== this.currentlyShowing || filteredTickets.length !== $('#table-section table tbody tr').length)) {
 
 			this.updateListViewNavbar(filteredTickets.length + ' \'' + filter.name + '\' ' + (filteredTickets.length === 1 ? 'ticket' : 'tickets'));
 			this.clearTable();
@@ -53,20 +53,20 @@ class TicketPage extends DynamicPage {
 			$('#ticket-view #ticket-overview').text('#' + ticket.id + ' | ' + ticket.created_at);
 			$('#ticket-view #ticket-description p').text(ticket.description);
 
-			$('#ticket-view #ticket-software').text(ticket.software || 'N/A');
-			$('#ticket-view #ticket-operating-system').text(ticket.operating_system || 'N/A');
+			// $('#ticket-view #ticket-software').text(ticket.software || 'N/A');
+			// $('#ticket-view #ticket-operating-system').text(ticket.operating_system || 'N/A');
 			$('#ticket-view #ticket-updated-at').text(ticket.updated_at);
 
 			var $ticketComments      = $('#ticket-comments'),
 				$ticketSerialNumbers = $('#ticket-serial-numbers');
 
-			if (ticket.serial_numbers.length === 0) {
+			if (ticket.devices.length === 0) {
 				$ticketSerialNumbers.text('N/A')
 			} else {
 				$ticketSerialNumbers.text('');
 
-				for (var index in ticket.serial_numbers) {
-					var serialNumber = ticket.serial_numbers[index];
+				for (var index in ticket.devices) {
+					var serialNumber = ticket.devices[index].serial_number;
 
 					$ticketSerialNumbers.append(
 						'<li>' + serialNumber + '</li>'
@@ -112,7 +112,7 @@ class TicketPage extends DynamicPage {
 		}
 	}
 
-	appendHardwareDevice($hardwareList, serialNumber) {
+	appendHardwareDevice($hardwareList, serialNumber, cardId) {
 		serialNumber = serialNumber.toUpperCase();
 
 		var existingSerialNumbers = [];
@@ -127,7 +127,7 @@ class TicketPage extends DynamicPage {
 			if (device !== null) {
 				$hardwareList.append(
 					' <li serial-number="' + serialNumber + '"">' +
-						'<input type="text" name="" value="' + serialNumber + '" hidden />' +
+						'<input type="text" name="tickets[' + cardId + '][devices]" value="' + device.id + '" hidden />' +
 						'<h4>' + device.name + '</h4>' +
 						'<p>' + device.programs[0].name + '</p>' +
 						'<a class="btn btn-danger remove-hardware-device" href="javascript: void(0);">' +

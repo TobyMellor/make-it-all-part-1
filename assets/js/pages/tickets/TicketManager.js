@@ -44,17 +44,15 @@ class TicketManager extends Manager {
 
 			this.tickets.push(new Ticket(
 				ticket.id,
+				ticket.calls,
 				ticket.filter,
 				ticket.title,
 				ticket.description,
 				ticket.assigned_to,
-				ticket.serial_numbers,
-				ticket.operating_system,
-				ticket.software,
+				ticket.devices,
 				ticket.created_at,
 				ticket.updated_at,
-				ticket.events,
-				ticket.calls
+				ticket.events
 			));
 		}
 
@@ -76,28 +74,54 @@ class TicketManager extends Manager {
 		return this.findFirstWhere(this.filters, filter => filter.slug === filterSlug);
 	}
 
-	createTicket(filterSlug, title, description, dateOfCall, caller, assignedTo, serialNumbers, operatingSystem, software) {
-		var filter = makeItAll.getFilter(filterSlug);
+	createCall(dateOfCall, caller, tickets) {
+		var callId    = Math.floor(Math.random() * (10000 + 1)),
+			ticketIds = [],
+			call      = new Call(
+				callId,
+				dateOfCall,
+				caller,
+				[]
+			);
 
+		for (var i in tickets) {
+			var ticketId = Math.floor(Math.random() * (10000 + 1));
+
+			var ticket = this.createTicket(
+				callId,
+				tickets[i].filter,
+				tickets[i].title,
+				tickets[i].description,
+				tickets[i].assigned_to,
+				tickets[i].devices
+			);
+
+			ticketIds.push(ticketId);
+		}
+		
+		call.tickets = ticketIds;
+
+		return call;
+	}
+
+	createTicket(callId, filterSlug, title, description, assignedTo, devices = []) {
 		// AJAX call here, which returns a ticketId
 		// validation here
 		var ticketId = Math.floor(Math.random() * (10000 + 1));
 
 		this.tickets.push(new Ticket(
 			ticketId,
+			[callId],
 			filterSlug,
 			title,
 			description,
 			assignedTo,
-			serialNumbers,
-			operatingSystem,
-			software,
+			devices,
 			'Just now',
-			'Just now',
-			[]
+			'Just now'
 		));
 
-		this.filters.push(ticketId);
+		this.getFilter(filterSlug)._tickets.push(ticketId);
 
 		return this.tickets[this.tickets.length - 1];
 	}
@@ -108,6 +132,10 @@ class TicketManager extends Manager {
 
 	getTicket(ticketId) {
 		return this.findFirstWhere(this.tickets, ticket => ticket.id === ticketId);
+	}
+
+	getTicketsFromCall(callId) {
+		return this.findAllWhere(this.tickets, ticket => ticket._calls.indexOf(callId) > -1);
 	}
 
 	createEvent(ticketId, author, type, content, createdAt) {

@@ -202,17 +202,17 @@
 											<div class="form-group">
 												<label class="required">Caller</label>
 												<br />
-												<select class="selectpicker staff-picker" data-live-search="true" name="ticket[caller]">
-													<option>Mustard</option>
-													<option>Ketchup</option>
-													<option>Relish</option>
+												<select class="selectpicker staff-picker" data-live-search="true" name="caller">
+													<option value="0">Example Caller 1</option>
+													<option value="1">Example Caller 2</option>
+													<option value="2">Example Caller 3</option>
 												</select>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Date of Call</label>
-												<input class="form-control timepicker" name="ticket[date_of_call]" />
+												<input class="form-control timepicker" name="date_of_call" />
 											</div>
 										</div>
 									</div>
@@ -234,7 +234,7 @@
 															<div class="form-group">
 																<label class="required">Status</label>
 																<br />
-																<select class="selectpicker" name="ticket[filter]">
+																<select class="selectpicker" name="tickets[1][filter]">
 																	<option value="new">New</option>
 																	<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
 																	<option value="pending_in_progress">Pending - In Progress</option>
@@ -246,27 +246,27 @@
 															<div class="form-group">
 																<label class="required">Assigned To</label>
 																<br />
-																<select class="selectpicker staff-picker" data-live-search="true" name="ticket[assigned_to]">
-																	<option>Mustard</option>
-																	<option>Ketchup</option>
-																	<option>Relish</option>
+																<select class="selectpicker staff-picker" data-live-search="true" name="tickets[1][assigned_to]">
+																	<option value="0">Example Operator 1</option>
+																	<option value="1">Example Operator 2</option>
+																	<option value="2">Example Operator 3</option>
 																</select>
 															</div>
 														</div>
 													</div>
 													<div class="form-group">
 														<label class="required">Ticket Title</label>
-														<input class="form-control" name="ticket[title]" />
+														<input class="form-control" name="tickets[1][title]" />
 													</div>
 													<div class="form-group">
 														<label class="required">Ticket Description</label>
-														<textarea class="form-control" name="ticket[description]"></textarea>
+														<textarea class="form-control" name="tickets[1][description]"></textarea>
 													</div>
 													
 													<div class="form-group">
 													<label>Serial Number of Hardware Affected</label>
 														<div class="input-group">
-															<input class="form-control" name="ticket[hardware][serial_number]" />
+															<input class="form-control" name="tickets[1][serial_number]" />
 															<span class="input-group-btn">
 																<button class="btn btn-success add-hardware-device" type="button">
 																	<i class="fa fa-plus"></i> 
@@ -328,23 +328,23 @@
 										<label class="required">Staff Name</label>
 										<div class="row">
 											<div class="col-md-6">
-												<input class="form-control no-clear-on-show" name="ticket[staff][first_name]" placeholder="First Name" />
+												<input class="form-control no-clear-on-show" name="tickets[staff][first_name]" placeholder="First Name" />
 											</div>
 											<div class="col-md-6">
-												<input class="form-control no-clear-on-show" name="ticket[staff][last_name]" placeholder="Last Name" />
+												<input class="form-control no-clear-on-show" name="tickets[staff][last_name]" placeholder="Last Name" />
 											</div>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="required">Staff Email</label>
-										<input class="form-control" name="ticket[staff][email]" />
+										<input class="form-control" name="tickets[staff][email]" />
 									</div>
 								</div>
 								<div class="col-md-4">
 									<label class="required">Staff Permissions</label>
 									<div class="staff-permissions">
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="ticket[staff][permissions][ticket_read_only]" checked="checked">
+											<input type="checkbox" class="custom-control-input" name="tickets[staff][permissions][ticket_read_only]" checked="checked">
 											<span class="custom-control-indicator"></span>
 											<span class="custom-control-description">Ticket Read Only</span>
 											<span class="help-text">
@@ -352,7 +352,7 @@
 											</span>
 										</label>
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="ticket[staff][permissions][helpdesk_operator]">
+											<input type="checkbox" class="custom-control-input" name="tickets[staff][permissions][helpdesk_operator]">
 											<span class="custom-control-indicator"></span>
 											<span class="custom-control-description">Helpdesk Operator</span>
 											<span class="help-text">
@@ -361,7 +361,7 @@
 											</span>
 										</label>
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="ticket[staff][permissions][analyst]">
+											<input type="checkbox" class="custom-control-input" name="tickets[staff][permissions][analyst]">
 											<span class="custom-control-indicator"></span>
 											<span class="custom-control-description">Analyst</span>
 											<span class="help-text">
@@ -370,7 +370,7 @@
 											</span>
 										</label>
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="ticket[staff][permissions][super_admin]">
+											<input type="checkbox" class="custom-control-input" name="tickets[staff][permissions][super_admin]">
 											<span class="custom-control-indicator"></span>
 											<span class="custom-control-description">Super Admin</span>
 											<span class="help-text">
@@ -478,76 +478,63 @@
 				[
 					{
 						id: 0,
+						calls: [0],
 						filter: 'new',
 						title: 'Printer Queue not working',
 						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
 						assigned_to: 0,
-						serial_numbers: [
-							'B3253SFG',
-							'GAGT666G'
-						],
-						operating_system: 'macOS',
-						software: 'Terminal',
+						devices: [],
 						created_at: 'Yesterday',
 						updated_at: '1 hour ago',
-						events: [0, 1, 2],
-						calls: [0]
+						events: [0, 1, 2]
 					},
 					{
 						id: 1,
+						calls: [0],
 						filter: 'new',
 						title: 'Coffee machine needs refilling',
 						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
 						assigned_to: 1,
-						serial_numbers: [],
-						operating_system: null,
-						software: null,
+						devices: [],
 						created_at: '4 days ago',
 						updated_at: '4 days ago',
-						events: [3],
-						calls: [0]
+						events: [3]
 					},
 					{
 						id: 2,
+						calls: [1],
 						filter: 'new',
 						title: 'Squeeky chair',
 						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
 						assigned_to: 0,
-						serial_numbers: [],
-						operating_system: null,
-						software: null,
+						devices: [],
 						created_at: '1 day ago',
 						updated_at: 'Just now',
-						events: [],
-						calls: [1]
+						events: []
 					},
 					{
 						id: 3,
+						calls: [2],
 						filter: 'pending_in_progress',
 						title: 'Spilt water on macbook',
 						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
 						assigned_to: 1,
-						serial_numbers: [],
-						operating_system: null,
-						software: null,
+						devices: [],
 						created_at: '23 hours ago',
 						updated_at: '3 minutes ago',
-						events: [],
-						calls: [2]
+						events: []
 					},
 					{
 						id: 4,
+						calls: [3, 4],
 						filter: 'resolved',
 						title: 'Computer wont turn on',
 						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
 						assigned_to: 0,
-						serial_numbers: [],
-						operating_system: null,
-						software: null,
+						devices: [],
 						created_at: '4 hours ago',
 						updated_at: '4 hours ago',
-						events: [],
-						calls: [3, 4]
+						events: []
 					}
 				],
 				[	
@@ -612,20 +599,10 @@
 				$('#new-ticket-modal #create-new-ticket').on('click', function (e) {
 					e.preventDefault();
 
-					var formData = parseFormData($('#new-ticket-modal form')),
-						ticket   = makeItAll.ticketManager.createTicket(
-							formData['ticket[filter]'],
-							formData['ticket[title]'],
-							formData['ticket[description]'],
-							formData['ticket[date_of_call]'],
-							formData['ticket[caller]'],
-							formData['ticket[assigned_to]'],
-							formData['ticket[hardware][serial_numbers]'],
-							formData['ticket[software][opearting_system]'],
-							formData['ticket[software][software]']
-						);
+					var formData = $('#new-ticket-modal form').serializeObject(),
+						call     = makeItAll.ticketManager.createCall(formData.date_of_call, formData.caller, formData.tickets);
 
-					$('.side-nav-bar-nested ul li[' + formData['ticket[filter]'] + ']').click();
+					$('.side-nav-bar-nested ul li[slug="' + call.tickets[0].filter.slug + '"]').click();
 
 					$('#new-ticket-modal').modal('hide');
 				});
@@ -677,7 +654,7 @@
 											'<div class="form-group">' +
 												'<label class="required">Status</label>' +
 												'<br />' +
-												'<select class="selectpicker" name="ticket[filter]">' +
+												'<select class="selectpicker" name="tickets[' + cardId + '][filter]">' +
 													'<option value="new">New</option>' +
 													'<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>' +
 													'<option value="pending_in_progress">Pending - In Progress</option>' +
@@ -689,26 +666,26 @@
 											'<div class="form-group">' +
 												'<label class="required">Assigned To</label>' +
 												'<br />' +
-												'<select class="selectpicker staff-picker" data-live-search="true" name="ticket[assigned_to]">' +
-													'<option>Mustard</option>' +
-													'<option>Ketchup</option>' +
-													'<option>Relish</option>' +
+												'<select class="selectpicker staff-picker" data-live-search="true" name="tickets[' + cardId + '][assigned_to]">' +
+													'<option value="0">Example Operator 1</option>' +
+													'<option value="1">Example Operator 2</option>' +
+													'<option value="2">Example Operator 3</option>' +
 												'</select>' +
 											'</div>' +
 										'</div>' +
 									'</div>' +
 									'<div class="form-group">' +
 										'<label class="required">Ticket Title</label>' +
-										'<input class="form-control" name="ticket[title]" />' +
+										'<input class="form-control" name="tickets[' + cardId + '][title]" />' +
 									'</div>' +
 									'<div class="form-group">' +
 										'<label class="required">Ticket Description</label>' +
-										'<textarea class="form-control" name="ticket[description]"></textarea>' +
+										'<textarea class="form-control" name="tickets[' + cardId + '][description]"></textarea>' +
 									'</div>' +
 									'<div class="form-group">' +
 									'<label>Serial Number of Hardware Affected</label>' +
 										'<div class="input-group">' +
-											'<input class="form-control" name="ticket[hardware][serial_number]" />' +
+											'<input class="form-control" name="tickets[' + cardId + '][hardware][serial_number]" />' +
 											'<span class="input-group-btn">' +
 												'<button class="btn btn-success add-hardware-device" type="button">' +
 													'<i class="fa fa-plus"></i> ' +
@@ -732,7 +709,7 @@
 
 				$(document).on('click', '#accordion .card .add-hardware-device', function() {
 					var $inputField       = $(this).closest('.form-group').find('input'),
-						successfullyAdded = ticketPage.appendHardwareDevice($(this).closest('.card').find('.hardware-list'), $inputField.val());
+						successfullyAdded = ticketPage.appendHardwareDevice($(this).closest('.card').find('.hardware-list'), $inputField.val(), $(this).closest('card').attr('card-id'));
 
 					if (successfullyAdded) {
 						$inputField.val('');

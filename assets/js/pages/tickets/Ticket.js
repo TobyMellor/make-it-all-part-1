@@ -8,32 +8,36 @@
 class Ticket {
 	constructor(
 		id,
+		calls,
 		filter,
 		title,
 		description,
 		assignedTo,
-		serialNumbers,
-		operatingSystem,
-		software,
+		devices,
 		createdAt,
 		updatedAt,
-		events,
-		calls
+		events
 	) {
-		this.id               = id;
-		this.filter           = filter; // slug of filter, get method returns instance of Filter
-		this.title            = title;
-		this.description      = description;
-		this.assigned_to      = assignedTo; // ID of caller, get method returns instance of Staff
-		this.serial_numbers   = serialNumbers;
-		this.operating_system = operatingSystem;
-		this.software         = software;
-		this.created_at       = createdAt;
-		this.updated_at       = updatedAt;
-		this.events           = events; // ID of events, get method returns instances of Event's
-		this.calls            = calls; // ID of calls, get method returns instances of Call's
+		this.id          = id;
+		this.calls       = calls;  // ID of calls, get method returns instances of Call's
+		this.filter      = filter; // slug of filter, get method returns instance of Filter
+		this.title       = title;
+		this.description = description;
+		this.assigned_to = assignedTo; // ID of caller, get method returns instance of Staff
+		this.devices     = devices;
+		this.created_at  = createdAt;
+		this.updated_at  = updatedAt;
+		this.events      = events; // ID of events, get method returns instances of Event's
 	}
 
+	get calls() {
+		return makeItAll.ticketManager.getCalls(this.id);
+	}
+
+	set calls(calls) {
+		this._calls = calls;
+	}
+	
 	get filter() {
 		return makeItAll.ticketManager.getFilter(this._filter);
 	}
@@ -58,19 +62,19 @@ class Ticket {
 		this._assigned_to = assignedTo;
 	}
 
+	get devices() {
+		return makeItAll.hardwareManager.getDevices(this._devices);
+	}
+
+	set devices(devices) {
+		this._devices = devices;
+	}
+
 	get events() {
 		return makeItAll.ticketManager.getEvents(this.id);
 	}
 
 	set events(events) {
 		this._events = events;
-	}
-
-	get calls() {
-		return makeItAll.ticketManager.getCalls(this.id);
-	}
-
-	set calls(calls) {
-		this._calls = calls;
 	}
 }

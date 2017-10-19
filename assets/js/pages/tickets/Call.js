@@ -13,10 +13,10 @@ class Call {
 		caller,
 		tickets
 	) {
-		this.id               = id;
-		this.date_of_call     = dateOfCall;
-		this.caller           = caller; // ID of caller, get method returns instance of Staff
-		this.tickets          = tickets; // ID of tickets, get method returns instances of Ticket's
+		this.id           = id;
+		this.date_of_call = dateOfCall;
+		this.caller       = caller;  // ID of caller, get method returns instance of Staff
+		this.tickets      = tickets; // ID of tickets, get method returns instances of Ticket's
 	}
 
 	get caller() {
@@ -28,7 +28,7 @@ class Call {
 	}
 
 	get tickets() {
-		return makeItAll.ticketManager.getTickets(this.id);
+		return makeItAll.ticketManager.getTicketsFromCall(this.id);
 	}
 
 	set tickets(tickets) {
