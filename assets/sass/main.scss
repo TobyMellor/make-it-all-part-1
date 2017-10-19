@@ -249,6 +249,16 @@ section {
 				padding: 4px 28px 4px 8px;
 			}
 		}
+
+		&.with-content {
+			button {
+				margin: 0 $cosy;
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
 	}
 
 	.main-content {
@@ -492,5 +502,11 @@ button.close {
 				color: $white;
 			}
 		}
+	}
+}
+
+.modal {
+	textarea {
+		min-height: 150px;
 	}
 }

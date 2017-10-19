@@ -131,6 +131,10 @@
 					<i class="fa fa-times"></i>
 					Close
 				</button>
+				<button class="btn btn-sm btn-warning close-button ticket-edit-button">
+					<i class="fa fa-pencil"></i>
+					Edit
+				</button>
 			</nav>
 
 			<div id="ticket-view" class="scrollable">
@@ -205,7 +209,7 @@
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Create one or more new Ticket(s)</h5>
+						<h5 class="modal-title">Create one or more new Ticket(s)</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -281,7 +285,7 @@
 													</div>
 													
 													<div class="form-group">
-													<label>Serial Number of Hardware Affected</label>
+														<label>Serial Number of Hardware Affected</label>
 														<div class="input-group">
 															<input class="form-control" name="tickets[1][serial_number]" />
 															<span class="input-group-btn">
@@ -291,10 +295,10 @@
 																</button>
 															</span>
 														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-12">
-															<ul class="hardware-list"></ul>
+														<div class="row">
+															<div class="col-md-12">
+																<ul class="hardware-list"></ul>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -327,11 +331,88 @@
 			</div>
 		</div>
 
+		<div class="modal fade" id="edit-ticket-modal" tabindex="-1" role="dialog" aria-labelledby="edit-ticket-modal" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Edit Ticket</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<input type="text" name="id" hidden />
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="required">Status</label>
+												<br />
+												<select class="selectpicker" name="filter">
+													<option value="new">New</option>
+													<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
+													<option value="pending_in_progress">Pending - In Progress</option>
+													<option value="resolved">Resolved</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="required">Assigned To</label>
+												<br />
+												<select class="selectpicker staff-picker" data-live-search="true" name="assigned_to">
+													<option value="0">Example Operator 1</option>
+													<option value="1">Example Operator 2</option>
+													<option value="2">Example Operator 3</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="required">Ticket Title</label>
+										<input class="form-control" name="title" />
+									</div>
+									<div class="form-group">
+										<label class="required">Ticket Description</label>
+										<textarea class="form-control" name="description"></textarea>
+									</div>
+									
+									<div class="form-group">
+										<label>Serial Number of Hardware Affected</label>
+										<div class="input-group">
+											<input class="form-control" name="serial_number" />
+											<span class="input-group-btn">
+												<button class="btn btn-success add-hardware-device" type="button">
+													<i class="fa fa-plus"></i> 
+													Add
+												</button>
+											</span>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<ul class="hardware-list"></ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-success" id="edit-existing-ticket">Edit Ticket</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="modal fade" id="new-staff-modal" tabindex="-1" role="dialog" aria-labelledby="new-staff-modal" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Create a new Staff Member</h5>
+						<h5 class="modal-title">Create a new Staff Member</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -600,15 +681,12 @@
 			makeItAll.softwareManager = new SoftwareManager(null); // TODO: Pass in some fake data
 		</script>
 		<script type="text/javascript">
-			$(function() {
 				var ticketPage = new TicketPage();
 
 				$('.side-nav-bar-nested ul li[slug]').on('click', function() {
-					$('.side-nav-bar-nested ul li.active').removeClass('active');
-
-					$(this).addClass('active');
-
-					ticketPage.showFilteredTickets($(this).attr('slug'));
+					if (ticketPage.currentlyShowing !== $(this).attr('slug')) {
+						ticketPage.refreshPage($(this).attr('slug'));
+					}
 				});
 
 				ticketPage.showFilteredTickets('new');
@@ -624,12 +702,31 @@
 					$('#new-ticket-modal').modal('hide');
 				});
 
+				$('#edit-ticket-modal #edit-existing-ticket').on('click', function (e) {
+					e.preventDefault();
+
+					var formData = $('#edit-ticket-modal form').serializeObject();
+
+					makeItAll.ticketManager.editTicket(
+						parseInt(formData.id),
+						formData.filter,
+						formData.title,
+						formData.description,
+						formData.assigned_to,
+						formData.devices
+					);
+
+					ticketPage.refreshPage(formData.filter, parseInt(formData.id));
+
+					$('#edit-ticket-modal').modal('hide');
+				});
+
 				$('#create-new-event').on('click', function (e) {
 					e.preventDefault();
 
 					var $commentBox = $(this).parent().find('textarea'),
 						event       = makeItAll.ticketManager.createEvent(
-							ticketPage.currentTicketId,
+							ticketPage.currentTicket.id,
 							'Toby Mellor', // TODO: Replace with ID of logged in user
 							'comment',
 							$commentBox.val(),
@@ -638,7 +735,7 @@
 
 					$commentBox.val('');
 
-					ticketPage.showTicketView(ticketPage.currentTicketId); // refresh to get new comment
+					ticketPage.showTicketView(ticketPage.currentTicket.id); // refresh to get new comment
 				});
 
 				$(document).on('click', '#table-section .table tr', function() {
@@ -647,6 +744,20 @@
 
 				$('.ticket-close-button').on('click', function() {
 					ticketPage.hideTableRowDetails();
+				});
+
+				$('.ticket-edit-button').on('click', function(e) {
+					e.preventDefault();
+
+					var $editTicket = $('#edit-ticket-modal');
+
+					for (var key in ticketPage.currentTicket) {
+						var value = ticketPage.currentTicket[key];
+
+						$editTicket.find('input[name="' + key + '"], textarea[name="' + key + '"]').val(value);
+					}
+
+					$editTicket.modal('show');
 				});
 
 				$('#add-another-ticket').on('click', function() {
@@ -710,10 +821,10 @@
 												'</button>' +
 											'</span>' +
 										'</div>' +
-									'</div>' +
-									'<div class="row">' +
-										'<div class="col-md-12">' +
-											'<ul class="hardware-list"></ul>' +
+										'<div class="row">' +
+											'<div class="col-md-12">' +
+												'<ul class="hardware-list"></ul>' +
+											'</div>' +
 										'</div>' +
 									'</div>' +
 								'</div>' +
@@ -724,9 +835,9 @@
 					$('.selectpicker').selectpicker('refresh');
 				});
 
-				$(document).on('click', '#accordion .card .add-hardware-device', function() {
+				$(document).on('click', '.add-hardware-device', function() {
 					var $inputField       = $(this).closest('.form-group').find('input'),
-						successfullyAdded = ticketPage.appendHardwareDevice($(this).closest('.card').find('.hardware-list'), $inputField.val(), $(this).closest('card').attr('card-id'));
+						successfullyAdded = ticketPage.appendHardwareDevice($(this).closest('.form-group').find('.hardware-list'), $inputField.val(), $(this).closest('card').attr('card-id'));
 
 					if (successfullyAdded) {
 						$inputField.val('');
@@ -735,12 +846,11 @@
 					}
 				});
 
-				$(document).on('click', '#accordion .card .remove-hardware-device', function() {
+				$(document).on('click', '.remove-hardware-device', function() {
 					$(this).closest('li').fadeOut(200, function() {
 						$(this).remove();
 					});
 				});
-			});
 		</script>
 	</body>
 </html>

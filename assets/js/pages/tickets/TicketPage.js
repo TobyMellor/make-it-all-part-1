@@ -10,15 +10,14 @@ class TicketPage extends DynamicPage {
 		super();
 
 		this.currentlyShowing = null;
-		this.currentTicketId  = null;
+		this.currentTicket    = null;
 	}
 
 	showFilteredTickets(filterSlug) {
 		var filter 		    = makeItAll.ticketManager.getFilter(filterSlug),
 			filteredTickets = filter.tickets;
 
-		if (filter !== null && (filter.id !== this.currentlyShowing || filteredTickets.length !== $('#table-section table tbody tr').length)) {
-
+		if (filter !== null) {
 			this.updateListViewNavbar(filteredTickets.length + ' \'' + filter.name + '\' ' + (filteredTickets.length === 1 ? 'ticket' : 'tickets'));
 			this.clearTable();
 
@@ -36,7 +35,7 @@ class TicketPage extends DynamicPage {
 
 			this.updateSplashScreen();
 
-			this.currentlyShowing = filter.id;
+			this.currentlyShowing = filter.slug;
 		}
 
 		this.hideTableRowDetails();
@@ -46,7 +45,7 @@ class TicketPage extends DynamicPage {
 		var ticket = makeItAll.ticketManager.getTicket(ticketId);
 
 		if (ticket !== null) {
-			this.currentTicketId = ticketId;
+			this.currentTicket = ticket;
 
 			this.updateSingleViewNavbar(ticket.title + '<span class="filter">' + ticket.filter.name + '</span>');
 
@@ -143,7 +142,7 @@ class TicketPage extends DynamicPage {
 		}
 	}
 
-	appendHardwareDevice($hardwareList, serialNumber, cardId) {
+	appendHardwareDevice($hardwareList, serialNumber, cardId = null) {
 		serialNumber = serialNumber.toUpperCase();
 
 		var existingSerialNumbers = [];
@@ -158,7 +157,7 @@ class TicketPage extends DynamicPage {
 			if (device !== null) {
 				$hardwareList.append(
 					' <li serial-number="' + serialNumber + '"">' +
-						'<input type="text" name="tickets[' + cardId + '][devices]" value="' + device.id + '" hidden />' +
+						'<input type="text" name="' + (cardId !== null ? 'tickets[' + cardId + '][devices]' : 'devices') + '" value="' + device.id + '" hidden />' +
 						'<h4>' + device.name + '</h4>' +
 						'<p>' + device.programs[0].name + '</p>' +
 						'<a class="btn btn-danger remove-hardware-device" href="javascript: void(0);">' +
@@ -173,5 +172,13 @@ class TicketPage extends DynamicPage {
 		}
 
 		return false;
+	}
+
+	refreshPage(filterSlug, ticketId = null) {
+		$('.side-nav-bar-nested ul li.active').removeClass('active');
+		$('.side-nav-bar-nested ul li[slug="' + filterSlug + '"]').addClass('active');
+
+		this.showFilteredTickets(filterSlug);
+		this.showTicketView(ticketId);
 	}
 }

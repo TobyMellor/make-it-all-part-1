@@ -142,6 +142,18 @@ class TicketManager extends Manager {
 		return this.findAllWhere(this.tickets, ticket => ticket._calls.indexOf(callId) > -1);
 	}
 
+	editTicket(ticketId, filterSlug, title, description, assignedTo, devices = []) {
+		var ticket = this.findFirstWhere(this.tickets, ticket => ticket.id === ticketId);
+
+		ticket.filterSlug  = filterSlug;
+		ticket.title       = title;
+		ticket.description = description;
+		ticket.assigned_to = assignedTo;
+		ticket.devices     = devices;
+
+		return ticket;
+	}
+
 	createEvent(ticketId, author, type, content, createdAt) {
 		var ticket = this.getTicket(ticketId);
 
