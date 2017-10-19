@@ -1,0 +1,50 @@
+#hardware-content {
+	margin-top: 17px;
+}
+
+.listbox {
+	height:85vh;
+}
+
+.hardware-info {
+	margin-top:30px;
+}
+
+.hardware-info > .card-body {
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+.hardware-info > * > p {
+	margin-bottom:5px;
+}
+
+.badge {
+	margin-top:2px;
+	margin-left:10px;
+}
+
+.card-list {
+	overflow-y:auto; 
+	padding:0px;
+	max-height: 31vh;
+}
+
+.card-header {
+	background-color: #ecf0f1;
+	border-bottom:2px solid rgb(128, 128, 128);	
+	font-weight: bold;
+	color:#2c3e50;
+}
+
+.list-group-item {
+	border-left:0;
+	border-right:0;
+	border-bottom:0;
+}
+
+#ticket-total {
+	font-size:14px;
+	float:right;
+	margin-top:2px;
+}
