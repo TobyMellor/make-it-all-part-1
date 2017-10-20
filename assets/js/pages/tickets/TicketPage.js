@@ -39,6 +39,7 @@ class TicketPage extends DynamicPage {
 		}
 
 		this.hideTableRowDetails();
+		this.currentTicket = null;
 	}
 
 	showTicketView(ticketId) {

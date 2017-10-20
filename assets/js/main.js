@@ -89,10 +89,6 @@ $(function () {
 	});
 
 	$('#new-staff-modal, #new-ticket-modal').on('show.bs.modal', function (e) {
-		$(this).find('input, textarea')
-			   .not('.no-clear-on-show')
-			   .val('');
-
 		var flooredCurrentTime = new Date();
 
 	    flooredCurrentTime.setMilliseconds(Math.round(flooredCurrentTime.getMilliseconds() / 1000) * 1000);
@@ -100,6 +96,12 @@ $(function () {
 	    flooredCurrentTime.setMinutes(Math.floor(flooredCurrentTime.getMinutes() / 15) * 15);
 
 		$(this).find('.timepicker').val((flooredCurrentTime.getMonth() + 1) + '/' + flooredCurrentTime.getDate() + '/' + flooredCurrentTime.getFullYear() + ' ' + flooredCurrentTime.getHours() + ':' + flooredCurrentTime.getMinutes()); // set time to last 15 minute interval e.g. 10:34 -> 10:30, 10:55 -> 10:45
+	});
+
+	$('#new-staff-modal').on('show.bs.modal', function() {
+		$(this).find('input, textarea')
+			   .not('.no-clear-on-show')
+			   .val('');
 	});
 
 	$(document).on('click', '#accordion .card .card-header .view-accordion', function() {

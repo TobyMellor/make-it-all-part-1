@@ -142,7 +142,7 @@
 					<div class="col-md-12">
 						<p class="ticket-details">
 							<strong>Description:</strong>
-							<span id="ticket-overview"></span>
+							<span id="ticket-overview" class="subtle"></span>
 						</p>
 						<div id="ticket-description">
 							<p></p>
@@ -170,6 +170,7 @@
 					<div class="col-md-6">
 						<p class="ticket-details">
 							<strong>Call History:</strong>
+							<span class="subtle" id="show-new-call-modal">Add new call</span>
 						</p>
 
 						<table class="table compact" id="call-history-table">
@@ -242,7 +243,7 @@
 											<div class="card-header" role="tab" id="heading-1">
 												<h5 class="mb-0">
 													<a data-toggle="collapse" data-parent="#accordion" href="#collapse-1">
-														Ticket #1
+														New Ticket
 													</a>
 													<i class="fa fa-eye-slash view-accordion"></i>
 												</h5>
@@ -736,13 +737,19 @@
 
 				ticketPage.showFilteredTickets('new');
 
+				$('.new-ticket').on('click', function() {
+					$('#new-ticket-modal').find('input, textarea')
+						   .not('.no-clear-on-show')
+						   .val('');
+				});
+
 				$('#new-ticket-modal #create-new-ticket').on('click', function (e) {
 					e.preventDefault();
 
 					var formData = $('#new-ticket-modal form').serializeObject(),
-						call     = makeItAll.ticketManager.createCall(formData.date_of_call, formData.caller, formData.tickets);
-
-					$('.side-nav-bar-nested ul li[slug="' + call.tickets[0].filter.slug + '"]').click();
+						call     = makeItAll.ticketManager.createCall(formData.date_of_call, formData.caller, formData.tickets, ticketPage.currentTicket);
+console.log(call);
+					ticketPage.refreshPage(call.tickets[0].filter.slug);
 
 					$('#new-ticket-modal').modal('hide');
 				});
@@ -805,14 +812,14 @@
 
 				$('#add-another-ticket').on('click', function() {
 					var $accordion = $(this).siblings('#accordion'),
-						cardId     = parseInt($accordion.find('.card:last-child').attr('card-id')) + 1;
+						cardId     = Math.floor(Math.random() * (10000 + 1));
 						
 					$accordion.append(
 						'<div class="card" card-id="' + cardId + '">' +
 							'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
 								'<h5 class="mb-0">' +
 									'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
-										'Ticket #' + cardId +
+										'New Ticket' +
 									'</a>' +
 									'<i class="fa fa-eye view-accordion"></i>' +
 									'<i class="fa fa-trash-o remove-accordion"></i>' +
@@ -878,6 +885,13 @@
 					$('.selectpicker').selectpicker('refresh');
 				});
 
+				$('#accordion .card .collapse input[name*="title"]').on('keyup', function() {
+					var $cardHeader = $(this).closest('.card').find('.card-header a'),
+						headerText  = $(this).val().length <= 2 ? 'New Ticket' : 'Ticket: ' + $(this).val();
+
+					$cardHeader.text(headerText);
+				});
+
 				$(document).on('click', '.add-hardware-device', function() {
 					var $inputField       = $(this).closest('.form-group').find('input'),
 						successfullyAdded = ticketPage.appendHardwareDevice($(this).closest('.form-group').find('.hardware-list'), $inputField.val(), $(this).closest('card').attr('card-id'));
@@ -908,6 +922,33 @@
 					$('#view-call-history-modal').modal('hide');
 
 					ticketPage.refreshPage(ticket.filter.slug, ticketId);
+				});
+
+				$('#show-new-call-modal').on('click', function() {
+					var $createNewTicket = $('#new-ticket-modal'); // I'm re-using the New Ticket modal as they're extremely similar
+
+					$createNewTicket.find('input, textarea')
+						   .not('.no-clear-on-show')
+						   .val('');
+
+					$createNewTicket.find('.modal-title').text('Create a call and one or more Ticket(s)');
+					$createNewTicket.find('#create-new-ticket').text('Create new Call');
+					$createNewTicket.find('#accordion .card-header a').text('Ticket: ' + ticketPage.currentTicket.title);
+
+					for (var key in ticketPage.currentTicket) {
+						var value = ticketPage.currentTicket[key];
+						
+						$createNewTicket.find('input[name*="' + key + '"], textarea[name*="' + key + '"]').val(value);
+					}
+
+					$('#new-ticket-modal').modal('show');
+				});
+
+				// This resets the Ticket Modal back to its original state
+				// Reason for this is that the new call modal re-uses the create ticket modal
+				$('#new-ticket-modal').on('hidden.bs.modal', function() {
+					$(this).find('.modal-title').text('Create one or more new Ticket(s)');
+					$(this).find('#create-new-ticket').text('Create new Ticket(s)');
 				});
 		</script>
 	</body>
