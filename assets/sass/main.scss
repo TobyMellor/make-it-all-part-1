@@ -12,6 +12,8 @@ $blue-hover: #2980b9;
 $red: red;
 $green: #28a745;
 $green-hover: #218838;
+$highlight: rgba(241, 196, 15, 0.2);
+$highlight-hover: rgba(241, 196, 15, 0.3);
 
 // Component sizing
 $thin: 2px;
@@ -467,6 +469,14 @@ button.close {
 
 				td:last-child i {
 					opacity: 1;
+				}
+			}
+
+			&.highlight {
+				background-color: $highlight;
+
+				&:hover {
+					background-color: $highlight-hover;
 				}
 			}
 

@@ -74,6 +74,10 @@ class TicketManager extends Manager {
 		return this.findAllWhere(this.calls, call => call._tickets.indexOf(ticketId) > -1);
 	}
 
+	getCall(callId) {
+		return this.findFirstWhere(this.calls, call => call.id === callId);
+	}
+
 	getFilter(filterSlug) {
 		return this.findFirstWhere(this.filters, filter => filter.slug === filterSlug);
 	}

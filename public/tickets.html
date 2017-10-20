@@ -115,7 +115,7 @@
 								<th slug="title">TICKET TITLE</th>
 								<th slug="filter_name">STATUS</th>
 								<th slug="created_at">CREATED</th>
-								<th slug="updated_at">LAST UPDATED</th>
+								<th slug="updated_at">UPDATED</th>
 								<th slug="eye"></th> <!-- If you want the eye when hovering over a table row, keep this -->
 							</tr>
 						</thead>
@@ -403,6 +403,51 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						<button type="button" class="btn btn-success" id="edit-existing-ticket">Edit Ticket</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="view-call-history-modal" tabindex="-1" role="dialog" aria-labelledby="view-call-history-modal" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">View Call</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="row">
+								<div class="col-md-8">
+									<table class="table compact" id="call-tickets-table">
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>TICKET TITLE</th>
+												<th>STATUS</th>
+												<th>CREATED</th>
+												<th>UPDATED</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+								<div class="col-md-4">
+									<h4>Call Information</h4>
+									<div class="call-information">
+										<p>ID: <strong id="call-id"></strong></p>
+										<p>Caller: <strong id="call-caller"></strong></p>
+										<p>Date: <strong id="call-date"></strong></p>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
@@ -746,9 +791,7 @@
 					ticketPage.hideTableRowDetails();
 				});
 
-				$('.ticket-edit-button').on('click', function(e) {
-					e.preventDefault();
-
+				$('.ticket-edit-button').on('click', function() {
 					var $editTicket = $('#edit-ticket-modal');
 
 					for (var key in ticketPage.currentTicket) {
@@ -850,6 +893,21 @@
 					$(this).closest('li').fadeOut(200, function() {
 						$(this).remove();
 					});
+				});
+
+				$(document).on('click', '#ticket-view #call-history-table tbody tr', function() {
+					var callId = parseInt($(this).attr('row-id'));
+					
+					ticketPage.showCallTicketsModal(callId);
+				});
+
+				$(document).on('click', '#view-call-history-modal #call-tickets-table tbody tr', function() {
+					var ticketId = parseInt($(this).attr('row-id')),
+						ticket   = makeItAll.ticketManager.getTicket(ticketId);
+
+					$('#view-call-history-modal').modal('hide');
+
+					ticketPage.refreshPage(ticket.filter.slug, ticketId);
 				});
 		</script>
 	</body>

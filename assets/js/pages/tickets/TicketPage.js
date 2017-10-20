@@ -174,6 +174,40 @@ class TicketPage extends DynamicPage {
 		return false;
 	}
 
+	showCallTicketsModal(callId) {
+		var call             = makeItAll.ticketManager.getCall(callId),
+			callTickets      = call.tickets,
+			$callHistory     = $('#view-call-history-modal'),
+			$callTicketTable = $callHistory.find('#call-tickets-table tbody');
+
+		$callHistory.find('#call-id').text(call.id);
+		$callHistory.find('#call-caller').text(call.caller.name);
+		$callHistory.find('#call-date').text(call.date_of_call);
+
+		$callTicketTable.html('');
+
+		for (var i = 0; i < callTickets.length; i++) {
+			var ticket = callTickets[i];
+
+			$callTicketTable.append(
+				'<tr row-id="' + ticket.id + '" ' + (ticket.id === this.currentTicket.id ? 'class="highlight"' : '') + '>' +
+					'<td>' + ticket.id + '</td>' +
+					'<td>' + ticket.title + '</td>' +
+					'<td>' +
+						'<span class="filter">' + ticket.filter.name + '</span>' +
+					'</td>' +
+					'<td>' + ticket.created_at + '</td>' +
+					'<td>' + ticket.updated_at + '</td>' +
+					'<td>' +
+						'<i class="fa fa-eye"></i>' +
+					'</td>' +
+				'</tr>'
+			);
+		}
+
+		$callHistory.modal('show');
+	}
+
 	refreshPage(filterSlug, ticketId = null) {
 		$('.side-nav-bar-nested ul li.active').removeClass('active');
 		$('.side-nav-bar-nested ul li[slug="' + filterSlug + '"]').addClass('active');
