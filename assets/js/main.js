@@ -23,24 +23,24 @@ $(function () {
 
 		if (isChecked) {
 			switch (fieldName) {
-				case 'ticket[staff][permissions][ticket_read_only]':
+				case 'staff[permissions][ticket_read_only]':
 					$("input[name*=ticket_read_only]").prop('checked', false);
-				case 'ticket[staff][permissions][helpdesk_operator]':
+				case 'staff[permissions][helpdesk_operator]':
 					$("input[name*=helpdesk_operator]").prop('checked', false);
-				case 'ticket[staff][permissions][analyst]':
+				case 'staff[permissions][analyst]':
 					$("input[name*=analyst]").prop('checked', false);
-				case 'ticket[staff][permissions][super_admin]':
+				case 'staff[permissions][super_admin]':
 					$("input[name*=super_admin]").prop('checked', false);
 			}
 		} else {
 			switch (fieldName) {
-				case 'ticket[staff][permissions][super_admin]':
+				case 'staff[permissions][super_admin]':
 					$("input[name*=super_admin]").prop('checked', true);
-				case 'ticket[staff][permissions][analyst]':
+				case 'staff[permissions][analyst]':
 					$("input[name*=analyst]").prop('checked', true);
-				case 'ticket[staff][permissions][helpdesk_operator]':
+				case 'staff[permissions][helpdesk_operator]':
 					$("input[name*=helpdesk_operator]").prop('checked', true);
-				case 'ticket[staff][permissions][ticket_read_only]':
+				case 'staff[permissions][ticket_read_only]':
 					$("input[name*=ticket_read_only]").prop('checked', true);
 			}
 		}
@@ -58,8 +58,8 @@ $(function () {
 			lastName       = $newStaffName.split(firstName + " ")[1],
 			$newStaffModal = $('#new-staff-modal');
 
-		$newStaffModal.find('input[name="ticket[staff][first_name]"]').val(firstName);
-		$newStaffModal.find('input[name="ticket[staff][last_name]"]').val(lastName);
+		$newStaffModal.find('input[name="staff[first_name]"]').val(firstName);
+		$newStaffModal.find('input[name="staff[last_name]"]').val(lastName);
 
 		$newStaffModal.find('input[name="event_target"]').val($(this).closest('.bootstrap-select').find('select').attr('name')); // when the staff member is created, this is the input field it'll update
 
@@ -82,7 +82,7 @@ $(function () {
 		addItemToPicker(
 			$('.selectpicker.staff-picker[name="' + formData['event_target'] + '"]'),
 			staffId,
-			formData['ticket[staff][first_name]'] + ' ' + formData['ticket[staff][last_name]']
+			formData['staff[first_name]'] + ' ' + formData['staff[last_name]']
 		); // formData and staffId to be retrieved by AJAX call
 
 		$('#new-staff-modal').modal('hide');

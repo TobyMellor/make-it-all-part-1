@@ -471,23 +471,23 @@
 										<label class="required">Staff Name</label>
 										<div class="row">
 											<div class="col-md-6">
-												<input class="form-control no-clear-on-show" name="tickets[staff][first_name]" placeholder="First Name" />
+												<input class="form-control no-clear-on-show" name="staff[first_name]" placeholder="First Name" />
 											</div>
 											<div class="col-md-6">
-												<input class="form-control no-clear-on-show" name="tickets[staff][last_name]" placeholder="Last Name" />
+												<input class="form-control no-clear-on-show" name="staff[last_name]" placeholder="Last Name" />
 											</div>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="required">Staff Email</label>
-										<input class="form-control" name="tickets[staff][email]" />
+										<input class="form-control" name="staff[email]" />
 									</div>
 								</div>
 								<div class="col-md-4">
 									<label class="required">Staff Permissions</label>
 									<div class="staff-permissions">
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="tickets[staff][permissions][ticket_read_only]" checked="checked">
+											<input type="checkbox" class="custom-control-input" name="staff[permissions][ticket_read_only]" checked="checked">
 											<span class="custom-control-indicator"></span>
 											<span class="custom-control-description">Ticket Read Only</span>
 											<span class="help-text">
@@ -495,7 +495,7 @@
 											</span>
 										</label>
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="tickets[staff][permissions][helpdesk_operator]">
+											<input type="checkbox" class="custom-control-input" name="staff[permissions][helpdesk_operator]">
 											<span class="custom-control-indicator"></span>
 											<span class="custom-control-description">Helpdesk Operator</span>
 											<span class="help-text">
@@ -504,7 +504,7 @@
 											</span>
 										</label>
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="tickets[staff][permissions][analyst]">
+											<input type="checkbox" class="custom-control-input" name="staff[permissions][analyst]">
 											<span class="custom-control-indicator"></span>
 											<span class="custom-control-description">Analyst</span>
 											<span class="help-text">
@@ -513,7 +513,7 @@
 											</span>
 										</label>
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="tickets[staff][permissions][super_admin]">
+											<input type="checkbox" class="custom-control-input" name="staff[permissions][super_admin]">
 											<span class="custom-control-indicator"></span>
 											<span class="custom-control-description">Super Admin</span>
 											<span class="help-text">
