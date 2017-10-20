@@ -138,7 +138,7 @@ class TicketPage extends DynamicPage {
 				}
 			}
 
-			this.showTableRowDetails();
+			this.showTableRowDetails($('#table-section table'), ticket.id);
 		}
 	}
 

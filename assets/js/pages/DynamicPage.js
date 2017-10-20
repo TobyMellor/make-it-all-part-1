@@ -96,7 +96,10 @@ class DynamicPage {
 		$('#table-section tbody').html('');
 	}
 
-	showTableRowDetails() {
+	showTableRowDetails($table = null, id = null) {
+		$table.find('tbody tr').removeClass('highlight');
+		$table.find('tbody tr[row-id="' + id + '"]').addClass('highlight');
+
 		$('#list-view').css('flex-grow', 'initial');
 		$('#single-view').css({'flex-grow': 1, 'display': 'block'});
 		$('#single-view > div').hide().fadeIn();
