@@ -96,9 +96,11 @@ class DynamicPage {
 		$('#table-section tbody').html('');
 	}
 
-	showTableRowDetails($table = null, id = null) {
-		$table.find('tbody tr').removeClass('highlight');
-		$table.find('tbody tr[row-id="' + id + '"]').addClass('highlight');
+	showTableRowDetails(id = null) {
+		if (id !== null) {
+			$('#table-section tbody tr').removeClass('highlight');
+			$('#table-section tbody').find('tr[row-id="' + id + '"]').addClass('highlight');
+		}
 
 		$('#list-view').css('flex-grow', 'initial');
 		$('#single-view').css({'flex-grow': 1, 'display': 'block'});
@@ -106,6 +108,8 @@ class DynamicPage {
 	}
 
 	hideTableRowDetails() {
+		$('#table-section tbody tr').removeClass('highlight');
+
 		$('#single-view').css({'flex-grow': 'initial', 'display': 'none'});
 		$('#list-view').css('flex-grow', 1);
 	}
