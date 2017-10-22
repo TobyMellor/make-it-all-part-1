@@ -241,4 +241,18 @@ class TicketPage extends DynamicPage {
 
 		this.appendHardwareDevices($modal.find('.hardware-list'), ticket, cardId);
 	}
+
+	appendNewComment($commentBox) {
+		var event = makeItAll.ticketManager.createEvent(
+				ticketPage.currentTicket.id,
+				'Toby Mellor', // TODO: Replace with ID of logged in user
+				'comment',
+				$commentBox.val(),
+				'Just Now'
+			);
+
+		$commentBox.val('');
+
+		this.showTicketView(ticketPage.currentTicket.id); // refresh to get new comment
+	}
 }

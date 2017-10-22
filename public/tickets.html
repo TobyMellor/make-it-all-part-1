@@ -879,18 +879,7 @@
 				$('#create-new-event').on('click', function (e) {
 					e.preventDefault();
 
-					var $commentBox = $(this).parent().find('textarea'),
-						event       = makeItAll.ticketManager.createEvent(
-							ticketPage.currentTicket.id,
-							'Toby Mellor', // TODO: Replace with ID of logged in user
-							'comment',
-							$commentBox.val(),
-							'Just Now'
-						);
-
-					$commentBox.val('');
-
-					ticketPage.showTicketView(ticketPage.currentTicket.id); // refresh to get new comment
+					ticketPage.appendNewComment($(this).parent().find('textarea'));
 				});
 
 				$(document).on('click', '#table-section .table tr:not(.highlight)', function() {
