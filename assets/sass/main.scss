@@ -202,14 +202,12 @@ section {
 	&#list-view {
 		border-right: 1px solid #bdc3c7;
 		flex-grow: 1;
-		padding-top: 45px; // Offset 45px top-nav
 		width: 100%;
 	}
 
 	&#single-view {
 		flex-grow: initial;
 		display: none;
-		padding-top: 45px; // Offset 45px top-nav
 		width: 100%;
 	}
 
@@ -217,11 +215,8 @@ section {
 		// box-shadow: 0px 5px 5px -5px rgba(0,0,0,0.26);
 		border-bottom: 1px solid $silver;
 		padding: 7px $standard 9px $standard;
-		height: 45px;
-		top: 0;
-		background-color: $white;
-		z-index: 3;
-		position: fixed;
+		position: sticky;
+		position: -webkit-sticky;
 
 		> .fa, h4 {
 			display: inline;
