@@ -216,4 +216,20 @@ class TicketPage extends DynamicPage {
 		this.showFilteredTickets(filterSlug);
 		this.showTicketView(ticketId);
 	}
+
+	populateTicketModal($modal, ticket) {
+		for (var key in ticket) {
+			var value = ticket[key];
+
+			if (key === '_filter') {
+				key   = 'filter';
+				value = ticket.filter.name;
+			} else if (key === '_assigned_to') {
+				key   = 'assigned_to';
+				value = ticket.assigned_to.name;
+			}
+			
+			$modal.find('input[name*="' + key + '"], textarea[name*="' + key + '"]').val(value);
+		}
+	}
 }

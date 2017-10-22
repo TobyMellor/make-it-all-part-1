@@ -71,7 +71,6 @@ class TicketManager extends Manager {
 	}
 
 	getCalls(ticketId) {
-		console.log(ticketId);
 		return this.findAllWhere(this.calls, call => call._tickets.indexOf(ticketId) > -1);
 	}
 
@@ -83,7 +82,7 @@ class TicketManager extends Manager {
 		return this.findFirstWhere(this.filters, filter => filter.slug === filterSlug);
 	}
 
-	createCall(dateOfCall, caller, tickets, existingTicket = null) {
+	createCall(dateOfCall, caller, tickets) {
 		var callId    = Math.floor(Math.random() * (10000 + 1)),
 			ticketIds = [],
 			call      = new Call(
@@ -92,25 +91,6 @@ class TicketManager extends Manager {
 				caller,
 				[]
 			);
-
-		console.log(dateOfCall, caller, tickets, existingTicket);
-
-		if (existingTicket !== null) {
-			ticketIds = [existingTicket.id];
-
-			var editedTicket = tickets[1];
-
-			this.editTicket(
-				existingTicket.id,
-				editedTicket.filter,
-				editedTicket.title,
-				editedTicket.description,
-				editedTicket.assigned_to,
-				editedTicket.devices
-			);
-
-			delete tickets[1];
-		}
 
 		for (var i in tickets) {
 			var ticketId = Math.floor(Math.random() * (10000 + 1));

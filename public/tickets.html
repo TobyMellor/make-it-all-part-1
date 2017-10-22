@@ -170,7 +170,7 @@
 					<div class="col-md-6">
 						<p class="ticket-details">
 							<strong>Call History:</strong>
-							<span class="subtle" id="show-new-call-modal">Add new call</span>
+							<span class="subtle" id="show-new-call-modal" data-toggle="modal" data-target="#follow-up-call-modal">Register follow-up call</span>
 						</p>
 
 						<table class="table compact" id="call-history-table">
@@ -306,7 +306,7 @@
 											</div>
 										</div>
 									</div>
-									<button type="button" class="btn btn-success" id="add-another-ticket">
+									<button type="button" class="btn btn-success add-another-ticket">
 										<i class="fa fa-plus"></i> 
 										Add another Ticket
 									</button>
@@ -327,6 +327,116 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						<button type="button" class="btn btn-success" id="create-new-ticket">Create new Ticket(s)</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="follow-up-call-modal" tabindex="-1" role="dialog" aria-labelledby="follow-up-call-modal" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Register a follow-up call</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="row">
+								<div class="col-md-8">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="required">Caller</label>
+												<br />
+												<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="caller">
+													<option value="0">Example Caller 1</option>
+													<option value="1">Example Caller 2</option>
+													<option value="2">Example Caller 3</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Date of Call</label>
+												<input class="form-control timepicker" name="date_of_call" />
+											</div>
+										</div>
+									</div>
+									<div id="accordion" role="tablist">
+										<div class="card" card-id="1">
+											<div class="card-header highlight" role="tab" id="heading-this-call">
+												<h5 class="mb-0">
+													<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-this-call">Loading...</a>
+													<i class="fa fa-eye view-accordion"></i>
+												</h5>
+											</div>
+
+											<div id="collapse-this-call" class="collapse" role="tabpanel">
+												<div class="card-block">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Status</label>
+																<br />
+																<input class="form-control" name="tickets[this-call][filter]" disabled />
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Assigned To</label>
+																<br />
+																<input class="form-control" name="tickets[this-call][assigned_to]" disabled />
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label>Ticket Title</label>
+														<input class="form-control" name="tickets[this-call][title]" disabled />
+													</div>
+													<div class="form-group">
+														<label>Ticket Description</label>
+														<textarea class="form-control" name="tickets[this-call][description]" disabled></textarea>
+													</div>
+													
+													<div class="form-group">
+														<label>Serial Numbers of Hardware Affected</label>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<label>Another Ticket referenced?</label>
+											<select class="selectpicker" data-live-search="true" data-live-search-placeholder="Search..." id="add-existing-ticket"></select>
+										</div>
+										<div class="col-md-6">
+											<label>New issue bought up?</label>
+											<button type="button" class="btn btn-success add-another-ticket">
+												<i class="fa fa-plus"></i> 
+												Reference new Ticket
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<h4>Caller Information</h4>
+									<div class="staff-information">
+										<p>ID Number: <strong id="staff-id">B619693</strong></p>
+										<p>Name: <strong id="staff-name">Toby Mellor</strong></p>
+										<p>Job Title: <strong id="staff-job-title">Student</strong></p>
+										<p>Department: <strong id="staff-department">Lboro</strong></p>
+										<p>Telephone Number: <strong id="staff-telephone-number">01234567890</strong></p>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-success" id="create-follow-up-call">Register follow-up call</button>
 					</div>
 				</div>
 			</div>
@@ -403,7 +513,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-success" id="edit-existing-ticket">Edit Ticket</button>
+						<button type="button" class="btn btn-success" id="edit-existing-ticket" data-toggle="modal" data-target="#edit-ticket-modal">Edit Ticket</button>
 					</div>
 				</div>
 			</div>
@@ -747,16 +857,14 @@
 					e.preventDefault();
 
 					var formData = $('#new-ticket-modal form').serializeObject(),
-						call     = makeItAll.ticketManager.createCall(formData.date_of_call, formData.caller, formData.tickets, ticketPage.currentTicket);
-console.log(call);
+						call     = makeItAll.ticketManager.createCall(formData.date_of_call, formData.caller, formData.tickets);
+
 					ticketPage.refreshPage(call.tickets[0].filter.slug);
 
 					$('#new-ticket-modal').modal('hide');
 				});
 
-				$('#edit-ticket-modal #edit-existing-ticket').on('click', function (e) {
-					e.preventDefault();
-
+				$('#edit-ticket-modal #edit-existing-ticket').on('click', function () {
 					var formData = $('#edit-ticket-modal form').serializeObject();
 
 					makeItAll.ticketManager.editTicket(
@@ -769,8 +877,6 @@ console.log(call);
 					);
 
 					ticketPage.refreshPage(formData.filter, parseInt(formData.id));
-
-					$('#edit-ticket-modal').modal('hide');
 				});
 
 				$('#create-new-event').on('click', function (e) {
@@ -799,21 +905,13 @@ console.log(call);
 				});
 
 				$('.ticket-edit-button').on('click', function() {
-					var $editTicket = $('#edit-ticket-modal');
-
-					for (var key in ticketPage.currentTicket) {
-						var value = ticketPage.currentTicket[key];
-
-						$editTicket.find('input[name="' + key + '"], textarea[name="' + key + '"]').val(value);
-					}
-
-					$editTicket.modal('show');
+					ticketPage.populateTicketModal($('#edit-ticket-modal'), ticketPage.currentTicket);
 				});
 
-				$('#add-another-ticket').on('click', function() {
-					var $accordion = $(this).siblings('#accordion'),
+				$('.add-another-ticket').on('click', function() {
+					var $accordion = $(this).closest('.modal-body').find('#accordion'),
 						cardId     = Math.floor(Math.random() * (10000 + 1));
-						
+
 					$accordion.append(
 						'<div class="card" card-id="' + cardId + '">' +
 							'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
@@ -861,7 +959,7 @@ console.log(call);
 										'<textarea class="form-control" name="tickets[' + cardId + '][description]"></textarea>' +
 									'</div>' +
 									'<div class="form-group">' +
-									'<label>Serial Number of Hardware Affected</label>' +
+										'<label>Serial Number of Hardware Affected</label>' +
 										'<div class="input-group">' +
 											'<input class="form-control" name="tickets[' + cardId + '][hardware][serial_number]" />' +
 											'<span class="input-group-btn">' +
@@ -885,9 +983,67 @@ console.log(call);
 					$('.selectpicker').selectpicker('refresh');
 				});
 
-				$('#accordion .card .collapse input[name*="title"]').on('keyup', function() {
+				$('#add-existing-ticket').on('change', function() {
+					if ($(this).val() !== "") {
+						var $accordion = $('#follow-up-call-modal #accordion'),
+							cardId     = Math.floor(Math.random() * (10000 + 1)),
+							ticketId   = parseInt($(this).val()),
+							ticket     = makeItAll.ticketManager.getTicket(ticketId);
+
+						$accordion.append(
+							'<div class="card" card-id="' + cardId + '">' +
+								'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
+									'<h5 class="mb-0">' +
+										'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
+											'Existing Ticket: ' + ticket.title +
+										'</a>' +
+										'<i class="fa fa-eye view-accordion"></i>' +
+										'<i class="fa fa-trash-o remove-accordion"></i>' +
+									'</h5>' +
+								'</div>' +
+								'<div id="collapse-' + cardId + '" class="collapse" role="tabpanel">' +
+									'<div class="card-block">' +
+										'<div class="row">' +
+											'<div class="col-md-6">' +
+												'<div class="form-group">' +
+													'<label>Status</label>' +
+													'<br />' +
+													'<input class="form-control" value="' + ticket.filter.name + '" disabled>' +
+												'</div>' +
+											'</div>' +
+											'<div class="col-md-6">' +
+												'<div class="form-group">' +
+													'<label>Assigned To</label>' +
+													'<br />' +
+													'<input class="form-control" value="' + ticket.assigned_to.name + '" disabled>' +
+												'</div>' +
+											'</div>' +
+										'</div>' +
+										'<div class="form-group">' +
+											'<label>Ticket Title</label>' +
+											'<input class="form-control" value="' + ticket.title + '" disabled>' +
+										'</div>' +
+										'<div class="form-group">' +
+											'<label>Ticket Description</label>' +
+											'<textarea class="form-control" disabled>' + ticket.description + '</textarea>' +
+										'</div>' +
+										'<div class="form-group">' +
+											'<label>Serial Numbers of Hardware Affected</label>' +
+										'</div>' +
+									'</div>' +
+								'</div>' +
+							'</div>'
+						);
+
+						$(this).find('option[value="' + ticketId + '"]').remove();
+
+						$(this).selectpicker('refresh');
+					}
+				});
+
+				$(document).on('keyup', '#accordion .card .collapse input[name*="title"]', function() {
 					var $cardHeader = $(this).closest('.card').find('.card-header a'),
-						headerText  = $(this).val().length <= 2 ? 'New Ticket' : 'Ticket: ' + $(this).val();
+						headerText  = $(this).val().length <= 2 ? 'New Ticket' : 'New Ticket: ' + $(this).val();
 
 					$cardHeader.text(headerText);
 				});
@@ -899,7 +1055,7 @@ console.log(call);
 					if (successfullyAdded) {
 						$inputField.val('');
 					} else {
-						console.log('Already exists or can\'t find device in system with serial number');
+						alert('Already exists or can\'t find device in system with serial number');
 					}
 				});
 
@@ -924,31 +1080,34 @@ console.log(call);
 					ticketPage.refreshPage(ticket.filter.slug, ticketId);
 				});
 
-				$('#show-new-call-modal').on('click', function() {
-					var $createNewTicket = $('#new-ticket-modal'); // I'm re-using the New Ticket modal as they're extremely similar
+				$('#follow-up-call-modal').on('shown.bs.modal', function() {
+					var $firstAccordionHeader = $(this).find('#accordion .card-header a'),
+						$addExistingTicket    = $('#add-existing-ticket'),
+						allTickets            = makeItAll.ticketManager.tickets;
 
-					$createNewTicket.find('input, textarea')
-						   .not('.no-clear-on-show')
-						   .val('');
+					$firstAccordionHeader.text('This Ticket: ' + ticketPage.currentTicket.title);
 
-					$createNewTicket.find('.modal-title').text('Create a call and one or more Ticket(s)');
-					$createNewTicket.find('#create-new-ticket').text('Create new Call');
-					$createNewTicket.find('#accordion .card-header a').text('Ticket: ' + ticketPage.currentTicket.title);
+					ticketPage.populateTicketModal($(this), ticketPage.currentTicket);
 
-					for (var key in ticketPage.currentTicket) {
-						var value = ticketPage.currentTicket[key];
-						
-						$createNewTicket.find('input[name*="' + key + '"], textarea[name*="' + key + '"]').val(value);
+					$addExistingTicket.html('<option selected hidden>Select an Existing Ticket</option>');
+
+					for (var i = 0; i < allTickets.length; i++) {
+						var ticket = allTickets[i];
+
+						if (ticket.id === ticketPage.currentTicket.id) {
+							continue;
+						}
+
+						$addExistingTicket.append('<option value="' + ticket.id + '">' + '#' + ticket.id + ' ' + ticket.title.substring(0, 17) + '...</option>');
 					}
 
-					$('#new-ticket-modal').modal('show');
+					$addExistingTicket.selectpicker('refresh');
 				});
 
-				// This resets the Ticket Modal back to its original state
-				// Reason for this is that the new call modal re-uses the create ticket modal
-				$('#new-ticket-modal').on('hidden.bs.modal', function() {
-					$(this).find('.modal-title').text('Create one or more new Ticket(s)');
-					$(this).find('#create-new-ticket').text('Create new Ticket(s)');
+				$('#create-follow-up-call').on('click', function() {
+
+
+					$('#follow-up-call-modal').modal('hide');
 				});
 		</script>
 	</body>

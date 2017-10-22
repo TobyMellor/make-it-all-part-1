@@ -396,6 +396,10 @@ button.close {
 			border: none;
 			background-color: $cloudy-white;
 
+			&.highlight {
+				background-color: $highlight;
+			}
+
 			a {
 				color: $black;
 			}

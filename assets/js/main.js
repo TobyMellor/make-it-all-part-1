@@ -46,9 +46,11 @@ $(function () {
 		}
 	});
 
-	$('.selectpicker').selectpicker({
+	$('.staff-picker').selectpicker({
 		noneResultsText: 'Click to create {0}'
 	});
+
+	$('.selectpicker').not('.staff-picker').selectpicker();
 
 	$('.timepicker').datetimepicker();
 
@@ -88,20 +90,18 @@ $(function () {
 		$('#new-staff-modal').modal('hide');
 	});
 
-	$('#new-staff-modal, #new-ticket-modal').on('show.bs.modal', function (e) {
-		var flooredCurrentTime = new Date();
-
-	    flooredCurrentTime.setMilliseconds(Math.round(flooredCurrentTime.getMilliseconds() / 1000) * 1000);
-	    flooredCurrentTime.setSeconds(Math.round(flooredCurrentTime.getSeconds() / 60) * 60);
-	    flooredCurrentTime.setMinutes(Math.floor(flooredCurrentTime.getMinutes() / 15) * 15);
-
-		$(this).find('.timepicker').val((flooredCurrentTime.getMonth() + 1) + '/' + flooredCurrentTime.getDate() + '/' + flooredCurrentTime.getFullYear() + ' ' + flooredCurrentTime.getHours() + ':' + flooredCurrentTime.getMinutes()); // set time to last 15 minute interval e.g. 10:34 -> 10:30, 10:55 -> 10:45
-	});
-
-	$('#new-staff-modal').on('show.bs.modal', function() {
+	$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
 		$(this).find('input, textarea')
 			   .not('.no-clear-on-show')
 			   .val('');
+
+		var flooredCurrentTime = new Date();
+
+		flooredCurrentTime.setMilliseconds(Math.round(flooredCurrentTime.getMilliseconds() / 1000) * 1000);
+		flooredCurrentTime.setSeconds(Math.round(flooredCurrentTime.getSeconds() / 60) * 60);
+		flooredCurrentTime.setMinutes(Math.floor(flooredCurrentTime.getMinutes() / 15) * 15);
+
+		$(this).find('.timepicker').val((flooredCurrentTime.getMonth() + 1) + '/' + flooredCurrentTime.getDate() + '/' + flooredCurrentTime.getFullYear() + ' ' + flooredCurrentTime.getHours() + ':' + flooredCurrentTime.getMinutes()); // set time to last 15 minute interval e.g. 10:34 -> 10:30, 10:55 -> 10:45
 	});
 
 	$(document).on('click', '#accordion .card .card-header .view-accordion', function() {
