@@ -82,6 +82,22 @@ class TicketManager extends Manager {
 		return this.findFirstWhere(this.filters, filter => filter.slug === filterSlug);
 	}
 
+	updateFilter(oldFilterSlug, newFilterSlug, ticketId) {
+		for (var i in this.filters) {
+			var filter         = this.filters[i],
+				filterTickets  = filter._tickets,
+				ticketsIndexOf = filterTickets.indexOf(ticketId);
+
+			if (ticketsIndexOf > -1) {
+				if (filter.slug === oldFilterSlug) {
+					filterTickets.splice(ticketsIndexOf, 1);
+				}
+			} else if (filter.slug === newFilterSlug) {
+				filterTickets.push(ticketId);
+			}
+		}
+	}
+
 	createCall(dateOfCall, caller, tickets, ticketIds = []) {
 		var callId    = Math.floor(Math.random() * (10000 + 1)),
 			call      = new Call(
@@ -153,9 +169,21 @@ class TicketManager extends Manager {
 	}
 
 	editTicket(ticketId, filterSlug, title, description, assignedTo, devices = []) {
-		var ticket = this.findFirstWhere(this.tickets, ticket => ticket.id === ticketId);
+		var ticket = this.getTicket(ticketId);
+		
+		if (ticket.filter.slug !== filterSlug) {
+			this.createEvent(
+				ticketId,
+				0, // TODO: Replace with logged in user
+				'event',
+				this.getFilter(filterSlug).name,
+				'Just now'
+			);
 
-		ticket.filterSlug  = filterSlug;
+			this.updateFilter(ticket.filter.slug, filterSlug, ticketId);
+		}
+
+		ticket.filter      = filterSlug;
 		ticket.title       = title;
 		ticket.description = description;
 		ticket.assigned_to = assignedTo;
