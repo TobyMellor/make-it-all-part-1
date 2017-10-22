@@ -206,7 +206,6 @@ class TicketPage extends DynamicPage {
 						'<span class="filter">' + ticket.filter.name + '</span>' +
 					'</td>' +
 					'<td>' + ticket.created_at + '</td>' +
-					'<td>' + ticket.updated_at + '</td>' +
 					'<td>' +
 						'<i class="fa fa-eye"></i>' +
 					'</td>' +
