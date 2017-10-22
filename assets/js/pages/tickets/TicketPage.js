@@ -143,6 +143,14 @@ class TicketPage extends DynamicPage {
 		}
 	}
 
+	appendHardwareDevices($hardwareList, ticket, cardId) {
+		for (var i = 0; i < ticket.devices.length; i++) {
+			var device = ticket.devices[i];
+
+			this.appendHardwareDevice($hardwareList, device.serial_number, cardId);
+		}
+	}
+
 	appendHardwareDevice($hardwareList, serialNumber, cardId = null) {
 		serialNumber = serialNumber.toUpperCase();
 
@@ -217,7 +225,7 @@ class TicketPage extends DynamicPage {
 		this.showTicketView(ticketId);
 	}
 
-	populateTicketModal($modal, ticket) {
+	populateTicketModal($modal, ticket, cardId = null) {
 		for (var key in ticket) {
 			var value = ticket[key];
 
@@ -231,5 +239,7 @@ class TicketPage extends DynamicPage {
 			
 			$modal.find('input[name*="' + key + '"], textarea[name*="' + key + '"]').val(value);
 		}
+
+		this.appendHardwareDevices($modal.find('.hardware-list'), ticket, cardId);
 	}
 }
