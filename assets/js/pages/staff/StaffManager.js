@@ -12,7 +12,26 @@ class StaffManager extends Manager {
 	constructor(staffMembers) {
 		super();
 		
-		this.staffMembers = [];
+		this.staffMembers = [
+			{
+				id: 0,
+				name: 'Toby Mellor',
+				email: 'example@domain.com',
+				permission_level: 3, // analyst
+				job_title: 'Developer',
+				department: 'Lboro',
+				telephone_number: 987654321
+			},
+			{
+				id: 1,
+				name: 'Another user',
+				email: 'another@email.com',
+				permission_level: 0,
+				job_title: 'Coffee Maker',
+				department: 'N/A',
+				telephone_number: 123456789
+			}
+		];
 
 		// loop through staffMembers, create instances and push to this.staffMembers
 	}
@@ -29,10 +48,6 @@ class StaffManager extends Manager {
 	getStaffMember(staffMemberId) {
 		// return staff member instance from this.staffMembers, return null if not found
 
-		return {
-			name: 'Toby Mellor',
-			email: 'example@domain.com',
-			permission_level: 3 // analyst
-		};
+		return this.staffMembers[staffMemberId];
 	}
 }

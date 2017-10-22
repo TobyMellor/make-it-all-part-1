@@ -170,7 +170,7 @@ class TicketManager extends Manager {
 
 	editTicket(ticketId, filterSlug, title, description, assignedTo, devices = []) {
 		var ticket = this.getTicket(ticketId);
-		
+
 		if (ticket.filter.slug !== filterSlug) {
 			this.createEvent(
 				ticketId,
@@ -181,6 +181,16 @@ class TicketManager extends Manager {
 			);
 
 			this.updateFilter(ticket.filter.slug, filterSlug, ticketId);
+		}
+
+		if (ticket._assigned_to !== assignedTo) {
+			this.createEvent(
+				ticketId,
+				0,
+				'event',
+				'Assigned to ' + makeItAll.staffManager.getStaffMember(assignedTo).name,
+				'Just now'
+			);
 		}
 
 		ticket.filter      = filterSlug;

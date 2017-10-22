@@ -113,4 +113,20 @@ class DynamicPage {
 		$('#single-view').css({'flex-grow': 'initial', 'display': 'none'});
 		$('#list-view').css('flex-grow', 1);
 	}
+
+	populateSelectField($select, defaultText, elements, defaultOptionId = null) {
+		$select.html('<option selected disabled hidden>' + defaultText + '</option>');
+
+		for (var i = 0; i < elements.length; i++) {
+			if (defaultOptionId !== null && elements[i].id === defaultOptionId) {
+				$select.append('<option selected value="' + elements[i].id + '">' + elements[i].name + '</option>');
+				
+				continue;
+			}
+
+			$select.append('<option value="' + elements[i].id + '">' + elements[i].name + '</option>');
+		}
+
+		$select.selectpicker('refresh');
+	}
 }
