@@ -82,9 +82,8 @@ class TicketManager extends Manager {
 		return this.findFirstWhere(this.filters, filter => filter.slug === filterSlug);
 	}
 
-	createCall(dateOfCall, caller, tickets) {
+	createCall(dateOfCall, caller, tickets, ticketIds = []) {
 		var callId    = Math.floor(Math.random() * (10000 + 1)),
-			ticketIds = [],
 			call      = new Call(
 				callId,
 				dateOfCall,
@@ -92,9 +91,13 @@ class TicketManager extends Manager {
 				[]
 			);
 
-		for (var i in tickets) {
-			var ticketId = Math.floor(Math.random() * (10000 + 1));
+		for (var i = 0; i < ticketIds.length; i++) {
+			var ticketId = ticketIds[i];
 
+			this.getTicket(ticketId)._calls.push(callId);
+		}
+
+		for (var i in tickets) {
 			var ticket = this.createTicket(
 				callId,
 				tickets[i].filter,
@@ -104,7 +107,7 @@ class TicketManager extends Manager {
 				tickets[i].devices
 			);
 
-			ticketIds.push(ticketId);
+			ticketIds.push(ticket.id);
 		}
 
 		call.tickets = ticketIds;
@@ -128,7 +131,8 @@ class TicketManager extends Manager {
 			assignedTo,
 			devices,
 			'Just now',
-			'Just now'
+			'Just now',
+			[]
 		));
 
 		this.getFilter(filterSlug)._tickets.push(ticketId);

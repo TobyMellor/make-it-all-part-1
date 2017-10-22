@@ -95,6 +95,8 @@ $(function () {
 			   .not('.no-clear-on-show')
 			   .val('');
 
+		$(this).find('#accordion .card:not(:first-child)').remove();
+
 		var flooredCurrentTime = new Date();
 
 		flooredCurrentTime.setMilliseconds(Math.round(flooredCurrentTime.getMilliseconds() / 1000) * 1000);
@@ -167,12 +169,12 @@ $(function () {
 
                 // push
                 if(k.match(patterns.push)){
-                    merge = self.build([], self.push_counter(reverse_key), merge);
+                    merge = self.build({}, self.push_counter(reverse_key), merge);
                 }
 
                 // fixed
                 else if(k.match(patterns.fixed)){
-                    merge = self.build([], k, merge);
+                    merge = self.build({}, k, merge);
                 }
 
                 // named
