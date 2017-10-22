@@ -78,8 +78,8 @@ class TicketPage extends DynamicPage {
 					$ticketHardwareSoftwareBody.append(
 						'<tr row-id="' + device.id + '">' +
 							'<td class="truncate">' + device.serial_number + '</td>' +
-							'<td>' + device.name + '</td>' +
-							'<td>' + device.operating_system + '</td>' +
+							'<td class="truncate">' + device.name + '</td>' +
+							'<td class="truncate">' + device.operating_system + '</td>' +
 							'<td>' +
 								'<i class="fa fa-eye"></i>' +
 							'</td>' +
@@ -117,7 +117,7 @@ class TicketPage extends DynamicPage {
 				if (event.type === 'comment') {
 					$ticketComments.append(
 						'<li class="media">' +
-							'<img class="d-flex mr-3" src="https://placehold.it/64x64" alt="Generic placeholder image">' +
+							'<img class="d-flex mr-3" src="images/portraits/portrait-1.jpg" alt="Portrait 1">' +
 							'<div class="media-body">' +
 								'<h5 class="mt-0 mb-1">' +
 									'Toby Mellor <span class="ticket-comment-date">' + event.created_at + '</span>' + // TODO: Replace 'Toby Mellor' with staff name

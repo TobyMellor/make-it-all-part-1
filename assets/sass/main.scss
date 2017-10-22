@@ -9,9 +9,12 @@ $dark-blue: #34495e;
 $dark-blue-hover: #2c3e50;
 $blue: #3498db;
 $blue-hover: #2980b9;
-$red: red;
+$red: #e74c3c;
+$red-hover: #c0392b;
 $green: #28a745;
 $green-hover: #218838;
+$orange: #f39c12;
+$orange-hover: #e67e22;
 $highlight: rgba(241, 196, 15, 0.2);
 $highlight-hover: rgba(241, 196, 15, 0.3);
 
@@ -74,6 +77,12 @@ nav ul {
 				margin-bottom: 0;
 			}
 
+			&:hover {
+				.fa {
+					-webkit-text-stroke: 0.5 $dark-blue-hover;
+				}
+			}
+
 			&:hover:not(:last-child) {
 				background-color: $dark-blue-hover;
 				border-left: $thin $blue-hover solid;
@@ -82,6 +91,7 @@ nav ul {
 
 			.fa {
 				width: 100%;
+				-webkit-text-stroke: 0.5px $dark-blue; // Make icons a bit thinner
 			}
 
 			&.active {
@@ -110,14 +120,22 @@ nav ul {
 				margin-bottom: 0;
 				margin-right: $compact;
 				margin-left: $compact;
-				font-size: $comfortable;
+				font-size: 15px;
+				line-height: 20px;
+				margin-top: 5px;
+			}
+
+			&:nth-child(4), &:nth-child(5) { // Hardware and Help icons have strange heights
+				p {
+					margin-top: 0;
+				}
 			}
 		}
 
 		.breaker {
-			height: 1px;
 			margin: $comfortable;
-			background-color: $grey;
+			width: initial !important;
+			border-bottom: 1px solid $grey !important;
 		}
 	}
 }
@@ -140,7 +158,7 @@ nav ul {
 	
 	li {
 		font-size: $standard;
-		border-bottom: 1px solid $grey;
+		border-bottom: 1px solid $silver;
 		padding: $compact 0;
 		
 		.fa {
@@ -156,10 +174,6 @@ nav ul {
 
 		&.active {
 			font-weight: bold;
-			
-			.fa {
-				color: $blue-hover;
-			}
 		}
 
 		&:last-child {
@@ -169,7 +183,6 @@ nav ul {
 		&:last-child .btn {
 			margin-top: $cosy;
 			width: 100%;
-			border-radius: $thin;
 
 			.fa {
 				color: $grey-hover;
@@ -180,14 +193,81 @@ nav ul {
 
 .btn {
 	cursor: pointer;
+	border-radius: 1px 1px 0 0;
+	border: 0;
+	background-color: $cloudy-white;
+    border-bottom: 2px solid $silver;
+    color: $black;
+
+	&:hover {
+		background-color: $silver;
+		color: $black-hover;
+	}
+
+	&.btn-success {
+		border-bottom: 2px solid $green-hover;
+		background-color: $green;
+		color: $white;
+
+		&:hover {
+			background-color: $green-hover;
+		}
+	}
+
+	&.btn-warning {
+		background-color: $orange;
+		color: $white;
+		border-bottom: 2px solid $orange-hover;
+
+		&:hover {
+			background-color: $orange-hover;
+		}
+	}
+
+	&.btn-danger {
+		background-color: $red;
+		color: $white;
+		border-bottom: 2px solid $red-hover;
+
+		&:hover {
+			color: $white;
+			background-color: $red-hover;
+		}
+	}
 
 	&.btn-info {
 		background-color: $blue;
 		color: $grey-hover !important;
 		font-size: $comfortable;
+		border-bottom: 2px solid $blue-hover;
 
 		&:hover {
 			background-color: $blue-hover;
+		}
+	}
+}
+
+.form-control {
+	border-radius: 1px 1px 0 0;
+	border: 1px solid $silver;
+	border-bottom: 2px solid $silver;
+	resize: none;
+
+	&:focus {
+		border: 1px solid $blue;
+		border-bottom: 2px solid $blue-hover;
+	}
+}
+
+.form-group {
+	.input-group {
+		& > .form-control:first-child {
+			border-right: 0;
+		}
+
+		.input-group-btn .btn {
+			padding-top: 9px;
+			padding-bottom: 9px;
 		}
 	}
 }
@@ -304,11 +384,15 @@ section {
 	}
 }
 
-label.required {
-	&::after {
-		content: "*";
-		color: $red;
-		padding-left: $thin;
+label {
+	color: black;
+
+	&.required {
+		&::after {
+			content: "*";
+			color: $red;
+			padding-left: $thin;
+		}
 	}
 }
 
@@ -340,6 +424,20 @@ label.required {
 		padding-bottom: 8px;
 	}
 
+	.dropdown-toggle {
+		border: 1px solid $silver;
+		border-bottom: 2px solid $silver;
+		border-radius: 1px 1px 0 0;
+
+		&:hover {
+			background-color: initial;
+		}
+
+		.filter-option {
+			color: $black;
+		}
+	}
+
 	.dropdown-menu {
 		.active, .selected, .dropdown-item:active, .dropdown-item:focus {
 			background-color: $blue;
@@ -357,15 +455,11 @@ label.required {
 	}
 }
 
-button.close {
-	cursor: pointer;
-}
-
 .breaker {
 	border-bottom: 1px solid #ecf0f1;
     margin-top: 10px;
     margin-bottom: 5px;
-    width: 50%;
+    width: 100%;
 }
 
 .close-button {
@@ -375,6 +469,7 @@ button.close {
 #accordion {
 	.card {
 		border: 1px solid $silver;
+		border-radius: 0;
 		margin-bottom: $comfortable;
 
 		&:first-child {
@@ -389,10 +484,16 @@ button.close {
 
 		.card-header {
 			border: none;
+			border-radius: 0;
 			background-color: $cloudy-white;
+			padding-left: 15px;
 
 			&.highlight {
 				background-color: $highlight;
+			}
+
+			h5 {
+				font-size: 16px;
 			}
 
 			a {
@@ -424,15 +525,21 @@ button.close {
 .table {
 	&.compact {
 		th, td {
-			padding: 12px $cosy;
+			padding: $cosy;
+			font-size: 14px;
 
 			&:first-child {
-				padding-left: 20px;
+				padding-left: 15px;
 			}
 
 			&:last-child {
-				padding-right: 20px;
+				padding-left: 0;
+				padding-right: 15px;
 			}
+		}
+
+		td {
+			padding: $compact;
 		}
 	}
 
@@ -522,5 +629,26 @@ button.close {
 .modal {
 	textarea {
 		min-height: 150px;
+	}
+	
+	.modal-content {
+		border-radius: 0;
+		border: 0;
+		border-bottom: 2px solid $silver;
+
+		.modal-header {
+			padding: 10px 15px;
+			color: $black;
+
+			.modal-title {
+				font-size: 25px;
+			}
+
+			.close {
+				cursor: pointer;
+				position: absolute;
+				right: 15px;
+			}
+		}
 	}
 }

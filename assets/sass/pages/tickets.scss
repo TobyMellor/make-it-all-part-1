@@ -43,13 +43,12 @@ span.filter {
 		margin-bottom: 5px;
 		text-justify: right;
 		position: relative;
+		color: $black;
 
 		#ticket-serial-numbers {
 			margin: 0;
 		}
 	}
-
-		
 
 	span.subtle {
 		color: $grey;
@@ -97,6 +96,8 @@ span.filter {
 
 			img {
 				border-radius: 50%;
+				width: 64px;
+				height: 64px;
 			}
 
 			.media-body {
@@ -137,14 +138,13 @@ span.filter {
 
 		img {
 			border-radius: 50%;
+			width: 64px;
+			height: 64px;
 		}
 
 		textarea {
 			width: 100%;
-			border: 1px solid $silver;
 			height: 150px;
-			border-radius: 3px;
-			resize: none;
 			padding: 12px $comfortable;
 		}
 
@@ -199,7 +199,8 @@ span.filter {
 		width: 152px;
 		height: 152px;
 		border: 1px solid $silver;
-		border-radius: 3px;
+		border-bottom: 2px solid $silver;
+		border-radius: 0;
 		padding: $cosy;
 		text-align: center;
 		display: inline-block;
@@ -207,8 +208,24 @@ span.filter {
 		overflow: hidden;
 		background-color: $cloudy-white;
 
-		h4, p {
+		h4 {
 			color: $black;
+			margin-bottom: 0;
+			line-height: 25px;
+			display: block;
+			text-overflow: ellipsis;
+			word-wrap: break-word;
+			overflow: hidden;
+			max-height: 50px;
+		}
+
+		p {
+			color: $grey;
+			font-size: 14px;
+			max-width: 135px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 
 		a {
