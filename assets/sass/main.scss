@@ -478,9 +478,14 @@ button.close {
 
 			&.highlight {
 				background-color: $highlight;
+				cursor: initial;
 
 				&:hover {
 					background-color: $highlight-hover;
+
+					td:last-child i {
+						opacity: 0;
+					}
 				}
 			}
 

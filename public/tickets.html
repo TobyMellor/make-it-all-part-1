@@ -901,7 +901,7 @@
 					ticketPage.showTicketView(ticketPage.currentTicket.id); // refresh to get new comment
 				});
 
-				$(document).on('click', '#table-section .table tr', function() {
+				$(document).on('click', '#table-section .table tr:not(.highlight)', function() {
 					ticketPage.showTicketView(parseInt($(this).attr('row-id')));
 				});
 
@@ -1083,7 +1083,7 @@
 					ticketPage.showCallTicketsModal(callId);
 				});
 
-				$(document).on('click', '#view-call-history-modal #call-tickets-table tbody tr', function() {
+				$(document).on('click', '#view-call-history-modal #call-tickets-table tbody tr:not(.highlight)', function() {
 					var ticketId = parseInt($(this).attr('row-id')),
 						ticket   = makeItAll.ticketManager.getTicket(ticketId);
 
