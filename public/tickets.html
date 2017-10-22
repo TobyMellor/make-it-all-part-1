@@ -882,6 +882,8 @@
 					);
 
 					ticketPage.refreshPage(formData.filter, parseInt(formData.id));
+
+					$('#edit-ticket-modal').modal('hide');
 				});
 
 				$('#create-new-event').on('click', function (e) {
@@ -1121,7 +1123,7 @@
 					var formData 		  = $('#follow-up-call-modal form').serializeObject(),
 						formDataTickets   = formData.tickets,
 						existingTicketIds = [];
-						
+
 					for (var cardId in formDataTickets) {
 						var card = formDataTickets[cardId];
 
