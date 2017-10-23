@@ -10,16 +10,15 @@ class TicketPage extends DynamicPage {
 		super();
 
 		this.currentlyShowing = null;
-		this.currentTicketId  = null;
+		this.currentTicket    = null;
 	}
 
 	showFilteredTickets(filterSlug) {
-		var filter = makeItAll.ticketManager.getFilter(filterSlug);
+		var filter 		    = makeItAll.ticketManager.getFilter(filterSlug),
+			filteredTickets = filter.tickets;
 
-		if (filter !== null && filter.id !== this.currentlyShowing) {
-			var filteredTickets = filter.tickets;
-
-			this.updateTopNavBar(filteredTickets.length + ' \'' + filter.name + '\' ' + (filteredTickets.length === 1 ? 'ticket' : 'tickets'));
+		if (filter !== null) {
+			this.updateListViewNavbar(filteredTickets.length + ' \'' + filter.name + '\' ' + (filteredTickets.length === 1 ? 'ticket' : 'tickets'));
 			this.clearTable();
 
 			for (var i = 0; i < filteredTickets.length; i++) {
@@ -28,7 +27,7 @@ class TicketPage extends DynamicPage {
 				this.appendTableRow({
 					id: ticket.id,
 					title: ticket.title,
-					filter_slug: '<span class="filter">' + ticket.filter.name + '</span>',
+					filter_name: '<span class="filter">' + ticket.filter.name + '</span>',
 					created_at: ticket.created_at,
 					updated_at: ticket.updated_at
 				});
@@ -36,43 +35,74 @@ class TicketPage extends DynamicPage {
 
 			this.updateSplashScreen();
 
-			this.currentlyShowing = filter.id;
+			this.currentlyShowing = filter.slug;
 		}
 
-		this.showListView();
+		this.hideTableRowDetails();
+		this.currentTicket = null;
 	}
 
 	showTicketView(ticketId) {
 		var ticket = makeItAll.ticketManager.getTicket(ticketId);
 
 		if (ticket !== null) {
-			this.currentTicketId = ticketId;
+			this.currentTicket = ticket;
 
-			$('#ticket-view #ticket-number').text('#' + ticket.id);
-			$('#ticket-view #ticket-title').text(ticket.title);
-			$('#ticket-view .filter').text(ticket.filter.name);
+			this.updateSingleViewNavbar(ticket.title + '<span class="filter">' + ticket.filter.name + '</span>');
+
+			$('#ticket-view #ticket-overview').text('#' + ticket.id + ' | ' + ticket.created_at);
 			$('#ticket-view #ticket-description p').text(ticket.description);
 
-			$('#ticket-view #ticket-software').text(ticket.software || 'N/A');
-			$('#ticket-view #ticket-operating-system').text(ticket.operating_system || 'N/A');
-			$('#ticket-view #ticket-created-at').text(ticket.created_at);
-			$('#ticket-view #ticket-updated-at').text(ticket.updated_at);
 
-			var $ticketComments      = $('#ticket-comments'),
-				$ticketSerialNumbers = $('#ticket-serial-numbers');
+			var $ticketComments           = $('#ticket-comments'),
+				$ticketHardwareSoftware   = $('#ticket-view #hardware-software-table'),
+				$ticketNoHardwareSoftware = $('#ticket-view #no-hardware-software'),
+				$ticketCallHistoryBody    = $('#ticket-view #call-history-table tbody'),
+				devices	                  = ticket.devices,
+				calls                     = ticket.calls;
 
-			if (ticket.serial_numbers.length === 0) {
-				$ticketSerialNumbers.text('N/A')
+			if (devices.length === 0) {
+				$ticketHardwareSoftware.hide();
+				$ticketNoHardwareSoftware.show();
 			} else {
-				$ticketSerialNumbers.text('');
+				$ticketHardwareSoftware.show();
+				$ticketNoHardwareSoftware.hide();
+				
+				var $ticketHardwareSoftwareBody = $ticketHardwareSoftware.find('tbody');
 
-				for (var index in ticket.serial_numbers) {
-					var serialNumber = ticket.serial_numbers[index];
+				$ticketHardwareSoftwareBody.html('');
 
-					$ticketSerialNumbers.append(
-						'<li>' + serialNumber + '</li>'
-					);
+				for (var i = 0; i < devices.length; i++) {
+					var device = devices[i];
+
+					$ticketHardwareSoftwareBody.append(
+						'<tr row-id="' + device.id + '">' +
+							'<td class="truncate">' + device.serial_number + '</td>' +
+							'<td class="truncate">' + device.name + '</td>' +
+							'<td class="truncate">' + device.operating_system + '</td>' +
+							'<td>' +
+								'<i class="fa fa-eye"></i>' +
+							'</td>' +
+						'</tr>'
+					); // TODO: href to show on hardware page
 				}
+			}
+
+			$ticketCallHistoryBody.html('');
+
+			for (var i = 0; i < calls.length; i++) {
+				var call = calls[i];
+
+				$ticketCallHistoryBody.append(
+					'<tr row-id="' + call.id + '">' +
+						'<td>' + call.id + '</td>' +
+						'<td>' + call.caller.name + '</td>' +
+						'<td>' + call.date_of_call + '</td>' +
+						'<td>' +
+							'<i class="fa fa-eye"></i>' +
+						'</td>' +
+					'</tr>'
+				);
 			}
 
 			if (ticket.events.length === 0) {
@@ -87,7 +117,7 @@ class TicketPage extends DynamicPage {
 				if (event.type === 'comment') {
 					$ticketComments.append(
 						'<li class="media">' +
-							'<img class="d-flex mr-3" src="https://placehold.it/64x64" alt="Generic placeholder image">' +
+							'<img class="d-flex mr-3" src="images/portraits/portrait-1.jpg" alt="Portrait 1">' +
 							'<div class="media-body">' +
 								'<h5 class="mt-0 mb-1">' +
 									'Toby Mellor <span class="ticket-comment-date">' + event.created_at + '</span>' + // TODO: Replace 'Toby Mellor' with staff name
@@ -109,23 +139,120 @@ class TicketPage extends DynamicPage {
 				}
 			}
 
-			$('.top-nav.with-title').fadeOut(500, function() {
-				$('.top-nav.with-content').fadeIn();
-			});
-
-			$('#table-section').fadeOut(500, function() {
-				$('#ticket-view').fadeIn();
-			});
+			this.showTableRowDetails(ticket.id);
 		}
 	}
 
-	showListView() {
-		$('.top-nav.with-content').fadeOut(500, function() {
-			$('.top-nav.with-title').fadeIn();
+	appendHardwareDevices($hardwareList, ticket, cardId) {
+		for (var i = 0; i < ticket.devices.length; i++) {
+			var device = ticket.devices[i];
+
+			this.appendHardwareDevice($hardwareList, device.serial_number, cardId);
+		}
+	}
+
+	appendHardwareDevice($hardwareList, serialNumber, cardId = null) {
+		serialNumber = serialNumber.toUpperCase();
+
+		var existingSerialNumbers = [];
+
+		$hardwareList.children().each(function() {
+			existingSerialNumbers.push($(this).attr('serial-number'));
 		});
 
-		$('#ticket-view').fadeOut(500, function() {
-			$('#table-section').fadeIn();
-		});
+		if (existingSerialNumbers.indexOf(serialNumber) === -1) {
+			var device = makeItAll.hardwareManager.getDevice(serialNumber);
+
+			if (device !== null) {
+				$hardwareList.append(
+					' <li serial-number="' + serialNumber + '"">' +
+						'<input type="text" name="' + (cardId !== null ? 'tickets[' + cardId + '][devices]' : 'devices') + '" value="' + device.id + '" hidden />' +
+						'<h4>' + device.name + '</h4>' +
+						'<p>' + device.programs[0].name + '</p>' +
+						'<a class="btn btn-danger remove-hardware-device" href="javascript: void(0);">' +
+							'<i class="fa fa-minus"></i> ' +
+							'Remove' +
+						'</a>' +
+					'</li>'
+				);
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	showCallTicketsModal(callId) {
+		var call             = makeItAll.ticketManager.getCall(callId),
+			callTickets      = call.tickets,
+			$callHistory     = $('#view-call-history-modal'),
+			$callTicketTable = $callHistory.find('#call-tickets-table tbody');
+
+		$callHistory.find('#call-id').text(call.id);
+		$callHistory.find('#call-caller').text(call.caller.name);
+		$callHistory.find('#call-date').text(call.date_of_call);
+
+		$callTicketTable.html('');
+
+		for (var i = 0; i < callTickets.length; i++) {
+			var ticket = callTickets[i];
+
+			$callTicketTable.append(
+				'<tr row-id="' + ticket.id + '" ' + (ticket.id === this.currentTicket.id ? 'class="highlight"' : '') + '>' +
+					'<td>' + ticket.id + '</td>' +
+					'<td>' + ticket.title + '</td>' +
+					'<td>' +
+						'<span class="filter">' + ticket.filter.name + '</span>' +
+					'</td>' +
+					'<td>' + ticket.created_at + '</td>' +
+					'<td>' +
+						'<i class="fa fa-eye"></i>' +
+					'</td>' +
+				'</tr>'
+			);
+		}
+
+		$callHistory.modal('show');
+	}
+
+	refreshPage(filterSlug, ticketId = null) {
+		$('.side-nav-bar-nested ul li.active').removeClass('active');
+		$('.side-nav-bar-nested ul li[slug="' + filterSlug + '"]').addClass('active');
+
+		this.showFilteredTickets(filterSlug);
+		this.showTicketView(ticketId);
+	}
+
+	populateTicketModal($modal, ticket, cardId = null) {
+		for (var key in ticket) {
+			var value = ticket[key];
+
+			if (key === '_filter') {
+				key   = 'filter';
+				value = ticket.filter.name;
+			} else if (key === '_assigned_to') {
+				key   = 'assigned_to';
+				value = ticket.assigned_to.name;
+			}
+			
+			$modal.find('input[name*="' + key + '"], textarea[name*="' + key + '"]').val(value);
+		}
+
+		this.appendHardwareDevices($modal.find('.hardware-list'), ticket, cardId);
+	}
+
+	appendNewComment($commentBox) {
+		var event = makeItAll.ticketManager.createEvent(
+				ticketPage.currentTicket.id,
+				'Toby Mellor', // TODO: Replace with ID of logged in user
+				'comment',
+				$commentBox.val(),
+				'Just Now'
+			);
+
+		$commentBox.val('');
+
+		this.showTicketView(ticketPage.currentTicket.id); // refresh to get new comment
 	}
 }

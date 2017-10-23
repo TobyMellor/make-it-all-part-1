@@ -1,6 +1,6 @@
 @import "../main";
 
-.staff-information {
+.staff-information, .call-information {
 	color: $black;
 
 	p {
@@ -19,7 +19,7 @@ span.filter {
 	background-color: $blue;
 	border-radius: 2px;
 	border: 0;
-	color: $cloudy-white;
+	color: $white;
 	font-weight: 600;
 	font-size: 15px;
 
@@ -29,26 +29,50 @@ span.filter {
 }
 
 #ticket-view {
-	margin-top: 25px;
-	display: none;
+	padding: $comfortable;
+
+	h2, h4 {
+		color: $black;
+	}
+
+	h4 {
+		margin-top: $cosy;
+	}
 
 	.ticket-details {
 		margin-bottom: 5px;
+		text-justify: right;
+		position: relative;
+		color: $black;
 
 		#ticket-serial-numbers {
 			margin: 0;
 		}
 	}
+
+	span.subtle {
+		color: $grey;
+		font-size: 14px;
+		position: absolute;
+		right: 0;
+
+		&#show-new-call-modal {
+			cursor: pointer;
+			text-decoration: underline;
+		}
+	}
 	
 	#ticket-description {
 		border: 1px solid $silver;
-		border-radius: 3px;
+		border-bottom: 2px solid $silver;
 		padding: 15px;
 		max-height: 250px;
 		overflow-y: scroll;
+		margin-bottom: $comfortable;
 
 		p {
 			margin-bottom: 0;
+			white-space: pre-wrap;
 		}
 	}
 
@@ -58,13 +82,6 @@ span.filter {
 		color: $white;
 		display: inline-block;
 		vertical-align: middle;
-	}
-
-	#ticket-number {
-		float: right;
-		color: $grey;
-		font-size: 14px;
-		margin-top: 12px;
 	}
 
 	#ticket-comments {
@@ -80,9 +97,13 @@ span.filter {
 
 			img {
 				border-radius: 50%;
+				width: 64px;
+				height: 64px;
 			}
 
 			.media-body {
+				white-space: pre-wrap;
+
 				.ticket-comment-date {
 					float: right;
 					font-size: 16px;
@@ -116,25 +137,105 @@ span.filter {
 	#comment-block {
 		background-color: $cloudy-white;
 		padding: $comfortable $comfortable $cosy $comfortable;
-		border-radius: 3px;
 		border: 1px solid $silver;
 
 		img {
 			border-radius: 50%;
+			width: 64px;
+			height: 64px;
 		}
 
 		textarea {
 			width: 100%;
-			border: 1px solid $silver;
 			height: 150px;
-			border-radius: 3px;
-			resize: none;
 			padding: 12px $comfortable;
 		}
 
 		.btn {
 			float: right;
 			margin-top: $cosy;
+		}
+	}
+
+	.col-md-6 {
+		&:first-child {
+			padding-right: $cosy;
+		}
+
+		&:last-child {
+			padding-left: $cosy;
+		}
+	}
+
+	.table {
+		tbody {
+			tr:last-child {
+				border-bottom: 2px solid $silver;
+			}
+		}
+	}
+}
+
+#single-view {
+	.top-nav {
+		.main-content-title {
+			.filter {
+				margin-left: $cosy;
+				margin-right: $cosy;
+			}
+		}
+	}
+}
+
+#new-ticket-modal {
+	.add-another-ticket {
+		float: right;
+	}
+}
+
+.hardware-list {
+	list-style: none;
+	padding: 0;
+	margin: $comfortable 0 0 0;
+
+	li {
+		width: 152px;
+		height: 152px;
+		border: 1px solid $silver;
+		border-bottom: 2px solid $silver;
+		border-radius: 0;
+		padding: $cosy;
+		text-align: center;
+		display: inline-block;
+		position: relative;
+		overflow: hidden;
+		background-color: $cloudy-white;
+
+		h4 {
+			color: $black;
+			margin-bottom: 0;
+			line-height: 25px;
+			display: block;
+			text-overflow: ellipsis;
+			word-wrap: break-word;
+			overflow: hidden;
+			max-height: 50px;
+		}
+
+		p {
+			color: $grey;
+			font-size: 14px;
+			max-width: 135px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		a {
+			position: absolute;
+			bottom: $cosy;
+			left: calc(50% - 65px);
+    		width: 130px;
 		}
 	}
 }

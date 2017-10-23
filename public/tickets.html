@@ -80,42 +80,16 @@
 				<li>
 					<button class="btn btn-success new-ticket" data-toggle="modal" data-target="#new-ticket-modal">
 						<i class="fa fa-plus"></i>
-						New Ticket
+						New Ticket(s)
 					</button>
 				</li>
 			</ul>
 		</nav>
 
-		<section>
+		<section id="list-view">
 			<nav class="top-nav with-title">
 				<i class="fa fa-ticket"></i>
 				<h4 class="main-content-title">Loading...</h4>
-			</nav>
-			<nav class="top-nav with-content">
-				<button class="btn btn-sm ticket-back-button">
-					<i class="fa fa-chevron-left"></i>
-					Back
-				</button>
-
-				<p>Status: </p>
-				<div class="form-group">
-					<select class="selectpicker" name="ticket[filter]">
-						<option value="new">New</option>
-						<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
-						<option value="pending_in_progress">Pending - In Progress</option>
-						<option value="resolved">Resolved</option>
-					</select>
-				</div>
-
-				<p>Assigned to: </p>
-				<div class="form-group">
-					<select class="selectpicker" name="ticket[filter]">
-						<option value="new">New</option>
-						<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
-						<option value="pending_in_progress">Pending - In Progress</option>
-						<option value="resolved">Resolved</option>
-					</select>
-				</div>
 			</nav>
 
 			<div class="main-content">
@@ -133,7 +107,7 @@
 						New Ticket
 					</button>
 				</div>
-				<div id="table-section">
+				<div id="table-section" class="scrollable">
 					<table class="table">
 						<thead>
 							<tr>
@@ -141,66 +115,93 @@
 								<th slug="title">TICKET TITLE</th>
 								<th slug="filter_name">STATUS</th>
 								<th slug="created_at">CREATED</th>
-								<th slug="updated_at">LAST UPDATED</th>
+								<th slug="updated_at">UPDATED</th>
 								<th slug="eye"></th> <!-- If you want the eye when hovering over a table row, keep this -->
 							</tr>
 						</thead>
 						<tbody></tbody>
 					</table>
 				</div>
-				<div id="ticket-view">
-					<div class="row">
-						<div class="col-md-8">
-							<h2>
-								<span id="ticket-title">Loading</span>
-								<span class="filter">Loading...</span>
-								<span id="ticket-number"></span>
-							</h2>
-							<p class="ticket-details">
-								<strong>Ticket Details:</strong>
-							</p>
-							<div id="ticket-description">
-								<p></p>
-							</div>
+			</div>
+		</section>
+		<section id="single-view">
+			<nav class="top-nav with-content">
+				<h4 class="main-content-title">Loading...</h4>
+				<button class="btn btn-sm close-button ticket-close-button">
+					<i class="fa fa-times"></i>
+					Close
+				</button>
+				<button class="btn btn-sm btn-warning close-button ticket-edit-button" data-toggle="modal" data-target="#edit-ticket-modal">
+					<i class="fa fa-pencil"></i>
+					Edit
+				</button>
+			</nav>
 
-							<ul class="list-unstyled" id="ticket-comments"></ul>
-							<div id="comment-block">
-								<li class="media">
-									<img class="d-flex mr-3" src="https://placehold.it/54x54" alt="Generic placeholder image">
-									<div class="media-body">
-										<textarea placeholder="Reply to the ticket thread here..."></textarea>
-										<button class="btn btn-success" id="create-new-event">
-											<i class="fa fa-paper-plane"></i>
-											Send Reply
-										</button>
-									</div>
-								</li>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<h3>Ticket Details:</h3>
-							<p class="ticket-details">
-								<strong>Software:</strong>
-								<span id="ticket-software">Loading...</span>
-							</p>
-							<p class="ticket-details">
-								<strong>Operating System:</strong>
-								<span id="ticket-operating-system">Loading...</span>
-							</p>
-							<p class="ticket-details">
-								<strong>Serial Numbers:</strong>
-							</p>
-							<ul id="ticket-serial-numbers"></ul>
-							<p class="ticket-details">
-								<strong>Created:</strong>
-								<span id="ticket-created-at">Loading...</span>
-							</p>
-							<p class="ticket-details">
-								<strong>Last updated:</strong>
-								<span id="ticket-updated-at">Loading...</span>
-							</p>
+			<div id="ticket-view" class="scrollable">
+				<div class="row">
+					<div class="col-md-12">
+						<p class="ticket-details">
+							<strong>Description:</strong>
+							<span id="ticket-overview" class="subtle"></span>
+						</p>
+						<div id="ticket-description">
+							<p></p>
 						</div>
 					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6">
+						<p class="ticket-details">
+							<strong>Hardware/Software:</strong>
+						</p>
+						<table class="table compact" id="hardware-software-table">
+							<thead>
+								<tr>
+									<th>SERIAL</th>
+									<th>NAME</th>
+									<th>OS</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+					<div class="col-md-6">
+						<p class="ticket-details">
+							<strong>Call History:</strong>
+							<span class="subtle" id="show-new-call-modal" data-toggle="modal" data-target="#follow-up-call-modal">Register follow-up call</span>
+						</p>
+
+						<table class="table compact" id="call-history-table">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>CALLER</th>
+									<th>DATE</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+
+				<h4>Updates:</h4>
+
+				<ul class="list-unstyled" id="ticket-comments"></ul>
+
+				<div id="comment-block">
+					<li class="media">
+						<img class="d-flex mr-3" src="images/portraits/portrait-1.jpg" alt="Portrait 1">
+						<div class="media-body">
+							<textarea class="form-control" placeholder="Reply to the ticket thread here..."></textarea>
+							<button class="btn btn-success" id="create-new-event">
+								<i class="fa fa-paper-plane"></i>
+								Send Reply
+							</button>
+						</div>
+					</li>
 				</div>
 			</div>
 		</section>
@@ -209,7 +210,7 @@
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Create a new Ticket</h5>
+						<h5 class="modal-title">Create one or more new Ticket(s)</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -221,77 +222,203 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="required">Status</label>
+												<label class="required">Caller</label>
 												<br />
-												<select class="selectpicker" name="ticket[filter]">
-													<option value="new">New</option>
-													<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
-													<option value="pending_in_progress">Pending - In Progress</option>
-													<option value="resolved">Resolved</option>
+												<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="caller"></select>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Date of Call</label>
+												<input class="form-control timepicker" name="date_of_call" />
+											</div>
+										</div>
+									</div>
+									<div id="accordion" role="tablist">
+										<div class="card" card-id="1">
+											<div class="card-header" role="tab" id="heading-1">
+												<h5 class="mb-0">
+													<a data-toggle="collapse" data-parent="#accordion" href="#collapse-1">
+														New Ticket
+													</a>
+													<i class="fa fa-eye-slash view-accordion"></i>
+												</h5>
+											</div>
+
+											<div id="collapse-1" class="collapse show" role="tabpanel">
+												<div class="card-block">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="required">Status</label>
+																<br />
+																<select class="selectpicker" name="tickets[1][filter]">
+																	<option value="new">New</option>
+																	<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
+																	<option value="pending_in_progress">Pending - In Progress</option>
+																	<option value="resolved">Resolved</option>
+																</select>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="required">Assigned To</label>
+																<br />
+																<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="tickets[1][assigned_to]">
+																	<option value="0">Example Operator 1</option>
+																	<option value="1">Example Operator 2</option>
+																	<option value="2">Example Operator 3</option>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="required">Ticket Title</label>
+														<input class="form-control" name="tickets[1][title]" />
+													</div>
+													<div class="form-group">
+														<label class="required">Ticket Description</label>
+														<textarea class="form-control" name="tickets[1][description]"></textarea>
+													</div>
+													
+													<div class="form-group">
+														<label>Serial Number of Hardware Affected</label>
+														<div class="input-group">
+															<input class="form-control" name="tickets[1][serial_number]" />
+															<span class="input-group-btn">
+																<button class="btn btn-success add-hardware-device" type="button">
+																	<i class="fa fa-plus"></i> 
+																	Add
+																</button>
+															</span>
+														</div>
+														<div class="row">
+															<div class="col-md-12">
+																<ul class="hardware-list"></ul>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<button type="button" class="btn btn-success add-another-ticket">
+										<i class="fa fa-plus"></i> 
+										Add another Ticket
+									</button>
+								</div>
+								<div class="col-md-4">
+									<h4>Caller Information</h4>
+									<div class="staff-information">No staff member has been selected yet!</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-success" id="create-new-ticket">Create new Ticket(s)</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="follow-up-call-modal" tabindex="-1" role="dialog" aria-labelledby="follow-up-call-modal" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Register a follow-up call</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="row">
+								<div class="col-md-8">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="required">Caller</label>
+												<br />
+												<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="caller">
+													<option value="0">Example Caller 1</option>
+													<option value="1">Example Caller 2</option>
+													<option value="2">Example Caller 3</option>
 												</select>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Date of Call</label>
-												<input class="form-control timepicker" name="ticket[date_of_call]" />
+												<input class="form-control timepicker" name="date_of_call" />
+											</div>
+										</div>
+									</div>
+									<div id="accordion" role="tablist">
+										<div class="card" card-id="1">
+											<input type="text" name="tickets[this][id]" hidden />
+											<div class="card-header highlight" role="tab" id="heading-this-call">
+												<h5 class="mb-0">
+													<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-this-call">Loading...</a>
+													<i class="fa fa-eye view-accordion"></i>
+												</h5>
+											</div>
+
+											<div id="collapse-this-call" class="collapse" role="tabpanel">
+												<div class="card-block">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Status</label>
+																<br />
+																<input class="form-control" name="tickets[this][filter]" disabled />
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Assigned To</label>
+																<br />
+																<input class="form-control" name="tickets[this][assigned_to]" disabled />
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label>Ticket Title</label>
+														<input class="form-control" name="tickets[this][title]" disabled />
+													</div>
+													<div class="form-group">
+														<label>Ticket Description</label>
+														<textarea class="form-control" name="tickets[this][description]" disabled></textarea>
+													</div>
+													
+													<div class="form-group">
+														<label>Serial Numbers of Hardware Affected</label>
+														<div class="row">
+															<div class="col-md-12">
+																<ul class="hardware-list"></ul>
+															</div>
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-6">
-											<div class="form-group">
-												<label class="required">Caller</label>
-												<br />
-												<select class="selectpicker staff-picker" data-live-search="true" name="ticket[caller]">
-													<option>Mustard</option>
-													<option>Ketchup</option>
-													<option>Relish</option>
-												</select>
-											</div>
+											<label>Another Ticket referenced?</label>
+											<select class="selectpicker" data-live-search="true" data-live-search-placeholder="Search..." id="add-existing-ticket"></select>
 										</div>
 										<div class="col-md-6">
-											<div class="form-group">
-												<label class="required">Assigned To</label>
-												<br />
-												<select class="selectpicker staff-picker" data-live-search="true" name="ticket[assigned_to]">
-													<option>Mustard</option>
-													<option>Ketchup</option>
-													<option>Relish</option>
-												</select>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="required">Ticket Title</label>
-										<input class="form-control" name="ticket[title]" />
-									</div>
-									<div class="form-group">
-										<label class="required">Ticket Description</label>
-										<textarea class="form-control" name="ticket[description]"></textarea>
-									</div>
-									<div class="form-group">
-										<label>Serial Number(s) of Hardware Affected</label>
-										<textarea class="form-control" name="ticket[hardware][serial_numbers]"></textarea>
-										<span class="help-text">Each serial number to be separated by a new line</span>
-									</div>
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Operating System</label>
-												<input class="form-control" name="ticket[software][operating_system]" />
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Software</label>
-												<input class="form-control" name="ticket[software][software]" />
-											</div>
+											<label>New issue bought up?</label>
+											<button type="button" class="btn btn-success add-another-ticket">
+												<i class="fa fa-plus"></i> 
+												Reference new Ticket
+											</button>
 										</div>
 									</div>
 								</div>
 								<div class="col-md-4">
-									<h4>Staff Information</h4>
+									<h4>Caller Information</h4>
 									<div class="staff-information">
 										<p>ID Number: <strong id="staff-id">B619693</strong></p>
 										<p>Name: <strong id="staff-name">Toby Mellor</strong></p>
@@ -305,7 +432,128 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-success" id="create-new-ticket">Create Ticket</button>
+						<button type="button" class="btn btn-success" id="create-follow-up-call">Register follow-up call</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="edit-ticket-modal" tabindex="-1" role="dialog" aria-labelledby="edit-ticket-modal" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Edit Ticket</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<input type="text" name="id" hidden />
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="required">Status</label>
+												<br />
+												<select class="selectpicker" name="filter">
+													<option value="new">New</option>
+													<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
+													<option value="pending_in_progress">Pending - In Progress</option>
+													<option value="resolved">Resolved</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="required">Assigned To</label>
+												<br />
+												<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="assigned_to">
+													<option value="0">Example Operator 1</option>
+													<option value="1">Example Operator 2</option>
+													<option value="2">Example Operator 3</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="required">Ticket Title</label>
+										<input class="form-control" name="title" />
+									</div>
+									<div class="form-group">
+										<label class="required">Ticket Description</label>
+										<textarea class="form-control" name="description"></textarea>
+									</div>
+									
+									<div class="form-group">
+										<label>Serial Number of Hardware Affected</label>
+										<div class="input-group">
+											<input class="form-control" name="serial_number" />
+											<span class="input-group-btn">
+												<button class="btn btn-success add-hardware-device" type="button">
+													<i class="fa fa-plus"></i> 
+													Add
+												</button>
+											</span>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<ul class="hardware-list"></ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-success" id="edit-existing-ticket">Edit Ticket</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="view-call-history-modal" tabindex="-1" role="dialog" aria-labelledby="view-call-history-modal" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">View Call</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="row">
+								<div class="col-md-8">
+									<table class="table" id="call-tickets-table">
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>TICKET TITLE</th>
+												<th>STATUS</th>
+												<th>CREATED</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+								<div class="col-md-4">
+									<h4>Call Information</h4>
+									<div class="call-information">
+										<p>ID: <strong id="call-id"></strong></p>
+										<p>Caller: <strong id="call-caller"></strong></p>
+										<p>Date: <strong id="call-date"></strong></p>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
@@ -315,7 +563,7 @@
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Create a new Staff Member</h5>
+						<h5 class="modal-title">Create a new Staff Member</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -329,23 +577,23 @@
 										<label class="required">Staff Name</label>
 										<div class="row">
 											<div class="col-md-6">
-												<input class="form-control no-clear-on-show" name="ticket[staff][first_name]" placeholder="First Name" />
+												<input class="form-control no-clear-on-show" name="staff[first_name]" placeholder="First Name" />
 											</div>
 											<div class="col-md-6">
-												<input class="form-control no-clear-on-show" name="ticket[staff][last_name]" placeholder="Last Name" />
+												<input class="form-control no-clear-on-show" name="staff[last_name]" placeholder="Last Name" />
 											</div>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="required">Staff Email</label>
-										<input class="form-control" name="ticket[staff][email]" />
+										<input class="form-control" name="staff[email]" />
 									</div>
 								</div>
 								<div class="col-md-4">
 									<label class="required">Staff Permissions</label>
 									<div class="staff-permissions">
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="ticket[staff][permissions][ticket_read_only]" checked="checked">
+											<input type="checkbox" class="custom-control-input" name="staff[permissions][ticket_read_only]" checked="checked">
 											<span class="custom-control-indicator"></span>
 											<span class="custom-control-description">Ticket Read Only</span>
 											<span class="help-text">
@@ -353,7 +601,7 @@
 											</span>
 										</label>
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="ticket[staff][permissions][helpdesk_operator]">
+											<input type="checkbox" class="custom-control-input" name="staff[permissions][helpdesk_operator]">
 											<span class="custom-control-indicator"></span>
 											<span class="custom-control-description">Helpdesk Operator</span>
 											<span class="help-text">
@@ -362,7 +610,7 @@
 											</span>
 										</label>
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="ticket[staff][permissions][analyst]">
+											<input type="checkbox" class="custom-control-input" name="staff[permissions][analyst]">
 											<span class="custom-control-indicator"></span>
 											<span class="custom-control-description">Analyst</span>
 											<span class="help-text">
@@ -371,7 +619,7 @@
 											</span>
 										</label>
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="ticket[staff][permissions][super_admin]">
+											<input type="checkbox" class="custom-control-input" name="staff[permissions][super_admin]">
 											<span class="custom-control-indicator"></span>
 											<span class="custom-control-description">Super Admin</span>
 											<span class="help-text">
@@ -401,6 +649,8 @@
 		<script src="js/main.min.js"></script>
 		<script src="js/pages/tickets.min.js"></script>
 		<script src="js/pages/staff.min.js"></script>
+		<script src="js/pages/hardware.min.js"></script>
+		<script src="js/pages/software.min.js"></script>
 		<script>
 			/**
 			 * makeItAll is global, and contains "managers".
@@ -419,6 +669,38 @@
 				[
 					{
 						id: 0,
+						date_of_call: '21/04/2017 12:32',
+						caller: 0,
+						tickets: [0, 1]
+					},
+					{
+						id: 1,
+						date_of_call: '21/04/2017 12:32',
+						caller: 0,
+						tickets: [2]
+					},
+					{
+						id: 2,
+						date_of_call: '21/04/2017 12:32',
+						caller: 0,
+						tickets: [3]
+					},
+					{
+						id: 3,
+						date_of_call: '21/04/2017 12:32',
+						caller: 0,
+						tickets: [4]
+					},
+					{
+						id: 4,
+						date_of_call: '21/04/2017 12:32',
+						caller: 0,
+						tickets: [4]
+					},
+				],
+				[
+					{
+						id: 0,
 						slug: 'new',
 						name: 'New',
 						tickets: [0, 1, 2]
@@ -432,7 +714,7 @@
 					{
 						id: 2,
 						slug: 'pending_in_progress',
-						name: 'Pending - Awaiting Staff',
+						name: 'Pending - In Progress',
 						tickets: [3]
 					},
 					{
@@ -445,78 +727,60 @@
 				[
 					{
 						id: 0,
+						calls: [0],
 						filter: 'new',
 						title: 'Printer Queue not working',
 						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
-						date_of_call: '21/04/2017 12:32',
-						caller: 1,
 						assigned_to: 0,
-						serial_numbers: [
-							'B3253SFG',
-							'GAGT666G'
-						],
-						operating_system: 'macOS',
-						software: 'Terminal',
+						devices: [],
 						created_at: 'Yesterday',
 						updated_at: '1 hour ago',
 						events: [0, 1, 2]
 					},
 					{
 						id: 1,
+						calls: [0],
 						filter: 'new',
 						title: 'Coffee machine needs refilling',
 						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
-						date_of_call: '21/04/2017 12:32',
-						caller: 1,
 						assigned_to: 1,
-						serial_numbers: [],
-						operating_system: null,
-						software: null,
+						devices: [],
 						created_at: '4 days ago',
 						updated_at: '4 days ago',
 						events: [3]
 					},
 					{
 						id: 2,
+						calls: [1],
 						filter: 'new',
 						title: 'Squeeky chair',
 						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
-						date_of_call: '21/04/2017 12:32',
-						caller: 0,
 						assigned_to: 0,
-						serial_numbers: [],
-						operating_system: null,
-						software: null,
+						devices: [],
 						created_at: '1 day ago',
 						updated_at: 'Just now',
 						events: []
 					},
 					{
 						id: 3,
+						calls: [2],
 						filter: 'pending_in_progress',
 						title: 'Spilt water on macbook',
 						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
-						date_of_call: '21/04/2017 12:32',
-						caller: 0,
 						assigned_to: 1,
-						serial_numbers: [],
-						operating_system: null,
-						software: null,
+						devices: [],
 						created_at: '23 hours ago',
 						updated_at: '3 minutes ago',
 						events: []
 					},
 					{
 						id: 4,
+						calls: [3, 4],
 						filter: 'resolved',
 						title: 'Computer wont turn on',
 						description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
-						date_of_call: '21/04/2017 12:32',
-						caller: 1,
 						assigned_to: 0,
-						serial_numbers: [],
-						operating_system: null,
-						software: null,
+						devices: [],
 						created_at: '4 hours ago',
 						updated_at: '4 hours ago',
 						events: []
@@ -560,67 +824,327 @@
 
 			// StaffManager(staffMembers)
 			makeItAll.staffManager = new StaffManager(null); // TODO: Pass in some fake data
+
+			// HardwareManager(devices)
+			makeItAll.hardwareManager = new HardwareManager(null); // TODO: Pass in some fake data
+
+			// SoftwareManager(programs)
+			makeItAll.softwareManager = new SoftwareManager(null); // TODO: Pass in some fake data
 		</script>
 		<script type="text/javascript">
-			$(function() {
 				var ticketPage = new TicketPage();
 
 				$('.side-nav-bar-nested ul li[slug]').on('click', function() {
-					$('.side-nav-bar-nested ul li.active').removeClass('active');
-
-					$(this).addClass('active');
-
-					ticketPage.showFilteredTickets($(this).attr('slug'));
+					if (ticketPage.currentlyShowing !== $(this).attr('slug')) {
+						ticketPage.refreshPage($(this).attr('slug'));
+					}
 				});
 
 				ticketPage.showFilteredTickets('new');
 
+				$('.new-ticket').on('click', function() {
+					$('#new-ticket-modal').find('input, textarea')
+						   .not('.no-clear-on-show')
+						   .val('');
+				});
+
 				$('#new-ticket-modal #create-new-ticket').on('click', function (e) {
 					e.preventDefault();
 
-					var formData = parseFormData($('#new-ticket-modal form')),
-						ticket   = makeItAll.ticketManager.createTicket(
-							formData['ticket[filter]'],
-							formData['ticket[title]'],
-							formData['ticket[description]'],
-							formData['ticket[date_of_call]'],
-							formData['ticket[caller]'],
-							formData['ticket[assigned_to]'],
-							formData['ticket[hardware][serial_numbers]'],
-							formData['ticket[software][opearting_system]'],
-							formData['ticket[software][software]']
-						);
+					var formData = $('#new-ticket-modal form').serializeObject(),
+						call     = makeItAll.ticketManager.createCall(formData.date_of_call, formData.caller, formData.tickets);
 
-					$('.side-nav-bar-nested ul li[' + formData['ticket[filter]'] + ']').click();
+					ticketPage.refreshPage(call.tickets[0].filter.slug);
 
 					$('#new-ticket-modal').modal('hide');
+				});
+
+				$('#edit-ticket-modal #edit-existing-ticket').on('click', function () {
+					var formData = $('#edit-ticket-modal form').serializeObject();
+
+					makeItAll.ticketManager.editTicket(
+						parseInt(formData.id),
+						formData.filter,
+						formData.title,
+						formData.description,
+						parseInt(formData.assigned_to),
+						formData.devices
+					);
+
+					ticketPage.refreshPage(formData.filter, parseInt(formData.id));
+
+					$('#edit-ticket-modal').modal('hide');
 				});
 
 				$('#create-new-event').on('click', function (e) {
 					e.preventDefault();
 
-					var $commentBox = $(this).parent().find('textarea'),
-						event       = makeItAll.ticketManager.createEvent(
-							ticketPage.currentTicketId,
-							'Toby Mellor', // TODO: Replace with ID of logged in user
-							'comment',
-							$commentBox.val(),
-							'Just Now'
-						);
-
-					$commentBox.val('');
-
-					ticketPage.showTicketView(ticketPage.currentTicketId); // refresh to get new comment
+					ticketPage.appendNewComment($(this).parent().find('textarea'));
 				});
 
-				$(document).on('click', '#table-section .table tr', function() {
+				$(document).on('click', '#table-section .table tr:not(.highlight)', function() {
 					ticketPage.showTicketView(parseInt($(this).attr('row-id')));
 				});
 
-				$('.ticket-back-button').on('click', function() {
-					ticketPage.showListView();
+				$('.ticket-close-button').on('click', function() {
+					ticketPage.hideTableRowDetails();
 				});
-			});
+
+				$('.ticket-edit-button').on('click', function() {
+					ticketPage.populateTicketModal($('#edit-ticket-modal'), ticketPage.currentTicket);
+				});
+
+				$('.add-another-ticket').on('click', function() {
+					var $accordion = $(this).closest('.modal-body').find('#accordion'),
+						cardId     = Math.floor(Math.random() * (10000 + 1));
+
+					$accordion.append(
+						'<div class="card" card-id="' + cardId + '">' +
+							'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
+								'<h5 class="mb-0">' +
+									'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
+										'New Ticket' +
+									'</a>' +
+									'<i class="fa fa-eye view-accordion"></i>' +
+									'<i class="fa fa-trash-o remove-accordion"></i>' +
+								'</h5>' +
+							'</div>' +
+							'<div id="collapse-' + cardId + '" class="collapse" role="tabpanel">' +
+								'<div class="card-block">' +
+									'<div class="row">' +
+										'<div class="col-md-6">' +
+											'<div class="form-group">' +
+												'<label class="required">Status</label>' +
+												'<br />' +
+												'<select class="selectpicker" name="tickets[' + cardId + '][filter]">' +
+													'<option value="new">New</option>' +
+													'<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>' +
+													'<option value="pending_in_progress">Pending - In Progress</option>' +
+													'<option value="resolved">Resolved</option>' +
+												'</select>' +
+											'</div>' +
+										'</div>' +
+										'<div class="col-md-6">' +
+											'<div class="form-group">' +
+												'<label class="required">Assigned To</label>' +
+												'<br />' +
+												'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="tickets[' + cardId + '][assigned_to]"></select>' +
+											'</div>' +
+										'</div>' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<label class="required">Ticket Title</label>' +
+										'<input class="form-control" name="tickets[' + cardId + '][title]" />' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<label class="required">Ticket Description</label>' +
+										'<textarea class="form-control" name="tickets[' + cardId + '][description]"></textarea>' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<label>Serial Number of Hardware Affected</label>' +
+										'<div class="input-group">' +
+											'<input class="form-control" name="tickets[' + cardId + '][hardware][serial_number]" />' +
+											'<span class="input-group-btn">' +
+												'<button class="btn btn-success add-hardware-device" type="button">' +
+													'<i class="fa fa-plus"></i> ' +
+													'Add' +
+												'</button>' +
+											'</span>' +
+										'</div>' +
+										'<div class="row">' +
+											'<div class="col-md-12">' +
+												'<ul class="hardware-list"></ul>' +
+											'</div>' +
+										'</div>' +
+									'</div>' +
+								'</div>' +
+							'</div>' +
+						'</div>'
+					);
+
+					ticketPage.populateSelectField($accordion.find('.card[card-id="' + cardId + '"] select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
+
+					$('.selectpicker').selectpicker('refresh');
+				});
+
+				$('#add-existing-ticket').on('change', function() {
+					if ($(this).val() !== "") {
+						var $accordion = $('#follow-up-call-modal #accordion'),
+							cardId     = Math.floor(Math.random() * (10000 + 1)),
+							ticketId   = parseInt($(this).val()),
+							ticket     = makeItAll.ticketManager.getTicket(ticketId);
+
+						$accordion.append(
+							'<div class="card" card-id="' + cardId + '">' +
+								'<input type="text" name="tickets[' + cardId + '][id]" value="' + ticketId + '" hidden />' +
+								'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
+									'<h5 class="mb-0">' +
+										'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
+											'Existing Ticket: ' + ticket.title +
+										'</a>' +
+										'<i class="fa fa-eye view-accordion"></i>' +
+										'<i class="fa fa-trash-o remove-accordion"></i>' +
+									'</h5>' +
+								'</div>' +
+								'<div id="collapse-' + cardId + '" class="collapse" role="tabpanel">' +
+									'<div class="card-block">' +
+										'<div class="row">' +
+											'<div class="col-md-6">' +
+												'<div class="form-group">' +
+													'<label>Status</label>' +
+													'<br />' +
+													'<input class="form-control" value="' + ticket.filter.name + '" disabled>' +
+												'</div>' +
+											'</div>' +
+											'<div class="col-md-6">' +
+												'<div class="form-group">' +
+													'<label>Assigned To</label>' +
+													'<br />' +
+													'<input class="form-control" value="' + ticket.assigned_to.name + '" disabled>' +
+												'</div>' +
+											'</div>' +
+										'</div>' +
+										'<div class="form-group">' +
+											'<label>Ticket Title</label>' +
+											'<input class="form-control" value="' + ticket.title + '" disabled>' +
+										'</div>' +
+										'<div class="form-group">' +
+											'<label>Ticket Description</label>' +
+											'<textarea class="form-control" disabled>' + ticket.description + '</textarea>' +
+										'</div>' +
+										'<div class="form-group">' +
+											'<label>Serial Numbers of Hardware Affected</label>' +
+											'<div class="row">' +
+												'<div class="col-md-12">' +
+													'<ul class="hardware-list"></ul>' +
+												'</div>' +
+											'</div>' +
+										'</div>' +
+									'</div>' +
+								'</div>' +
+							'</div>'
+						);
+
+						ticketPage.appendHardwareDevices($accordion.find('.card[card-id="' + cardId + '"] .hardware-list'), ticket, cardId);
+
+						$(this).find('option[value="' + ticketId + '"]').remove();
+
+						$(this).selectpicker('refresh');
+					}
+				});
+
+				$(document).on('keyup', '#accordion .card .collapse input[name*="title"]', function() {
+					var $cardHeader = $(this).closest('.card').find('.card-header a'),
+						headerText  = $(this).val().length <= 2 ? 'New Ticket' : 'New Ticket: ' + $(this).val();
+
+					$cardHeader.text(headerText);
+				});
+
+				$(document).on('click', '.add-hardware-device', function() {
+					var $inputField       = $(this).closest('.form-group').find('input'),
+						successfullyAdded = ticketPage.appendHardwareDevice($(this).closest('.form-group').find('.hardware-list'), $inputField.val(), $(this).closest('card').attr('card-id'));
+
+					if (successfullyAdded) {
+						$inputField.val('');
+					} else {
+						alert('Already exists or can\'t find device in system with serial number');
+					}
+				});
+
+				$(document).on('click', '.remove-hardware-device', function() {
+					$(this).closest('li').fadeOut(200, function() {
+						$(this).remove();
+					});
+				});
+
+				$(document).on('click', '#ticket-view #call-history-table tbody tr', function() {
+					var callId = parseInt($(this).attr('row-id'));
+					
+					ticketPage.showCallTicketsModal(callId);
+				});
+
+				$(document).on('click', '#view-call-history-modal #call-tickets-table tbody tr:not(.highlight)', function() {
+					var ticketId = parseInt($(this).attr('row-id')),
+						ticket   = makeItAll.ticketManager.getTicket(ticketId);
+
+					$('#view-call-history-modal').modal('hide');
+
+					ticketPage.refreshPage(ticket.filter.slug, ticketId);
+				});
+
+				$('#follow-up-call-modal').on('shown.bs.modal', function() {
+					var $firstAccordionHeader = $(this).find('#accordion .card-header a'),
+						$addExistingTicket    = $('#add-existing-ticket'),
+						allTickets            = makeItAll.ticketManager.tickets;
+
+					$firstAccordionHeader.text('This Ticket: ' + ticketPage.currentTicket.title);
+
+					ticketPage.populateTicketModal($(this), ticketPage.currentTicket, 'this');
+
+					$addExistingTicket.html('<option selected hidden>Select an Existing Ticket</option>');
+
+					for (var i = 0; i < allTickets.length; i++) {
+						var ticket = allTickets[i];
+
+						if (ticket.id === ticketPage.currentTicket.id) {
+							continue;
+						}
+
+						$addExistingTicket.append('<option value="' + ticket.id + '">' + '#' + ticket.id + ' ' + ticket.title.substring(0, 17) + '...</option>');
+					}
+
+					$addExistingTicket.selectpicker('refresh');
+				});
+
+				$('#create-follow-up-call').on('click', function() {
+					var formData 		  = $('#follow-up-call-modal form').serializeObject(),
+						formDataTickets   = formData.tickets,
+						existingTicketIds = [];
+
+					for (var cardId in formDataTickets) {
+						var card = formDataTickets[cardId];
+
+						if (card.hasOwnProperty('id')) {
+							existingTicketIds.push(parseInt(card.id));
+							delete formDataTickets[cardId];
+						}
+					}
+
+					makeItAll.ticketManager.createCall(formData.date_of_call, formData.caller, formDataTickets, existingTicketIds);
+
+					ticketPage.refreshPage(ticketPage.currentTicket.filter.slug, ticketPage.currentTicket.id);
+
+					$('#follow-up-call-modal').modal('hide');
+				});
+
+				$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
+					ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller...', makeItAll.staffManager.staffMembers);
+				});
+
+				$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
+					ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
+				});
+
+				$('#edit-ticket-modal').on('show.bs.modal', function() {
+					ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers, ticketPage.currentTicket._assigned_to);
+				});
+
+				$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
+					$(this).find('.staff-information').text('No staff member has been selected yet!');
+				});
+
+				$('#new-ticket-modal select[name="caller"], #follow-up-call-modal select[name="caller"]').on('change', function() {
+					var $staffInformation = $(this).closest('.modal').find('.staff-information'),
+						staffMember       = makeItAll.staffManager.getStaffMember($(this).val());
+
+					$staffInformation.html(
+						'<p>ID Number: <strong>' + staffMember.id + '</strong></p>' +
+						'<p>Name: <strong>' + staffMember.name + '</strong></p>' +
+						'<p>Job Title: <strong>' + staffMember.job_title + '</strong></p>' +
+						'<p>Department: <strong>' + staffMember.department + '</strong></p>' +
+						'<p>Telephone Number: <strong>' + staffMember.telephone_number + '</strong></p>'
+					);
+				});
 		</script>
 	</body>
 </html>

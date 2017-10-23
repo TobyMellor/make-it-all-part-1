@@ -8,16 +8,8 @@ var gulp      = require('gulp'),
     concat    = require('gulp-concat');
 
 gulp.task('scripts', function() {
-    gulp.src(['assets/js/plugins/**/*.js'])
-        .pipe(plumber())
-        .pipe(rename({
-            suffix: '.min'
-        }))
-        .pipe(uglify())
-        .pipe(gulp.dest('./public/js/plugins/'));
-
     // The Main files used on every page
-    gulp.src(['assets/js/main.js', 'assets/js/pages/DynamicPage.js'])
+    gulp.src(['assets/js/main.js', 'assets/js/pages/DynamicPage.js', 'assets/js/pages/Manager.js'])
         .pipe(plumber())
         // .pipe(uglify())
         .pipe(concat('main.min.js'))
@@ -35,6 +27,20 @@ gulp.task('scripts', function() {
         .pipe(plumber())
         // .pipe(uglify())
         .pipe(concat('staff.min.js'))
+        .pipe(gulp.dest('./public/js/pages/'));
+
+    // Hardware
+    gulp.src(['assets/js/pages/hardware/**/*.js'])
+        .pipe(plumber())
+        // .pipe(uglify())
+        .pipe(concat('hardware.min.js'))
+        .pipe(gulp.dest('./public/js/pages/'));
+
+    // Software
+    gulp.src(['assets/js/pages/software/**/*.js'])
+        .pipe(plumber())
+        // .pipe(uglify())
+        .pipe(concat('software.min.js'))
         .pipe(gulp.dest('./public/js/pages/'));
 
     // Global Metrics
@@ -59,6 +65,6 @@ gulp.task('styles', function() {
 gulp.task('watch', function() {
     gulp.watch('assets/js/**/*.js', ['scripts']);
     gulp.watch('assets/sass/**/*.scss', ['styles']);
-})
+});
 
 gulp.task('default', ['styles', 'scripts', 'watch']);

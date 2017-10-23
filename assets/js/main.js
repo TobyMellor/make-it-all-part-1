@@ -23,32 +23,34 @@ $(function () {
 
 		if (isChecked) {
 			switch (fieldName) {
-				case 'ticket[staff][permissions][ticket_read_only]':
+				case 'staff[permissions][ticket_read_only]':
 					$("input[name*=ticket_read_only]").prop('checked', false);
-				case 'ticket[staff][permissions][helpdesk_operator]':
+				case 'staff[permissions][helpdesk_operator]':
 					$("input[name*=helpdesk_operator]").prop('checked', false);
-				case 'ticket[staff][permissions][analyst]':
+				case 'staff[permissions][analyst]':
 					$("input[name*=analyst]").prop('checked', false);
-				case 'ticket[staff][permissions][super_admin]':
+				case 'staff[permissions][super_admin]':
 					$("input[name*=super_admin]").prop('checked', false);
 			}
 		} else {
 			switch (fieldName) {
-				case 'ticket[staff][permissions][super_admin]':
+				case 'staff[permissions][super_admin]':
 					$("input[name*=super_admin]").prop('checked', true);
-				case 'ticket[staff][permissions][analyst]':
+				case 'staff[permissions][analyst]':
 					$("input[name*=analyst]").prop('checked', true);
-				case 'ticket[staff][permissions][helpdesk_operator]':
+				case 'staff[permissions][helpdesk_operator]':
 					$("input[name*=helpdesk_operator]").prop('checked', true);
-				case 'ticket[staff][permissions][ticket_read_only]':
+				case 'staff[permissions][ticket_read_only]':
 					$("input[name*=ticket_read_only]").prop('checked', true);
 			}
 		}
 	});
 
-	$('.selectpicker').selectpicker({
+	$('.staff-picker').selectpicker({
 		noneResultsText: 'Click to create {0}'
 	});
+
+	$('.selectpicker').not('.staff-picker').selectpicker();
 
 	$('.timepicker').datetimepicker();
 
@@ -58,8 +60,8 @@ $(function () {
 			lastName       = $newStaffName.split(firstName + " ")[1],
 			$newStaffModal = $('#new-staff-modal');
 
-		$newStaffModal.find('input[name="ticket[staff][first_name]"]').val(firstName);
-		$newStaffModal.find('input[name="ticket[staff][last_name]"]').val(lastName);
+		$newStaffModal.find('input[name="staff[first_name]"]').val(firstName);
+		$newStaffModal.find('input[name="staff[last_name]"]').val(lastName);
 
 		$newStaffModal.find('input[name="event_target"]').val($(this).closest('.bootstrap-select').find('select').attr('name')); // when the staff member is created, this is the input field it'll update
 
@@ -82,34 +84,111 @@ $(function () {
 		addItemToPicker(
 			$('.selectpicker.staff-picker[name="' + formData['event_target'] + '"]'),
 			staffId,
-			formData['ticket[staff][first_name]'] + ' ' + formData['ticket[staff][last_name]']
+			formData['staff[first_name]'] + ' ' + formData['staff[last_name]']
 		); // formData and staffId to be retrieved by AJAX call
 
 		$('#new-staff-modal').modal('hide');
 	});
 
-	$('#new-staff-modal, #new-ticket-modal').on('show.bs.modal', function (e) {
+	$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
 		$(this).find('input, textarea')
 			   .not('.no-clear-on-show')
 			   .val('');
 
+		$(this).find('#accordion .card:not(:first-child)').remove();
+
 		var flooredCurrentTime = new Date();
 
-	    flooredCurrentTime.setMilliseconds(Math.round(flooredCurrentTime.getMilliseconds() / 1000) * 1000);
-	    flooredCurrentTime.setSeconds(Math.round(flooredCurrentTime.getSeconds() / 60) * 60);
-	    flooredCurrentTime.setMinutes(Math.floor(flooredCurrentTime.getMinutes() / 15) * 15);
+		flooredCurrentTime.setMilliseconds(Math.round(flooredCurrentTime.getMilliseconds() / 1000) * 1000);
+		flooredCurrentTime.setSeconds(Math.round(flooredCurrentTime.getSeconds() / 60) * 60);
+		flooredCurrentTime.setMinutes(Math.floor(flooredCurrentTime.getMinutes() / 15) * 15);
 
 		$(this).find('.timepicker').val((flooredCurrentTime.getMonth() + 1) + '/' + flooredCurrentTime.getDate() + '/' + flooredCurrentTime.getFullYear() + ' ' + flooredCurrentTime.getHours() + ':' + flooredCurrentTime.getMinutes()); // set time to last 15 minute interval e.g. 10:34 -> 10:30, 10:55 -> 10:45
 	});
+
+	$(document).on('click', '#accordion .card .card-header .view-accordion', function() {
+		$(this).siblings('a[data-toggle="collapse"]').click();
+	});
+
+	$(document).on('click', '#accordion .card .card-header .remove-accordion', function() {
+		$(this).closest('.card').fadeOut(200, function() {
+			$(this).remove();
+		});
+	});
+
+	$(document).on('hide.bs.collapse', '#accordion .collapse', function () {
+		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-eye-slash').addClass('fa-eye');
+	});
+
+	$(document).on('show.bs.collapse', '#accordion .collapse', function () {
+		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-eye').addClass('fa-eye-slash');
+	});
 });
 
-function parseFormData(form) {
-	return form.serializeArray().reduce(function(obj, item) {
-		obj[item.name] = item.value;
+// https://stackoverflow.com/a/8407771/2957677
+(function($){
+    $.fn.serializeObject = function(){
+        var self = this,
+            json = {},
+            push_counters = {},
+            patterns = {
+                "validate": /^[a-zA-Z][a-zA-Z0-9_]*(?:\[(?:\d*|[a-zA-Z0-9_]+)\])*$/,
+                "key":      /[a-zA-Z0-9_]+|(?=\[\])/g,
+                "push":     /^$/,
+                "fixed":    /^\d+$/,
+                "named":    /^[a-zA-Z0-9_]+$/
+            };
 
-		return obj;
-	}, {});
-}
+        this.build = function(base, key, value){
+            base[key] = value;
+            return base;
+        };
+
+        this.push_counter = function(key){
+            if(push_counters[key] === undefined){
+                push_counters[key] = 0;
+            }
+            return push_counters[key]++;
+        };
+
+        $.each($(this).serializeArray(), function(){
+            // skip invalid keys
+            if(!patterns.validate.test(this.name)){
+                return;
+            }
+
+            var k,
+                keys = this.name.match(patterns.key),
+                merge = this.value,
+                reverse_key = this.name;
+
+            while((k = keys.pop()) !== undefined){
+
+                // adjust reverse_key
+                reverse_key = reverse_key.replace(new RegExp("\\[" + k + "\\]$"), '');
+
+                // push
+                if(k.match(patterns.push)){
+                    merge = self.build({}, self.push_counter(reverse_key), merge);
+                }
+
+                // fixed
+                else if(k.match(patterns.fixed)){
+                    merge = self.build({}, k, merge);
+                }
+
+                // named
+                else if(k.match(patterns.named)){
+                    merge = self.build({}, k, merge);
+                }
+            }
+
+            json = $.extend(true, json, merge);
+        });
+
+        return json;
+    };
+})(jQuery);
 
 function addItemToPicker(pickerElement, itemValue, itemName) {
 	$('.selectpicker.staff-picker').append('<option val="' + itemValue + '">' + itemName + '</option>');
@@ -133,7 +212,9 @@ function addItemToPicker(pickerElement, itemValue, itemName) {
  */
 class MakeItAll {
 	constructor() {
-		this.ticketManager = null;
-		this.staffManager  = null;
+		this.ticketManager   = null;
+		this.staffManager    = null;
+		this.hardwareManager = null;
+		this.softwareManager = null;
 	}
 }
