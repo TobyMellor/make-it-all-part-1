@@ -8,6 +8,14 @@ var gulp      = require('gulp'),
     concat    = require('gulp-concat');
 
 gulp.task('scripts', function() {
+    gulp.src(['assets/js/plugins/**/*.js'])
+        .pipe(plumber())
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(uglify())
+        .pipe(gulp.dest('./public/js/plugins/'));
+
     // The Main files used on every page
     gulp.src(['assets/js/main.js', 'assets/js/pages/DynamicPage.js', 'assets/js/pages/Manager.js'])
         .pipe(plumber())
@@ -65,6 +73,6 @@ gulp.task('styles', function() {
 gulp.task('watch', function() {
     gulp.watch('assets/js/**/*.js', ['scripts']);
     gulp.watch('assets/sass/**/*.scss', ['styles']);
-});
+})
 
 gulp.task('default', ['styles', 'scripts', 'watch']);
