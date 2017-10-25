@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Staff - Make-It-All</title>
+	<link rel="stylesheet" type="text/css" href="css/plugins/plugins.min.css">
+	<link rel="stylesheet" type="text/css" href="css/pages/staff.min.css">
+	<link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+	<nav class="side-nav-bar">
+		<a class="btn btn-info">
+			Logout
+			<i class="fa fa-sign-out"></i>
+		</a>
+		
+		<div class="side-nav-bar-menu">
+			<ul>
+				<li>
+					<i class="fa fa-line-chart fa-2x"></i>
+					<p>Global Metrics</p>
+				</li>
+				<li>
+					<i class="fa fa-ticket fa-2x"></i>
+					<p>Tickets</p>
+				</li>
+				<li>
+					<i class="fa fa-file-code-o fa-2x"></i>
+					<p>Software</p>
+				</li>
+				<li>
+					<i class="fa fa-laptop fa-2x"></i>
+					<p>Hardware</p>
+				</li>
+				<li>
+					<i class="fa fa-question fa-2x"></i>
+					<p>Help</p>
+				</li>
+				<li class="active">
+					<i class="fa fa-user-circle-o fa-2x"></i>
+					<p>Staff</p>
+				</li>
+				<li>
+					<i class="fa fa-line-chart fa-2x"></i>
+					<p>My Metrics</p>
+				</li>
+
+				<li>
+					<div class="breaker"></div>
+					<i class="fa fa-cog fa-2x"></i>
+					<p>Settings</p>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	
+	<nav class="side-nav-bar-nested" id="staff-nav">
+		<h1>
+			<i class="fa fa-user-circle-o"></i>
+			Staff
+		</h1>
+		<p>
+			Roles
+		</p>
+		<ul>				
+			<li class="active" data-slug="all">
+				<i class="fa fa-users"></i>
+				All Staff
+			</li>
+			<li data-slug="access.operator">
+				<i class="fa fa-user-secret"></i>
+				Operators
+			</li>
+			<li data-slug="access.analyst">
+				<i class="fa fa-line-chart"></i>
+				Analysts
+			</li>
+			<li data-slug="access.admin">
+				<i class="fa fa-shield"></i>
+				Administrators
+			</li>
+			<li>
+				<button id="new-user" class="btn btn-success">
+						<i class="fa fa-plus"></i>
+						New User
+				</button>
+			</li>
+		</ul>
+	</nav>
+	
+	<section id="staff">
+		<nav class="top-nav with-title">
+			<i class="fa fa-ticket"></i>
+			<h4 class="main-content-title">Loading...</h4>
+		</nav>
+		<div class="splash-screen" style="display: none;">
+			<h3>No results</h3>
+			<p>Get started, create a new staff member.</p>
+			<button class="btn btn-success btn-lg new-ticket" data-toggle="modal" data-target="#create-staff-modal">
+				<i class="fa fa-plus"></i>
+				New User
+			</button>
+		</div>
+		<div class="main-content">
+			<table class="table table-hover table-responsive data">
+				<thead>
+					<tr>
+						<th data-slug="id">ID</th>
+						<th data-slug="name">Name</th>
+						<th data-slug="job">Job</th>
+						<th data-slug="department">Department</th>
+						<th data-slug="phone">Phone No</th>
+						<th data-toggle="tooltip" title="Operator" data-slug="access.operator">
+							<i class="fa fa-user-secret"></i>
+						</th>
+						<th data-toggle="tooltip" title="Analyst" data-slug="access.analyst">
+							<i class="fa fa-line-chart"></i>
+						</th>
+						<th data-toggle="tooltip" title="Administrator" data-slug="access.admin">
+							<i class="fa fa-shield"></i>
+						</th>
+						<th data-slug="eye"></th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</section>
+	
+	<script src="js/plugins/plugins.min.js"></script>
+	<script src="js/main.min.js"></script>
+	<script src="js/pages/staff.min.js"></script>
+	<script>
+		let makeItAll = new MakeItAll();
+		makeItAll.staffManager = new StaffManager([
+			{
+				id: 1,
+				name: "George",
+				job: "Developer",
+				department: "Team 5",
+				phone: "01555555555",
+				isOperator: true,
+				isAdmin: true
+			},
+			{
+				id: 2,
+				name: "Joe",
+				isOperator: true
+			}
+		]);
+		
+		let staffPage = new StaffPage();
+		staffPage.showStaff();
+	</script>
+</body>
+</html>
