@@ -19,10 +19,6 @@ class DynamicPage {
 		this.detailSelector = detailSelector ? detailSelector : (sectionSelector !== "#table-section" ? sectionSelector.split(" ")[0] + "-detail" : "#single-view");
 	}
 	
-	updateListViewNavbar(html) {
-		$(this.sectionSelector).find('.top-nav.with-title .main-content-title').html(html);
-	}
-
 	updateSingleViewNavbar(html) {
 		$(this.detailSelector).find('.top-nav .main-content-title').html(html);
 	}
@@ -60,6 +56,11 @@ class DynamicPage {
 				});
 			}
 		}
+		
+		// Set navbar text as number of items in table then append currently selected filter
+		var navText = resultsCount + " " + $(this.navSelector).find("li.active").first().text().replace("All ", "");
+		// If unable to obtain rows count, show "Loading…"
+		$(this.sectionSelector).closest("section").find(".main-content-title").text(resultsCount !== undefined ? navText : "Loading…");
 	}
 
 	/**

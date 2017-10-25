@@ -18,7 +18,6 @@ class TicketPage extends DynamicPage {
 			filteredTickets = filter.tickets;
 
 		if (filter !== null) {
-			this.updateListViewNavbar(filteredTickets.length + ' \'' + filter.name + '\' ' + (filteredTickets.length === 1 ? 'ticket' : 'tickets'));
 			this.clearTable();
 
 			for (var i = 0; i < filteredTickets.length; i++) {
