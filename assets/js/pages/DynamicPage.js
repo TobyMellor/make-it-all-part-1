@@ -8,12 +8,23 @@
  */
 
 class DynamicPage {
+	constructor({
+		sectionSelector = "#table-section",
+		navSelector = "#table-section .top-nav",
+		detailSelector = "#single-view"
+	} = {}) {
+		this.sectionSelector = sectionSelector;
+		// Set navigation selector to first component of section selector with ‘-nav’ appended, otherwise default CSS selector
+		this.navSelector = navSelector ? navSelector : (sectionSelector !== "#table-section" ? sectionSelector.split(" ")[0] + "-nav" : ".side-nav-bar-nested");
+		this.detailSelector = detailSelector ? detailSelector : (sectionSelector !== "#table-section" ? sectionSelector.split(" ")[0] + "-detail" : null);
+	}
+	
 	updateListViewNavbar(html) {
-		$('.top-nav.with-title .main-content-title').html(html);
+		$(this.sectionSelector).find('.top-nav.with-title .main-content-title').html(html);
 	}
 
 	updateSingleViewNavbar(html) {
-		$('#single-view .top-nav .main-content-title').html(html);
+		$(this.detailSelector).find('.top-nav .main-content-title').html(html);
 	}
 
 	/**
@@ -33,9 +44,9 @@ class DynamicPage {
 				scope.updateSplashScreen();
 			}, 201);
 		} else {
-			var resultsCount = $('#table-section tbody tr').length,
+			var resultsCount = $(this.sectionSelector).find('tbody tr').length,
 				splashScreen = $('.splash-screen').not('.loading-splash-screen'),
-				tableSection = $('#table-section');
+				tableSection = $(this.sectionSelector);
 
 			if (resultsCount > 0) {
 				splashScreen.fadeOut(200, function() {
@@ -66,11 +77,10 @@ class DynamicPage {
 	 * splashscreen on your page
 	 */
 	appendTableRow(object) {
-		var mainContent  = $('.main-content'),
-			tableSection = mainContent.find('#table-section'),
-			tableHead    = tableSection.find('table thead tr'),
-			tableBody    = tableSection.find('table tbody'),
-			newRow       = $('<tr row-id="' + object.id + '"></tr>');
+		var tableSection = $(this.sectionSelector),
+		    tableHead    = tableSection.find('table thead tr'),
+		    tableBody    = tableSection.find('table tbody'),
+		    newRow       = $('<tr row-id="' + object.id + '"></tr>');
 
 		tableHead.children('th').each(function() {
 			var slug = $(this).attr('slug');
@@ -93,24 +103,24 @@ class DynamicPage {
 	 * Clears the data in the table body within #table-section
 	 */
 	clearTable() {
-		$('#table-section tbody').html('');
+		$(this.sectionSelector).find('tbody').html('');
 	}
 
 	showTableRowDetails(id = null) {
 		if (id !== null) {
-			$('#table-section tbody tr').removeClass('highlight');
-			$('#table-section tbody').find('tr[row-id="' + id + '"]').addClass('highlight');
+			$(this.sectionSelector).find('tbody tr').removeClass('highlight');
+			$(this.sectionSelector).find('tbody tr[row-id="' + id + '"]').addClass('highlight');
 		}
 
 		$('#list-view').css('flex-grow', 'initial');
-		$('#single-view').css({'flex-grow': 1, 'display': 'block'});
-		$('#single-view > div').hide().fadeIn();
+		$(this.detailSelector).css({'flex-grow': 1, 'display': 'block'});
+		$(this.detailSelector).children('div').hide().fadeIn();
 	}
 
 	hideTableRowDetails() {
-		$('#table-section tbody tr').removeClass('highlight');
+		$(this.sectionSelector).find('tbody tr').removeClass('highlight');
 
-		$('#single-view').css({'flex-grow': 'initial', 'display': 'none'});
+		$(this.detailSelector).css({'flex-grow': 'initial', 'display': 'none'});
 		$('#list-view').css('flex-grow', 1);
 	}
 
