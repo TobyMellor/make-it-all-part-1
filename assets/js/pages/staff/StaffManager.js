@@ -13,7 +13,7 @@ class StaffManager extends Manager {
 		super();
 		this.staff = staff ? staff.map(e => new Employee(e)) : [];
 	}
-
+	
 	createEmployee(data = {}) {
 		data.id = Math.floor(Math.random() * 10000 + 1);
 		
@@ -35,5 +35,15 @@ class StaffManager extends Manager {
 			return this.getEmployee(id);
 		}
 		return id;
+	}
+	
+	// Deprecated
+	get staffMembers() {
+		console.warn("Use of StaffManager property staffMembers is deprecated, use staff");
+		return this.staff;
+	}
+	getStaffMember(id) {
+		console.warn("Use of StaffManager method getStaffMember(id) is deprecated, use getEmployee(id)");
+		return this.getEmployee(id);
 	}
 }

@@ -1,10 +1,10 @@
-let staffPage;
+let staffPage = new StaffPage();
 
 $(() => {
 	
-	staffPage = new StaffPage();
+	if (document.getElementById(staffPage.sectionSelector.substring(1)).dataset.page !== "staff") return;
+	
 	staffPage.showStaff();
-	staffPage.updateSplashScreen();
 	$(staffPage.navSelector).find("[data-slug]").click(el => {
 		$(el.delegateTarget).addClass("active").siblings().removeClass("active");
 		
@@ -20,8 +20,8 @@ $(() => {
 		});
 	});
 	
-	$(staffPage.sectionSelector).on("click", "tbody tr", e => {
-		staffPage.showDetail(Number(e.currentTarget.dataset.id));
+	$(staffPage.tableSelector).on("click", "tbody tr", e => {
+		staffPage.showTableRowDetails(Number(e.currentTarget.dataset.rowid));
 	});
 	
 });

@@ -7,19 +7,20 @@ class StaffPage extends DynamicPage {
 		for (let employee of makeItAll.staffManager.staff) {
 			this.appendTableRow(employee);
 		}
+		staffPage.updateSplashScreen();
 	}
 	
-	showDetail(id) {
+	showTableRowDetails(id) {
 		// Get employee with ID
 		let employee = makeItAll.staffManager.getEmployee(id);
 		if (!employee) {
-			this.hideDetail();
+			this.hideTableRowDetails();
 			alert("No employee with ID " + id);
 			return;
 		}
 		
 		this.detailTitle = employee.name;
 		
-		super.showDetail(id);
+		super.showTableRowDetails(id);
 	}
 }
