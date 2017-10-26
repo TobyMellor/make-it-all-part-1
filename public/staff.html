@@ -88,10 +88,10 @@
 		</ul>
 	</nav>
 	
-	<section id="staff">
-		<nav class="top-nav with-title">
+	<section id="list-view">
+		<nav class="top-nav">
 			<i class="fa fa-ticket"></i>
-			<h4 class="main-content-title">Loading...</h4>
+			<h4 class="main-content-title">Loading…</h4>
 		</nav>
 		<div class="splash-screen" style="display: none;">
 			<h3>No results</h3>
@@ -128,6 +128,18 @@
 		</div>
 	</section>
 	
+	<div>
+		<section id="single-view">
+			<nav class="top-nav">
+				<button class="btn btn-sm close-button ticket-close-button">
+					<i class="fa fa-times"></i>
+					Close
+				</button>
+				<h4>Loading…</h4>
+			</nav>
+		</section>
+	</div>
+	
 	<script src="js/plugins/plugins.min.js"></script>
 	<script src="js/main.min.js"></script>
 	<script src="js/pages/staff.min.js"></script>
@@ -149,9 +161,6 @@
 				isOperator: true
 			}
 		]);
-		
-		let staffPage = new StaffPage();
-		staffPage.showStaff();
 	</script>
 </body>
 </html>
