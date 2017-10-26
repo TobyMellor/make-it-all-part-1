@@ -40,7 +40,7 @@ body {
 		overflow-y: scroll;
 	}
 	
-	> div {
+	> div:not([class]) {
 		display: none;
 	}
 	// I think this looks better with a 1px border, to discuss
@@ -299,6 +299,7 @@ section {
 		background: $white;
 		position: sticky;
 		position: -webkit-sticky;
+		z-index: 1;
 
 		> .fa, h4 {
 			display: inline;
