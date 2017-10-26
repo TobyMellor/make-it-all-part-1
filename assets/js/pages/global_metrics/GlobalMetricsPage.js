@@ -1,5 +1,8 @@
 $(function() {
 	var globalMetricsPage = new GlobalMetricsPage();
+	$('.selectpicker').selectpicker({
+		noneResultsText: 'No results match {0}'
+	});
 });
 
 class GlobalMetricsPage extends DynamicPage {

@@ -49,6 +49,13 @@ gulp.task('scripts', function() {
             .pipe(sourcemaps.write('maps'))
             .pipe(gulp.dest('./public/js/pages/'));
     }
+
+    //Hardware
+    gulp.src(['assets/js/pages/software/**/*.js'])
+        .pipe(plumber())
+        // .pipe(uglify())
+        .pipe(concat('software.min.js'))
+        .pipe(gulp.dest('./public/js/pages/'));
 });
 
 gulp.task('styles', function() {

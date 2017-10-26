@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Tickets - Make-It-All</title>
+	<link rel="stylesheet" type="text/css" href="css/plugins/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/plugins/bootstrap-select.min.css">
+	<link rel="stylesheet" type="text/css" href="css/plugins/jquery-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="css/plugins/jquery-ui-timepicker-addon.min.css">
+	<link rel="stylesheet" type="text/css" href="css/main.min.css">
+	<link rel="stylesheet" type="text/css" href="css/pages/software.min.css">
+	<link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
+</head>
+
+<body>
+	<nav class="side-nav-bar">
+		<a class="btn btn-info">
+			Logout
+			<i class="fa fa-sign-out"></i>
+		</a>
+		<div class="side-nav-bar-menu">
+			<ul>
+				<li>
+					<i class="fa fa-line-chart fa-2x"></i>
+					<p>Global Metrics</p>
+				</li>
+				<li>
+					<i class="fa fa-ticket fa-2x"></i>
+					<p>Tickets</p>
+				</li>
+				<li class="active">
+					<i class="fa fa-file-code-o fa-2x"></i>
+					<p>Software</p>
+				</li>
+				<li>
+					<i class="fa fa-laptop fa-2x"></i>
+					<p>Hardware</p>
+				</li>
+				<li>
+					<i class="fa fa-question fa-2x"></i>
+					<p>Help</p>
+				</li>
+				<li>
+					<i class="fa fa-user-circle-o fa-2x"></i>
+					<p>Staff</p>
+				</li>
+				<li>
+					<i class="fa fa-line-chart fa-2x"></i>
+					<p>My Metrics</p>
+				</li>
+				<li>
+					<div class="breaker"></div>
+					<i class="fa fa-cog fa-2x"></i>
+					<p>Settings</p>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<section>
+		<nav class="top-nav">
+			<i class="fa fa-file-code-o"></i>
+			<h4 class="main-content-title">Software</h4>
+		</nav>
+		<div class="main-content">
+			<div class="container-fluid" id="software-content">
+				<div class="row">
+
+					<div class="col-md-5">
+						<div class="form-group">
+							<label for="type-select">Hardware Type</label>
+							<select size="2" class="form-control listbox" id="type">
+								<option>Word</option>
+								<option>Powerpoint</option>
+								<option>Excel</option>
+								<option>Firefox</option>
+								<option>Internet Explorer</option>
+								<option>MS SQL Server Manager</option>
+								<option>Visual Studio</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-7">
+						<div class="card mb-3" style="border:0">
+							<h6 class="card-header main-content-title">
+								<i class="fa fa-file-code-o"></i> Authorised Users
+								<span id="ticket-total" class="text-muted">Total: 4</span>
+							</h6>
+							<div class="card-body card-list">
+								<ul class="list-group">
+									<li class="list-group-item list-group-item-action">
+										#0 Steve
+										<span class="pull-right text-muted">Operator</span>
+									</li>
+									<li class="list-group-item list-group-item-action">
+										#1 Andy
+										<span class="pull-right text-muted">Admin</span>
+									</li>
+									<li class="list-group-item list-group-item-action">
+										#2 Claire
+										<span class="pull-right text-muted">Analyst</span>
+									</li>
+									<li class="list-group-item list-group-item-action">
+										#3 Mary
+										<span class="pull-right text-muted">Specialist</span>
+									</li>
+
+								</ul>
+							</div>
+						</div>
+
+						<div class="card mb-3" style="border:0;margin-top:30px">
+							<h6 class="card-header main-content-title">
+								<i class="fa fa-ticket"></i> Tickets
+								<span id="ticket-total" class="text-muted">Total: 2</span>
+							</h6>
+							<div class="card-body card-list">
+								<ul class="list-group">
+									<li class="list-group-item list-group-item-action">
+										#0: Printer Queue not working
+										<span class="badge badge-success">
+											Solved
+										</span>
+										<span class="pull-right text-muted">12/10/2017</span>
+									</li>
+									<li class="list-group-item list-group-item-action">
+										#1: Coffee machine needs refilling
+										<span class="badge badge-primary">
+											New
+										</span>
+										<span class="pull-right text-muted">12/10/2017</span>
+									</li>
+									<li class="list-group-item list-group-item-action">
+										#1: Coffee machine needs refilling
+										<span class="badge badge-primary">
+											New
+										</span>
+										<span class="pull-right text-muted">12/10/2017</span>
+									</li>
+									<li class="list-group-item list-group-item-action">
+										#1: Coffee machine needs refilling
+										<span class="badge badge-primary">
+											New
+										</span>
+										<span class="pull-right text-muted">12/10/2017</span>
+									</li>
+									<li class="list-group-item list-group-item-action">
+										#1: Coffee machine needs refilling
+										<span class="badge badge-primary">
+											New
+										</span>
+										<span class="pull-right text-muted">12/10/2017</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="card mb-3" style="border:0">
+							<h6 class="card-header main-content-title">
+								<i class="fa fa-file-code-o"></i> Software
+								<span id="ticket-total" class="text-muted">Total: 2</span>
+							</h6>
+							<div class="card-body card-list">
+								<ul class="list-group">
+									<li class="list-group-item list-group-item-action">
+										Microsoft Word
+									</li>
+									<li class="list-group-item list-group-item-action">
+										Microsoft Word
+									</li>
+									<li class="list-group-item list-group-item-action">
+										Microsoft Word
+									</li>
+									<li class="list-group-item list-group-item-action">
+										Microsoft Word
+									</li>
+									<li class="list-group-item list-group-item-action">
+										Microsoft Word
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+	<script src="js/plugins/jquery.min.js"></script>
+	<script src="js/plugins/jquery-ui.min.js"></script>
+	<script src="js/plugins/jquery-ui-timepicker-addon.min.js"></script>
+	<script src="js/plugins/popper.min.js"></script>
+	<script src="js/plugins/bootstrap.min.js"></script>
+	<script src="js/plugins/bootstrap-select.min.js"></script>
+	<script src="js/main.min.js"></script>
+	<script src="js/pages/software.min.js"></script>
+	<script>
+		var makeItAll = new MakeItAll;
+	</script>
+</body>
+
+</html>
