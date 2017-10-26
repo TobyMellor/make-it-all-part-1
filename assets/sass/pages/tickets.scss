@@ -1,5 +1,11 @@
 @import "../main";
 
+section:not(:last-of-type)#list-view {
+	th:nth-last-child(-n+2), td:nth-last-child(-n+2) {
+		display: none;
+	}
+}
+
 .staff-information, .call-information {
 	color: $black;
 

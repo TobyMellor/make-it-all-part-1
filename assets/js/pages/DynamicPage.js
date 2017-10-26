@@ -8,12 +8,19 @@
  */
 
 class DynamicPage {
-	updateListViewNavbar(html) {
-		$('.top-nav.with-title .main-content-title').html(html);
+	constructor({
+		sectionSelector = "#table-section",
+		navSelector,
+		detailSelector
+	} = {}) {
+		this.sectionSelector = sectionSelector;
+		// Set navigation selector to first component of section selector with ‘-nav’ appended, otherwise default CSS selector
+		this.navSelector = navSelector ? navSelector : (sectionSelector !== "#table-section" ? sectionSelector.split(" ")[0] + "-nav" : ".side-nav-bar-nested");
+		this.detailSelector = detailSelector ? detailSelector : (sectionSelector !== "#table-section" ? sectionSelector.split(" ")[0] + "-detail" : "#single-view");
 	}
-
+	
 	updateSingleViewNavbar(html) {
-		$('#single-view .top-nav .main-content-title').html(html);
+		$(this.detailSelector).find('.top-nav .main-content-title').html(html);
 	}
 
 	/**
@@ -24,31 +31,18 @@ class DynamicPage {
 	 * You should call this function using "appendTable"
 	 */
 	updateSplashScreen() {
-		if ($('.loading-splash-screen').is(':visible')) {
-			$('.loading-splash-screen').fadeOut(200);
-
-			var scope = this; // unable to access 'this' in closure
-
-			setTimeout(function() {
-				scope.updateSplashScreen();
-			}, 201);
-		} else {
-			var resultsCount = $('#table-section tbody tr').length,
-				splashScreen = $('.splash-screen').not('.loading-splash-screen'),
-				tableSection = $('#table-section');
-
-			if (resultsCount > 0) {
-				splashScreen.fadeOut(200, function() {
-					tableSection.fadeIn(200);
-				});
-			} else {
-				tableSection.fadeOut(200, function() {
-					splashScreen.css('display', 'flex')
-					   			.hide()
-					   			.fadeIn(200); // fadeIn/Out doesn't support display: flex; so set it immediately
-				});
-			}
-		}
+		var $section = $(this.sectionSelector),
+		    resultsCount = $section.find('tbody tr').filter((i, el) => $(el).css("display") !== "none").length,
+		    $splashScreen = $('.splash-screen');
+		
+		var [$show, $hide] = resultsCount ? [$section, $splashScreen] : [$splashScreen, $section];
+		$hide.hide();
+		$show.fadeIn(100);
+		
+		// Set navbar text as number of items in table then append currently selected filter
+		var navText = resultsCount + " " + $(this.navSelector).find("li.active").first().text().replace("All ", "");
+		// If unable to obtain rows count, show "Loading…"
+		$(this.sectionSelector).closest("section").find(".top-nav h4").text(resultsCount !== undefined ? navText : "Loading…");
 	}
 
 	/**
@@ -66,52 +60,59 @@ class DynamicPage {
 	 * splashscreen on your page
 	 */
 	appendTableRow(object) {
-		var mainContent  = $('.main-content'),
-			tableSection = mainContent.find('#table-section'),
-			tableHead    = tableSection.find('table thead tr'),
-			tableBody    = tableSection.find('table tbody'),
-			newRow       = $('<tr row-id="' + object.id + '"></tr>');
+		var $tableSection = $(this.sectionSelector),
+		    $tableHead     = $tableSection.find('table thead tr'),
+		    $tableBody     = $tableSection.find('table tbody'),
+		    $newRow       = $(document.createElement("tr"));
 
-		tableHead.children('th').each(function() {
-			var slug = $(this).attr('slug');
+		// Set ID on row to reference later
+		$newRow[0].dataset.rowid = object.id;
+
+		$tableHead.children('th').each(function() {
+			var slug = this.dataset.slug, td = document.createElement("td");
 
 			if (slug === 'eye') { // the on-hover eye invisible row
-				newRow.append(
-					'<td>' +
-						'<i class="fa fa-eye"></i>' +
-					'</td>'
-				);
+				td.innerHTML = '<i class="fa fa-eye"></i>';
+			} else if (slug ? slug.includes("access") : false) {
+				// Boolean value support
+				td.textContent = Object.resolve(slug, object) ? "Yes" : "No";
 			} else {
-				newRow.append('<td>' + object[$(this).attr('slug')] + '</td>');
+				td.innerHTML = object[slug];
 			}
+			
+			$newRow.append(td);
 		});
-
-		tableBody.append(newRow);
+		
+		$tableBody.append($newRow);
 	}
 
 	/**
 	 * Clears the data in the table body within #table-section
 	 */
 	clearTable() {
-		$('#table-section tbody').html('');
+		$(this.sectionSelector).find('tbody').html('');
 	}
-
+	
+	/**
+	 * Show detail page
+	 */
 	showTableRowDetails(id = null) {
-		if (id !== null) {
-			$('#table-section tbody tr').removeClass('highlight');
-			$('#table-section tbody').find('tr[row-id="' + id + '"]').addClass('highlight');
-		}
-
-		$('#list-view').css('flex-grow', 'initial');
-		$('#single-view').css({'flex-grow': 1, 'display': 'block'});
-		$('#single-view > div').hide().fadeIn();
+		// No need to check for null as no rows will match if no ID passed
+		// .siblings does not include the element itself so can be chained after finding highlight row first
+		$(this.sectionSelector).find("tbody tr").filter((i, el) => el.dataset.rowid == id).addClass("highlight").first().siblings().removeClass("highlight");
+		
+		// No need to set style using JS here, CSS handles flex
+		$(this.detailSelector).unwrap("div");
 	}
-
+	
+	/**
+	 * Hide detail page shown with showDetail
+	 */
 	hideTableRowDetails() {
-		$('#table-section tbody tr').removeClass('highlight');
-
-		$('#single-view').css({'flex-grow': 'initial', 'display': 'none'});
-		$('#list-view').css('flex-grow', 1);
+		// Deselect all rows
+		$(this.sectionSelector).find("tbody tr").removeClass("highlight");
+		// Filter to check if already hidden, don't hide again
+		$(this.detailSelector).filter((i, el) => $(el).parent("div").length === 0).wrap(document.createElement("div"));
 	}
 
 	populateSelectField($select, defaultText, elements, defaultOptionId = null) {
