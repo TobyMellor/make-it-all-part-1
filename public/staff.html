@@ -80,7 +80,7 @@
 				Administrators
 			</li>
 			<li>
-				<button id="new-user" class="btn btn-success">
+				<button id="new-user" class="btn btn-success" data-toggle="modal" data-target="#new-staff-modal">
 						<i class="fa fa-plus"></i>
 						New User
 				</button>
@@ -96,7 +96,7 @@
 		<div class="splash-screen" style="display: none;">
 			<h3>No results</h3>
 			<p>Get started, create a new staff member.</p>
-			<button class="btn btn-success btn-lg new-ticket" data-toggle="modal" data-target="#create-staff-modal">
+			<button class="btn btn-success btn-lg new-ticket" data-toggle="modal" data-target="#new-staff-modal">
 				<i class="fa fa-plus"></i>
 				New User
 			</button>
@@ -135,12 +135,93 @@
 					Close
 				</button>
 				<h4>Loading…</h4>
-				<button class="btn btn-sm btn-warning float-right" data-action="edit">
+				<button class="btn btn-sm btn-warning float-right" data-action="edit" data-toggle="modal" data-target="#new-staff-modal">
 					<i class="fa fa-pencil"></i>
 					Edit
 				</button>
 			</nav>
 		</section>
+	</div>
+
+	<div class="modal fade" id="new-staff-modal" tabindex="-1" role="dialog" aria-labelledby="new-staff-modal" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Create a new Staff Member</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<input type="text" class="no-clear-on-show" name="event_target" hidden />
+						<div class="row">
+							<div class="col-md-8">
+								<div class="form-group">
+									<label class="required">Staff Name</label>
+									<div class="row">
+										<div class="col-md-6">
+											<input class="form-control no-clear-on-show" name="staff[first_name]" placeholder="First Name" />
+										</div>
+										<div class="col-md-6">
+											<input class="form-control no-clear-on-show" name="staff[last_name]" placeholder="Last Name" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="required">Staff Email</label>
+									<input class="form-control" name="staff[email]" />
+								</div>
+							</div>
+							<div class="col-md-4">
+								<label class="required">Staff Permissions</label>
+								<div class="staff-permissions">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" name="staff[permissions][ticket_read_only]" checked="checked">
+										<span class="custom-control-indicator"></span>
+										<span class="custom-control-description">Ticket Read Only</span>
+										<span class="help-text">
+											Can VIEW <a href="/tickets" target="_blank">tickets</a> and RECIEVE email status updates.
+										</span>
+									</label>
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" name="staff[permissions][helpdesk_operator]">
+										<span class="custom-control-indicator"></span>
+										<span class="custom-control-description">Helpdesk Operator</span>
+										<span class="help-text">
+											All permissions from 'Ticket Read Access'.<br />
+											They can also CREATE, UPDATE and DELETE <a href="/tickets" target="_blank">tickets</a> and VIEW <a href="/staff" target="_blank">staff</a>
+										</span>
+									</label>
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" name="staff[permissions][analyst]">
+										<span class="custom-control-indicator"></span>
+										<span class="custom-control-description">Analyst</span>
+										<span class="help-text">
+											All permissions from 'Ticket Read Access' and 'Helpdesk Operator'.<br />
+											They can also VIEW <a href="/metrics" target="_blank">metrics</a>.
+										</span>
+									</label>
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" name="staff[permissions][super_admin]">
+										<span class="custom-control-indicator"></span>
+										<span class="custom-control-description">Super Admin</span>
+										<span class="help-text">
+											All permissions from 'Ticket Read Access', 'Helpdesk Operator' and 'Analyst'<br />
+											They can also CREATE, UPDATE and DELETE <a href="/staff">staff</a>.
+										</span>
+									</label>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-success" id="create-new-staff">Create Staff Member</button>
+				</div>
+			</div>
+		</div>
 	</div>
 	
 	<script src="js/plugins/plugins.min.js"></script>
