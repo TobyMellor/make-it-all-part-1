@@ -84,9 +84,9 @@
 		</nav>
 
 		<section id="list-view">
-			<nav class="top-nav with-title">
+			<nav class="top-nav">
 				<i class="fa fa-ticket"></i>
-				<h4 class="main-content-title">Loading…</h4>
+				<h4>Loading…</h4>
 			</nav>
 			
 			<div class="splash-screen" style="display: none;">
@@ -98,7 +98,7 @@
 				</button>
 			</div>
 			
-			<div id="table-section" class="scrollable">
+			<div id="table-section">
 				<table class="table">
 					<thead>
 						<tr>
@@ -114,87 +114,90 @@
 				</table>
 			</div>
 		</section>
-		<section id="single-view">
-			<nav class="top-nav with-content">
-				<h4 class="main-content-title">Loading…</h4>
-				<button class="btn btn-sm close-button ticket-close-button">
-					<i class="fa fa-times"></i>
-					Close
-				</button>
-				<button class="btn btn-sm btn-warning close-button ticket-edit-button" data-toggle="modal" data-target="#edit-ticket-modal">
-					<i class="fa fa-pencil"></i>
-					Edit
-				</button>
-			</nav>
-
-			<div id="ticket-view" class="scrollable">
-				<div class="row">
-					<div class="col-md-12">
-						<p class="ticket-details">
-							<strong>Description:</strong>
-							<span id="ticket-overview" class="subtle"></span>
-						</p>
-						<div id="ticket-description">
-							<p></p>
+		
+		<div>
+			<section id="single-view">
+				<nav class="top-nav with-content">
+					<h4 class="main-content-title">Loading…</h4>
+					<button class="btn btn-sm close-button ticket-close-button">
+						<i class="fa fa-times"></i>
+						Close
+					</button>
+					<button class="btn btn-sm btn-warning close-button ticket-edit-button" data-toggle="modal" data-target="#edit-ticket-modal">
+						<i class="fa fa-pencil"></i>
+						Edit
+					</button>
+				</nav>
+	
+				<div id="ticket-view">
+					<div class="row">
+						<div class="col-md-12">
+							<p class="ticket-details">
+								<strong>Description:</strong>
+								<span id="ticket-overview" class="subtle"></span>
+							</p>
+							<div id="ticket-description">
+								<p></p>
+							</div>
 						</div>
 					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-6">
-						<p class="ticket-details">
-							<strong>Hardware/Software:</strong>
-						</p>
-						<table class="table compact" id="hardware-software-table">
-							<thead>
-								<tr>
-									<th>SERIAL</th>
-									<th>NAME</th>
-									<th>OS</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody></tbody>
-						</table>
-					</div>
-					<div class="col-md-6">
-						<p class="ticket-details">
-							<strong>Call History:</strong>
-							<span class="subtle" id="show-new-call-modal" data-toggle="modal" data-target="#follow-up-call-modal">Register follow-up call</span>
-						</p>
-
-						<table class="table compact" id="call-history-table">
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>CALLER</th>
-									<th>DATE</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody></tbody>
-						</table>
-					</div>
-				</div>
-
-				<h4>Updates:</h4>
-
-				<ul class="list-unstyled" id="ticket-comments"></ul>
-
-				<div id="comment-block">
-					<li class="media">
-						<img class="d-flex mr-3" src="images/portraits/portrait-1.jpg" alt="Portrait 1">
-						<div class="media-body">
-							<textarea class="form-control" placeholder="Reply to the ticket thread here..."></textarea>
-							<button class="btn btn-success" id="create-new-event">
-								<i class="fa fa-paper-plane"></i>
-								Send Reply
-							</button>
+	
+					<div class="row">
+						<div class="col-md-6">
+							<p class="ticket-details">
+								<strong>Hardware/Software:</strong>
+							</p>
+							<table class="table compact" id="hardware-software-table">
+								<thead>
+									<tr>
+										<th>SERIAL</th>
+										<th>NAME</th>
+										<th>OS</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
 						</div>
-					</li>
+						<div class="col-md-6">
+							<p class="ticket-details">
+								<strong>Call History:</strong>
+								<span class="subtle" id="show-new-call-modal" data-toggle="modal" data-target="#follow-up-call-modal">Register follow-up call</span>
+							</p>
+	
+							<table class="table compact" id="call-history-table">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>CALLER</th>
+										<th>DATE</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
+					</div>
+	
+					<h4>Updates:</h4>
+	
+					<ul class="list-unstyled" id="ticket-comments"></ul>
+	
+					<div id="comment-block">
+						<li class="media">
+							<img class="d-flex mr-3" src="images/portraits/portrait-1.jpg" alt="Portrait 1">
+							<div class="media-body">
+								<textarea class="form-control" placeholder="Reply to the ticket thread here..."></textarea>
+								<button class="btn btn-success" id="create-new-event">
+									<i class="fa fa-paper-plane"></i>
+									Send Reply
+								</button>
+							</div>
+						</li>
+					</div>
 				</div>
-			</div>
-		</section>
+			</section>
+		</div>
 
 		<div class="modal fade" id="new-ticket-modal" tabindex="-1" role="dialog" aria-labelledby="new-ticket-modal" aria-hidden="true">
 			<div class="modal-dialog modal-lg">

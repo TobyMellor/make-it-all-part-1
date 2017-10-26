@@ -42,7 +42,7 @@ class DynamicPage {
 		// Set navbar text as number of items in table then append currently selected filter
 		var navText = resultsCount + " " + $(this.navSelector).find("li.active").first().text().replace("All ", "");
 		// If unable to obtain rows count, show "Loading…"
-		$(this.sectionSelector).closest("section").find(".main-content-title").text(resultsCount !== undefined ? navText : "Loading…");
+		$(this.sectionSelector).closest("section").find(".top-nav h4").text(resultsCount !== undefined ? navText : "Loading…");
 	}
 
 	/**
@@ -92,23 +92,27 @@ class DynamicPage {
 	clearTable() {
 		$(this.sectionSelector).find('tbody').html('');
 	}
-
+	
+	/**
+	 * Show detail page
+	 */
 	showTableRowDetails(id = null) {
-		if (id !== null) {
-			$(this.sectionSelector).find('tbody tr').removeClass('highlight');
-			$(this.sectionSelector).find('tbody tr[data-rowid="' + id + '"]').addClass('highlight');
-		}
-
-		$('#list-view').css('flex-grow', 'initial');
-		$(this.detailSelector).css({'flex-grow': 1, 'display': 'block'});
-		$(this.detailSelector).children('div').hide().fadeIn();
+		// No need to check for null as no rows will match if no ID passed
+		// .siblings does not include the element itself so can be chained after finding highlight row first
+		$(this.sectionSelector).find("tbody tr").filter((i, el) => el.dataset.rowid == id).addClass("highlight").first().siblings().removeClass("highlight");
+		
+		// No need to set style using JS here, CSS handles flex
+		$(this.detailSelector).unwrap("div");
 	}
-
+	
+	/**
+	 * Hide detail page shown with showDetail
+	 */
 	hideTableRowDetails() {
-		$(this.sectionSelector).find('tbody tr').removeClass('highlight');
-
-		$(this.detailSelector).css({'flex-grow': 'initial', 'display': 'none'});
-		$('#list-view').css('flex-grow', 1);
+		// Deselect all rows
+		$(this.sectionSelector).find("tbody tr").removeClass("highlight");
+		// Filter to check if already hidden, don't hide again
+		$(this.detailSelector).filter((i, el) => $(el).parent("div").length === 0).wrap(document.createElement("div"));
 	}
 
 	populateSelectField($select, defaultText, elements, defaultOptionId = null) {
