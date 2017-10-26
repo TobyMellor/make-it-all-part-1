@@ -104,7 +104,10 @@ class DynamicPage {
 		$(this.sectionSelector).find("tbody tr").filter((i, el) => el.dataset.rowid == id).addClass("highlight").first().siblings().removeClass("highlight");
 		
 		// No need to set style using JS here, CSS handles flex
-		$(this.detailSelector).unwrap("div");
+		$(this.detailSelector).unwrap("div")
+		
+		// Close button on hide
+		.find("[data-action=\"close\"]").click(() => this.hideTableRowDetails());
 	}
 	
 	/**

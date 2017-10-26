@@ -118,12 +118,12 @@
 		<div>
 			<section id="single-view">
 				<nav class="top-nav with-content">
-					<h4 class="main-content-title">Loading…</h4>
-					<button class="btn btn-sm close-button ticket-close-button">
+					<button class="btn btn-sm float-left" data-action="close">
 						<i class="fa fa-times"></i>
 						Close
 					</button>
-					<button class="btn btn-sm btn-warning close-button ticket-edit-button" data-toggle="modal" data-target="#edit-ticket-modal">
+					<h4 class="main-content-title">Loading…</h4>
+					<button class="btn btn-sm btn-warning float-right" data-action="edit" data-toggle="modal" data-target="#edit-ticket-modal">
 						<i class="fa fa-pencil"></i>
 						Edit
 					</button>
@@ -988,11 +988,7 @@
 					ticketPage.showTicketView(parseInt(this.dataset.rowid));
 				});
 
-				$('.ticket-close-button').on('click', function() {
-					ticketPage.hideTableRowDetails();
-				});
-
-				$('.ticket-edit-button').on('click', function() {
+				$('#single-view [data-action="edit"]').on('click', function() {
 					ticketPage.populateTicketModal($('#edit-ticket-modal'), ticketPage.currentTicket);
 				});
 

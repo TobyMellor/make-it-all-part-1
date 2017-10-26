@@ -28,6 +28,10 @@ $comfortable: 16px;
 $standard: 14px;
 $h4: 24px;
 
+* {
+	transition: all 0.1s ease-out;
+}
+
 body {
 	height: 100vh;
 	display: flex;
@@ -361,6 +365,10 @@ section {
 	}
 }
 
+#single-view .top-nav {
+	text-align: center;
+}
+
 .splash-screen {
 	display: flex;
 	align-items: center;
@@ -456,10 +464,6 @@ label {
     margin-top: 10px;
     margin-bottom: 5px;
     width: 100%;
-}
-
-.close-button {
-	float: right;
 }
 
 #accordion {
