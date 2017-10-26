@@ -22,7 +22,7 @@ class DynamicPage {
 	}
 	
 	updateSingleViewNavbar(html) {
-		$(this.detailSelector).find('.top-nav .main-content-title').html(html);
+		$(this.detailSelector).find('.top-nav h4').html(html);
 	}
 
 	/**

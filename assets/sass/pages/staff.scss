@@ -16,3 +16,17 @@
 		display: none;
 	}
 }
+
+#single-view {
+	.container > .row {
+		padding-top: $comfortable;
+		align-items: center;
+	}
+	.card {
+		max-width: $comfortable * 16;
+		margin: $cosy $comfortable $cosy auto;
+	}
+	form .row {
+		border-bottom: 1px solid $silver;
+	}
+}

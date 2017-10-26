@@ -19,7 +19,13 @@ class StaffPage extends DynamicPage {
 			return;
 		}
 		
-		this.detailTitle = employee.name;
+		//this.detailTitle = employee.name;
+		this.updateSingleViewNavbar(employee.name);
+		
+		// Content
+		$(this.detailSelector).find("[data-slug]").each((i, el) => {
+			el.textContent = employee[el.dataset.slug];
+		});
 		
 		super.showTableRowDetails(id);
 	}
