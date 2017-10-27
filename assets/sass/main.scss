@@ -483,6 +483,7 @@ label {
 			border-radius: 0;
 			background-color: $cloudy-white;
 			padding-left: 15px;
+			border-bottom: 1px solid $silver;
 
 			&.highlight {
 				background-color: $highlight;
@@ -513,7 +514,8 @@ label {
 
 		.card-block {
 			padding: $comfortable;
-			border-top: 1px solid $silver;
+			max-height: 550px;
+			overflow-y: scroll;
 		}
 	}
 }
