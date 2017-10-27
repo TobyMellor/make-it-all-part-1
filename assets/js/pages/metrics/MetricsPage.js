@@ -1,11 +1,11 @@
 $(function() {
-	var globalMetricsPage = new GlobalMetricsPage();
+	var metricsPage = new MetricsPage();
 	$('.selectpicker').selectpicker({
 		noneResultsText: 'No results match {0}'
 	});
 });
 
-class GlobalMetricsPage extends DynamicPage {
+class MetricsPage extends DynamicPage {
 	constructor() {
 		super();
 		this.createLineGraph();
