@@ -27,10 +27,10 @@ class DynamicPage {
 
 	/**
 	 * Hides the "Loading..." splash screen if it's shown
-	 * Determins whether the "No Results..." splash screen
+	 * Determines whether the "No Results..." splash screen
 	 * should be shown or not.
 	 *
-	 * You should call this function using "appendTable"
+	 * You should call this function after using "appendTable"
 	 */
 	updateSplashScreen() {
 		var $table = $(this.tableSelector),
