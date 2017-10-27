@@ -1,0 +1,21 @@
+@import "../main";
+
+body {
+	background: $cloudy-white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+form {
+	background: $white;
+	width: 100%;
+	max-width: 640px;
+	margin: 0 auto;
+	padding: $comfortable;
+}
+
+.btn {
+	width: 160px;
+}
