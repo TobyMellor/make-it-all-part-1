@@ -50,7 +50,7 @@ gulp.task('scripts', function() {
             .pipe(gulp.dest('./public/js/pages/'));
     }
 
-    //Hardware
+    //Software
     gulp.src(['assets/js/pages/software/**/*.js'])
         .pipe(plumber())
         // .pipe(uglify())
