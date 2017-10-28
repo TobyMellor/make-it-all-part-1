@@ -65,23 +65,23 @@
 		</nav>
 		<div class="main-content">
 			<div id="metrics-content">
-				<div class="row">
-					<div class="col-md-4">
+				<div class="row" id="staff-info">
+					<div class="col-md-12">
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
-									<select class="selectpicker" data-live-search="true" name="StaffNameSearch">
-										<option selected>Search for Staff Member</option>
-										<option value="">Joe Bloggs</option>
-										<option value="">Richard Branson</option>
-										<option value="">Steve Jobs</option>
-										<option value="">Bill Gates</option>
+									<select class="selectpicker" style="z-index:100!important" data-live-search="true" id="StaffNameSearch" name="StaffNameSearch">
+										<option>-Search-</option>
+										<option>Joe Bloggs</option>
+										<option>Richard Branson</option>
+										<option>Steve Jobs</option>
+										<option>Bill Gates</option>
 									</select>
 								</div>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-4">
 								<p>
 									<strong>Name:</strong>
 									<span id="name-text">Joe Bloggs</span>
@@ -95,72 +95,64 @@
 									<span id="role-text">Staff</span>
 								</p>
 							</div>
-						</div>
-					</div>
-					<div class="col-md-8">
-						<div class="form-group">
-							<label> Number of Customers Served</label>
-							<input class="form-control" name="customers-served">
-						</div>
-						<div class="form-group">
-							<label> Number Of Tickets</label>
-							<input class="form-control" name="no-of-tickets">
-						</div>
-						<div class="form-group">
-							<label> Average Replies per Ticket</label>
-							<input class="form-control" name="avg-replies-per-ticket">
-						</div>
-						<div class="form-group">
-							<label> Average Response Time</label>
-							<input class="form-control" name="avg-response-time">
-						</div>
-						<div class="form-group">
-							<label> Average Time per Ticket</label>
-							<input class="form-control" name="avg-time-per-ticket">
+							<div class="col-md-8">
+								<div class="form-group">
+									<label> Number of Customers Served</label>
+									<input disabled class="form-control" id="customers-served">
+								</div>
+								<div class="form-group collapsible">
+									<label> Number Of Tickets</label>
+									<input class="form-control" id="no-of-tickets">
+								</div>
+								<div class="form-group collapsible">
+									<label> Average Replies per Ticket</label>
+									<input class="form-control" id="avg-replies-per-ticket">
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<div class="col-md-12">
-					<div class="card mb-3">
-						<div class="card-header">
-							<h4 class="main-content-title">Tickets Solved</h4>
-						</div>
-						<div class="card-body" style="position:relative; margin:auto; height:20vh; width:90vw;">
-							<canvas id="operatorStatistics"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
 
-			<div class="row">
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<h4 class="main-content-title">Problem Type</h4>
-						</div>
-						<div class="card-body" style="position:relative; width:30vw;">
-							<canvas id="problemTypeSolved"></canvas>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card mb-3">
+							<div class="card-header">
+								<h4 class="main-content-title">Tickets Solved</h4>
+							</div>
+							<div class="card-body" style="position:relative; margin:auto; height:20vh; width:90vw;">
+								<canvas id="operatorStatistics"></canvas>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<h4 class="main-content-title">Top Operators</h4>
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="main-content-title">Problem Type</h4>
+							</div>
+							<div class="card-body" style="position:relative; width:30vw;">
+								<canvas id="problemTypeSolved"></canvas>
+							</div>
 						</div>
-						<div class="card-body">
-							<p>Operators Here</p>
-							<p>Operators Here</p>
-							<p>Operators Here</p>
-							<p>Operators Here</p>
+					</div>
+					<div class="col-md-6">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="main-content-title">Top Operators</h4>
+							</div>
+							<div class="card-body">
+								<p>Operators Here</p>
+								<p>Operators Here</p>
+								<p>Operators Here</p>
+								<p>Operators Here</p>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 		</div>
 	</section>
 

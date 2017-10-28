@@ -1,3 +1,19 @@
 #metrics-content {
 	margin-top: 17px;
 }
+
+#metrics-content > *{
+	margin-top: 17px;
+}
+
+#staff-info {
+	border-bottom:1px solid rgb(189, 195, 199);
+}
+
+#staff-info p {
+	margin-bottom:7px;
+}
+
+.collapsible {
+	display:none;
+}

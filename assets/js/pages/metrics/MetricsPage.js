@@ -5,6 +5,29 @@ $(function() {
 	});
 });
 
+$('#StaffNameSearch').change(function(){ 
+	var index = $(this)[0].selectedIndex;
+	if (index > 0) {
+		$(".collapsible").css("display","block");
+		$("#customers-served").prop('disabled', false);
+		$("#name-text").text("Joe Bloggs");
+		$("#phone-text").text("01234567890");
+		$("#role-text").text("Staff");
+		$("#customers-served").val("32");
+		$("#no-of-tickets").val("12");
+		$("#avg-replies-per-ticket").val("5");
+	} else {
+		$(".collapsible").css("display","none");
+		$("#customers-served").prop('disabled', true);
+		$("#customers-served").val("");
+		$("#no-of-tickets").val("");
+		$("#avg-replies-per-ticket").val("");
+		$("#name-text").text("");
+		$("#phone-text").text("");
+		$("#role-text").text("");
+	}
+});
+
 class MetricsPage extends DynamicPage {
 	constructor() {
 		super();
