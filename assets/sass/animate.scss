@@ -1,0 +1,67 @@
+$duration: 0.2s;
+$ease: ease-out;
+
+* {
+	transition: all $duration $ease, ;
+}
+
+#single-view {
+	width: 700px;
+	body > & {
+		animation: $duration $ease slidein;
+	}
+}
+body > div:not([class]) {
+	overflow: visible;
+	transform: translateX(100%);
+	width: 0;
+	transition: $duration $ease slideout;
+}
+@keyframes slidein {
+	from {
+		transform: translateX(100%);
+		width: 0;
+	}
+	to {
+		transform: translateX(0%);
+		width: 700px;
+	}
+}
+@keyframes slideout {
+	from {
+		transform: translateX(0%);
+		width: 700px;
+	}
+	50% {
+		width: 0;
+	}
+	to {
+		transform: translateX(100%);
+		width: 0;
+	}
+}
+
+// Hide columns when showing detail
+@mixin colhide($columns) {
+	#list-view:not(:last-of-type) table {
+		th:nth-last-child(-n+#{$columns}), td:nth-last-child(-n+#{$columns}) {
+			width: 0 !important;
+			font-size: 0;
+			padding: 0;
+			opacity: 0;
+			transition: $duration $ease colhide, font-size ($duration / 1) $ease;
+		}
+	}
+}
+@keyframes colhide() {
+	from {
+		opacity: 1;
+	}
+	20% {
+		opacity: 0;
+	}
+	50% {
+		width: 0;
+		padding: 0;
+	}
+}
