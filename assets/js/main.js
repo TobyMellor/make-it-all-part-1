@@ -62,28 +62,6 @@ $(function () {
 		$newStaffModal.modal('show');
 	});
 
-	$('#new-staff-modal #create-new-staff').on('click', function(e) {
-		e.preventDefault();
-
-		var formData = parseFormData($('#new-staff-modal form'));
-
-		// validate staff member here
-
-		// if validation passes:
-		//  - create staff member here /w AJAX
-		//  - retrieve new database ID and replace Math.random function below
-		//  - do following:
-		var staffId = Math.floor(Math.random() * (10000 + 1));
-
-		addItemToPicker(
-			$('.selectpicker.staff-picker[name="' + formData['event_target'] + '"]'),
-			staffId,
-			formData['staff[first_name]'] + ' ' + formData['staff[last_name]']
-		); // formData and staffId to be retrieved by AJAX call
-
-		$('#new-staff-modal').modal('hide');
-	});
-
 	$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
 		$(this).find('input, textarea')
 			   .not('.no-clear-on-show')

@@ -1,8 +1,32 @@
 let staffPage = new StaffPage();
 
 $(() => {
+	let isPage = document.getElementById(staffPage.sectionSelector.substring(1)).dataset.page === "staff";
 	
-	if (document.getElementById(staffPage.sectionSelector.substring(1)).dataset.page !== "staff") return;
+	$("#new-staff-modal #create-new-staff").click(e => {
+		e.preventDefault();
+
+		var formData = $("#new-staff-modal form").serializeObject();
+
+		// validate staff member here
+
+		// if validation passes:
+		//  - create staff member here /w AJAX
+		//  - retrieve new database ID and replace Math.random function below
+		//  - do following:
+		var staffId = Math.floor(Math.random() * (10000 + 1));
+
+		addItemToPicker(
+			$('.selectpicker.staff-picker[name="' + formData['event_target'] + '"]'),
+			staffId,
+			formData['staff[first_name]'] + ' ' + formData['staff[last_name]']
+		); // formData and staffId to be retrieved by AJAX call
+
+		$('#new-staff-modal').modal('hide');
+	});
+
+	// Page-specific follows
+	if (!isPage) return;
 	
 	staffPage.showStaff();
 	$(staffPage.navSelector).find("[data-slug]").click(el => {
