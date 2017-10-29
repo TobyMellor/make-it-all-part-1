@@ -99,8 +99,8 @@ class TicketManager extends Manager {
 	}
 
 	createCall(dateOfCall, caller, tickets, ticketIds = []) {
-		var callId    = Math.floor(Math.random() * (10000 + 1)),
-			call      = new Call(
+		var callId = Math.floor(Math.random() * (10000 + 1)),
+			call   = new Call(
 				callId,
 				dateOfCall,
 				caller,

@@ -8,19 +8,29 @@
 class ProblemType {
 	constructor(
 		id,
-		problemName,
-		subProblemTypes
+		name,
+		parent,
+		children
 	) {
-		this.id                = id;
-		this.problem_name      = problemName;
-		this.sub_problem_types = subProblemTypes; // ID of ProblemType's, get method returns instances of ProblemType's
+		this.id       = id;
+		this.name     = name;
+		this.parent   = parent;
+		this.children = children; // ID of ProblemType's, get method returns instances of ProblemType's
 	}
 
-	get sub_problem_types() {
-		return makeItAll.problemManager.getProblemTypes(this._sub_problem_types);
+	get parent() {
+		return makeItAll.problemTypeManager.getProblemType(this._parent);
 	}
 
-	set sub_problem_types(subProblemTypes) {
-		this._sub_problem_types = subProblemTypes;
+	set parent(parent) {
+		this._parent = parent;
+	}
+
+	get children() {
+		return makeItAll.problemTypeManager.getProblemTypes(this._children);
+	}
+
+	set children(children) {
+		this._children = children;
 	}
 }
