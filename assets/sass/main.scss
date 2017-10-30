@@ -667,17 +667,12 @@ label {
 	display: flex;
 	border: 1px solid $silver;
 	
+
 	.type-columns {
 		display: flex;
 		flex: 2;
 		flex-wrap: nowrap;
 		overflow-x: auto;
-
-		.active:last-child {
-			background-color: $blue !important;
-			color: $white;
-			cursor: initial !important;
-		}
 
 		.type-column {
 			flex-grow: 0;
@@ -697,6 +692,12 @@ label {
 
 				&.active {
 					background-color: $cloudy-white;
+				}
+
+				&.last-active {
+					background-color: $blue !important;
+					color: $white;
+					cursor: initial !important;
 				}
 
 				&:hover {

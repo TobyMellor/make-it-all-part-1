@@ -16,8 +16,9 @@ class ProblemTypePage {
 			this.loadProblemTypeInfo(problemType);
 
 			$li.parent().nextAll().remove();
-			$li.parent().find('li').removeClass('active');
-			$li.addClass('active');
+			$li.parent().find('li.active').removeClass('active');
+			$li.parent().parent().find('li.last-active').removeClass('last-active');
+			$li.addClass('active last-active');
 
 			if ($li.hasClass('no-children')) {
 				return;
@@ -52,17 +53,35 @@ class ProblemTypePage {
 	}
 
 	loadProblemTypeInfo(problemType) {
-		var $singleView 	 = $('#single-view'),
-			$navBar          = $singleView.find('.top-nav h4'),
-			$splashScreen    = $singleView.find('.splash-screen'),
-			$problemTypeView = $singleView.find('#problem-type-view');
+		var $singleView 	  = $('#single-view'),
+			$navBar           = $singleView.find('.top-nav h4'),
+			$splashScreen     = $singleView.find('.splash-screen'),
+			$problemTypeView  = $singleView.find('#problem-type-view'),
+			$problemTypeTable = $problemTypeView.find('#problem-types-table tbody');
 
 		$splashScreen.hide();
 		$problemTypeView.fadeIn();
 
 		$navBar.text(this.getProblemTypeBreadcrum(problemType));
 		
+		var problemTypeChain = makeItAll.problemTypeManager.getProblemTypeChain(problemType);
 
+		$problemTypeTable.html('');
+
+		for (var i = 0; i < problemTypeChain.length; i++) {
+			var problemType = problemTypeChain[i];
+
+			$problemTypeTable.prepend(
+				'<tr ' + (i === 0 ? 'class="highlight"' : '') + ' data-rowid="' + problemType.id + '">' +
+					'<td>' + problemType.id + '</td>' +
+					'<td>' + problemType.name + '</td>' +
+					'<td>' + (problemType._parent !== null ? problemTypeChain[i + 1].name : 'N/A') + '</td>' +
+					'<td>' +
+						'<i class="fa fa-eye"></i>' +
+					'</td>' +
+				'</tr>'
+			);
+		}
 	}
 
 	getProblemTypeBreadcrum(problemType) {

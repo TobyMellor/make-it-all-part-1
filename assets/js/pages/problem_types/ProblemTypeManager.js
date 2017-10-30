@@ -84,4 +84,19 @@ class ProblemTypeManager extends Manager {
 
 		return this.findAllWhere(this.problemTypes, problemType => problemTypeIds.indexOf(problemType.id) > -1);
 	}
+
+	getProblemTypeChain(problemType) {
+		var problemTypeParent = problemType,
+			problemTypes      = [problemTypeParent];
+
+		while (problemTypeParent !== null) {
+			problemTypeParent = problemTypeParent.parent;
+
+			if (problemTypeParent !== null) {
+				problemTypes.push(problemTypeParent);
+			}
+		}
+
+		return problemTypes;
+	}
 }
