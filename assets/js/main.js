@@ -76,11 +76,11 @@ $(function () {
 	});
 
 	$(document).on('hide.bs.collapse', '#accordion .collapse', function () {
-		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-eye-slash').addClass('fa-eye');
+		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-chevron-up').addClass('fa-chevron-down');
 	});
 
 	$(document).on('show.bs.collapse', '#accordion .collapse', function () {
-		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-eye').addClass('fa-eye-slash');
+		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-chevron-down').addClass('fa-chevron-up');
 	});
 });
 

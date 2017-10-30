@@ -470,7 +470,7 @@ label {
 		&:first-child {
 			.card-header {
 				i {
-					&.fa-eye, &.fa-eye-slash {
+					&.fa-chevron-up, &.fa-chevron-down {
 						right: 15px;
 					}
 				}
@@ -501,8 +501,8 @@ label {
 				right: 15px;
 				cursor: pointer;
 
-				&.fa-eye, &.fa-eye-slash {
-					right: 45px;
+				&.fa-chevron-up, &.fa-chevron-down {
+					right: 40px;
 				}
 
 				&.fa-trash-o {
