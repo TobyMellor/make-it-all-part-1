@@ -99,4 +99,23 @@ class ProblemTypeManager extends Manager {
 
 		return problemTypes;
 	}
+
+	createProblemType(name, parentProblemTypeId) {
+		// AJAX call here, which returns a problemTypeId
+		// validation here
+		var problemTypeId = Math.floor(Math.random() * (10000 + 1));
+
+		this.problemTypes.push(new ProblemType(
+			problemTypeId,
+			name,
+			parentProblemTypeId,
+			[]
+		));
+
+		if (parentProblemTypeId !== null) {
+			this.getProblemType(parentProblemTypeId)._children.push(problemTypeId);
+		}
+
+		return this.problemTypes[this.problemTypes.length - 1];
+	}
 }
