@@ -6,6 +6,10 @@
  */
 
 class ProblemTypePage {
+	constructor(allowProblemTypeCreation = false) {
+		this.allowProblemTypeCreation = allowProblemTypeCreation;
+	}
+
 	loadSubProblemTypes($typeColumns, $li = null, problemTypeId = null) {
 		if ($li) {
 			var problemType = makeItAll.problemTypeManager.getProblemType(problemTypeId);
@@ -17,7 +21,9 @@ class ProblemTypePage {
 			$li.parent().parent().find('li.last-active').removeClass('last-active');
 			$li.addClass('active last-active');
 
-			if ($li.hasClass('no-children')) {
+			if (this.allowProblemTypeCreation) {
+				$typeColumns.find('.type-column:not(:first-child)').find('.input-group').remove();
+			} else if ($li.hasClass('no-children')) {
 				return;
 			}
 		}
@@ -43,6 +49,19 @@ class ProblemTypePage {
 					'</div>' +
 					'<i class="fa fa-caret-right"></i>' +
 				'</li>'
+			);
+		}
+
+		if (this.allowProblemTypeCreation) {
+			$typeColumn.append(
+				'<div class="input-group">' +
+					'<input type="text" class="form-control" placeholder="Problem type name...">' +
+						'<span class="input-group-btn">' +
+						'<button class="btn btn-success btn-sm" type="button">' +
+							'<i class="fa fa-plus"></i>' +
+						'</button>' +
+					'</span>' +
+				'</div>'
 			);
 		}
 
