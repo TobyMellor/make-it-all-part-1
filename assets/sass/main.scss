@@ -626,6 +626,14 @@ label {
 .row-hidden {
 	line-height: 0;
 }
+.block-hidden {
+	height: 0;
+	opacity: 0;
+	&:not(#table-section) {
+		overflow: hidden;
+	}
+}
+
 .modal {
 	textarea {
 		min-height: 150px;

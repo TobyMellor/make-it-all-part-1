@@ -78,3 +78,17 @@ body > div:not([class]) {
 		display: none;
 	}
 }
+#table-section {
+	transition: $duration $ease blockhidden reverse;
+	.block-hidden {
+		transition: $duration $ease blockhidden;
+	}
+}
+@keyframes blockhidden() {
+	from {
+		transform: translateY(0%);
+	}
+	to {
+		transform: translateY(100%);
+	}
+}
