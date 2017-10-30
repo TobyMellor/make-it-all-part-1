@@ -3,14 +3,6 @@
 .problem-type-picker {
 	height: 100%;
 	border: none;
-
-	.type-columns {
-		.type-column {
-			&:last-child {
-				border-right: 1px solid $silver;
-			}
-		}
-	}
 }
 
 #list-view {

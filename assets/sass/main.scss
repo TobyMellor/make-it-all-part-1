@@ -515,6 +515,10 @@ label {
 			padding: $comfortable;
 			max-height: 550px;
 			overflow-y: scroll;
+
+			span.subtle {
+				color: $grey;
+			}
 		}
 	}
 }
@@ -666,7 +670,6 @@ label {
 	height: 152px;
 	display: flex;
 	border: 1px solid $silver;
-	
 
 	.type-columns {
 		display: flex;
@@ -680,10 +683,6 @@ label {
 			flex-basis: 225px;
 			border-right: 1px solid $silver;
 			list-style: none;
-
-			&:last-child {
-				border-right: none;
-			}
 
 			li {
 				padding: 0 $cosy;
@@ -728,25 +727,6 @@ label {
 					top: 4px;
 				}
 			}
-		}
-	}
-
-	.info-column {
-		flex: 1;
-		border-left: 2px solid $silver;
-		text-align: center;
-		font-size: 10px;
-		color: $grey;
-		line-height: 17px;
-
-		div {
-			margin-top: 5px;
-		}
-
-		strong {
-			font-size: 25px;
-			color: $black;
-			margin-top: 5px;
 		}
 	}
 }
