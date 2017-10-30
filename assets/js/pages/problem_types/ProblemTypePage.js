@@ -52,6 +52,19 @@ class ProblemTypePage {
 		$('.type-columns').append($typeColumn);
 	}
 
+	loadProblemType(problemTypeId) {
+		var ptm              = makeItAll.problemTypeManager,
+			problemTypeChain = ptm.getProblemTypeChain(ptm.getProblemType(problemTypeId));
+
+		$('.type-columns').html('');
+
+		this.loadSubProblemTypes();
+
+		for (var i = problemTypeChain.length - 2; i >= -1; i--) {
+			this.loadSubProblemTypes($('.type-column li[data-problem-type-id="' + problemTypeChain[i + 1].id + '"]'), problemTypeChain[i + 1].id);
+		}
+	}
+
 	loadProblemTypeInfo(problemType) {
 		var $singleView 	  = $('#single-view'),
 			$navBar           = $singleView.find('.top-nav h4'),
