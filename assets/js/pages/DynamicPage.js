@@ -34,7 +34,7 @@ class DynamicPage {
 	 */
 	updateSplashScreen() {
 		var $table = $(this.tableSelector),
-		    resultsCount = $table.find('tbody tr').filter((i, el) => $(el).css("display") !== "none").length,
+		    resultsCount = $table.find('tbody tr').filter((i, el) => !$(el).hasClass("row-hidden")).length,
 		    $splashScreen = $('.splash-screen');
 		
 		var [$show, $hide] = resultsCount ? [$table, $splashScreen] : [$splashScreen, $table];

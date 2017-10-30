@@ -65,3 +65,16 @@ body > div:not([class]) {
 		padding: 0;
 	}
 }
+
+// Table row show/hide
+.row-hidden {
+	opacity: 0;
+	visibility: collapse;
+	> td {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+	.fa {
+		display: none;
+	}
+}
