@@ -19,8 +19,12 @@
 
 #single-view {
 	.container > .row {
-		padding-top: $comfortable;
-		align-items: center;
+		&:not(:last-child) {
+			padding-top: $comfortable;
+		}
+		&:first-child {
+			align-items: center;
+		}
 	}
 	.card {
 		max-width: $comfortable * 16;
@@ -29,4 +33,14 @@
 	form .row {
 		border-bottom: 1px solid $silver;
 	}
+}
+
+.table-compact-heading {
+	margin-bottom: $compact;
+	margin-right: $cosy;
+	color: $black;
+}
+.subtle {
+	color: $grey;
+	float: right;
 }
