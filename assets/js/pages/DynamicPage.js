@@ -79,7 +79,7 @@ class DynamicPage {
 				// Boolean value support
 				td.textContent = Object.resolve(slug, object) ? "Yes" : "No";
 			} else {
-				td.innerHTML = object[slug];
+				td.innerHTML = object[slug] !== undefined ? object[slug] : "—";
 			}
 			
 			$newRow.append(td);
