@@ -5,15 +5,16 @@
  * the ProblemManager.
  */
 
-class ProblemTypePage extends DynamicPage {
+class ProblemTypePage {
 	constructor() {
-		super();
-
 		this.loadSubProblemTypes(); // there will only be one at the start
 	}
 
 	loadSubProblemTypes($li = null, problemTypeId = null) {
 		if ($li) {
+			var problemType = makeItAll.problemTypeManager.getProblemType(problemTypeId);
+			this.loadProblemTypeInfo(problemType);
+
 			$li.parent().nextAll().remove();
 			$li.parent().find('li').removeClass('active');
 			$li.addClass('active');
@@ -29,8 +30,6 @@ class ProblemTypePage extends DynamicPage {
 		if (problemTypeId === null) {
 			children = makeItAll.problemTypeManager.getRootProblemTypes();
 		} else {
-			var problemType = makeItAll.problemTypeManager.getProblemType(problemTypeId);
-
 			children = makeItAll.problemTypeManager.getProblemTypes(problemType._children);
 		}
 
@@ -50,5 +49,36 @@ class ProblemTypePage extends DynamicPage {
 		}
 
 		$('.type-columns').append($typeColumn);
+	}
+
+	loadProblemTypeInfo(problemType) {
+		var $singleView 	 = $('#single-view'),
+			$navBar          = $singleView.find('.top-nav h4'),
+			$splashScreen    = $singleView.find('.splash-screen'),
+			$problemTypeView = $singleView.find('#problem-type-view');
+
+		$splashScreen.hide();
+		$problemTypeView.fadeIn();
+
+		$navBar.text(this.getProblemTypeBreadcrum(problemType));
+		
+
+	}
+
+	getProblemTypeBreadcrum(problemType) {
+		var problemTypeParent = problemType,
+			breadcrum         = '';
+
+		while (problemTypeParent !== null) {
+			breadcrum = problemTypeParent.name + breadcrum;
+
+			problemTypeParent = problemTypeParent.parent;
+
+			if (problemTypeParent !== null) {
+				breadcrum = ' / ' + breadcrum;
+			}
+		}
+
+		return breadcrum;
 	}
 }

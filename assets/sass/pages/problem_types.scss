@@ -12,3 +12,20 @@
 		}
 	}
 }
+
+#list-view {
+	flex: 2;
+}
+
+#single-view {
+	flex: 1;
+
+	.splash-screen {
+		height: 75%;
+	}
+
+	#problem-type-view {
+		padding: $comfortable;
+		display: none;
+	}
+}

@@ -16,7 +16,7 @@ class ProblemTypeManager extends Manager {
 				1,
 				'Printers',
 				null,
-				[2, 8, 10]
+				[2]
 			),
 			new ProblemType(
 				2,
