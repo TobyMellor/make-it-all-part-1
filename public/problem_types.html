@@ -68,9 +68,7 @@
 			</div>
 			
 			<div class="problem-type-picker">
-				<div class="type-columns">
-					<div class="type-column"></div>
-				</div>
+				<div class="type-columns"></div>
 			</div>
 		</section>
 		
@@ -343,7 +341,9 @@
 		<script type="text/javascript">
 			var problemTypePage = new ProblemTypePage();
 
-			
+			$(document).on('click', '.type-column li', function() {
+				problemTypePage.loadSubProblemTypes($(this), parseInt($(this).data('problemTypeId')));
+			});
 		</script>
 	</body>
 </html>
