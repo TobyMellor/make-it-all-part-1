@@ -3,6 +3,19 @@
 .problem-type-picker {
 	height: 100%;
 	border: none;
+
+	.input-group {
+		padding: $cosy;
+
+		input {
+			padding: $thin $cosy;
+		}
+
+		button {
+			width: 30px;
+			height: 30px;
+		}
+	}
 }
 
 #list-view {
@@ -20,4 +33,8 @@
 		padding: $comfortable;
 		display: none;
 	}
+}
+
+.problem-type-details {
+	margin-bottom: 5px;
 }
