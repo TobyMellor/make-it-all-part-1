@@ -6,6 +6,7 @@
 
 	.input-group {
 		padding: $cosy;
+		z-index: 0;
 
 		input {
 			padding: $thin $cosy;

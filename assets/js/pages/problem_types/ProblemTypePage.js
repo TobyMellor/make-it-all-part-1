@@ -57,7 +57,7 @@ class ProblemTypePage {
 				'<div class="input-group">' +
 					'<input type="text" class="form-control" placeholder="Problem type name...">' +
 						'<span class="input-group-btn">' +
-						'<button class="btn btn-success btn-sm" type="button">' +
+						'<button class="btn btn-success btn-sm create-problem-type" type="button">' +
 							'<i class="fa fa-plus"></i>' +
 						'</button>' +
 					'</span>' +
@@ -129,5 +129,11 @@ class ProblemTypePage {
 		}
 
 		return breadcrum;
+	}
+
+	createProblemType(name, parentProblemTypeId) {
+		var problemType = makeItAll.problemTypeManager.createProblemType(name, parentProblemTypeId);
+
+		this.loadProblemType($('.type-columns'), problemType.id);
 	}
 }
