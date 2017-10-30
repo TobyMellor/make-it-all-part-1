@@ -65,6 +65,13 @@ nav ul {
 		border-radius: 0;
 		border: 0;
 	}
+	
+	a {
+		color: unset;
+		&:hover {
+			text-decoration: none;
+		}
+	}
 
 	ul {
 		li {
