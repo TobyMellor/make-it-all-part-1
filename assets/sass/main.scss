@@ -688,18 +688,6 @@ label {
 
 			&:last-child {
 				border-right: none;
-
-				&:last-child {
-					li {
-						.specialist-counter {
-							right: 10px;
-						}
-						
-						.fa-caret-right {
-							display: none;
-						}
-					}
-				}
 			}
 
 			li {
@@ -715,6 +703,12 @@ label {
 					background-color: $blue-hover;
 					color: $white;
 					cursor: pointer;
+				}
+
+				&.no-children {
+					.fa-caret-right {
+						display: none;
+					}
 				}
 
 				.specialist-counter {

@@ -1,13 +1,6 @@
 $(function () {
 	$('[data-toggle="tooltip"]').tooltip();
 
-	// TODO: Move to assets/js/pages/staff/x.js (george)
-	$('#new-staff-modal').on('shown.bs.modal', function () {
-		// When the staff modal is shown
-		// focus input field, clear input fields etc...
-	});
-
-	// TODO: Move to assets/js/pages/staff/x.js (george)
 	$('.staff-permissions .custom-checkbox').on('click', function(e) {
 		e.preventDefault();
 
