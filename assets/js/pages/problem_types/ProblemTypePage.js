@@ -6,15 +6,12 @@
  */
 
 class ProblemTypePage {
-	constructor() {
-		this.loadSubProblemTypes(); // there will only be one at the start
-	}
-
-	loadSubProblemTypes($li = null, problemTypeId = null) {
+	loadSubProblemTypes($typeColumns, $li = null, problemTypeId = null) {
 		if ($li) {
 			var problemType = makeItAll.problemTypeManager.getProblemType(problemTypeId);
 			this.loadProblemTypeInfo(problemType);
 
+			$li.closest('.form-group').find('span.subtle').text(this.getProblemTypeBreadcrum(problemType));
 			$li.parent().nextAll().remove();
 			$li.parent().find('li.active').removeClass('active');
 			$li.parent().parent().find('li.last-active').removeClass('last-active');
@@ -49,19 +46,20 @@ class ProblemTypePage {
 			);
 		}
 
-		$('.type-columns').append($typeColumn);
+		$typeColumns.append($typeColumn);
+		$typeColumns.scrollLeft($typeColumns.width());
 	}
 
-	loadProblemType(problemTypeId) {
+	loadProblemType($typeColumns, problemTypeId) {
 		var ptm              = makeItAll.problemTypeManager,
 			problemTypeChain = ptm.getProblemTypeChain(ptm.getProblemType(problemTypeId));
 
-		$('.type-columns').html('');
+		$typeColumns.html('');
 
-		this.loadSubProblemTypes();
+		this.loadSubProblemTypes($typeColumns);
 
 		for (var i = problemTypeChain.length - 2; i >= -1; i--) {
-			this.loadSubProblemTypes($('.type-column li[data-problem-type-id="' + problemTypeChain[i + 1].id + '"]'), problemTypeChain[i + 1].id);
+			this.loadSubProblemTypes($typeColumns, $typeColumns.find('.type-column li[data-problem-type-id="' + problemTypeChain[i + 1].id + '"]'), problemTypeChain[i + 1].id);
 		}
 	}
 
@@ -70,7 +68,7 @@ class ProblemTypePage {
 			$navBar           = $singleView.find('.top-nav h4'),
 			$splashScreen     = $singleView.find('.splash-screen'),
 			$problemTypeView  = $singleView.find('#problem-type-view'),
-			$problemTypeTable = $problemTypeView.find('#problem-types-table tbody');
+			$problemTypeTable = $singleView.find('#problem-types-table tbody');
 
 		$splashScreen.hide();
 		$problemTypeView.fadeIn();
