@@ -1012,7 +1012,7 @@
 				);
 
 				problemTypePage.loadSubProblemTypes($accordion.find('.type-columns'));
-				
+
 				ticketPage.populateSelectField($accordion.find('.card[data-cardid="' + cardId + '"] select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
 
 				$('.selectpicker').selectpicker('refresh');
@@ -1193,10 +1193,6 @@
 
 			$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
 				$(this).find('.staff-information').text('No staff member has been selected yet!');
-				
-				var $typeColumns = $(this).find('.type-columns');
-
-				problemTypePage.loadProblemType($typeColumns, ticketPage.currentTicket._problem_type);
 			});
 
 			$(document).on('click', '.type-column li', function() {
