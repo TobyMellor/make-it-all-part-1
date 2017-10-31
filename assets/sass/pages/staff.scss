@@ -1,7 +1,8 @@
 @import "../main";
 
 #list-view table {
-	th:nth-last-child(-n+4):not(:last-child), td:nth-last-child(-n+4):not(:last-child) {
+	// Icon columns
+	th:nth-last-child(-n+5):not(:last-child), td:nth-last-child(-n+5):not(:last-child) {
 		width: $comfortable * 2;
 		text-align: center;
 	}
@@ -12,7 +13,7 @@
 
 // Hide columns when showing detail
 #list-view:not(:last-of-type) table {
-	th:nth-last-child(-n+5), td:nth-last-child(-n+5) {
+	th:nth-last-child(-n+6), td:nth-last-child(-n+6) {
 		display: none;
 	}
 }

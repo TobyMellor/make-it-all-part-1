@@ -11,6 +11,7 @@ class Employee {
 		job,
 		department,
 		phone,
+		isRead: read = false,
 		isOperator: operator = false,
 		isAnalyst: analyst = false,
 		isAdmin: admin = false
@@ -21,16 +22,22 @@ class Employee {
 		this.job = job;
 		this.department = department;
 		this.phone = phone;
-		this.access = {operator, analyst, admin};
+		this.access = {read, operator, analyst, admin};
+		
+		// If user is any other permission then read is granted
+		this.access.read = this.access.operator || this.access.analyst || this.access.admin || this.access.readonly;
 	}
 	
+	get isRead() {
+		return this.access.read;
+	}
 	get isOperator() {
-		return this.access.operator
+		return this.access.operator;
 	}
 	get isAnalyst() {
-		return this.access.analyst
+		return this.access.analyst;
 	}
 	get isAdmin() {
-		return this.access.admin
+		return this.access.admin;
 	}
 }

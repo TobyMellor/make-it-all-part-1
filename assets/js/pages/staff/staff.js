@@ -40,7 +40,7 @@ $(() => {
 			let $el = $(el);
 			let $td = $el.children().eq(columnIndex);
 			// Closure used to set ‘this’ correctly https://i.stack.imgur.com/CUsZm.png
-			$el[$td.text() === "No" ? "fadeOut" : "fadeIn"](100, () => staffPage.updateSplashScreen());
+			$el[$td.children().length === 0 ? "fadeOut" : "fadeIn"](100, () => staffPage.updateSplashScreen());
 		});
 	});
 	
