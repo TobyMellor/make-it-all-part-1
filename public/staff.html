@@ -302,44 +302,37 @@
 				</div>
 				<div class="modal-body">
 					<form>
-						<input type="text" class="no-clear-on-show" name="event_target" hidden />
+						<input type="text" class="no-clear-on-show" name="event_target" hidden>
 						<div class="row">
 							<div class="col-md-8">
 								<div class="form-group">
 									<label class="required">Staff Name</label>
-									<div class="row">
-										<div class="col-md-6">
-											<input class="form-control no-clear-on-show" name="staff[first_name]" placeholder="First Name" />
-										</div>
-										<div class="col-md-6">
-											<input class="form-control no-clear-on-show" name="staff[last_name]" placeholder="Last Name" />
-										</div>
-									</div>
+									<input class="form-control no-clear-on-show" name="staff.name">
 								</div>
 								<div class="form-group">
 									<label class="required">Staff Email</label>
-									<input class="form-control" name="staff[email]" />
+									<input type="email" class="form-control" name="staff.email">
 								</div>
 								<div class="row">
 									<div class="col-md-6 form-group">
 										<label>Job Title</label>
-										<input class="form-control" name="staff[job]" />
+										<input class="form-control" name="staff.job">
 									</div>
 									<div class="col-md-6 form-group">
 										<label>Department</label>
-										<input class="form-control" name="staff[department]" />
+										<input class="form-control" name="staff.department">
 									</div>
 								</div>
 								<div class="form-group">
 									<label>Phone Number</label>
-									<input class="form-control" name="staff[phone]" />
+									<input type="tel" class="form-control" name="staff.phone">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<label class="required">Staff Permissions</label>
 								<div class="staff-permissions">
 									<label class="custom-control custom-checkbox">
-										<input type="checkbox" class="custom-control-input" name="staff[permissions][ticket_read_only]" checked="checked">
+										<input type="checkbox" class="custom-control-input" name="staff.access.read" checked>
 										<span class="custom-control-indicator"></span>
 										<span class="custom-control-description">Ticket Read Only</span>
 										<span class="help-text">
@@ -347,7 +340,7 @@
 										</span>
 									</label>
 									<label class="custom-control custom-checkbox">
-										<input type="checkbox" class="custom-control-input" name="staff[permissions][helpdesk_operator]">
+										<input type="checkbox" class="custom-control-input" name="staff.access.operator">
 										<span class="custom-control-indicator"></span>
 										<span class="custom-control-description">Helpdesk Operator</span>
 										<span class="help-text">
@@ -356,7 +349,7 @@
 										</span>
 									</label>
 									<label class="custom-control custom-checkbox">
-										<input type="checkbox" class="custom-control-input" name="staff[permissions][analyst]">
+										<input type="checkbox" class="custom-control-input" name="staff.access.analyst">
 										<span class="custom-control-indicator"></span>
 										<span class="custom-control-description">Analyst</span>
 										<span class="help-text">
@@ -365,9 +358,9 @@
 										</span>
 									</label>
 									<label class="custom-control custom-checkbox">
-										<input type="checkbox" class="custom-control-input" name="staff[permissions][super_admin]">
+										<input type="checkbox" class="custom-control-input" name="staff.access.admin">
 										<span class="custom-control-indicator"></span>
-										<span class="custom-control-description">Super Admin</span>
+										<span class="custom-control-description">Administrator</span>
 										<span class="help-text">
 											All permissions from 'Ticket Read Access', 'Helpdesk Operator' and 'Analyst'<br />
 											They can also CREATE, UPDATE and DELETE <a href="/staff">staff</a>.
