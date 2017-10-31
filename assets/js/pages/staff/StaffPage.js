@@ -13,9 +13,11 @@ class StaffPage extends DynamicPage {
 	showTableRowDetails(id) {
 		// Get employee with ID
 		let employee = makeItAll.staffManager.getEmployee(id);
+
 		if (!employee) {
 			this.hideTableRowDetails();
 			alert("No employee with ID " + id);
+
 			return;
 		}
 		
@@ -26,6 +28,9 @@ class StaffPage extends DynamicPage {
 		$(this.detailSelector).find("[data-slug]").each((i, el) => {
 			el.textContent = String(Object.resolve(el.dataset.slug, employee)) || "—";
 		});
+
+		staffProblemTypePage.currentSpecialisms = employee._specialisms;
+		staffProblemTypePage.loadSpecialistProblemTypes($('.type-columns'));
 		
 		super.showTableRowDetails(id);
 	}

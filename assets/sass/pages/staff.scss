@@ -47,10 +47,37 @@
 }
 
 .problem-type-picker {
+	&.readonly {
+		li {
+			.specialism-checkbox {
+				border: none !important;
+
+				i {
+					right: 7px;
+					top: 3px;
+					font-size: 16px;
+
+					&.fa-times {
+						display: initial;
+					}
+				}
+			}
+		}
+	}
+
 	li {
-		&:hover, &.last-active {
+		&:hover:not(.no-children), &.last-active:not(.no-children) {
 			.specialism-checkbox {
 				border: 2px solid $white;
+			}
+		}
+
+		&.no-children {
+			cursor: initial !important;
+
+			&:hover {
+				background-color: $white !important;
+				color: $black !important;
 			}
 		}
 
@@ -66,6 +93,10 @@
 				right: 10px;
 				top: 6px;
 				font-size: 11px;
+
+				&.fa-times {
+					display: none;
+				}
 			}
 		}
 	}

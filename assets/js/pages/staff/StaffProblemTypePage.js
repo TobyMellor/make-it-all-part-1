@@ -39,7 +39,7 @@ class StaffProblemTypePage {
 				'<li ' + (child._children.length === 0 ? 'class="no-children"' : '') + ' data-problem-type-id="' + child.id + '">' +
 					children[i].name +
 					'<div class="specialism-checkbox pull-right">' +
-						(this.currentSpecialisms.indexOf(child.id) > -1 ? '<i class="fa fa-check"></i>' : '<i class="fa"></i>') +
+						(this.currentSpecialisms.indexOf(child.id) > -1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>') +
 					'</div>' +
 				'</li>'
 			);
@@ -57,14 +57,14 @@ class StaffProblemTypePage {
 
 		if (currentSpecialismsIndexOf > -1) {
 			this.currentSpecialisms.splice(currentSpecialismsIndexOf, 1);
-			$icon.removeClass('fa-check');
+			$icon.removeClass('fa-check').addClass('fa-times');
 
 			if (this.shouldRemoveChildSpecialisms(children)) {
 				this.toggleChildren(children, false);
 			}
 		} else {
 			this.currentSpecialisms.push(clickedSpecialismId);
-			$icon.addClass('fa-check');
+			$icon.removeClass('fa-times').addClass('fa-check');
 
 			this.toggleChildren(children, true);
 		}
