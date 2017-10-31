@@ -515,10 +515,6 @@ label {
 			padding: $comfortable;
 			max-height: 550px;
 			overflow-y: scroll;
-
-			span.subtle {
-				color: $grey;
-			}
 		}
 	}
 }
@@ -729,6 +725,10 @@ label {
 			}
 		}
 	}
+}
+
+span.subtle {
+	color: $grey;
 }
 
 @import "animate";

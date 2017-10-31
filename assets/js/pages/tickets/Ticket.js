@@ -16,18 +16,20 @@ class Ticket {
 		devices,
 		createdAt,
 		updatedAt,
-		events
+		events,
+		problemType
 	) {
-		this.id          = id;
-		this.calls       = calls;  // ID of calls, get method returns instances of Call's
-		this.filter      = filter; // slug of filter, get method returns instance of Filter
-		this.title       = title;
-		this.description = description;
-		this.assigned_to = assignedTo; // ID of caller, get method returns instance of Staff
-		this.devices     = devices;
-		this.created_at  = createdAt;
-		this.updated_at  = updatedAt;
-		this.events      = events; // ID of events, get method returns instances of Event's
+		this.id           = id;
+		this.calls        = calls;  // ID of calls, get method returns instances of Call's
+		this.filter       = filter; // slug of filter, get method returns instance of Filter
+		this.title        = title;
+		this.description  = description;
+		this.assigned_to  = assignedTo; // ID of caller, get method returns instance of Staff
+		this.devices      = devices;
+		this.created_at   = createdAt;
+		this.updated_at   = updatedAt;
+		this.events       = events; // ID of events, get method returns instances of Event's
+		this.problem_type = problemType; // ID of problem type, get method returns instance of ProblemType
 	}
 
 	get calls() {
@@ -76,5 +78,13 @@ class Ticket {
 
 	set events(events) {
 		this._events = events;
+	}
+
+	get problem_type() {
+		return makeItAll.problemTypeManager.getProblemType(this._problem_type);
+	}
+
+	set problem_type(problemType) {
+		this._problem_type = problemType;
 	}
 }
