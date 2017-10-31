@@ -19,7 +19,7 @@
 
 #single-view {
 	.container > .row {
-		&:not(:last-child) {
+		&:not(.thin) {
 			padding-top: $comfortable;
 		}
 		&:first-child {

@@ -11,6 +11,7 @@
 class StaffManager extends Manager {
 	constructor(staff) {
 		super();
+		staff = staffData; // initial prototype data
 		this.staff = staff ? staff.map(e => new Employee(e)) : [];
 	}
 	
@@ -47,3 +48,57 @@ class StaffManager extends Manager {
 		return this.getEmployee(id);
 	}
 }
+
+var staffData = [
+	{
+		id: 0,
+		name: "Bex Howell",
+		job: "Designer",
+		phone: "01555516794",
+		department: "Team 5",
+		isAnalyst: true
+	},
+	{
+		id: 1,
+		name: "George Garside",
+		email: "george@example.com",
+		job: "Developer",
+		department: "Team 5",
+		phone: "01555864722",
+		isOperator: true,
+		isAdmin: true
+	},
+	{
+		id: 2,
+		name: "Mike Higson",
+		job: "Developer",
+		phone: "01555138339",
+		department: "Team 5",
+		isOperator: true
+	},
+	{
+		id: 3,
+		name: "Ryan Sharp",
+		job: "Designer",
+		phone: "01555736169",
+		department: "Team 5",
+		isAnalyst: true
+	},
+	{
+		id: 4,
+		name: "Toby Beasley",
+		job: "Designer",
+		phone: "01555574667",
+		department: "Team 5",
+		isAnalyst: true
+	},
+	{
+		id: 5,
+		name: "Toby Mellor",
+		job: "Developer",
+		department: "Team 5",
+		phone: "01555181056",
+		isOperator: true,
+		isAdmin: true
+	}
+];

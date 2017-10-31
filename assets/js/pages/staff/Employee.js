@@ -7,6 +7,7 @@ class Employee {
 	constructor({
 		id,
 		name,
+		email,
 		job,
 		department,
 		phone,
@@ -16,6 +17,7 @@ class Employee {
 	}) {
 		this.id = id;
 		this.name = name;
+		this.email = email;
 		this.job = job;
 		this.department = department;
 		this.phone = phone;
