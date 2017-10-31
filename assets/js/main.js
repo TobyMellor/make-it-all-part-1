@@ -88,6 +88,10 @@ $(function () {
 	$(document).on('show.bs.collapse', '#accordion .collapse', function () {
 		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-chevron-down').addClass('fa-chevron-up');
 	});
+
+	$('.top-nav .hamburger').on('click', function() {
+		$('.side-nav-bar-nested').toggle();
+	});
 });
 
 // https://stackoverflow.com/a/8407771/2957677

@@ -40,11 +40,11 @@ class DynamicPage {
 		var [$show, $hide] = resultsCount ? [$table, $splashScreen] : [$splashScreen, $table];
 		$hide.addClass("block-hidden");
 		$show.removeClass("block-hidden");
-		
+
 		// Set navbar text as number of items in table then append currently selected filter
-		var navText = resultsCount + " " + $(this.navSelector).find("li.active").first().text().replace("All ", "");
+		var navText = '<i class="fa fa-bars hamburger"></i> ' + resultsCount + " " + $(this.navSelector).find("li.active").first().text().replace("All ", "");
 		// If unable to obtain rows count, show "Loading…"
-		$(this.sectionSelector).closest("section").find(".top-nav h4").text(resultsCount !== undefined ? navText : "Loading…");
+		$(this.sectionSelector).closest("section").find(".top-nav h4").html(resultsCount !== undefined ? navText : "Loading…");
 	}
 
 	/**

@@ -1,0 +1,44 @@
+@import "variables";
+
+// col-lg
+@media (max-width: 1200px) {
+	.top-nav:not(.with-content) {
+		padding: 6px $standard 4px $standard;
+
+		i {
+			display: none;
+		}
+
+		.hamburger {
+			font-size: 14px;
+			font-size: 25px;
+			margin-right: 10px;
+			color: $black;
+			cursor: pointer;
+			display: initial;
+		}
+
+		h4 {
+			line-height: 0;
+			font-weight: 600;
+		}
+	}
+}
+
+@media (max-width: 1050px) {
+	.top-nav.with-content {
+		.main-content-title-wrapper {
+			.main-content-title {
+				display: block;
+				font-size: 16px;
+				font-weight: 600;
+				margin: 0;
+
+				span.filter {
+					padding: 2px 4px;
+					font-size: 12px;
+				}
+			}
+		}
+	}
+}

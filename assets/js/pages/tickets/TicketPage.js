@@ -52,7 +52,6 @@ class TicketPage extends DynamicPage {
 			$('#ticket-view #ticket-overview').text('#' + ticket.id + ' | ' + ticket.created_at);
 			$('#ticket-view #ticket-description p').text(ticket.description);
 
-
 			var $ticketComments           = $('#ticket-comments'),
 				$ticketHardwareSoftware   = $('#ticket-view #hardware-software-table'),
 				$ticketNoHardwareSoftware = $('#ticket-view #no-hardware-software'),
@@ -130,7 +129,7 @@ class TicketPage extends DynamicPage {
 					$ticketComments.append(
 						'<li class="ticket-event">' +
 							'<i class="fa fa-ticket"></i>' +
-							' Status Changed: ' +
+							' <span class="ticket-event-overview">Status Changed: </span>' +
 							'<span class="ticket-event-details">' + event.content + '</span>' +
 							'<span class="ticket-event-date">' + event.created_at + '</span>' +
 						'</li>'
