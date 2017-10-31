@@ -403,12 +403,8 @@
 													</div>
 
 													<div class="form-group">
-														<label class="required">Problem Type</label>
-														<input name="tickets[this][problem_type]" hidden>
-														<span class="subtle pull-right"></span>
-														<div class="problem-type-picker">
-															<div class="type-columns"></div>
-														</div>
+														<label>Problem Type</label>
+														<input class="form-control" name="tickets[this][problem_type]" disabled />
 													</div>
 												</div>
 											</div>
@@ -517,7 +513,7 @@
 
 									<div class="form-group">
 										<label class="required">Problem Type</label>
-										<input name="tickets[1][problem_type]" hidden>
+										<input name="problem_type" hidden>
 										<span class="subtle pull-right"></span>
 										<div class="problem-type-picker">
 											<div class="type-columns"></div>
@@ -995,6 +991,8 @@
 						'</div>' +
 					'</div>'
 				);
+
+				problemTypePage.loadSubProblemTypes($accordion.find('.type-columns'));
 				
 				ticketPage.populateSelectField($accordion.find('.card[data-cardid="' + cardId + '"] select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
 
@@ -1055,12 +1053,8 @@
 										'</div>' +
 									'</div>' +
 									'<div class="form-group">' +
-										'<label class="required">Problem Type</label>' +
-										'<input name="tickets[1][problem_type]" hidden>' +
-										'<span class="subtle pull-right"></span>' +
-										'<div class="problem-type-picker">' +
-											'<div class="type-columns"></div>' +
-										'</div>' +
+										'<label>Problem Type</label>' + 
+										'<input class="form-control" value="' + problemTypePage.getProblemTypeBreadcrum(ticket.problem_type) + '" disabled>' +
 									'</div>' +
 								'</div>' +
 							'</div>' +
@@ -1068,8 +1062,6 @@
 					);
 
 					ticketPage.appendHardwareDevices($accordion.find('.card[data-cardid="' + cardId + '"] .hardware-list'), ticket, cardId);
-
-					problemTypePage.loadProblemType($accordion.find('.type-columns'), ticket._problem_type);
 
 					$(this).find('option[value="' + ticketId + '"]').remove();
 					$(this).selectpicker('refresh');
@@ -1193,7 +1185,7 @@
 
 				problemTypePage.loadSubProblemTypes($(this).closest('.type-columns'), $(this), problemTypeId);
 
-				$(this).closest('input[name*=problem_type]').val(problemTypeId);
+				$(this).closest('.problem-type-picker').siblings('input[name*=problem_type]').val(problemTypeId);
 			});
 
 			$('#new-ticket-modal select[name="caller"], #follow-up-call-modal select[name="caller"]').on('change', function() {

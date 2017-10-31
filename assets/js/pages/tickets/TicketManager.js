@@ -146,12 +146,12 @@ class TicketManager extends Manager {
 			filterSlug,
 			title,
 			description,
-			assignedTo,
+			parseInt(assignedTo),
 			devices,
 			'Just now',
 			'Just now',
 			[],
-			problemType
+			parseInt(problemType)
 		));
 
 		this.getFilter(filterSlug)._tickets.push(ticketId);
