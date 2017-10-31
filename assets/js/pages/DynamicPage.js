@@ -75,9 +75,9 @@ class DynamicPage {
 
 			if (slug === 'eye') { // the on-hover eye invisible row
 				td.innerHTML = '<i class="fa fa-eye"></i>';
-			} else if (slug ? slug.includes("access") : false) {
+			} else if (slug && slug.includes("access")) {
 				// Boolean value support
-				td.textContent = Object.resolve(slug, object) ? "Yes" : "No";
+				td.innerHTML = Object.resolve(slug, object) ? this.innerHTML : "·";
 			} else {
 				td.innerHTML = object[slug] !== undefined ? object[slug] : "—";
 			}
