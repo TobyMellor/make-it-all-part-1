@@ -33,7 +33,7 @@ $(() => {
 	$(".staff-permissions .custom-checkbox").click(e => {
 		e.preventDefault();
 		
-		var input = e.target.children[0];
+		var input = e.currentTarget.children[0];
 		input.checked = !input.checked;
 		
 		// Access logic
