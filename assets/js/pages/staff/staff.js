@@ -15,7 +15,10 @@ $(() => {
 		//  - create staff member here /w AJAX
 		//  - retrieve new database ID and replace Math.random function below
 		//  - do following:
-		var staffId = Math.floor(Math.random() * (10000 + 1));
+		var staffId  = Math.floor(Math.random() * (10000 + 1)),
+			employee = makeItAll.staffManager.getEmployee(staffId);
+
+		employee._specialisms = staffProblemTypePage.currentSpecialisms;
 
 		addItemToPicker(
 			$('.selectpicker.staff-picker[name="' + formData['event_target'] + '"]'),
