@@ -15,9 +15,16 @@
 @include colhide(5);
 
 #single-view {
-	.container > .row {
-		&:not(.thin) {
-			padding-top: $comfortable;
+	.row {
+		margin: 0;
+	}
+
+	> .row {
+		width: 100%;
+		padding-top: $comfortable;
+
+		&.thin {
+			padding-top: $thin;
 		}
 
 		&:first-child {
@@ -27,7 +34,33 @@
 
 	.card {
 		max-width: $comfortable * 16;
-		margin: $cosy $comfortable $cosy auto;
+		border: 0;
+
+		img {
+			border-radius: 0;
+		}
+
+		.card-title {
+			font-size: 25px;
+		    font-weight: 600;
+		    margin: 0;
+		    display: inline-block;
+		    color: $black;
+
+		    p {
+		    	text-align: right;
+			    line-height: 15px;
+			    font-size: 10px;
+			    color: $grey;
+		    }
+		}
+
+		.card-body {
+			border-radius: 0;
+			border: 1px solid $silver;
+			border-bottom: 2px solid $silver;
+			padding: 12px;
+		}
 	}
 
 	form .row {
@@ -36,9 +69,10 @@
 }
 
 .table-compact-heading {
-	margin-bottom: $compact;
+	margin-bottom: 5px;
 	margin-right: $cosy;
 	color: $black;
+	display: block;
 }
 
 .subtle {

@@ -26,7 +26,13 @@ class StaffPage extends DynamicPage {
 		
 		// Content
 		$(this.detailSelector).find("[data-slug]").each((i, el) => {
-			el.textContent = String(Object.resolve(el.dataset.slug, employee)) || "—";
+			var textContent = String(Object.resolve(el.dataset.slug, employee) || "—");
+
+			if ($(el).is('input')) {
+				el.value = textContent;
+			} else {
+				el.textContent = textContent;
+			}
 		});
 
 		staffProblemTypePage.currentSpecialisms = employee._specialisms;
