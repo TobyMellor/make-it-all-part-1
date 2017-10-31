@@ -29,6 +29,18 @@
 	form .row {
 		border-bottom: 1px solid $silver;
 	}
+	
+	// List of permissions for user
+	[data-customslug="access"] > span {
+		// Separation between permissions
+		&:not(:first-child) {
+			margin-left: $comfortable;
+		}
+		// Separation between permission and icon
+		> span {
+			margin-left: $compact;
+		}
+	}
 }
 
 .table-compact-heading {
