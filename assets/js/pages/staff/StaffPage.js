@@ -24,7 +24,7 @@ class StaffPage extends DynamicPage {
 		
 		// Content
 		$(this.detailSelector).find("[data-slug]").each((i, el) => {
-			el.textContent = Object.resolve(el.dataset.slug, employee) || "—";
+			el.textContent = String(Object.resolve(el.dataset.slug, employee)) || "—";
 		});
 		
 		super.showTableRowDetails(id);
