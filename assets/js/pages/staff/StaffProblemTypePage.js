@@ -6,10 +6,10 @@
 
 class StaffProblemTypePage {
 	constructor() {
-		//super();
+		this.currentSpecialisms = [];
 	}
 
-	loadSpecialistProblemTypes(specialist, $typeColumns, $li = null, problemTypeId = null) {
+	loadSpecialistProblemTypes($typeColumns, $li = null, problemTypeId = null) {
 		if ($li) {
 			var problemType = makeItAll.problemTypeManager.getProblemType(problemTypeId);
 
@@ -39,7 +39,7 @@ class StaffProblemTypePage {
 				'<li ' + (child._children.length === 0 ? 'class="no-children"' : '') + ' data-problem-type-id="' + child.id + '">' +
 					children[i].name +
 					'<div class="specialism-checkbox pull-right">' +
-						(specialist._specialisms.indexOf(child.id) > -1 ? '<i class="fa fa-check"></i>' : '') +
+						(this.currentSpecialisms.indexOf(child.id) > -1 ? '<i class="fa fa-check"></i>' : '<i class="fa"></i>') +
 					'</div>' +
 				'</li>'
 			);
@@ -47,5 +47,66 @@ class StaffProblemTypePage {
 
 		$typeColumns.append($typeColumn);
 		$typeColumns.scrollLeft($typeColumns.width());
+	}
+
+	toggleSpecialism($specialismCheckbox) {
+		var clickedSpecialismId       = parseInt($specialismCheckbox.parent().data('problemTypeId')),
+			currentSpecialismsIndexOf = this.currentSpecialisms.indexOf(clickedSpecialismId),
+			$icon                     = $specialismCheckbox.find('i'),
+			children                  = makeItAll.problemTypeManager.getProblemType(clickedSpecialismId).children;
+
+		if (currentSpecialismsIndexOf > -1) {
+			this.currentSpecialisms.splice(currentSpecialismsIndexOf, 1);
+			$icon.removeClass('fa-check');
+
+			if (this.shouldRemoveChildSpecialisms(children)) {
+				this.toggleChildren(children, false);
+			}
+		} else {
+			this.currentSpecialisms.push(clickedSpecialismId);
+			$icon.addClass('fa-check');
+
+			this.toggleChildren(children, true);
+		}
+	}
+
+	toggleChildren(children, status = false) {
+		for (var i = 0; i < children.length; i++) {
+			var child = children[i];
+
+			if (status) {
+				if (this.currentSpecialisms.indexOf(child.id) === -1) {
+					this.currentSpecialisms.push(child.id);
+				}
+			} else {
+				var indexOf = this.currentSpecialisms.indexOf(child.id);
+
+				if (indexOf > -1) {
+					this.currentSpecialisms.splice(indexOf, 1);
+				}
+			}
+
+			this.toggleChildren(child.children, status);
+		}
+	}
+
+	/*
+	 * We should only mess with children if they
+	 * all have the same status
+	 */
+	shouldRemoveChildSpecialisms(children) {
+		for (var i = 0; i < children.length; i++) {
+			var child = children[i];
+
+			if (this.currentSpecialisms.indexOf(child.id) === -1) {
+				return false;
+			}
+
+			if (!this.shouldRemoveChildSpecialisms(child.children)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 }
