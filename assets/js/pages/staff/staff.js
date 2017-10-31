@@ -24,6 +24,37 @@ $(() => {
 
 		$('#new-staff-modal').modal('hide');
 	});
+	
+	$("#new-staff-modal").on("shown.bs.modal", e => {
+		// Focus name input
+		$(e.target).find("input[name=\"staff.name\"]").focus();
+	});
+
+	$(".staff-permissions .custom-checkbox").click(e => {
+		e.preventDefault();
+		
+		var input = e.target.children[0];
+		input.checked = !input.checked;
+		
+		// Access logic
+		if (input.checked) { // Any other access requires read access
+			$("input[name=\"staff.access.read\"]").prop("checked", true);
+			
+			if (input.name === "staff.access.admin") { // Admin requires all other access
+				$("input[name*=\"staff.access\"]").prop("checked", true);
+			}
+		} else { // Cannot have admin access if another access is revoked
+			$("input[name=\"staff.access.admin\"]").prop("checked", false);
+			
+			if (input.name === "staff.access.read") { // No read access cannot have any other access
+				$("input[name*=\"staff.access\"]").prop("checked", false);
+			}
+		}
+	});
+
+	$('.staff-picker').selectpicker({
+		noneResultsText: 'Click to create {0}'
+	});
 
 	// Page-specific follows
 	if (!isPage) return;
