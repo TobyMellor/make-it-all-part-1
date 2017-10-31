@@ -38,8 +38,8 @@ class ProblemTypePage {
 		}
 
 		for (var i = 0; i < children.length; i++) {
-			var specialistCount = Math.floor(Math.random() * 5), // TODO: Replace with actual specialist count
-				child           = children[i];
+			var child           = children[i],
+				specialistCount = makeItAll.staffManager.getSpecialists(child.id).length;
 
 			$typeColumn.append(
 				'<li ' + (child._children.length === 0 ? 'class="no-children"' : '') + ' data-problem-type-id="' + child.id + '">' +
