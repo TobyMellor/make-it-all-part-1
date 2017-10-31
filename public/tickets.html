@@ -118,12 +118,12 @@
 		<div>
 			<section id="single-view">
 				<nav class="top-nav with-content">
-					<h4 class="main-content-title">Loading…</h4>
-					<button class="btn btn-sm close-button ticket-close-button">
+					<button class="btn btn-sm float-left" data-action="close">
 						<i class="fa fa-times"></i>
 						Close
 					</button>
-					<button class="btn btn-sm btn-warning close-button ticket-edit-button" data-toggle="modal" data-target="#edit-ticket-modal">
+					<h4 class="main-content-title">Loading…</h4>
+					<button class="btn btn-sm btn-warning float-right" data-action="edit" data-toggle="modal" data-target="#edit-ticket-modal">
 						<i class="fa fa-pencil"></i>
 						Edit
 					</button>
@@ -906,7 +906,26 @@
 			);
 
 			// StaffManager(staffMembers)
-			makeItAll.staffManager = new StaffManager(null); // TODO: Pass in some fake data
+			makeItAll.staffManager = new StaffManager([
+				{
+					id: 0,
+					name: 'Toby Mellor',
+					email: 'example@domain.com',
+					permission_level: 3, // analyst
+					job_title: 'Developer',
+					department: 'Lboro',
+					telephone_number: 987654321
+				},
+				{
+					id: 1,
+					name: 'Another user',
+					email: 'another@email.com',
+					permission_level: 0,
+					job_title: 'Coffee Maker',
+					department: 'N/A',
+					telephone_number: 123456789
+				}
+			]);
 
 			// HardwareManager(devices)
 			makeItAll.hardwareManager = new HardwareManager(null); // TODO: Pass in some fake data
@@ -969,11 +988,7 @@
 					ticketPage.showTicketView(parseInt(this.dataset.rowid));
 				});
 
-				$('.ticket-close-button').on('click', function() {
-					ticketPage.hideTableRowDetails();
-				});
-
-				$('.ticket-edit-button').on('click', function() {
+				$('#single-view [data-action="edit"]').on('click', function() {
 					ticketPage.populateTicketModal($('#edit-ticket-modal'), ticketPage.currentTicket);
 				});
 

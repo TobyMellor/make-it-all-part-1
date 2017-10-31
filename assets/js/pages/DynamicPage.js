@@ -9,18 +9,20 @@
 
 class DynamicPage {
 	constructor({
-		sectionSelector = "#table-section",
+		sectionSelector = "#list-view",
+		tableSelector = "#table-section",
 		navSelector,
 		detailSelector
 	} = {}) {
 		this.sectionSelector = sectionSelector;
+		this.tableSelector = tableSelector;
 		// Set navigation selector to first component of section selector with ‘-nav’ appended, otherwise default CSS selector
-		this.navSelector = navSelector ? navSelector : (sectionSelector !== "#table-section" ? sectionSelector.split(" ")[0] + "-nav" : ".side-nav-bar-nested");
-		this.detailSelector = detailSelector ? detailSelector : (sectionSelector !== "#table-section" ? sectionSelector.split(" ")[0] + "-detail" : "#single-view");
+		this.navSelector = navSelector ? navSelector : (sectionSelector !== "#list-view" ? sectionSelector.split(" ")[0] + "-nav" : ".side-nav-bar-nested");
+		this.detailSelector = detailSelector ? detailSelector : (sectionSelector !== "#list-view" ? sectionSelector.split(" ")[0] + "-detail" : "#single-view");
 	}
 	
 	updateSingleViewNavbar(html) {
-		$(this.detailSelector).find('.top-nav .main-content-title').html(html);
+		$(this.detailSelector).find('.top-nav h4').html(html);
 	}
 
 	/**
@@ -31,11 +33,11 @@ class DynamicPage {
 	 * You should call this function using "appendTable"
 	 */
 	updateSplashScreen() {
-		var $section = $(this.sectionSelector),
-		    resultsCount = $section.find('tbody tr').filter((i, el) => $(el).css("display") !== "none").length,
+		var $table = $(this.tableSelector),
+		    resultsCount = $table.find('tbody tr').filter((i, el) => $(el).css("display") !== "none").length,
 		    $splashScreen = $('.splash-screen');
 		
-		var [$show, $hide] = resultsCount ? [$section, $splashScreen] : [$splashScreen, $section];
+		var [$show, $hide] = resultsCount ? [$table, $splashScreen] : [$splashScreen, $table];
 		$hide.hide();
 		$show.fadeIn(100);
 		
@@ -73,11 +75,11 @@ class DynamicPage {
 
 			if (slug === 'eye') { // the on-hover eye invisible row
 				td.innerHTML = '<i class="fa fa-eye"></i>';
-			} else if (slug ? slug.includes("access") : false) {
+			} else if (slug && slug.includes("access")) {
 				// Boolean value support
-				td.textContent = Object.resolve(slug, object) ? "Yes" : "No";
+				td.innerHTML = Object.resolve(slug, object) ? this.innerHTML : "·";
 			} else {
-				td.innerHTML = object[slug];
+				td.innerHTML = object[slug] !== undefined ? object[slug] : "—";
 			}
 			
 			$newRow.append(td);
@@ -102,7 +104,10 @@ class DynamicPage {
 		$(this.sectionSelector).find("tbody tr").filter((i, el) => el.dataset.rowid == id).addClass("highlight").first().siblings().removeClass("highlight");
 		
 		// No need to set style using JS here, CSS handles flex
-		$(this.detailSelector).unwrap("div");
+		$(this.detailSelector).unwrap("div")
+		
+		// Close button on hide
+		.find("[data-action=\"close\"]").click(() => this.hideTableRowDetails());
 	}
 	
 	/**

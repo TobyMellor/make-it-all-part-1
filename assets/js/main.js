@@ -1,12 +1,6 @@
 $(function () {
 	$('[data-toggle="tooltip"]').tooltip();
 
-	$('[data-toggle="tooltip"] > .nested-list').hover(function() {
-		$(this).parent().tooltip('disable');
-	}, function() {
-		$(this).parent().tooltip('enable');
-	});
-
 	// TODO: Move to assets/js/pages/staff/x.js (george)
 	$('#new-staff-modal').on('shown.bs.modal', function () {
 		// When the staff modal is shown
@@ -66,28 +60,6 @@ $(function () {
 		$newStaffModal.find('input[name="event_target"]').val($(this).closest('.bootstrap-select').find('select').attr('name')); // when the staff member is created, this is the input field it'll update
 
 		$newStaffModal.modal('show');
-	});
-
-	$('#new-staff-modal #create-new-staff').on('click', function(e) {
-		e.preventDefault();
-
-		var formData = parseFormData($('#new-staff-modal form'));
-
-		// validate staff member here
-
-		// if validation passes:
-		//  - create staff member here /w AJAX
-		//  - retrieve new database ID and replace Math.random function below
-		//  - do following:
-		var staffId = Math.floor(Math.random() * (10000 + 1));
-
-		addItemToPicker(
-			$('.selectpicker.staff-picker[name="' + formData['event_target'] + '"]'),
-			staffId,
-			formData['staff[first_name]'] + ' ' + formData['staff[last_name]']
-		); // formData and staffId to be retrieved by AJAX call
-
-		$('#new-staff-modal').modal('hide');
 	});
 
 	$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {

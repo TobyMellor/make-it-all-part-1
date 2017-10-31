@@ -9,45 +9,96 @@
  */
 
 class StaffManager extends Manager {
-	constructor(staffMembers) {
+	constructor(staff) {
 		super();
+		staff = staffData; // initial prototype data
+		this.staff = staff ? staff.map(e => new Employee(e)) : [];
+	}
+	
+	createEmployee(data = {}) {
+		data.id = Math.floor(Math.random() * 10000 + 1);
 		
-		this.staffMembers = [
-			{
-				id: 0,
-				name: 'Toby Mellor',
-				email: 'example@domain.com',
-				permission_level: 3, // analyst
-				job_title: 'Developer',
-				department: 'Lboro',
-				telephone_number: 987654321
-			},
-			{
-				id: 1,
-				name: 'Another user',
-				email: 'another@email.com',
-				permission_level: 0,
-				job_title: 'Coffee Maker',
-				department: 'N/A',
-				telephone_number: 123456789
-			}
-		];
-
-		// loop through staffMembers, create instances and push to this.staffMembers
+		let employee = new Employee(data);
+		
+		this.staff.push(employee);
+		
+		return employee;
 	}
 
-	createStaffMember(staff, info, here) {
-		// AJAX call here, which returns a ticketId
-		// validation here
-
-		var staffId = Math.floor(Math.random() * (10000 + 1));
-			
-		// create staff instance, push to this.staffMembers. Return new staff member instance
+	getEmployee(id) {
+		return this.staff.find(e => e.id === id);
 	}
-
-	getStaffMember(staffMemberId) {
-		// return staff member instance from this.staffMembers, return null if not found
-
-		return this.staffMembers[staffMemberId];
+	
+	currentUser(asEmployee = false) {
+		let id = 1;
+		
+		if (asEmployee) {
+			return this.getEmployee(id);
+		}
+		return id;
+	}
+	
+	// Deprecated
+	get staffMembers() {
+		console.warn("Use of StaffManager property staffMembers is deprecated, use staff");
+		return this.staff;
+	}
+	getStaffMember(id) {
+		console.warn("Use of StaffManager method getStaffMember(id) is deprecated, use getEmployee(id)");
+		return this.getEmployee(id);
 	}
 }
+
+var staffData = [
+	{
+		id: 0,
+		name: "Bex Howell",
+		job: "Designer",
+		phone: "01555516794",
+		department: "Team 5",
+		isAnalyst: true
+	},
+	{
+		id: 1,
+		name: "George Garside",
+		email: "george@example.com",
+		job: "Developer",
+		department: "Team 5",
+		phone: "01555864722",
+		isOperator: true,
+		isAdmin: true
+	},
+	{
+		id: 2,
+		name: "Mike Higson",
+		job: "Developer",
+		phone: "01555138339",
+		department: "Team 5",
+		isOperator: true
+	},
+	{
+		id: 3,
+		name: "Ryan Sharp",
+		job: "Designer",
+		phone: "01555736169",
+		department: "Team 5",
+		isAnalyst: true
+	},
+	{
+		id: 4,
+		name: "Toby Beasley",
+		job: "Designer",
+		phone: "01555574667",
+		department: "Team 5",
+		isAnalyst: true
+	},
+	{
+		id: 5,
+		name: "Toby Mellor",
+		job: "Developer",
+		department: "Team 5",
+		phone: "01555181056",
+		isOperator: true,
+		isAdmin: true
+	}
+];

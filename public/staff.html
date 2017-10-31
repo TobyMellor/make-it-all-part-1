@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Staff - Make-It-All</title>
+	<link rel="stylesheet" type="text/css" href="css/plugins/plugins.min.css">
+	<link rel="stylesheet" type="text/css" href="css/pages/staff.min.css">
+	<link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+	<nav class="side-nav-bar">
+		<a class="btn btn-info">
+			Logout
+			<i class="fa fa-sign-out"></i>
+		</a>
+		
+		<div class="side-nav-bar-menu">
+			<ul>
+				<li>
+					<i class="fa fa-line-chart fa-2x"></i>
+					<p>Global Metrics</p>
+				</li>
+				<li>
+					<i class="fa fa-ticket fa-2x"></i>
+					<p>Tickets</p>
+				</li>
+				<li>
+					<i class="fa fa-file-code-o fa-2x"></i>
+					<p>Software</p>
+				</li>
+				<li>
+					<i class="fa fa-laptop fa-2x"></i>
+					<p>Hardware</p>
+				</li>
+				<li>
+					<i class="fa fa-question fa-2x"></i>
+					<p>Help</p>
+				</li>
+				<li class="active">
+					<i class="fa fa-user-circle-o fa-2x"></i>
+					<p>Staff</p>
+				</li>
+				<li>
+					<i class="fa fa-line-chart fa-2x"></i>
+					<p>My Metrics</p>
+				</li>
+
+				<li>
+					<div class="breaker"></div>
+					<i class="fa fa-cog fa-2x"></i>
+					<p>Settings</p>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	
+	<nav class="side-nav-bar-nested" id="staff-nav">
+		<h1>
+			<i class="fa fa-user-circle-o"></i>
+			Staff
+		</h1>
+		<p>
+			Roles
+		</p>
+		<ul>				
+			<li class="active" data-slug="all">
+				<i class="fa fa-users"></i>
+				All Staff
+			</li>
+			<li data-slug="access.operator">
+				<i class="fa fa-user-secret"></i>
+				Operators
+			</li>
+			<li data-slug="access.analyst">
+				<i class="fa fa-line-chart"></i>
+				Analysts
+			</li>
+			<li data-slug="access.admin">
+				<i class="fa fa-shield"></i>
+				Administrators
+			</li>
+			<li>
+				<button id="new-user" class="btn btn-success" data-toggle="modal" data-target="#new-staff-modal">
+						<i class="fa fa-plus"></i>
+						New User
+				</button>
+			</li>
+		</ul>
+	</nav>
+	
+	<section id="list-view" data-page="staff">
+		<nav class="top-nav">
+			<i class="fa fa-ticket"></i>
+			<h4 class="main-content-title">Loading…</h4>
+		</nav>
+		<div class="splash-screen" style="display: none;">
+			<h3>No results</h3>
+			<p>Get started, create a new staff member.</p>
+			<button class="btn btn-success btn-lg new-ticket" data-toggle="modal" data-target="#new-staff-modal">
+				<i class="fa fa-plus"></i>
+				New User
+			</button>
+		</div>
+		<div id="table-section">
+			<table class="table table-hover table-responsive data">
+				<thead>
+					<tr>
+						<th data-slug="id">ID</th>
+						<th data-slug="name">Name</th>
+						<th data-slug="job">Job</th>
+						<th data-slug="department">Department</th>
+						<th data-slug="phone">Phone No</th>
+						<th data-toggle="tooltip" title="Read" data-slug="access.read">
+							<i class="fa fa-eye"></i>
+						</th>
+						<th data-toggle="tooltip" title="Operator" data-slug="access.operator">
+							<i class="fa fa-user-secret"></i>
+						</th>
+						<th data-toggle="tooltip" title="Analyst" data-slug="access.analyst">
+							<i class="fa fa-line-chart"></i>
+						</th>
+						<th data-toggle="tooltip" title="Administrator" data-slug="access.admin">
+							<i class="fa fa-shield"></i>
+						</th>
+						<th data-slug="eye"></th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+	</section>
+	
+	<div>
+		<section id="single-view">
+			<nav class="top-nav">
+				<button class="btn btn-sm float-left" data-action="close">
+					<i class="fa fa-times"></i>
+					Close
+				</button>
+				<h4>Loading…</h4>
+				<button class="btn btn-sm btn-warning float-right" data-action="edit" data-toggle="modal" data-target="#new-staff-modal">
+					<i class="fa fa-pencil"></i>
+					Edit
+				</button>
+			</nav>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="card text-center">
+							<img class="card-img-top" src="images/portraits/portrait-1.jpg" alt="User profile photo">
+							<div class="card-body">
+								<h4 class="card-title" data-slug="name"></h4>
+								<p class="card-text" data-slug="job"></p>
+							</div>
+						</div>
+					</div>
+					<form class="col-md-6">
+						<span class="subtle">#<span data-slug="id"></span></span>
+						<div class="form-group row">
+							<label>Email</label>
+							<div class="col-sm-12">
+								<span data-slug="email"></span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label>Job</label>
+							<div class="col-sm-12">
+								<span data-slug="job"></span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label>Department</label>
+							<div class="col-sm-12">
+								<span data-slug="department"></span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label>Phone No</label>
+							<div class="col-sm-12">
+								<span data-slug="phone"></span>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="row">
+					<p class="col-md-9 text-right">
+						<strong class="table-compact-heading">Find <span data-slug="name"></span>'s</strong>
+						<button type="button" class="btn btn-primary">Tickets</button>
+						<button type="button" class="btn btn-primary">Software</button>
+					</p>
+				</div>
+				<div class="row thin">
+					<div class="col-md-12">
+						<strong class="table-compact-heading"><span data-slug="name"></span>'s Specialisms</strong>
+						<div class="problem-type-picker">
+							<div class="type-columns">
+								<div class="type-column">
+									<li class="active">
+										Printer
+										<div class="specialist-counter">
+											8 <i class="fa fa-user"></i>
+										</div>
+										<i class="fa fa-caret-right"></i>
+									</li>
+									<li>
+										Computers
+										<div class="specialist-counter">
+											12 <i class="fa fa-user"></i>
+										</div>
+										<i class="fa fa-caret-right"></i>
+									</li>
+									<li>
+										Software
+										<div class="specialist-counter">
+											1 <i class="fa fa-user"></i>
+										</div>
+										<i class="fa fa-caret-right"></i>
+									</li>
+								</div>
+								<div class="type-column">
+									<li>
+										Computer Problem
+										<div class="specialist-counter">
+											4 <i class="fa fa-user"></i>
+										</div>
+										<i class="fa fa-caret-right"></i>
+									</li>
+									<li>
+										Paper Jam
+										<div class="specialist-counter">
+											<i class="fa fa-user-times"></i>
+										</div>
+										<i class="fa fa-caret-right"></i>
+									</li>
+									<li class="active">
+										No Ink
+										<div class="specialist-counter">
+											20 <i class="fa fa-user"></i>
+										</div>
+										<i class="fa fa-caret-right"></i>
+									</li>
+								</div>
+								<div class="type-column">
+									<li>
+										Low Magenta
+										<div class="specialist-counter">
+											4 <i class="fa fa-user"></i>
+										</div>
+										<i class="fa fa-caret-right"></i>
+									</li>
+									<li>
+										Low Cyan
+										<div class="specialist-counter">
+											<i class="fa fa-user-times"></i>
+										</div>
+										<i class="fa fa-caret-right"></i>
+									</li>
+									<li>
+										Low Yellow
+										<div class="specialist-counter">
+											<i class="fa fa-user-times"></i>
+										</div>
+										<i class="fa fa-caret-right"></i>
+									</li>
+									<li>
+										Low Black
+										<div class="specialist-counter">
+											<i class="fa fa-user-times"></i>
+										</div>
+										<i class="fa fa-caret-right"></i>
+									</li>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<p class="col-md-9 text-right">
+						<strong class="table-compact-heading">Administrate <span data-slug="name"></span></strong>
+						<button type="button" class="btn btn-outline-warning">Reset Password</button>
+						<button type="button" class="btn btn-danger">Delete</button>
+					</p>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<div class="modal fade" id="new-staff-modal" tabindex="-1" role="dialog" aria-labelledby="new-staff-modal" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Create a new Staff Member</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<input type="text" class="no-clear-on-show" name="event_target" hidden />
+						<div class="row">
+							<div class="col-md-8">
+								<div class="form-group">
+									<label class="required">Staff Name</label>
+									<div class="row">
+										<div class="col-md-6">
+											<input class="form-control no-clear-on-show" name="staff[first_name]" placeholder="First Name" />
+										</div>
+										<div class="col-md-6">
+											<input class="form-control no-clear-on-show" name="staff[last_name]" placeholder="Last Name" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="required">Staff Email</label>
+									<input class="form-control" name="staff[email]" />
+								</div>
+								<div class="row">
+									<div class="col-md-6 form-group">
+										<label>Job Title</label>
+										<input class="form-control" name="staff[job]" />
+									</div>
+									<div class="col-md-6 form-group">
+										<label>Department</label>
+										<input class="form-control" name="staff[department]" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Phone Number</label>
+									<input class="form-control" name="staff[phone]" />
+								</div>
+							</div>
+							<div class="col-md-4">
+								<label class="required">Staff Permissions</label>
+								<div class="staff-permissions">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" name="staff[permissions][ticket_read_only]" checked="checked">
+										<span class="custom-control-indicator"></span>
+										<span class="custom-control-description">Ticket Read Only</span>
+										<span class="help-text">
+											Can VIEW <a href="/tickets" target="_blank">tickets</a> and RECIEVE email status updates.
+										</span>
+									</label>
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" name="staff[permissions][helpdesk_operator]">
+										<span class="custom-control-indicator"></span>
+										<span class="custom-control-description">Helpdesk Operator</span>
+										<span class="help-text">
+											All permissions from 'Ticket Read Access'.<br />
+											They can also CREATE, UPDATE and DELETE <a href="/tickets" target="_blank">tickets</a> and VIEW <a href="/staff" target="_blank">staff</a>
+										</span>
+									</label>
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" name="staff[permissions][analyst]">
+										<span class="custom-control-indicator"></span>
+										<span class="custom-control-description">Analyst</span>
+										<span class="help-text">
+											All permissions from 'Ticket Read Access' and 'Helpdesk Operator'.<br />
+											They can also VIEW <a href="/metrics" target="_blank">metrics</a>.
+										</span>
+									</label>
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" name="staff[permissions][super_admin]">
+										<span class="custom-control-indicator"></span>
+										<span class="custom-control-description">Super Admin</span>
+										<span class="help-text">
+											All permissions from 'Ticket Read Access', 'Helpdesk Operator' and 'Analyst'<br />
+											They can also CREATE, UPDATE and DELETE <a href="/staff">staff</a>.
+										</span>
+									</label>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-success" id="create-new-staff">Create Staff Member</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="js/plugins/plugins.min.js"></script>
+	<script src="js/main.min.js"></script>
+	<script src="js/pages/staff.min.js"></script>
+	<script>
+		let makeItAll = new MakeItAll();
+		makeItAll.staffManager = new StaffManager();
+	</script>
+</body>
+</html>
