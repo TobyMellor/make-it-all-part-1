@@ -294,6 +294,7 @@
 
 													<div class="form-group">
 														<label class="required">Problem Type</label>
+														<input name="tickets[1][problem_type]" hidden>
 														<span class="subtle pull-right"></span>
 														<div class="problem-type-picker">
 															<div class="type-columns"></div>
@@ -400,6 +401,15 @@
 															</div>
 														</div>
 													</div>
+
+													<div class="form-group">
+														<label class="required">Problem Type</label>
+														<input name="tickets[this][problem_type]" hidden>
+														<span class="subtle pull-right"></span>
+														<div class="problem-type-picker">
+															<div class="type-columns"></div>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -502,6 +512,15 @@
 											<div class="col-md-12">
 												<ul class="hardware-list"></ul>
 											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="required">Problem Type</label>
+										<input name="tickets[1][problem_type]" hidden>
+										<span class="subtle pull-right"></span>
+										<div class="problem-type-picker">
+											<div class="type-columns"></div>
 										</div>
 									</div>
 								</div>
@@ -732,7 +751,8 @@
 						devices: [],
 						created_at: 'Yesterday',
 						updated_at: '1 hour ago',
-						events: [0, 1, 2]
+						events: [0, 1, 2],
+						problem_type: 5
 					},
 					{
 						id: 1,
@@ -744,7 +764,8 @@
 						devices: [],
 						created_at: '4 days ago',
 						updated_at: '4 days ago',
-						events: [3]
+						events: [3],
+						problem_type: 1
 					},
 					{
 						id: 2,
@@ -756,7 +777,8 @@
 						devices: [],
 						created_at: '1 day ago',
 						updated_at: 'Just now',
-						events: []
+						events: [],
+						problem_type: 3
 					},
 					{
 						id: 3,
@@ -768,7 +790,8 @@
 						devices: [],
 						created_at: '23 hours ago',
 						updated_at: '3 minutes ago',
-						events: []
+						events: [],
+						problem_type: 5
 					},
 					{
 						id: 4,
@@ -780,7 +803,8 @@
 						devices: [],
 						created_at: '4 hours ago',
 						updated_at: '4 hours ago',
-						events: []
+						events: [],
+						problem_type: 4
 					}
 				],
 				[	
@@ -888,7 +912,8 @@
 					formData.title,
 					formData.description,
 					parseInt(formData.assigned_to),
-					formData.devices
+					formData.devices,
+					parseInt(formData.problem_type)
 				);
 
 				ticketPage.refreshPage(formData.filter, parseInt(formData.id));
@@ -977,6 +1002,14 @@
 										'</div>' +
 									'</div>' +
 								'</div>' +
+								'<div class="form-group">' +
+									'<label class="required">Problem Type</label>' +
+									'<input name="tickets[' + cardId + '][problem_type]" hidden>' +
+									'<span class="subtle pull-right"></span>' +
+									'<div class="problem-type-picker">' +
+										'<div class="type-columns"></div>' +
+									'</div>' +
+								'</div>' +
 							'</div>' +
 						'</div>' +
 					'</div>'
@@ -1040,6 +1073,14 @@
 											'</div>' +
 										'</div>' +
 									'</div>' +
+									'<div class="form-group">' +
+										'<label class="required">Problem Type</label>' +
+										'<input name="tickets[1][problem_type]" hidden>' +
+										'<span class="subtle pull-right"></span>' +
+										'<div class="problem-type-picker">' +
+											'<div class="type-columns"></div>' +
+										'</div>' +
+									'</div>' +
 								'</div>' +
 							'</div>' +
 						'</div>'
@@ -1047,8 +1088,9 @@
 
 					ticketPage.appendHardwareDevices($accordion.find('.card[data-cardid="' + cardId + '"] .hardware-list'), ticket, cardId);
 
-					$(this).find('option[value="' + ticketId + '"]').remove();
+					problemTypePage.loadProblemType($accordion.find('.type-columns'), ticket._problem_type);
 
+					$(this).find('option[value="' + ticketId + '"]').remove();
 					$(this).selectpicker('refresh');
 				}
 			});
@@ -1143,6 +1185,10 @@
 
 			$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
 				ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
+
+				$(this).find('.staff-information').text('No staff member has been selected yet!');
+
+				problemTypePage.loadSubProblemTypes($(this).find('.type-columns'));
 			});
 
 			$('#edit-ticket-modal').on('show.bs.modal', function() {
@@ -1155,12 +1201,18 @@
 
 			$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
 				$(this).find('.staff-information').text('No staff member has been selected yet!');
+				
+				var $typeColumns = $(this).find('.type-columns');
 
-				problemTypePage.loadSubProblemTypes($(this).find('.type-columns'));
+				problemTypePage.loadProblemType($typeColumns, ticketPage.currentTicket._problem_type);
 			});
 
 			$(document).on('click', '.type-column li', function() {
-				problemTypePage.loadSubProblemTypes($(this).closest('.type-columns'), $(this), parseInt($(this).data('problemTypeId')));
+				var problemTypeId = parseInt($(this).data('problemTypeId'));
+
+				problemTypePage.loadSubProblemTypes($(this).closest('.type-columns'), $(this), problemTypeId);
+
+				$(this).closest('input[name*=problem_type]').val(problemTypeId);
 			});
 
 			$('#new-ticket-modal select[name="caller"], #follow-up-call-modal select[name="caller"]').on('change', function() {
