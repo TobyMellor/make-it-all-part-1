@@ -64,7 +64,7 @@ var staffData = [
 		phone: "01555516794",
 		department: "Team 5",
 		isAnalyst: true,
-		specialismss: [1]
+		specialisms: [1]
 	},
 	{
 		id: 1,

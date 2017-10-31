@@ -1,4 +1,5 @@
-let staffPage = new StaffPage();
+let staffPage            = new StaffPage();
+let staffProblemTypePage = new StaffProblemTypePage();
 
 $(() => {
 	let isPage = document.getElementById(staffPage.sectionSelector.substring(1)).dataset.page === "staff";
@@ -95,8 +96,6 @@ $(() => {
 	// Page-specific follows
 	if (!isPage) return;
 
-	let staffProblemTypePage = new StaffProblemTypePage();
-
 	$('#new-staff-modal').on('show.bs.modal', function() {
 		var $typeColumns = $(this).find('.type-columns');
 
@@ -105,10 +104,12 @@ $(() => {
 	});
 
 	$(document).on('click', '.type-column li', function() {
-		staffProblemTypePage.loadSpecialistProblemTypes($(this).closest('.type-columns'), $(this), parseInt($(this).data('problemTypeId')));
+		if (!$(this).hasClass('no-children')) {
+			staffProblemTypePage.loadSpecialistProblemTypes($(this).closest('.type-columns'), $(this), parseInt($(this).data('problemTypeId')));
+		}
 	});
 
-	$(document).on('click', '.type-column li .specialism-checkbox', function() {
+	$(document).on('click', '.problem-type-picker:not(.readonly) .type-column li .specialism-checkbox', function() {
 		staffProblemTypePage.toggleSpecialism($(this));
 	});
 	
