@@ -6,6 +6,7 @@
 		width: $comfortable * 2;
 		text-align: center;
 	}
+
 	td:last-child {
 		text-align: center;
 	}	
@@ -18,15 +19,18 @@
 		&:not(.thin) {
 			padding-top: $comfortable;
 		}
+
 		&:first-child {
 			align-items: center;
 		}
 	}
+
 	.card {
 		max-width: $comfortable * 16;
 		margin: $cosy $comfortable $cosy auto;
 	}
-	.col-md-6 .row {
+
+	form .row {
 		border-bottom: 1px solid $silver;
 		margin-bottom: 1rem;
 	}
@@ -49,7 +53,33 @@
 	margin-right: $cosy;
 	color: $black;
 }
+
 .subtle {
 	color: $grey;
 	float: right;
+}
+
+.problem-type-picker {
+	li {
+		&:hover, &.last-active {
+			.specialism-checkbox {
+				border: 2px solid $white;
+			}
+		}
+
+		.specialism-checkbox {
+			width: 15px;
+			height: 15px;
+			border: 2px solid $black;
+			margin-top: $compact;
+			cursor: pointer;
+
+			i {
+				position: absolute;
+				right: 10px;
+				top: 6px;
+				font-size: 11px;
+			}
+		}
+	}
 }
