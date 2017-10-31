@@ -14,20 +14,6 @@
 	}
 }
 
-span.filter {
-	padding: 4px 8px;
-	background-color: $blue;
-	border-radius: 2px;
-	border: 0;
-	color: $white;
-	font-weight: 600;
-	font-size: 15px;
-
-	&.filter-green {
-		background-color: $green;
-	}
-}
-
 #ticket-view {
 	padding: $comfortable;
 

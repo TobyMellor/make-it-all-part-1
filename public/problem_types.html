@@ -102,6 +102,7 @@
 				<p class="problem-type-details">
 					<strong>Specialists with this speciality:</strong>
 				</p>
+				<p id="no-specialists-data">There's no specialists that specialise in this problem!</p>
 				<table class="table" id="specialists-table">
 					<thead>
 						<tr>
@@ -128,6 +129,7 @@
 				<p class="problem-type-details">
 					<strong>Related Tickets:</strong>
 				</p>
+				<p id="no-tickets-data">There's no tickets related to this problem!</p>
 				<table class="table" id="tickets-table">
 					<thead>
 						<tr>
@@ -260,7 +262,8 @@
 						devices: [],
 						created_at: 'Yesterday',
 						updated_at: '1 hour ago',
-						events: [0, 1, 2]
+						events: [0, 1, 2],
+						problem_type: 5
 					},
 					{
 						id: 1,
@@ -272,7 +275,8 @@
 						devices: [],
 						created_at: '4 days ago',
 						updated_at: '4 days ago',
-						events: [3]
+						events: [3],
+						problem_type: 1
 					},
 					{
 						id: 2,
@@ -284,7 +288,8 @@
 						devices: [],
 						created_at: '1 day ago',
 						updated_at: 'Just now',
-						events: []
+						events: [],
+						problem_type: 3
 					},
 					{
 						id: 3,
@@ -296,7 +301,8 @@
 						devices: [],
 						created_at: '23 hours ago',
 						updated_at: '3 minutes ago',
-						events: []
+						events: [],
+						problem_type: 5
 					},
 					{
 						id: 4,
@@ -308,7 +314,8 @@
 						devices: [],
 						created_at: '4 hours ago',
 						updated_at: '4 hours ago',
-						events: []
+						events: [],
+						problem_type: 4
 					}
 				],
 				[	
