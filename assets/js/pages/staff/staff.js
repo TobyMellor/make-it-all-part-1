@@ -33,11 +33,16 @@ $(() => {
 	$('#new-staff-modal').on('show.bs.modal', function() {
 		var $typeColumns = $(this).find('.type-columns');
 
-		staffProblemTypePage.loadSpecialistProblemTypes(makeItAll.staffManager.currentUser(true), $typeColumns);
+		staffProblemTypePage.currentSpecialisms = []; // TODO: for the edit modal, set this to Employee._specialisms
+		staffProblemTypePage.loadSpecialistProblemTypes($typeColumns);
 	});
 
 	$(document).on('click', '.type-column li', function() {
-		staffProblemTypePage.loadSpecialistProblemTypes(makeItAll.staffManager.currentUser(true), $(this).closest('.type-columns'), $(this), parseInt($(this).data('problemTypeId')));
+		staffProblemTypePage.loadSpecialistProblemTypes($(this).closest('.type-columns'), $(this), parseInt($(this).data('problemTypeId')));
+	});
+
+	$(document).on('click', '.type-column li .specialism-checkbox', function() {
+		staffProblemTypePage.toggleSpecialism($(this));
 	});
 	
 	staffPage.showStaff();
