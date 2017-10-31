@@ -22,6 +22,8 @@ $(() => {
 		switch (e.currentTarget.dataset.action) {
 			case "create":
 				var employee = makeItAll.staffManager.createEmployee(formData.staff);
+
+				employee._specialisms = staffProblemTypePage.currentSpecialisms;
 				
 				addItemToPicker(
 					$('.selectpicker.staff-picker[name="' + formData['event_target'] + '"]'),
@@ -33,6 +35,7 @@ $(() => {
 				
 			case "save":
 				formData.staff.id = staffPage.employee.id;
+				staffPage.employee._specialisms = staffProblemTypePage.currentSpecialisms;
 				makeItAll.staffManager.updateEmployee(formData.staff);
 		}
 				

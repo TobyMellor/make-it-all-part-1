@@ -13,15 +13,9 @@ class StaffPage extends DynamicPage {
 	}
 	
 	showTableRowDetails(id) {
-		// Get employee with ID
-<<<<<<< HEAD
+		// Get employee with IDå
 		this.employee = makeItAll.staffManager.getEmployee(id);
 		if (!this.employee) {
-=======
-		let employee = makeItAll.staffManager.getEmployee(id);
-
-		if (!employee) {
->>>>>>> Readonly view for staff details section
 			this.hideTableRowDetails();
 			alert("No employee with ID " + id);
 
