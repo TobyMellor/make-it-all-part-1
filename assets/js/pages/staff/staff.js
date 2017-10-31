@@ -27,6 +27,18 @@ $(() => {
 
 	// Page-specific follows
 	if (!isPage) return;
+
+	let staffProblemTypePage = new StaffProblemTypePage();
+
+	$('#new-staff-modal').on('show.bs.modal', function() {
+		var $typeColumns = $(this).find('.type-columns');
+
+		staffProblemTypePage.loadSpecialistProblemTypes(makeItAll.staffManager.currentUser(true), $typeColumns);
+	});
+
+	$(document).on('click', '.type-column li', function() {
+		staffProblemTypePage.loadSpecialistProblemTypes(makeItAll.staffManager.currentUser(true), $(this).closest('.type-columns'), $(this), parseInt($(this).data('problemTypeId')));
+	});
 	
 	staffPage.showStaff();
 	$(staffPage.navSelector).find("[data-slug]").click(el => {
@@ -48,5 +60,4 @@ $(() => {
 	$(staffPage.tableSelector).on("click", "tbody tr", e => {
 		staffPage.showTableRowDetails(Number(e.currentTarget.dataset.rowid));
 	});
-	
 });

@@ -11,6 +11,7 @@ class Employee {
 		job,
 		department,
 		phone,
+		specialisms,
 		isRead: read = false,
 		isOperator: operator = false,
 		isAnalyst: analyst = false,
@@ -22,6 +23,7 @@ class Employee {
 		this.job = job;
 		this.department = department;
 		this.phone = phone;
+		this.specialisms = specialisms;
 		this.access = {read, operator, analyst, admin};
 		
 		// If user is any other permission then read is granted
@@ -31,13 +33,24 @@ class Employee {
 	get isRead() {
 		return this.access.read;
 	}
+
 	get isOperator() {
 		return this.access.operator;
 	}
+
 	get isAnalyst() {
 		return this.access.analyst;
 	}
+
 	get isAdmin() {
 		return this.access.admin;
+	}
+
+	get specialisms() {
+		return makeItAll.problemTypeManager.getProblemTypes(this._specialisms);
+	}
+
+	set specialisms(specialisms) {
+		this._specialisms = specialisms;
 	}
 }
