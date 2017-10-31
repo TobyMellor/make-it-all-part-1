@@ -1164,12 +1164,13 @@
 				problemTypePage.loadSubProblemTypes($(this).find('.type-columns'));
 			});
 
-			$('#edit-ticket-modal').on('show.bs.modal', function() {
-				ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers, ticketPage.currentTicket._assigned_to);
-			});
-
 			$('#single-view [data-action="edit"]').on('click', function() {
-				ticketPage.populateTicketModal($('#edit-ticket-modal'), ticketPage.currentTicket);
+				var $editTicketModal = $('#edit-ticket-modal');
+
+				ticketPage.populateTicketModal($editTicketModal, ticketPage.currentTicket);
+				ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers, ticketPage.currentTicket._assigned_to);
+
+				problemTypePage.loadProblemType($editTicketModal.find('.type-columns'), ticketPage.currentTicket._problem_type);
 			});
 
 			$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
