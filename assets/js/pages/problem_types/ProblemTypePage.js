@@ -83,21 +83,30 @@ class ProblemTypePage {
 	}
 
 	loadProblemTypeInfo(problemType) {
-		var $singleView 	  = $('#single-view'),
-			$navBar           = $singleView.find('.top-nav h4'),
-			$splashScreen     = $singleView.find('.splash-screen'),
-			$problemTypeView  = $singleView.find('#problem-type-view'),
-			$problemTypeTable = $singleView.find('#problem-types-table tbody');
+		var $singleView 	   = $('#single-view'),
+			$navBar            = $singleView.find('.top-nav h4'),
+			$splashScreen      = $singleView.find('.splash-screen'),
+			$problemTypeView   = $singleView.find('#problem-type-view'),
+			$problemTypeTable  = $singleView.find('#problem-types-table tbody'),
+			$specialistsTable  = $singleView.find('#specialists-table tbody'),
+			$ticketsTable      = $singleView.find('#tickets-table tbody'),
+			$noSpecialistsData = $singleView.find('#no-specialists-data'),
+			$noTicketsData     = $singleView.find('#no-tickets-data');
 
 		$splashScreen.hide();
 		$problemTypeView.fadeIn();
 
 		$navBar.text(this.getProblemTypeBreadcrum(problemType));
 		
-		var problemTypeChain = makeItAll.problemTypeManager.getProblemTypeChain(problemType);
+		var problemTypeChain = makeItAll.problemTypeManager.getProblemTypeChain(problemType),
+			specialists      = makeItAll.staffManager.getSpecialists(problemType.id),
+			tickets          = makeItAll.ticketManager.getRelatedProblems(problemType.id);
 
 		$problemTypeTable.html('');
+		$specialistsTable.html('');
+		$ticketsTable.html('');
 
+		// Should probably move these to DynamicPage
 		for (var i = 0; i < problemTypeChain.length; i++) {
 			var problemType = problemTypeChain[i];
 
@@ -111,6 +120,56 @@ class ProblemTypePage {
 					'</td>' +
 				'</tr>'
 			);
+		}
+
+		if (specialists.length > 0) {
+			$specialistsTable.parent().show();
+			$noSpecialistsData.hide();
+
+			for (var i = 0; i < specialists.length; i++) {
+				var specialist = specialists[i];
+
+				$specialistsTable.append(
+					'<tr ' + (specialist.id === makeItAll.staffManager.currentUser() ? 'class="highlight"' : '') + ' data-rowid="' + specialist.id + '">' +
+						'<td>' + specialist.id + '</td>' +
+						'<td>' + specialist.name + '</td>' +
+						'<td>' + specialist.job + '</td>' +
+						'<td>' + specialist.phone + '</td>' +
+						'<td>' +
+							'<i class="fa fa-eye"></i>' +
+						'</td>' +
+					'</tr>'
+				);
+			}
+		} else {
+			$specialistsTable.parent().hide();
+			$noSpecialistsData.show();
+		}
+
+		if (tickets.length > 0) {
+			$ticketsTable.parent().show();
+			$noTicketsData.hide();
+
+			for (var i = 0; i < tickets.length; i++) {
+				var ticket = tickets[i];
+
+				$ticketsTable.append(
+					'<tr data-rowid="' + ticket.id + '">' +
+						'<td>' + ticket.id + '</td>' +
+						'<td class="truncate">' + ticket.title + '</td>' +
+						'<td>' +
+							'<span class="filter">' + ticket.filter.name + '</span>' +
+						'</td>' +
+						'<td class="truncate">' + ticket.created_at + '</td>' +
+						'<td>' +
+							'<i class="fa fa-eye"></i>' +
+						'</td>' +
+					'</tr>'
+				);
+			}
+		} else {
+			$ticketsTable.parent().hide();
+			$noTicketsData.show();
 		}
 	}
 
