@@ -34,12 +34,12 @@ class DynamicPage {
 	 */
 	updateSplashScreen() {
 		var $table = $(this.tableSelector),
-		    resultsCount = $table.find('tbody tr').filter((i, el) => $(el).css("display") !== "none").length,
+		    resultsCount = $table.find('tbody tr').filter((i, el) => !$(el).hasClass("row-hidden")).length,
 		    $splashScreen = $('.splash-screen');
 		
 		var [$show, $hide] = resultsCount ? [$table, $splashScreen] : [$splashScreen, $table];
-		$hide.hide();
-		$show.fadeIn(100);
+		$hide.addClass("block-hidden");
+		$show.removeClass("block-hidden");
 		
 		// Set navbar text as number of items in table then append currently selected filter
 		var navText = resultsCount + " " + $(this.navSelector).find("li.active").first().text().replace("All ", "");

@@ -28,12 +28,10 @@ $comfortable: 16px;
 $standard: 14px;
 $h4: 24px;
 
-* {
-	transition: all 0.1s ease-out;
-}
-
 body {
 	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: stretch;
@@ -44,9 +42,6 @@ body {
 		overflow-y: scroll;
 	}
 	
-	> div:not([class]) {
-		display: none;
-	}
 	// I think this looks better with a 1px border, to discuss
 	// > nav, > section {
 	// 	box-shadow: 1px 0 5px rgba(0, 0, 0, 0.26);
@@ -628,6 +623,17 @@ label {
 	}
 }
 
+.row-hidden {
+	line-height: 0;
+}
+.block-hidden {
+	height: 0;
+	opacity: 0;
+	&:not(#table-section) {
+		overflow: hidden;
+	}
+}
+
 .modal {
 	textarea {
 		min-height: 150px;
@@ -749,3 +755,5 @@ label {
 		}
 	}
 }
+
+@import "animate";

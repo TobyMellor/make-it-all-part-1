@@ -39,9 +39,10 @@ $(() => {
 		$table.find("tbody tr").each((i, el) => {
 			let $el = $(el);
 			let $td = $el.children().eq(columnIndex);
-			// Closure used to set ‘this’ correctly https://i.stack.imgur.com/CUsZm.png
-			$el[$td.children().length === 0 ? "fadeOut" : "fadeIn"](100, () => staffPage.updateSplashScreen());
+			$el.toggleClass("row-hidden", $td.children().length === 0);
 		});
+		
+		staffPage.updateSplashScreen();
 	});
 	
 	$(staffPage.tableSelector).on("click", "tbody tr", e => {

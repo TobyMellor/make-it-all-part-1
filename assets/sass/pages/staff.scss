@@ -11,12 +11,7 @@
 	}	
 }
 
-// Hide columns when showing detail
-#list-view:not(:last-of-type) table {
-	th:nth-last-child(-n+6), td:nth-last-child(-n+6) {
-		display: none;
-	}
-}
+@include colhide(5);
 
 #single-view {
 	.container > .row {
