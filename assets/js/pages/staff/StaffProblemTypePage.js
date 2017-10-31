@@ -21,6 +21,8 @@ class StaffProblemTypePage {
 			if ($li.hasClass('no-children')) {
 				return;
 			}
+		} else {
+			$typeColumns.html('');
 		}
 
 		var children    = [],
