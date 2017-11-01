@@ -26,8 +26,9 @@
 		max-width: $comfortable * 16;
 		margin: $cosy $comfortable $cosy auto;
 	}
-	form .row {
+	.col-md-6 .row {
 		border-bottom: 1px solid $silver;
+		margin-bottom: 1rem;
 	}
 	
 	// List of permissions for user
