@@ -2,3 +2,48 @@
 $small: 780px;
 $display: 1440px;
 $wide: 1600px;
+
+@media (max-width: $small) {
+	body {
+		flex-direction: column;
+	}
+	
+	.side-nav-bar {
+		width: 100vw;
+		display: flex;
+		overflow-x: scroll;
+		overflow-y: hidden;
+		
+		.btn-info {
+			font-size: 0.9em;
+			writing-mode: vertical-lr;
+			padding: $compact $cosy;
+			.fa {
+				margin: -$compact 0;
+			}
+		}
+		
+		ul {
+			display: flex;
+			align-items: stretch;
+		}
+		
+		li {
+			display: flex;
+			align-items: flex-end;
+			padding: 8px !important;
+			border-left: none !important;
+			&:hover {
+				border-top: $thin $blue solid;
+				padding-right: initial;
+			}
+			&.active {
+				border-top: $thin $blue-hover solid;
+			}
+		}
+		
+		.breaker {
+			display: none;
+		}
+	}
+}
