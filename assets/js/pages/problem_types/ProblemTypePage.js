@@ -25,7 +25,7 @@ class ProblemTypePage extends DynamicPage {
 			$li.addClass('active last-active');
 
 			if (this.allowProblemTypeCreation) {
-				$typeColumns.find('.type-column:not(:first-child)').find('.input-group').remove();
+				$typeColumns.find('.type-column').find('.input-group').remove();
 			} else if ($li.hasClass('no-children')) {
 				return;
 			}
@@ -56,7 +56,7 @@ class ProblemTypePage extends DynamicPage {
 		}
 
 		if (this.allowProblemTypeCreation) {
-			$typeColumn.append(
+			var input = 
 				'<div class="input-group">' +
 					'<input type="text" class="form-control" placeholder="Problem type name...">' +
 						'<span class="input-group-btn">' +
@@ -64,8 +64,17 @@ class ProblemTypePage extends DynamicPage {
 							'<i class="fa fa-plus"></i>' +
 						'</button>' +
 					'</span>' +
-				'</div>'
-			);
+				'</div>';
+
+			if ($li) {
+				$li.parent().append(input);
+
+				if ($li.hasClass('no-children')) {
+					$typeColumn.append(input);
+				}
+			} else {
+				$typeColumn.append(input);
+			}
 		}
 
 		$typeColumns.append($typeColumn);
