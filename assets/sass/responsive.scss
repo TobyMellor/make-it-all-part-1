@@ -8,12 +8,15 @@ $wide: 1600px;
 		flex-direction: column;
 	}
 	
-	.side-nav-bar {
+	.side-nav-bar, .side-nav-bar-nested {
 		width: 100vw;
 		display: flex;
 		overflow-x: scroll;
 		overflow-y: hidden;
-		
+		border-bottom: 1px solid $silver;
+	}
+	
+	.side-nav-bar {		
 		.btn-info {
 			font-size: 0.9em;
 			writing-mode: vertical-lr;
@@ -44,6 +47,43 @@ $wide: 1600px;
 		
 		.breaker {
 			display: none;
+		}
+	}
+	
+	.side-nav-bar-nested {
+		padding: $cosy;
+		
+		h1 {
+			white-space: nowrap;
+			font-size: 2rem;
+			margin: 0;
+		}
+		
+		> p {
+			display: none;
+		}
+		
+		ul {
+			margin-left: $comfortable;
+			display: flex;
+			
+			li {
+				white-space: nowrap;
+				font-size: 100%;
+				margin-left: $compact;
+				border-bottom: none;
+				border-left: 1px solid $silver;
+				padding: $compact $cosy;
+				
+				&:last-child {
+					padding: 0;
+					border-left: none;
+					> .btn {
+						margin: 0;
+						padding: ($cosy - $compact) $cosy;
+					}
+				}
+			}
 		}
 	}
 }
