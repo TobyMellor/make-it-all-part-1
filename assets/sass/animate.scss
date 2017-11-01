@@ -2,7 +2,7 @@ $duration: 0.2s;
 $ease: ease-out;
 
 * {
-	transition: all $duration $ease, ;
+	transition: all $duration $ease;
 }
 
 #single-view {

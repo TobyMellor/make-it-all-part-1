@@ -23,11 +23,18 @@
 		&:first-child {
 			align-items: center;
 		}
+		@media (max-width: $small) {
+			padding: 0 ($comfortable * 2);
+		}
 	}
 
 	.card {
 		max-width: $comfortable * 16;
 		margin: $cosy $comfortable $cosy auto;
+		@media (max-width: $small) {
+			margin: 0 auto;
+			width: 180px;
+		}
 	}
 
 	form .row {
