@@ -343,6 +343,7 @@ section {
 
 #list-view {
 	border-right: 1px solid #bdc3c7;
+	min-width: 640px;
 	
 	.table {
 		th:first-child, td:first-child {
@@ -360,11 +361,6 @@ section {
 		text-align: center;
 	}
 }
-
-#list-view, #single-view {
-	flex: 1;
-}
-
 .splash-screen {
 	display: flex;
 	align-items: center;
