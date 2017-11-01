@@ -4,6 +4,7 @@ class StaffPage extends DynamicPage {
 	}
 	
 	showStaff() {
+		$(this.tableSelector).find("tbody").empty();
 		for (let employee of makeItAll.staffManager.staff) {
 			this.appendTableRow(employee);
 		}

@@ -15,13 +15,21 @@ $(() => {
 		//  - retrieve new database ID and replace Math.random function below
 		//  - do following:
 		var staffId = Math.floor(Math.random() * (10000 + 1));
+		
+		makeItAll.staffManager.createEmployee(formData.staff);
 
 		addItemToPicker(
 			$('.selectpicker.staff-picker[name="' + formData['event_target'] + '"]'),
 			staffId,
 			formData['staff[first_name]'] + ' ' + formData['staff[last_name]']
 		); // formData and staffId to be retrieved by AJAX call
-
+		
+		if (isPage) {
+			$(staffPage.navSelector).find("[data-slug=\"all\"]").addClass("active").siblings().removeClass("active");
+			staffPage.hideTableRowDetails();
+			staffPage.showStaff();
+		}
+		
 		$('#new-staff-modal').modal('hide');
 	});
 	
