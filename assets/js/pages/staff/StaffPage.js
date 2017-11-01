@@ -1,6 +1,7 @@
 class StaffPage extends DynamicPage {
 	constructor() {
 		super();
+		this.employee = null;
 	}
 	
 	showStaff() {
@@ -13,19 +14,20 @@ class StaffPage extends DynamicPage {
 	
 	showTableRowDetails(id) {
 		// Get employee with ID
-		let employee = makeItAll.staffManager.getEmployee(id);
-		if (!employee) {
+		this.employee = makeItAll.staffManager.getEmployee(id);
+		if (!this.employee) {
 			this.hideTableRowDetails();
 			alert("No employee with ID " + id);
 			return;
 		}
 		
 		//this.detailTitle = employee.name;
-		this.updateSingleViewNavbar(employee.name);
+		this.updateSingleViewNavbar(this.employee.name);
 		
 		// Content
 		$(this.detailSelector).find("[data-slug]").each((i, el) => {
-			el.textContent = String(Object.resolve(el.dataset.slug, employee)) || "—";
+			let value = Object.resolve(el.dataset.slug, this.employee);
+			el.textContent = typeof value !== "undefined" ? value : "—";
 		});
 		
 		$(this.detailSelector).find("[data-customslug]").each((i, el) => {
@@ -37,7 +39,7 @@ class StaffPage extends DynamicPage {
 					
 					for (let permission of ["read", "operator", "analyst", "admin"]) {
 						
-						if (employee.access[permission]) {
+						if (this.employee.access[permission]) {
 							
 							let elIcon = document.createElement("i");
 							elIcon.classList.add("fa", "fa-" + icons[permission]);

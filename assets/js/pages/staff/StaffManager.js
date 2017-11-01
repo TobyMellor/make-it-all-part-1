@@ -29,6 +29,13 @@ class StaffManager extends Manager {
 		return this.staff.find(e => e.id === id);
 	}
 	
+	updateEmployee(employee) {
+		let oldEmployee = this.staff.find(e => e.id === employee.id);
+		
+		Object.assign(oldEmployee.access, employee.access);
+		Object.assign(oldEmployee, employee);
+	}
+	
 	currentUser(asEmployee = false) {
 		let id = 1;
 		
