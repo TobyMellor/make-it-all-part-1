@@ -89,7 +89,7 @@ $(function () {
 		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-chevron-down').addClass('fa-chevron-up');
 	});
 
-	$('.top-nav .hamburger').on('click', function() {
+	$(document).on('click', '.top-nav .hamburger', function() {
 		$('.side-nav-bar-nested').show();
 	});
 

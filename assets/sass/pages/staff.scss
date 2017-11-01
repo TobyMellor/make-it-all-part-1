@@ -135,3 +135,40 @@
 		}
 	}
 }
+
+.staff-details {
+	.col-md-4 {
+		padding-right: $cosy;
+	}
+
+	.col-md-8 {
+		padding-left: $cosy;
+
+		.staff-info {
+			border-bottom: 2px solid $silver;
+			margin-bottom: $cosy;
+
+			label {
+				margin-bottom: $cosy;
+				color: $black;
+			}
+
+			p {
+				margin-bottom: $compact;
+				color: $black;
+			}
+		}
+
+		.no-gutters {
+			.col-md-6 {
+				&:first-child {
+					padding-right: $cosy;
+				}
+
+				&:last-child {
+					padding-left: $cosy;
+				}
+			}
+		}
+	}
+}
