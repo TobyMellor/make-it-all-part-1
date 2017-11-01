@@ -86,4 +86,30 @@ $wide: 1600px;
 			}
 		}
 	}
+	
+	#table-section {
+		width: 100vw;
+		overflow-x: scroll;
+		
+		th, td {
+			white-space: nowrap;
+			&:nth-child(2) {
+				position: -webkit-sticky;
+				left: 0;
+			}
+		}
+		
+		tr:not(:hover) td:nth-child(2) {
+			background: $white;
+		}
+		tr:hover td:nth-child(2) {
+			background: $cloudy-white;
+		}
+		tr th:nth-child(2) {
+			background: $cloudy-white;
+		}
+		tr.highlight td:nth-child(2) {
+			background: lighten(opacify($highlight, 1), 36%);
+		}
+	}
 }
