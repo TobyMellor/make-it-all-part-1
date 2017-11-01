@@ -26,6 +26,19 @@
 
 	.side-nav-bar-nested {
 		display: none;
+		position: absolute;
+		height: 100%;
+		left: 100px;
+
+		> i {
+			display: block;
+		}
+	}
+}
+
+@media (min-width: 1201px) {
+	.side-nav-bar-nested {
+		display: block !important;
 	}
 }
 

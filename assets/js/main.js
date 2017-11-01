@@ -90,7 +90,11 @@ $(function () {
 	});
 
 	$('.top-nav .hamburger').on('click', function() {
-		$('.side-nav-bar-nested').toggle();
+		$('.side-nav-bar-nested').show();
+	});
+
+	$('.side-nav-bar-nested > i').on('click', function() {
+		$('.side-nav-bar-nested').hide();
 	});
 });
 

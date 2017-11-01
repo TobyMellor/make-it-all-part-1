@@ -131,6 +131,16 @@ nav ul {
 	color: #2c3e50;
 	z-index: 2; // Make box shadow appear on top of all content to the right
 	border-right: 1px solid $silver;
+	position: relative;
+
+	> i {
+		right: 8px;
+	    position: absolute;
+	    top: 8px;
+	    font-size: 20px;
+	    cursor: pointer;
+	    display: none;
+	}
 
 	p {
 		font-size: $comfortable;
