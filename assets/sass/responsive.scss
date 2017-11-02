@@ -152,5 +152,8 @@ $wide: 1600px;
 		width: 100vw;
 		animation: none !important;
 		transform: none !important;
+		position: absolute;
+		z-index: 2;
+		background: white;
 	}
 }
