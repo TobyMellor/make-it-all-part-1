@@ -258,7 +258,7 @@ nav ul {
 	}
 }
 
-.form-control {
+.form-control, .input-group-addon, .custom-file-input, .custom-file-control, .custom-file-control::before {
 	border-radius: 1px 1px 0 0;
 	border: 1px solid $silver;
 	border-bottom: 2px solid $silver;
@@ -657,10 +657,6 @@ label {
 				position: absolute;
 				right: 15px;
 			}
-		}
-		
-		.input-group-addon {
-			border-bottom: 2px solid $silver;
 		}
 	}
 }
