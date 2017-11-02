@@ -992,7 +992,7 @@
 					'</div>'
 				);
 
-				problemTypePage.loadSubProblemTypes($accordion.find('.type-columns'));
+				problemTypePage.loadSubProblemTypes($accordion.find('.card:last-child').find('.type-columns'));
 
 				ticketPage.populateSelectField($accordion.find('.card[data-cardid="' + cardId + '"] select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
 
