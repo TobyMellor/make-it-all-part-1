@@ -13,11 +13,11 @@ class TicketPage extends DynamicPage {
 		this.currentTicket    = null;
 	}
 
-	showFilteredTickets(filterSlug) {
-		var filter 		    = makeItAll.ticketManager.getFilter(filterSlug),
-			filteredTickets = filter.tickets;
+	showFilteredTickets(filterSlugs) {
+		var filters 		    = makeItAll.ticketManager.getFilters(filterSlugs.split(',')),
+			filteredTickets     = [].concat(...filters.map(filter => filter.tickets));
 
-		if (filter !== null) {
+		if (filters !== null) {
 			this.clearTable();
 
 			for (var i = 0; i < filteredTickets.length; i++) {
@@ -34,7 +34,7 @@ class TicketPage extends DynamicPage {
 
 			this.updateSplashScreen();
 
-			this.currentlyShowing = filter.slug;
+			this.currentlyShowing = filterSlugs;
 		}
 
 		this.hideTableRowDetails();

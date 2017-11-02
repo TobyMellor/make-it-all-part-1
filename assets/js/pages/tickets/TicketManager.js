@@ -83,6 +83,16 @@ class TicketManager extends Manager {
 		return this.findFirstWhere(this.filters, filter => filter.slug === filterSlug);
 	}
 
+	getFilters(filterSlugs) {
+		var filters = [];
+
+		for (var i = 0; i < filterSlugs.length; i++) {
+			filters.push(this.getFilter(filterSlugs[i]));
+		}
+
+		return filters;
+	}
+
 	updateFilter(oldFilterSlug, newFilterSlug, ticketId) {
 		for (var i in this.filters) {
 			var filter         = this.filters[i],
