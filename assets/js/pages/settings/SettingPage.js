@@ -1,0 +1,5 @@
+class SettingPage {
+	constructor() {
+		//
+	}
+}
