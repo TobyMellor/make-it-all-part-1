@@ -357,7 +357,7 @@
 										</div>
 									</div>
 									<div id="accordion" role="tablist">
-										<div class="card" data-cardid="1">
+										<div class="card existing" data-cardid="1">
 											<input type="text" name="tickets[this][id]" hidden />
 											<div class="card-header highlight" role="tab" id="heading-this-call">
 												<h5 class="mb-0">
@@ -1007,7 +1007,7 @@
 						ticket     = makeItAll.ticketManager.getTicket(ticketId);
 
 					$accordion.append(
-						'<div class="card" data-cardid="' + cardId + '">' +
+						'<div class="card existing" data-cardid="' + cardId + '">' +
 							'<input type="text" name="tickets[' + cardId + '][id]" value="' + ticketId + '" hidden />' +
 							'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
 								'<h5 class="mb-0">' +
