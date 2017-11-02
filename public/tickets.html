@@ -920,7 +920,7 @@
 				var $accordion = $(this).closest('.modal-body').find('#accordion'),
 					cardId     = Math.floor(Math.random() * (10000 + 1));
 
-				$accordion.append(
+				$card = $(
 					'<div class="card" data-cardid="' + cardId + '">' +
 						'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
 							'<h5 class="mb-0">' +
@@ -992,10 +992,13 @@
 					'</div>'
 				);
 
-				problemTypePage.loadSubProblemTypes($accordion.find('.card:last-child').find('.type-columns'));
+				$accordion.append($card);
 
-				ticketPage.populateSelectField($accordion.find('.card[data-cardid="' + cardId + '"] select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
+				problemTypePage.loadSubProblemTypes($card.find('.type-columns'));
 
+				ticketPage.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
+
+				$card.find('.view-accordion').click();
 				$('.selectpicker').selectpicker('refresh');
 			});
 
