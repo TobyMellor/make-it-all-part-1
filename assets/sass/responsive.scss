@@ -21,6 +21,7 @@ $wide: 1600px;
 	
 	.side-nav-bar {		
 		.btn-info {
+			width: unset;
 			font-size: 0.9em;
 			writing-mode: vertical-lr;
 			padding: $compact $cosy;
@@ -67,7 +68,7 @@ $wide: 1600px;
 		}
 		
 		ul {
-			margin-left: $comfortable;
+			margin-left: $cosy;
 			display: flex;
 			
 			li {
@@ -78,10 +79,18 @@ $wide: 1600px;
 				border-left: 1px solid $silver;
 				padding: $compact $cosy;
 				
+				&:nth-last-child(2) {
+					padding-right: 80px;
+				}
+				
 				&:last-child {
 					padding: 0;
 					border-left: none;
+					position: -webkit-sticky;
+					position: sticky;
+					right: 0;
 					> .btn {
+						width: ($comfortable * 2) + 1px;
 						margin: 0;
 						padding: ($cosy - $compact) $cosy;
 					}
@@ -107,6 +116,7 @@ $wide: 1600px;
 			white-space: nowrap;
 			&:nth-child(2) {
 				position: -webkit-sticky;
+				position: sticky;
 				left: 0;
 			}
 		}
