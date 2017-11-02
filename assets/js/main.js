@@ -1,51 +1,6 @@
 $(function () {
 	$('[data-toggle="tooltip"]').tooltip();
 
-	// TODO: Move to assets/js/pages/staff/x.js (george)
-	$('#new-staff-modal').on('shown.bs.modal', function () {
-		// When the staff modal is shown
-		// focus input field, clear input fields etc...
-	});
-
-	// TODO: Move to assets/js/pages/staff/x.js (george)
-	$('.staff-permissions .custom-checkbox').on('click', function(e) {
-		e.preventDefault();
-
-		var $input    = $(this).find('input'),
-			fieldName = $input.attr('name'),
-			isChecked = $input.prop('checked');
-
-		if (isChecked) {
-			switch (fieldName) {
-				case 'staff[permissions][ticket_read_only]':
-					$("input[name*=ticket_read_only]").prop('checked', false);
-				case 'staff[permissions][helpdesk_operator]':
-					$("input[name*=helpdesk_operator]").prop('checked', false);
-				case 'staff[permissions][analyst]':
-					$("input[name*=analyst]").prop('checked', false);
-				case 'staff[permissions][super_admin]':
-					$("input[name*=super_admin]").prop('checked', false);
-			}
-		} else {
-			switch (fieldName) {
-				case 'staff[permissions][super_admin]':
-					$("input[name*=super_admin]").prop('checked', true);
-				case 'staff[permissions][analyst]':
-					$("input[name*=analyst]").prop('checked', true);
-				case 'staff[permissions][helpdesk_operator]':
-					$("input[name*=helpdesk_operator]").prop('checked', true);
-				case 'staff[permissions][ticket_read_only]':
-					$("input[name*=ticket_read_only]").prop('checked', true);
-			}
-		}
-	});
-
-	$('.staff-picker').selectpicker({
-		noneResultsText: 'Click to create {0}'
-	});
-
-	$('.selectpicker').not('.staff-picker').selectpicker();
-
 	$('.timepicker').datetimepicker();
 
 	$(document).on('click', 'li.no-results', function() {
@@ -98,13 +53,14 @@ $(function () {
 });
 
 // https://stackoverflow.com/a/8407771/2957677
+// Modified by /1549818 to support dot notation
 (function($){
     $.fn.serializeObject = function(){
         var self = this,
             json = {},
             push_counters = {},
             patterns = {
-                "validate": /^[a-zA-Z][a-zA-Z0-9_]*(?:\[(?:\d*|[a-zA-Z0-9_]+)\])*$/,
+                "validate": /^[a-zA-Z][a-zA-Z0-9_]*(?:[\[\.](?:\d*|[a-zA-Z0-9_]+)[\]]?)*$/,
                 "key":      /[a-zA-Z0-9_]+|(?=\[\])/g,
                 "push":     /^$/,
                 "fixed":    /^\d+$/,

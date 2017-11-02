@@ -11,7 +11,7 @@
 	}	
 }
 
-@include colhide(5);
+@include colhide(6);
 
 #single-view {
 	.container > .row {
@@ -26,8 +26,21 @@
 		max-width: $comfortable * 16;
 		margin: $cosy $comfortable $cosy auto;
 	}
-	form .row {
+	.col-md-6 .row {
 		border-bottom: 1px solid $silver;
+		margin-bottom: 1rem;
+	}
+	
+	// List of permissions for user
+	[data-customslug="access"] > span {
+		// Separation between permissions
+		&:not(:first-child) {
+			margin-left: $comfortable;
+		}
+		// Separation between permission and icon
+		> span {
+			margin-left: $compact;
+		}
 	}
 }
 

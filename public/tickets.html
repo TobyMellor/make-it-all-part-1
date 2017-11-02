@@ -905,27 +905,8 @@
 				]
 			);
 
-			// StaffManager(staffMembers)
-			makeItAll.staffManager = new StaffManager([
-				{
-					id: 0,
-					name: 'Toby Mellor',
-					email: 'example@domain.com',
-					permission_level: 3, // analyst
-					job_title: 'Developer',
-					department: 'Lboro',
-					telephone_number: 987654321
-				},
-				{
-					id: 1,
-					name: 'Another user',
-					email: 'another@email.com',
-					permission_level: 0,
-					job_title: 'Coffee Maker',
-					department: 'N/A',
-					telephone_number: 123456789
-				}
-			]);
+			// StaffManager()
+			makeItAll.staffManager = new StaffManager();
 
 			// HardwareManager(devices)
 			makeItAll.hardwareManager = new HardwareManager(null); // TODO: Pass in some fake data
