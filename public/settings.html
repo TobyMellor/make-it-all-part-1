@@ -45,8 +45,9 @@
 					<p>My Metrics</p>
 				</li>
 
+				<div class="breaker"></div>
+
 				<li class="active">
-					<div class="breaker"></div>
 					<i class="fa fa-cog fa-2x"></i>
 					<p>Settings</p>
 				</li>
@@ -63,11 +64,11 @@
 			Options
 		</p>
 		<ul>				
-			<li class="active">
+			<li class="active" data-slug="general">
 				<i class="fa fa-cog"></i>
 				General
 			</li>
-			<li>
+			<li data-slug="security">
 				<i class="fa fa-shield"></i>
 				Security
 			</li>
@@ -77,21 +78,121 @@
 	<section id="list-view">
 		<nav class="top-nav">
 			<i class="fa fa-cogs"></i>
-			<h4 class="main-content-title">Loading…</h4>
+			<h4 class="main-content-title">Settings | General</h4>
 		</nav>
-		<div id="general-section">
+		<div class="section" id="general-section">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-6">General</div>
-					<div class="col-md-6">General</div>
+					<div class="col-md-9">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="required">Name</label>
+									<div class="input-group">
+										<span class="input-group-addon"><i class="fa fa-user"></i></span>
+										<input class="form-control" name="staff.name" disabled="disabled" value="Toby Mellor">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="required">Permissions</label>
+									<div class="html-input">
+										<i class="fa fa-eye"></i> Read Only 
+										<i class="fa fa-user-secret"></i> Operator
+										<i class="fa fa-line-chart"></i> Analyst
+										<!-- <i class="fa fa-shield"></i> Admin -->
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label>Job Title</label>
+								<input class="form-control" name="staff.job" disabled="disabled" value="Developer">
+							</div>
+							<div class="col-md-6 form-group">
+								<label>Department</label>
+								<input class="form-control" name="staff.department" disabled="disabled" value="Loughborough">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label>Phone Number</label>
+								<input class="form-control" name="staff.phone" type="tel" value="0123456789">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<div class="card text-center">
+								<img class="card-img-top" src="images/portraits/portrait-1.jpg" alt="User profile photo">
+								<div class="card-body">
+									<h4 class="card-title" data-slug="name">
+										Bex Howell
+										<p class="card-text" data-slug="job">Designer</p>
+									</h4>
+								</div>
+							</div>
+							<br />
+
+							<label>Change your Photo</label>
+							<label class="custom-file">
+								<input class="custom-file-input" name="staff.photo" type="file">
+								<span class="custom-file-control"></span>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="breaker"></div>
+				<div class="row">
+					<div class="col-md-12">
+						<button class="btn btn-success save-changes">
+							<i class="fa fa-floppy-o"></i> Save Changes
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div id="security-section">
+		<div class="section" id="security-section">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-6">Security</div>
-					<div class="col-md-6">Security</div>
+					<div class="col-md-6">
+						<h4>Change your Email</h4>
+						<br />
+						<div class="form-group">
+							<label class="required">Work Email</label>
+							<input class="form-control" name="staff.email" type="email">
+						</div>
+						<div class="form-group">
+							<label class="required">Confirm Work Email</label>
+							<input class="form-control" name="staff.email" type="email">
+						</div>
+
+						<button class="btn btn-success save-changes">
+							<i class="fa fa-floppy-o"></i> Change Email
+						</button>
+					</div>
+					<div class="col-md-6">
+						<h4>Change your Password</h4>
+						<br />
+						<div class="form-group">
+							<label class="required">Old Password</label>
+							<input class="form-control" name="staff.email" type="password">
+						</div>
+						<div class="form-group">
+							<label class="required">New Password</label>
+							<input class="form-control" name="staff.email" type="password">
+						</div>
+						<div class="form-group">
+							<label class="required">Confirm New Password</label>
+							<input class="form-control" name="staff.email" type="password">
+						</div>
+
+						<button class="btn btn-success save-changes">
+							<i class="fa fa-floppy-o"></i> Change Password
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -99,7 +200,19 @@
 
 	<script src="js/plugins/plugins.min.js"></script>
 	<script>
-		//
+		$('.side-nav-bar-nested ul li').on('click', function() {
+			if (!$(this).hasClass('active')) {
+				var slug = $(this).data('slug');
+
+				$('.section:visible').hide();
+				$('#' + slug + '-section').show();
+
+				$(this).siblings().removeClass('active');
+				$(this).addClass('active');
+
+				$('.top-nav h4').text('Settings | ' + $(this).text());
+			}
+		});
 	</script>
 </body>
 </html>
