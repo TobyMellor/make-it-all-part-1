@@ -82,6 +82,16 @@ $(function () {
 	$(document).on('show.bs.collapse', '#accordion .collapse', function () {
 		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-chevron-up').addClass('fa-chevron-down');
 	});
+
+	$('.search-button').on('click', function() {
+		$(this).hide();
+		$('.search-field').css('display', 'flex');
+	});
+
+	$('.search-field .input-group-addon').on('click', function() {
+		$(this).parent().hide();
+		$('.search-button').show();
+	});
 });
 
 // https://stackoverflow.com/a/8407771/2957677

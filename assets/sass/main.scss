@@ -329,9 +329,23 @@ section {
 			}
 		}
 
+		.input-group.search-field {
+			height: 30px;
+			max-width: 250px;
+			display: none;
+
+			input {
+				padding: $compact 12px;
+			}
+		}
+
+		.search-field .input-group-addon {
+			cursor: pointer;
+		}
+
 		&.with-content {
 			button {
-				margin: 0 $cosy;
+				margin: 0;
 
 				&:last-child {
 					margin-right: 0;
