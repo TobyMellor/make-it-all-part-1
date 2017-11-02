@@ -14,8 +14,15 @@ class TicketPage extends DynamicPage {
 	}
 
 	showFilteredTickets(filterSlugs) {
-		var filters 		    = makeItAll.ticketManager.getFilters(filterSlugs.split(',')),
-			filteredTickets     = [].concat(...filters.map(filter => filter.tickets));
+		var filters = [],
+			filteredTickets = [];
+
+		if (filterSlugs.indexOf('assigned_to') > -1) {
+			filteredTickets = makeItAll.ticketManager.getMyTickets();
+		} else {
+			filters         = makeItAll.ticketManager.getFilters(filterSlugs.split(','));
+			filteredTickets = [].concat(...filters.map(filter => filter.tickets));
+		}
 
 		if (filters !== null) {
 			this.clearTable();
