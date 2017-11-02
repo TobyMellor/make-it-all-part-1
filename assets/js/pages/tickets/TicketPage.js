@@ -33,7 +33,7 @@ class TicketPage extends DynamicPage {
 				this.appendTableRow({
 					id: ticket.id,
 					title: ticket.title,
-					filter_name: '<span class="filter">' + ticket.filter.name + '</span>',
+					filter_name: '<span class="filter filter-' + ticket.filter.slug.split('_')[0] + '">' + ticket.filter.name + '</span>',
 					created_at: ticket.created_at,
 					updated_at: ticket.updated_at
 				});
@@ -54,7 +54,7 @@ class TicketPage extends DynamicPage {
 		if (ticket !== null) {
 			this.currentTicket = ticket;
 
-			this.updateSingleViewNavbar(ticket.title + '<span class="filter">' + ticket.filter.name + '</span>');
+			this.updateSingleViewNavbar(ticket.title + '<span class="filter filter-' + ticket.filter.slug.split('_')[0] + '">' + ticket.filter.name + '</span>');
 
 			$('#ticket-view #ticket-overview').text('#' + ticket.id + ' | ' + ticket.created_at);
 			$('#ticket-view #ticket-description p').text(ticket.description);
@@ -209,7 +209,7 @@ class TicketPage extends DynamicPage {
 					'<td>' + ticket.id + '</td>' +
 					'<td>' + ticket.title + '</td>' +
 					'<td>' +
-						'<span class="filter">' + ticket.filter.name + '</span>' +
+						'<span class="filter filter-' + ticket.filter.slug.split('_')[0] + '">' + ticket.filter.name + '</span>' +
 					'</td>' +
 					'<td>' + ticket.created_at + '</td>' +
 					'<td>' +
