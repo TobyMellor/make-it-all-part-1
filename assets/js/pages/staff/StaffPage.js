@@ -63,7 +63,7 @@ class StaffPage extends DynamicPage {
 			}
 		});
 
-		staffProblemTypePage.currentSpecialisms = employee._specialisms;
+		staffProblemTypePage.currentSpecialisms = this.employee._specialisms;
 		staffProblemTypePage.loadSpecialistProblemTypes($('.type-columns'));
 		
 		super.showTableRowDetails(id);
