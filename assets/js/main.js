@@ -90,6 +90,7 @@ $(function () {
 
 	$('.search-field .input-group-addon').on('click', function() {
 		$(this).parent().hide();
+		$(this).siblings('input').val('');
 		$('.search-button').show();
 	});
 });

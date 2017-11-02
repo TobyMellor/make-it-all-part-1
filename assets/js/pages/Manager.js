@@ -36,4 +36,21 @@
 
 		return null;
  	}
+
+ 	search(elements, query, properties) {
+ 		query = query.toLowerCase();
+
+ 		return this.findAllWhere(elements, function(element) {
+ 			for (var i = 0; i < properties.length; i++) {
+ 				var property = properties[i],
+ 					value    = element[property].toLowerCase();
+
+ 				if (value.indexOf(query) > -1) {
+ 					return true;
+ 				}
+ 			}
+
+ 			return false;
+ 		});
+ 	}
  }
