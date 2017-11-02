@@ -233,6 +233,9 @@ class TicketPage extends DynamicPage {
 			} else if (key === '_assigned_to') {
 				key   = 'assigned_to';
 				value = ticket.assigned_to.name;
+			} else if (key === '_problem_type') {
+				key = 'problem_type';
+				value = problemTypePage.getProblemTypeBreadcrum(ticket.problem_type);
 			}
 			
 			$modal.find('input[name*="' + key + '"], textarea[name*="' + key + '"]').val(value);

@@ -1,6 +1,38 @@
 $(function () {
 	$('[data-toggle="tooltip"]').tooltip();
 
+	$('.staff-permissions .custom-checkbox').on('click', function(e) {
+		e.preventDefault();
+
+		var $input    = $(this).find('input'),
+			fieldName = $input.attr('name'),
+			isChecked = $input.prop('checked');
+
+		if (isChecked) {
+			switch (fieldName) {
+				case 'staff[permissions][ticket_read_only]':
+					$("input[name*=ticket_read_only]").prop('checked', false);
+				case 'staff[permissions][helpdesk_operator]':
+					$("input[name*=helpdesk_operator]").prop('checked', false);
+				case 'staff[permissions][analyst]':
+					$("input[name*=analyst]").prop('checked', false);
+				case 'staff[permissions][super_admin]':
+					$("input[name*=super_admin]").prop('checked', false);
+			}
+		} else {
+			switch (fieldName) {
+				case 'staff[permissions][super_admin]':
+					$("input[name*=super_admin]").prop('checked', true);
+				case 'staff[permissions][analyst]':
+					$("input[name*=analyst]").prop('checked', true);
+				case 'staff[permissions][helpdesk_operator]':
+					$("input[name*=helpdesk_operator]").prop('checked', true);
+				case 'staff[permissions][ticket_read_only]':
+					$("input[name*=ticket_read_only]").prop('checked', true);
+			}
+		}
+	});
+
 	$('.timepicker').datetimepicker();
 
 	$(document).on('click', 'li.no-results', function() {
@@ -44,11 +76,11 @@ $(function () {
 	});
 
 	$(document).on('hide.bs.collapse', '#accordion .collapse', function () {
-		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-eye-slash').addClass('fa-eye');
+		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-chevron-down').addClass('fa-chevron-up');
 	});
 
 	$(document).on('show.bs.collapse', '#accordion .collapse', function () {
-		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-eye').addClass('fa-eye-slash');
+		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-chevron-up').addClass('fa-chevron-down');
 	});
 });
 

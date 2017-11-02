@@ -1,4 +1,5 @@
-let staffPage = new StaffPage();
+let staffPage            = new StaffPage();
+let staffProblemTypePage = new StaffProblemTypePage();
 
 $(() => {
 	let isPage = document.getElementById(staffPage.sectionSelector.substring(1)).dataset.page === "staff";
@@ -21,6 +22,8 @@ $(() => {
 		switch (e.currentTarget.dataset.action) {
 			case "create":
 				var employee = makeItAll.staffManager.createEmployee(formData.staff);
+
+				employee._specialisms = staffProblemTypePage.currentSpecialisms;
 				
 				addItemToPicker(
 					$('.selectpicker.staff-picker[name="' + formData['event_target'] + '"]'),
@@ -32,6 +35,7 @@ $(() => {
 				
 			case "save":
 				formData.staff.id = staffPage.employee.id;
+				staffPage.employee._specialisms = staffProblemTypePage.currentSpecialisms;
 				makeItAll.staffManager.updateEmployee(formData.staff);
 		}
 				
@@ -94,6 +98,23 @@ $(() => {
 
 	// Page-specific follows
 	if (!isPage) return;
+
+	$('#new-staff-modal').on('show.bs.modal', function() {
+		var $typeColumns = $(this).find('.type-columns');
+
+		staffProblemTypePage.currentSpecialisms = []; // TODO: for the edit modal, set this to Employee._specialisms
+		staffProblemTypePage.loadSpecialistProblemTypes($typeColumns);
+	});
+
+	$(document).on('click', '.type-column li', function() {
+		if (!$(this).hasClass('no-children')) {
+			staffProblemTypePage.loadSpecialistProblemTypes($(this).closest('.type-columns'), $(this), parseInt($(this).data('problemTypeId')));
+		}
+	});
+
+	$(document).on('click', '.problem-type-picker:not(.readonly) .type-column li .specialism-checkbox', function() {
+		staffProblemTypePage.toggleSpecialism($(this));
+	});
 	
 	staffPage.showStaff();
 	$(staffPage.navSelector).find("[data-slug]").click(el => {
@@ -115,5 +136,4 @@ $(() => {
 	$(staffPage.tableSelector).on("click", "tbody tr", e => {
 		staffPage.showTableRowDetails(Number(e.currentTarget.dataset.rowid));
 	});
-	
 });

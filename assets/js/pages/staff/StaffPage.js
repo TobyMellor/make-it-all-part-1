@@ -13,11 +13,12 @@ class StaffPage extends DynamicPage {
 	}
 	
 	showTableRowDetails(id) {
-		// Get employee with ID
+		// Get employee with IDå
 		this.employee = makeItAll.staffManager.getEmployee(id);
 		if (!this.employee) {
 			this.hideTableRowDetails();
 			alert("No employee with ID " + id);
+
 			return;
 		}
 		
@@ -61,6 +62,9 @@ class StaffPage extends DynamicPage {
 					el.textContent = "—";
 			}
 		});
+
+		staffProblemTypePage.currentSpecialisms = this.employee._specialisms;
+		staffProblemTypePage.loadSpecialistProblemTypes($('.type-columns'));
 		
 		super.showTableRowDetails(id);
 	}

@@ -14,20 +14,6 @@
 	}
 }
 
-span.filter {
-	padding: 4px 8px;
-	background-color: $blue;
-	border-radius: 2px;
-	border: 0;
-	color: $white;
-	font-weight: 600;
-	font-size: 15px;
-
-	&.filter-green {
-		background-color: $green;
-	}
-}
-
 #ticket-view {
 	padding: $comfortable;
 
@@ -236,6 +222,16 @@ span.filter {
 			bottom: $cosy;
 			left: calc(50% - 65px);
     		width: 130px;
+		}
+	}
+}
+
+#accordion .card.existing .hardware-list {
+	li {
+		height: 90px;
+		
+		.remove-hardware-device {
+			display: none;
 		}
 	}
 }

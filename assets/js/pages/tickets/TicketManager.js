@@ -52,7 +52,8 @@ class TicketManager extends Manager {
 				ticket.devices,
 				ticket.created_at,
 				ticket.updated_at,
-				ticket.events
+				ticket.events,
+				ticket.problem_type
 			));
 		}
 
@@ -99,8 +100,8 @@ class TicketManager extends Manager {
 	}
 
 	createCall(dateOfCall, caller, tickets, ticketIds = []) {
-		var callId    = Math.floor(Math.random() * (10000 + 1)),
-			call      = new Call(
+		var callId = Math.floor(Math.random() * (10000 + 1)),
+			call   = new Call(
 				callId,
 				dateOfCall,
 				caller,
@@ -120,7 +121,8 @@ class TicketManager extends Manager {
 				tickets[i].title,
 				tickets[i].description,
 				tickets[i].assigned_to,
-				tickets[i].devices
+				tickets[i].devices,
+				tickets[i].problem_type
 			);
 
 			ticketIds.push(ticket.id);
@@ -133,7 +135,7 @@ class TicketManager extends Manager {
 		return call;
 	}
 
-	createTicket(callId, filterSlug, title, description, assignedTo, devices = []) {
+	createTicket(callId, filterSlug, title, description, assignedTo, devices, problemType) {
 		// AJAX call here, which returns a ticketId
 		// validation here
 		var ticketId = Math.floor(Math.random() * (10000 + 1));
@@ -144,11 +146,12 @@ class TicketManager extends Manager {
 			filterSlug,
 			title,
 			description,
-			assignedTo,
+			parseInt(assignedTo),
 			devices,
 			'Just now',
 			'Just now',
-			[]
+			[],
+			parseInt(problemType)
 		));
 
 		this.getFilter(filterSlug)._tickets.push(ticketId);
@@ -168,7 +171,7 @@ class TicketManager extends Manager {
 		return this.findAllWhere(this.tickets, ticket => ticket._calls.indexOf(callId) > -1);
 	}
 
-	editTicket(ticketId, filterSlug, title, description, assignedTo, devices = []) {
+	editTicket(ticketId, filterSlug, title, description, assignedTo, devices, problemType) {
 		var ticket = this.getTicket(ticketId);
 
 		if (ticket.filter.slug !== filterSlug) {
@@ -193,11 +196,12 @@ class TicketManager extends Manager {
 			);
 		}
 
-		ticket.filter      = filterSlug;
-		ticket.title       = title;
-		ticket.description = description;
-		ticket.assigned_to = assignedTo;
-		ticket.devices     = devices;
+		ticket.filter       = filterSlug;
+		ticket.title        = title;
+		ticket.description  = description;
+		ticket.assigned_to  = assignedTo;
+		ticket.devices      = devices;
+		ticket.problem_type = problemType;
 
 		return ticket;
 	}
@@ -229,5 +233,9 @@ class TicketManager extends Manager {
 
 	getEvents(ticketId) {
 		return this.findAllWhere(this.events, event => event.ticket.id === ticketId);
+	}
+
+	getRelatedProblems(problemTypeId) {
+		return this.findAllWhere(this.tickets, ticket => ticket._problem_type === problemTypeId);
 	}
 }

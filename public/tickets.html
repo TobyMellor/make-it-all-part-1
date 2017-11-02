@@ -234,7 +234,7 @@
 													<a data-toggle="collapse" data-parent="#accordion" href="#collapse-1">
 														New Ticket
 													</a>
-													<i class="fa fa-eye-slash view-accordion"></i>
+													<i class="fa fa-chevron-down view-accordion"></i>
 												</h5>
 											</div>
 
@@ -294,96 +294,10 @@
 
 													<div class="form-group">
 														<label class="required">Problem Type</label>
+														<input name="tickets[1][problem_type]" hidden>
+														<span class="subtle pull-right"></span>
 														<div class="problem-type-picker">
-															<div class="type-columns">
-																<div class="type-column">
-																	<li class="active">
-																		Printer
-																		<div class="specialist-counter">
-																			8 <i class="fa fa-user"></i>
-																		</div>
-																		<i class="fa fa-caret-right"></i>
-																	</li>
-																	<li>
-																		Computers
-																		<div class="specialist-counter">
-																			12 <i class="fa fa-user"></i>
-																		</div>
-																		<i class="fa fa-caret-right"></i>
-																	</li>
-																	<li>
-																		Software
-																		<div class="specialist-counter">
-																			1 <i class="fa fa-user"></i>
-																		</div>
-																		<i class="fa fa-caret-right"></i>
-																	</li>
-																</div>
-																<div class="type-column">
-																	<li>
-																		Computer Problem
-																		<div class="specialist-counter">
-																			4 <i class="fa fa-user"></i>
-																		</div>
-																		<i class="fa fa-caret-right"></i>
-																	</li>
-																	<li>
-																		Paper Jam
-																		<div class="specialist-counter">
-																			<i class="fa fa-user-times"></i>
-																		</div>
-																		<i class="fa fa-caret-right"></i>
-																	</li>
-																	<li class="active">
-																		No Ink
-																		<div class="specialist-counter">
-																			20 <i class="fa fa-user"></i>
-																		</div>
-																		<i class="fa fa-caret-right"></i>
-																	</li>
-																</div>
-																<div class="type-column">
-																	<li>
-																		Low Magenta
-																		<div class="specialist-counter">
-																			4 <i class="fa fa-user"></i>
-																		</div>
-																		<i class="fa fa-caret-right"></i>
-																	</li>
-																	<li>
-																		Low Cyan
-																		<div class="specialist-counter">
-																			<i class="fa fa-user-times"></i>
-																		</div>
-																		<i class="fa fa-caret-right"></i>
-																	</li>
-																	<li>
-																		Low Yellow
-																		<div class="specialist-counter">
-																			<i class="fa fa-user-times"></i>
-																		</div>
-																		<i class="fa fa-caret-right"></i>
-																	</li>
-																	<li>
-																		Low Black
-																		<div class="specialist-counter">
-																			<i class="fa fa-user-times"></i>
-																		</div>
-																		<i class="fa fa-caret-right"></i>
-																	</li>
-																</div>
-															</div>
-															<div class="info-column">
-																<div>
-																	Problem Type: <br /><strong>Printer</strong><br />
-																</div>
-																<div>
-																	Specialists Available: <br /><strong>8</strong>
-																</div>
-																<div>
-																	Selected Specialist: <br /><strong>Toby Mellor</strong><br />(From Printers)
-																</div>
-															</div>
+															<div class="type-columns"></div>
 														</div>
 													</div>
 												</div>
@@ -443,12 +357,12 @@
 										</div>
 									</div>
 									<div id="accordion" role="tablist">
-										<div class="card" data-cardid="1">
+										<div class="card existing" data-cardid="1">
 											<input type="text" name="tickets[this][id]" hidden />
 											<div class="card-header highlight" role="tab" id="heading-this-call">
 												<h5 class="mb-0">
 													<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-this-call">Loading…</a>
-													<i class="fa fa-eye view-accordion"></i>
+													<i class="fa fa-chevron-up view-accordion"></i>
 												</h5>
 											</div>
 
@@ -486,6 +400,11 @@
 																<ul class="hardware-list"></ul>
 															</div>
 														</div>
+													</div>
+
+													<div class="form-group">
+														<label>Problem Type</label>
+														<input class="form-control" name="tickets[this][problem_type]" disabled />
 													</div>
 												</div>
 											</div>
@@ -589,6 +508,15 @@
 											<div class="col-md-12">
 												<ul class="hardware-list"></ul>
 											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="required">Problem Type</label>
+										<input name="problem_type" hidden>
+										<span class="subtle pull-right"></span>
+										<div class="problem-type-picker">
+											<div class="type-columns"></div>
 										</div>
 									</div>
 								</div>
@@ -734,6 +662,7 @@
 		<script src="js/pages/staff.min.js"></script>
 		<script src="js/pages/hardware.min.js"></script>
 		<script src="js/pages/software.min.js"></script>
+		<script src="js/pages/problem_types.min.js"></script>
 		<script>
 			/**
 			 * makeItAll is global, and contains "managers".
@@ -818,7 +747,8 @@
 						devices: [],
 						created_at: 'Yesterday',
 						updated_at: '1 hour ago',
-						events: [0, 1, 2]
+						events: [0, 1, 2],
+						problem_type: 5
 					},
 					{
 						id: 1,
@@ -830,7 +760,8 @@
 						devices: [],
 						created_at: '4 days ago',
 						updated_at: '4 days ago',
-						events: [3]
+						events: [3],
+						problem_type: 1
 					},
 					{
 						id: 2,
@@ -842,7 +773,8 @@
 						devices: [],
 						created_at: '1 day ago',
 						updated_at: 'Just now',
-						events: []
+						events: [],
+						problem_type: 3
 					},
 					{
 						id: 3,
@@ -854,7 +786,8 @@
 						devices: [],
 						created_at: '23 hours ago',
 						updated_at: '3 minutes ago',
-						events: []
+						events: [],
+						problem_type: 5
 					},
 					{
 						id: 4,
@@ -866,7 +799,8 @@
 						devices: [],
 						created_at: '4 hours ago',
 						updated_at: '4 hours ago',
-						events: []
+						events: [],
+						problem_type: 4
 					}
 				],
 				[	
@@ -913,78 +847,177 @@
 
 			// SoftwareManager(programs)
 			makeItAll.softwareManager = new SoftwareManager(null); // TODO: Pass in some fake data
+
+			// ProblemTypeManager(problemTypes)
+			makeItAll.problemTypeManager = new ProblemTypeManager(null); // TODO: Pass in some fake data
 		</script>
 		<script type="text/javascript">
-				var ticketPage = new TicketPage();
+			var ticketPage      = new TicketPage(),
+				problemTypePage = new ProblemTypePage();
 
-				$('.side-nav-bar-nested ul li[data-slug]').on('click', function() {
-					if (ticketPage.currentlyShowing !== this.dataset.slug) {
-						ticketPage.refreshPage(this.dataset.slug);
-					}
-				});
+			$('.side-nav-bar-nested ul li[data-slug]').on('click', function() {
+				if (ticketPage.currentlyShowing !== this.dataset.slug) {
+					ticketPage.refreshPage(this.dataset.slug);
+				}
+			});
 
-				ticketPage.showFilteredTickets('new');
+			ticketPage.showFilteredTickets('new');
 
-				$('.new-ticket').on('click', function() {
-					$('#new-ticket-modal').find('input, textarea')
-						   .not('.no-clear-on-show')
-						   .val('');
-				});
+			$('.new-ticket').on('click', function() {
+				$('#new-ticket-modal').find('input, textarea')
+					   .not('.no-clear-on-show')
+					   .val('');
+			});
 
-				$('#new-ticket-modal #create-new-ticket').on('click', function (e) {
-					e.preventDefault();
+			$('#new-ticket-modal #create-new-ticket').on('click', function (e) {
+				e.preventDefault();
 
-					var formData = $('#new-ticket-modal form').serializeObject(),
-						call     = makeItAll.ticketManager.createCall(formData.date_of_call, formData.caller, formData.tickets);
+				var formData = $('#new-ticket-modal form').serializeObject(),
+					call     = makeItAll.ticketManager.createCall(formData.date_of_call, formData.caller, formData.tickets);
 
-					ticketPage.refreshPage(call.tickets[0].filter.slug);
+				ticketPage.refreshPage(call.tickets[0].filter.slug);
 
-					$('#new-ticket-modal').modal('hide');
-				});
+				$('#new-ticket-modal').modal('hide');
+			});
 
-				$('#edit-ticket-modal #edit-existing-ticket').on('click', function () {
-					var formData = $('#edit-ticket-modal form').serializeObject();
+			$('#edit-ticket-modal #edit-existing-ticket').on('click', function () {
+				var formData = $('#edit-ticket-modal form').serializeObject();
 
-					makeItAll.ticketManager.editTicket(
-						parseInt(formData.id),
-						formData.filter,
-						formData.title,
-						formData.description,
-						parseInt(formData.assigned_to),
-						formData.devices
-					);
+				makeItAll.ticketManager.editTicket(
+					parseInt(formData.id),
+					formData.filter,
+					formData.title,
+					formData.description,
+					parseInt(formData.assigned_to),
+					formData.devices,
+					parseInt(formData.problem_type)
+				);
 
-					ticketPage.refreshPage(formData.filter, parseInt(formData.id));
+				ticketPage.refreshPage(formData.filter, parseInt(formData.id));
 
-					$('#edit-ticket-modal').modal('hide');
-				});
+				$('#edit-ticket-modal').modal('hide');
+			});
 
-				$('#create-new-event').on('click', function (e) {
-					e.preventDefault();
+			$('#create-new-event').on('click', function (e) {
+				e.preventDefault();
 
-					ticketPage.appendNewComment($(this).parent().find('textarea'));
-				});
+				ticketPage.appendNewComment($(this).parent().find('textarea'));
+			});
 
-				$(document).on('click', '#table-section .table tr:not(.highlight)', function() {
-					ticketPage.showTicketView(parseInt(this.dataset.rowid));
-				});
+			$(document).on('click', '#table-section .table tr:not(.highlight)', function() {
+				ticketPage.showTicketView(parseInt(this.dataset.rowid));
+			});
 
-				$('#single-view [data-action="edit"]').on('click', function() {
-					ticketPage.populateTicketModal($('#edit-ticket-modal'), ticketPage.currentTicket);
-				});
+			$('.ticket-close-button').on('click', function() {
+				ticketPage.hideTableRowDetails();
+			});
 
-				$('.add-another-ticket').on('click', function() {
-					var $accordion = $(this).closest('.modal-body').find('#accordion'),
-						cardId     = Math.floor(Math.random() * (10000 + 1));
+			$('.ticket-edit-button').on('click', function() {
+				ticketPage.populateTicketModal($('#edit-ticket-modal'), ticketPage.currentTicket);
+			});
+
+			$('.add-another-ticket').on('click', function() {
+				var $accordion = $(this).closest('.modal-body').find('#accordion'),
+					cardId     = Math.floor(Math.random() * (10000 + 1));
+
+				$card = $(
+					'<div class="card" data-cardid="' + cardId + '">' +
+						'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
+							'<h5 class="mb-0">' +
+								'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
+									'New Ticket' +
+								'</a>' +
+								'<i class="fa fa-chevron-up view-accordion"></i>' +
+								'<i class="fa fa-trash-o remove-accordion"></i>' +
+							'</h5>' +
+						'</div>' +
+						'<div id="collapse-' + cardId + '" class="collapse" role="tabpanel">' +
+							'<div class="card-block">' +
+								'<div class="row">' +
+									'<div class="col-md-6">' +
+										'<div class="form-group">' +
+											'<label class="required">Status</label>' +
+											'<br />' +
+											'<select class="selectpicker" name="tickets[' + cardId + '][filter]">' +
+												'<option value="new">New</option>' +
+												'<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>' +
+												'<option value="pending_in_progress">Pending - In Progress</option>' +
+												'<option value="resolved">Resolved</option>' +
+											'</select>' +
+										'</div>' +
+									'</div>' +
+									'<div class="col-md-6">' +
+										'<div class="form-group">' +
+											'<label class="required">Assigned To</label>' +
+											'<br />' +
+											'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="tickets[' + cardId + '][assigned_to]"></select>' +
+										'</div>' +
+									'</div>' +
+								'</div>' +
+								'<div class="form-group">' +
+									'<label class="required">Ticket Title</label>' +
+									'<input class="form-control" name="tickets[' + cardId + '][title]" />' +
+								'</div>' +
+								'<div class="form-group">' +
+									'<label class="required">Ticket Description</label>' +
+									'<textarea class="form-control" name="tickets[' + cardId + '][description]"></textarea>' +
+								'</div>' +
+								'<div class="form-group">' +
+									'<label>Serial Number of Hardware Affected</label>' +
+									'<div class="input-group">' +
+										'<input class="form-control" name="tickets[' + cardId + '][hardware][serial_number]" />' +
+										'<span class="input-group-btn">' +
+											'<button class="btn btn-success add-hardware-device" type="button">' +
+												'<i class="fa fa-plus"></i> ' +
+												'Add' +
+											'</button>' +
+										'</span>' +
+									'</div>' +
+									'<div class="row">' +
+										'<div class="col-md-12">' +
+											'<ul class="hardware-list"></ul>' +
+										'</div>' +
+									'</div>' +
+								'</div>' +
+								'<div class="form-group">' +
+									'<label class="required">Problem Type</label>' +
+									'<input name="tickets[' + cardId + '][problem_type]" hidden>' +
+									'<span class="subtle pull-right"></span>' +
+									'<div class="problem-type-picker">' +
+										'<div class="type-columns"></div>' +
+									'</div>' +
+								'</div>' +
+							'</div>' +
+						'</div>' +
+					'</div>'
+				);
+
+				$accordion.append($card);
+
+				problemTypePage.loadSubProblemTypes($card.find('.type-columns'));
+
+				ticketPage.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
+
+				$card.find('.view-accordion').click();
+				$('.selectpicker').selectpicker('refresh');
+			});
+
+			$('#add-existing-ticket').on('change', function() {
+				if ($(this).val() !== "") {
+					var $accordion = $('#follow-up-call-modal #accordion'),
+						cardId     = Math.floor(Math.random() * (10000 + 1)),
+						ticketId   = parseInt($(this).val()),
+						ticket     = makeItAll.ticketManager.getTicket(ticketId);
 
 					$accordion.append(
-						'<div class="card" data-cardid="' + cardId + '">' +
+						'<div class="card existing" data-cardid="' + cardId + '">' +
+							'<input type="text" name="tickets[' + cardId + '][id]" value="' + ticketId + '" hidden />' +
 							'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
 								'<h5 class="mb-0">' +
 									'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
-										'New Ticket' +
+										'Existing Ticket: ' + ticket.title +
 									'</a>' +
-									'<i class="fa fa-eye view-accordion"></i>' +
+									'<i class="fa fa-chevron-up view-accordion"></i>' +
 									'<i class="fa fa-trash-o remove-accordion"></i>' +
 								'</h5>' +
 							'</div>' +
@@ -993,237 +1026,180 @@
 									'<div class="row">' +
 										'<div class="col-md-6">' +
 											'<div class="form-group">' +
-												'<label class="required">Status</label>' +
+												'<label>Status</label>' +
 												'<br />' +
-												'<select class="selectpicker" name="tickets[' + cardId + '][filter]">' +
-													'<option value="new">New</option>' +
-													'<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>' +
-													'<option value="pending_in_progress">Pending - In Progress</option>' +
-													'<option value="resolved">Resolved</option>' +
-												'</select>' +
+												'<input class="form-control" value="' + ticket.filter.name + '" disabled>' +
 											'</div>' +
 										'</div>' +
 										'<div class="col-md-6">' +
 											'<div class="form-group">' +
-												'<label class="required">Assigned To</label>' +
+												'<label>Assigned To</label>' +
 												'<br />' +
-												'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="tickets[' + cardId + '][assigned_to]"></select>' +
+												'<input class="form-control" value="' + ticket.assigned_to.name + '" disabled>' +
 											'</div>' +
 										'</div>' +
 									'</div>' +
 									'<div class="form-group">' +
-										'<label class="required">Ticket Title</label>' +
-										'<input class="form-control" name="tickets[' + cardId + '][title]" />' +
+										'<label>Ticket Title</label>' +
+										'<input class="form-control" value="' + ticket.title + '" disabled>' +
 									'</div>' +
 									'<div class="form-group">' +
-										'<label class="required">Ticket Description</label>' +
-										'<textarea class="form-control" name="tickets[' + cardId + '][description]"></textarea>' +
+										'<label>Ticket Description</label>' +
+										'<textarea class="form-control" disabled>' + ticket.description + '</textarea>' +
 									'</div>' +
 									'<div class="form-group">' +
-										'<label>Serial Number of Hardware Affected</label>' +
-										'<div class="input-group">' +
-											'<input class="form-control" name="tickets[' + cardId + '][hardware][serial_number]" />' +
-											'<span class="input-group-btn">' +
-												'<button class="btn btn-success add-hardware-device" type="button">' +
-													'<i class="fa fa-plus"></i> ' +
-													'Add' +
-												'</button>' +
-											'</span>' +
-										'</div>' +
+										'<label>Serial Numbers of Hardware Affected</label>' +
 										'<div class="row">' +
 											'<div class="col-md-12">' +
 												'<ul class="hardware-list"></ul>' +
 											'</div>' +
 										'</div>' +
 									'</div>' +
+									'<div class="form-group">' +
+										'<label>Problem Type</label>' + 
+										'<input class="form-control" value="' + problemTypePage.getProblemTypeBreadcrum(ticket.problem_type) + '" disabled>' +
+									'</div>' +
 								'</div>' +
 							'</div>' +
 						'</div>'
 					);
 
-					ticketPage.populateSelectField($accordion.find('.card[data-cardid="' + cardId + '"] select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
+					ticketPage.appendHardwareDevices($accordion.find('.card[data-cardid="' + cardId + '"] .hardware-list'), ticket, cardId);
 
-					$('.selectpicker').selectpicker('refresh');
+					$(this).find('option[value="' + ticketId + '"]').remove();
+					$(this).selectpicker('refresh');
+				}
+			});
+
+			$(document).on('keyup', '#accordion .card .collapse input[name*="title"]', function() {
+				var $cardHeader = $(this).closest('.card').find('.card-header a'),
+					headerText  = $(this).val().length <= 2 ? 'New Ticket' : 'New Ticket: ' + $(this).val();
+
+				$cardHeader.text(headerText);
+			});
+
+			$(document).on('click', '.add-hardware-device', function() {
+				var $inputField       = $(this).closest('.form-group').find('input'),
+					successfullyAdded = ticketPage.appendHardwareDevice($(this).closest('.form-group').find('.hardware-list'), $inputField.val(), $(this).closest('card').data('cardid'));
+
+				if (successfullyAdded) {
+					$inputField.val('');
+				} else {
+					alert('Already exists or can\'t find device in system with serial number');
+				}
+			});
+
+			$(document).on('click', '.remove-hardware-device', function() {
+				$(this).closest('li').fadeOut(200, function() {
+					$(this).remove();
 				});
+			});
 
-				$('#add-existing-ticket').on('change', function() {
-					if ($(this).val() !== "") {
-						var $accordion = $('#follow-up-call-modal #accordion'),
-							cardId     = Math.floor(Math.random() * (10000 + 1)),
-							ticketId   = parseInt($(this).val()),
-							ticket     = makeItAll.ticketManager.getTicket(ticketId);
+			$(document).on('click', '#ticket-view #call-history-table tbody tr', function() {
+				var callId = parseInt(this.dataset.rowid);
+				
+				ticketPage.showCallTicketsModal(callId);
+			});
 
-						$accordion.append(
-							'<div class="card" data-cardid="' + cardId + '">' +
-								'<input type="text" name="tickets[' + cardId + '][id]" value="' + ticketId + '" hidden />' +
-								'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
-									'<h5 class="mb-0">' +
-										'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
-											'Existing Ticket: ' + ticket.title +
-										'</a>' +
-										'<i class="fa fa-eye view-accordion"></i>' +
-										'<i class="fa fa-trash-o remove-accordion"></i>' +
-									'</h5>' +
-								'</div>' +
-								'<div id="collapse-' + cardId + '" class="collapse" role="tabpanel">' +
-									'<div class="card-block">' +
-										'<div class="row">' +
-											'<div class="col-md-6">' +
-												'<div class="form-group">' +
-													'<label>Status</label>' +
-													'<br />' +
-													'<input class="form-control" value="' + ticket.filter.name + '" disabled>' +
-												'</div>' +
-											'</div>' +
-											'<div class="col-md-6">' +
-												'<div class="form-group">' +
-													'<label>Assigned To</label>' +
-													'<br />' +
-													'<input class="form-control" value="' + ticket.assigned_to.name + '" disabled>' +
-												'</div>' +
-											'</div>' +
-										'</div>' +
-										'<div class="form-group">' +
-											'<label>Ticket Title</label>' +
-											'<input class="form-control" value="' + ticket.title + '" disabled>' +
-										'</div>' +
-										'<div class="form-group">' +
-											'<label>Ticket Description</label>' +
-											'<textarea class="form-control" disabled>' + ticket.description + '</textarea>' +
-										'</div>' +
-										'<div class="form-group">' +
-											'<label>Serial Numbers of Hardware Affected</label>' +
-											'<div class="row">' +
-												'<div class="col-md-12">' +
-													'<ul class="hardware-list"></ul>' +
-												'</div>' +
-											'</div>' +
-										'</div>' +
-									'</div>' +
-								'</div>' +
-							'</div>'
-						);
+			$(document).on('click', '#view-call-history-modal #call-tickets-table tbody tr:not(.highlight)', function() {
+				var ticketId = parseInt(this.dataset.rowid),
+					ticket   = makeItAll.ticketManager.getTicket(ticketId);
 
-						ticketPage.appendHardwareDevices($accordion.find('.card[data-cardid="' + cardId + '"] .hardware-list'), ticket, cardId);
+				$('#view-call-history-modal').modal('hide');
 
-						$(this).find('option[value="' + ticketId + '"]').remove();
+				ticketPage.refreshPage(ticket.filter.slug, ticketId);
+			});
 
-						$(this).selectpicker('refresh');
-					}
-				});
+			$('#follow-up-call-modal').on('shown.bs.modal', function() {
+				var $firstAccordionHeader = $(this).find('#accordion .card-header a'),
+					$addExistingTicket    = $('#add-existing-ticket'),
+					allTickets            = makeItAll.ticketManager.tickets;
 
-				$(document).on('keyup', '#accordion .card .collapse input[name*="title"]', function() {
-					var $cardHeader = $(this).closest('.card').find('.card-header a'),
-						headerText  = $(this).val().length <= 2 ? 'New Ticket' : 'New Ticket: ' + $(this).val();
+				$firstAccordionHeader.text('This Ticket: ' + ticketPage.currentTicket.title);
 
-					$cardHeader.text(headerText);
-				});
+				ticketPage.populateTicketModal($(this), ticketPage.currentTicket, 'this');
 
-				$(document).on('click', '.add-hardware-device', function() {
-					var $inputField       = $(this).closest('.form-group').find('input'),
-						successfullyAdded = ticketPage.appendHardwareDevice($(this).closest('.form-group').find('.hardware-list'), $inputField.val(), $(this).closest('card').data('cardid'));
+				$addExistingTicket.html('<option selected hidden>Select an Existing Ticket</option>');
 
-					if (successfullyAdded) {
-						$inputField.val('');
-					} else {
-						alert('Already exists or can\'t find device in system with serial number');
-					}
-				});
+				for (var i = 0; i < allTickets.length; i++) {
+					var ticket = allTickets[i];
 
-				$(document).on('click', '.remove-hardware-device', function() {
-					$(this).closest('li').fadeOut(200, function() {
-						$(this).remove();
-					});
-				});
-
-				$(document).on('click', '#ticket-view #call-history-table tbody tr', function() {
-					var callId = parseInt(this.dataset.rowid);
-					
-					ticketPage.showCallTicketsModal(callId);
-				});
-
-				$(document).on('click', '#view-call-history-modal #call-tickets-table tbody tr:not(.highlight)', function() {
-					var ticketId = parseInt(this.dataset.rowid),
-						ticket   = makeItAll.ticketManager.getTicket(ticketId);
-
-					$('#view-call-history-modal').modal('hide');
-
-					ticketPage.refreshPage(ticket.filter.slug, ticketId);
-				});
-
-				$('#follow-up-call-modal').on('shown.bs.modal', function() {
-					var $firstAccordionHeader = $(this).find('#accordion .card-header a'),
-						$addExistingTicket    = $('#add-existing-ticket'),
-						allTickets            = makeItAll.ticketManager.tickets;
-
-					$firstAccordionHeader.text('This Ticket: ' + ticketPage.currentTicket.title);
-
-					ticketPage.populateTicketModal($(this), ticketPage.currentTicket, 'this');
-
-					$addExistingTicket.html('<option selected hidden>Select an Existing Ticket</option>');
-
-					for (var i = 0; i < allTickets.length; i++) {
-						var ticket = allTickets[i];
-
-						if (ticket.id === ticketPage.currentTicket.id) {
-							continue;
-						}
-
-						$addExistingTicket.append('<option value="' + ticket.id + '">' + '#' + ticket.id + ' ' + ticket.title.substring(0, 17) + '...</option>');
+					if (ticket.id === ticketPage.currentTicket.id) {
+						continue;
 					}
 
-					$addExistingTicket.selectpicker('refresh');
-				});
+					$addExistingTicket.append('<option value="' + ticket.id + '">' + '#' + ticket.id + ' ' + ticket.title.substring(0, 17) + '...</option>');
+				}
 
-				$('#create-follow-up-call').on('click', function() {
-					var formData 		  = $('#follow-up-call-modal form').serializeObject(),
-						formDataTickets   = formData.tickets,
-						existingTicketIds = [];
+				$addExistingTicket.selectpicker('refresh');
+			});
 
-					for (var cardId in formDataTickets) {
-						var card = formDataTickets[cardId];
+			$('#create-follow-up-call').on('click', function() {
+				var formData 		  = $('#follow-up-call-modal form').serializeObject(),
+					formDataTickets   = formData.tickets,
+					existingTicketIds = [];
 
-						if (card.hasOwnProperty('id')) {
-							existingTicketIds.push(parseInt(card.id));
-							delete formDataTickets[cardId];
-						}
+				for (var cardId in formDataTickets) {
+					var card = formDataTickets[cardId];
+
+					if (card.hasOwnProperty('id')) {
+						existingTicketIds.push(parseInt(card.id));
+						delete formDataTickets[cardId];
 					}
+				}
 
-					makeItAll.ticketManager.createCall(formData.date_of_call, formData.caller, formDataTickets, existingTicketIds);
+				makeItAll.ticketManager.createCall(formData.date_of_call, formData.caller, formDataTickets, existingTicketIds);
 
-					ticketPage.refreshPage(ticketPage.currentTicket.filter.slug, ticketPage.currentTicket.id);
+				ticketPage.refreshPage(ticketPage.currentTicket.filter.slug, ticketPage.currentTicket.id);
 
-					$('#follow-up-call-modal').modal('hide');
-				});
+				$('#follow-up-call-modal').modal('hide');
+			});
 
-				$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
-					ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller...', makeItAll.staffManager.staffMembers);
-				});
+			$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
+				ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller...', makeItAll.staffManager.staffMembers);
+			});
 
-				$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
-					ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
-				});
+			$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
+				ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
 
-				$('#edit-ticket-modal').on('show.bs.modal', function() {
-					ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers, ticketPage.currentTicket._assigned_to);
-				});
+				$(this).find('.staff-information').text('No staff member has been selected yet!');
 
-				$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
-					$(this).find('.staff-information').text('No staff member has been selected yet!');
-				});
+				problemTypePage.loadSubProblemTypes($(this).find('.type-columns'));
+			});
 
-				$('#new-ticket-modal select[name="caller"], #follow-up-call-modal select[name="caller"]').on('change', function() {
-					var $staffInformation = $(this).closest('.modal').find('.staff-information'),
-						staffMember       = makeItAll.staffManager.getStaffMember($(this).val());
+			$('#single-view [data-action="edit"]').on('click', function() {
+				var $editTicketModal = $('#edit-ticket-modal');
 
-					$staffInformation.html(
-						'<p>ID Number: <strong>' + staffMember.id + '</strong></p>' +
-						'<p>Name: <strong>' + staffMember.name + '</strong></p>' +
-						'<p>Job Title: <strong>' + staffMember.job_title + '</strong></p>' +
-						'<p>Department: <strong>' + staffMember.department + '</strong></p>' +
-						'<p>Telephone Number: <strong>' + staffMember.telephone_number + '</strong></p>'
-					);
-				});
+				ticketPage.populateTicketModal($editTicketModal, ticketPage.currentTicket);
+				ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers, ticketPage.currentTicket._assigned_to);
+
+				problemTypePage.loadProblemType($editTicketModal.find('.type-columns'), ticketPage.currentTicket._problem_type);
+			});
+
+			$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
+				$(this).find('.staff-information').text('No staff member has been selected yet!');
+			});
+
+			$(document).on('click', '.type-column li', function() {
+				var problemTypeId = parseInt($(this).data('problemTypeId'));
+
+				problemTypePage.loadSubProblemTypes($(this).closest('.type-columns'), $(this), problemTypeId);
+
+				$(this).closest('.problem-type-picker').siblings('input[name*=problem_type]').val(problemTypeId);
+			});
+
+			$('#new-ticket-modal select[name="caller"], #follow-up-call-modal select[name="caller"]').on('change', function() {
+				var $staffInformation = $(this).closest('.modal').find('.staff-information'),
+					staffMember       = makeItAll.staffManager.getStaffMember($(this).val());
+
+				$staffInformation.html(
+					'<p>ID Number: <strong>' + staffMember.id + '</strong></p>' +
+					'<p>Name: <strong>' + staffMember.name + '</strong></p>' +
+					'<p>Job Title: <strong>' + staffMember.job_title + '</strong></p>' +
+					'<p>Department: <strong>' + staffMember.department + '</strong></p>' +
+					'<p>Telephone Number: <strong>' + staffMember.telephone_number + '</strong></p>'
+				);
+			});
 		</script>
 	</body>
 </html>

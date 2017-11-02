@@ -1,0 +1,41 @@
+@import "../main";
+
+.problem-type-picker {
+	height: 100%;
+	border: none;
+
+	.input-group {
+		padding: $cosy;
+		z-index: 0;
+
+		input {
+			padding: $thin $cosy;
+		}
+
+		button {
+			width: 30px;
+			height: 30px;
+		}
+	}
+}
+
+#list-view {
+	flex: 2;
+}
+
+#single-view {
+	flex: 1;
+
+	.splash-screen {
+		height: 75%;
+	}
+
+	#problem-type-view {
+		padding: $comfortable;
+		display: none;
+	}
+}
+
+.problem-type-details {
+	margin-bottom: 5px;
+}

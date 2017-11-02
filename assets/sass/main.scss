@@ -470,7 +470,7 @@ label {
 		&:first-child {
 			.card-header {
 				i {
-					&.fa-eye, &.fa-eye-slash {
+					&.fa-chevron-up, &.fa-chevron-down {
 						right: 15px;
 					}
 				}
@@ -501,8 +501,8 @@ label {
 				right: 15px;
 				cursor: pointer;
 
-				&.fa-eye, &.fa-eye-slash {
-					right: 45px;
+				&.fa-chevron-up, &.fa-chevron-down {
+					right: 40px;
 				}
 
 				&.fa-trash-o {
@@ -666,18 +666,12 @@ label {
 	height: 152px;
 	display: flex;
 	border: 1px solid $silver;
-	
+
 	.type-columns {
 		display: flex;
 		flex: 2;
 		flex-wrap: nowrap;
 		overflow-x: auto;
-
-		.active:last-child {
-			background-color: $blue !important;
-			color: $white;
-			cursor: initial !important;
-		}
 
 		.type-column {
 			flex-grow: 0;
@@ -685,22 +679,6 @@ label {
 			flex-basis: 225px;
 			border-right: 1px solid $silver;
 			list-style: none;
-
-			&:last-child {
-				border-right: none;
-
-				&:last-child {
-					li {
-						.specialist-counter {
-							right: 10px;
-						}
-						
-						.fa-caret-right {
-							display: none;
-						}
-					}
-				}
-			}
 
 			li {
 				padding: 0 $cosy;
@@ -711,10 +689,22 @@ label {
 					background-color: $cloudy-white;
 				}
 
+				&.last-active {
+					background-color: $blue !important;
+					color: $white;
+					cursor: initial !important;
+				}
+
 				&:hover {
 					background-color: $blue-hover;
 					color: $white;
 					cursor: pointer;
+				}
+
+				&.no-children {
+					.fa-caret-right {
+						display: none;
+					}
 				}
 
 				.specialist-counter {
@@ -735,24 +725,23 @@ label {
 			}
 		}
 	}
+}
 
-	.info-column {
-		flex: 1;
-		border-left: 2px solid $silver;
-		text-align: center;
-		font-size: 10px;
-		color: $grey;
-		line-height: 17px;
+span.subtle {
+	color: $grey;
+}
 
-		div {
-			margin-top: 5px;
-		}
+span.filter {
+	padding: 4px 8px;
+	background-color: $blue;
+	border-radius: 2px;
+	border: 0;
+	color: $white;
+	font-weight: 600;
+	font-size: 15px;
 
-		strong {
-			font-size: 25px;
-			color: $black;
-			margin-top: 5px;
-		}
+	&.filter-green {
+		background-color: $green;
 	}
 }
 

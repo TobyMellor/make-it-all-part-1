@@ -44,6 +44,10 @@ class StaffManager extends Manager {
 		}
 		return id;
 	}
+
+	getSpecialists(problemTypeId) {
+		return this.findAllWhere(this.staff, employee => employee._specialisms.indexOf(problemTypeId) > -1);
+	}
 	
 	// Deprecated
 	get staffMembers() {
@@ -63,7 +67,8 @@ var staffData = [
 		job: "Designer",
 		phone: "01555516794",
 		department: "Team 5",
-		isAnalyst: true
+		isAnalyst: true,
+		specialisms: [1]
 	},
 	{
 		id: 1,
@@ -73,7 +78,8 @@ var staffData = [
 		department: "Team 5",
 		phone: "01555864722",
 		isOperator: true,
-		isAdmin: true
+		isAdmin: true,
+		specialisms: [2]
 	},
 	{
 		id: 2,
@@ -81,7 +87,8 @@ var staffData = [
 		job: "Developer",
 		phone: "01555138339",
 		department: "Team 5",
-		isOperator: true
+		isOperator: true,
+		specialisms: [3]
 	},
 	{
 		id: 3,
@@ -89,7 +96,8 @@ var staffData = [
 		job: "Designer",
 		phone: "01555736169",
 		department: "Team 5",
-		isAnalyst: true
+		isAnalyst: true,
+		specialisms: [4]
 	},
 	{
 		id: 4,
@@ -97,7 +105,8 @@ var staffData = [
 		job: "Designer",
 		phone: "01555574667",
 		department: "Team 5",
-		isAnalyst: true
+		isAnalyst: true,
+		specialisms: [5]
 	},
 	{
 		id: 5,
@@ -106,6 +115,7 @@ var staffData = [
 		department: "Team 5",
 		phone: "01555181056",
 		isOperator: true,
-		isAdmin: true
+		isAdmin: true,
+		specialisms: [1, 2, 6, 8]
 	}
 ];

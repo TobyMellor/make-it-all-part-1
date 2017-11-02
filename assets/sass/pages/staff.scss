@@ -6,6 +6,7 @@
 		width: $comfortable * 2;
 		text-align: center;
 	}
+
 	td:last-child {
 		text-align: center;
 	}	
@@ -18,15 +19,18 @@
 		&:not(.thin) {
 			padding-top: $comfortable;
 		}
+
 		&:first-child {
 			align-items: center;
 		}
 	}
+
 	.card {
 		max-width: $comfortable * 16;
 		margin: $cosy $comfortable $cosy auto;
 	}
-	.col-md-6 .row {
+
+	form .row {
 		border-bottom: 1px solid $silver;
 		margin-bottom: 1rem;
 	}
@@ -49,7 +53,64 @@
 	margin-right: $cosy;
 	color: $black;
 }
+
 .subtle {
 	color: $grey;
 	float: right;
+}
+
+.problem-type-picker {
+	&.readonly {
+		li {
+			.specialism-checkbox {
+				border: none !important;
+
+				i {
+					right: 7px;
+					top: 3px;
+					font-size: 16px;
+
+					&.fa-times {
+						display: initial;
+					}
+				}
+			}
+		}
+	}
+
+	li {
+		&:hover:not(.no-children), &.last-active:not(.no-children) {
+			.specialism-checkbox {
+				border: 2px solid $white;
+			}
+		}
+
+		&.no-children {
+			cursor: initial !important;
+
+			&:hover {
+				background-color: $white !important;
+				color: $black !important;
+			}
+		}
+
+		.specialism-checkbox {
+			width: 15px;
+			height: 15px;
+			border: 2px solid $black;
+			margin-top: $compact;
+			cursor: pointer;
+
+			i {
+				position: absolute;
+				right: 10px;
+				top: 6px;
+				font-size: 11px;
+
+				&.fa-times {
+					display: none;
+				}
+			}
+		}
+	}
 }
