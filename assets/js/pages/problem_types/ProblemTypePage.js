@@ -215,7 +215,7 @@ class ProblemTypePage extends DynamicPage {
 				return {
 					id: problemType.id,
 					name: problemType.name,
-					parent: problemType.parent
+					parent: (problemType.parent !== null ? problemType.parent.name : 'N/A')
 				}
 			}, searchKeys);
 		} else {
