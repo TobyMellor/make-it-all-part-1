@@ -40,6 +40,7 @@ $wide: 1600px;
 			align-items: flex-end;
 			padding: 8px !important;
 			border-left: none !important;
+			white-space: nowrap;
 			&:hover {
 				border-top: $thin $blue solid;
 				padding-right: initial;
@@ -90,7 +91,7 @@ $wide: 1600px;
 					position: sticky;
 					right: 0;
 					> .btn {
-						width: ($comfortable * 2) + 1px;
+						width: ($comfortable * 4) + 1px;
 						margin: 0;
 						padding: ($cosy - $compact) $cosy;
 					}

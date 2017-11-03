@@ -17,33 +17,48 @@
 			<div class="side-nav-bar-menu">
 				<ul>
 					<li>
-						<i class="fa fa-ticket fa-2x"></i>
-						<p>Tickets</p>
+						<a href="metrics.html">
+							<i class="fa fa-line-chart fa-2x"></i>
+							<p>Metrics</p>
+						</a>
 					</li>
 					<li>
-						<i class="fa fa-file-code-o fa-2x"></i>
-						<p>Software</p>
+						<a href="tickets.html">
+							<i class="fa fa-ticket fa-2x"></i>
+							<p>Tickets</p>
+						</a>
 					</li>
 					<li>
-						<i class="fa fa-laptop fa-2x"></i>
-						<p>Hardware</p>
+						<a href="software.html">
+							<i class="fa fa-file-code-o fa-2x"></i>
+							<p>Software</p>
+						</a>
+					</li>
+					<li>
+						<a href="hardware.html">
+							<i class="fa fa-laptop fa-2x"></i>
+							<p>Hardware</p>
+						</a>
 					</li>
 					<li class="active">
-						<i class="fa fa-question fa-2x"></i>
-						<p>Help</p>
+						<a href="problem_types.html">
+							<i class="fa fa-question fa-2x"></i>
+							<p>Problem Types</p>
+						</a>
 					</li>
 					<li>
-						<i class="fa fa-user-circle-o fa-2x"></i>
-						<p>Staff</p>
+						<a href="staff.html">
+							<i class="fa fa-user-circle-o fa-2x"></i>
+							<p>Staff</p>
+						</a>
 					</li>
-					<li>
-						<i class="fa fa-line-chart fa-2x"></i>
-						<p>Metrics</p>
-					</li>
+	
 					<li>
 						<div class="breaker"></div>
-						<i class="fa fa-cog fa-2x"></i>
-						<p>Settings</p>
+						<a href="settings.html">
+							<i class="fa fa-cog fa-2x"></i>
+							<p>Settings</p>
+						</a>
 					</li>
 				</ul>
 			</div>
@@ -51,7 +66,7 @@
 
 		<section id="list-view">
 			<nav class="top-nav">
-				<i class="fa fa-exclamation-triangle"></i>
+				<i class="fa fa-question"></i>
 				<h4>Problem Types</h4>
 				<div class="input-group search-field float-right">
 					<span class="input-group-addon">
@@ -86,102 +101,107 @@
 		
 		<section id="single-view">
 			<nav class="top-nav">
-				<h4 class="main-content-title">Nothing selected yet…</h4>
+				<h4 class="main-content-title"></h4>
 			</nav>
 
 			<div class="splash-screen">
-				<i class="fa fa-warning fa-5x"></i>
-				<h1>Nothing Selected</h1>
-				<p>Get started, select a problem type on the left.</p>
+				<h1>No Selection</h1>
+				<p>Get started, select a problem type to view its details.</p>
 			</div>
 
 			<div id="problem-type-view" class="block-hidden">
 				<p class="problem-type-details">
 					<strong>Problem Types:</strong>
 				</p>
-				<table class="table" id="problem-types-table">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>NAME</th>
-							<th>PARENT</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-				</table>
-
+				<div class="table-container">
+					<table class="table" id="problem-types-table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>NAME</th>
+								<th>PARENT</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+	
 				<p class="problem-type-details">
 					<strong>Specialists with this speciality:</strong>
 				</p>
 				<p id="no-specialists-data">There's no specialists that specialise in this problem!</p>
-				<table class="table" id="specialists-table">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>NAME</th>
-							<th>JOB</th>
-							<th>PHONE #</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>0</td>
-							<td>Toby Mellor</td>
-							<td>Developer</td>
-							<td>1234567890</td>
-							<td>
-								<i class="fa fa-eye"></i>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="table-container">
+					<table class="table" id="specialists-table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>NAME</th>
+								<th>JOB</th>
+								<th>PHONE #</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>0</td>
+								<td>Toby Mellor</td>
+								<td>Developer</td>
+								<td>1234567890</td>
+								<td>
+									<i class="fa fa-eye"></i>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 
 				<p class="problem-type-details">
 					<strong>Related Tickets:</strong>
 				</p>
 				<p id="no-tickets-data">There's no tickets related to this problem!</p>
-				<table class="table" id="tickets-table">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>TICKET TITLE</th>
-							<th>STATUS</th>
-							<th>CREATED</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>0</td>
-							<td>Test Ticket Name!</td>
-							<td>New</td>
-							<td>Just now</td>
-							<td>
-								<i class="fa fa-eye"></i>
-							</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Something else...</td>
-							<td>Resolved</td>
-							<td>Just now</td>
-							<td>
-								<i class="fa fa-eye"></i>
-							</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>Ticket name here</td>
-							<td>Resolved</td>
-							<td>Just now</td>
-							<td>
-								<i class="fa fa-eye"></i>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="table-container">
+					<table class="table" id="tickets-table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>TICKET TITLE</th>
+								<th>STATUS</th>
+								<th>CREATED</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>0</td>
+								<td>Test Ticket Name!</td>
+								<td>New</td>
+								<td>Just now</td>
+								<td>
+									<i class="fa fa-eye"></i>
+								</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>Something else...</td>
+								<td>Resolved</td>
+								<td>Just now</td>
+								<td>
+									<i class="fa fa-eye"></i>
+								</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Ticket name here</td>
+								<td>Resolved</td>
+								<td>Just now</td>
+								<td>
+									<i class="fa fa-eye"></i>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</section>
 

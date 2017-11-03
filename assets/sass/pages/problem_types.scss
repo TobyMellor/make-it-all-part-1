@@ -24,3 +24,29 @@
 .problem-type-details {
 	margin-bottom: 5px;
 }
+
+@media (max-width: $small) {
+	#list-view {
+		height: 40vh;
+	}
+	#single-view {
+		position: unset;
+		border-top: 1px solid $silver;
+	}
+	.splash-screen {
+		padding: $comfortable;
+	}
+	#problem-type-view {
+		.table-container {
+			overflow-x: scroll;
+		}
+		.table {
+			white-space: nowrap;
+			width: unset;
+			max-width: unset;
+		}
+	}
+	.truncate {
+		max-width: unset !important;
+	}
+}
