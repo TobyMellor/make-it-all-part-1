@@ -91,7 +91,7 @@ $(function () {
 
 	$('.search-field .input-group-addon').on('click', function() {
 		$(this).parent().hide();
-		$(this).siblings('input').val('');
+		$(this).siblings('input').val('').keyup();
 		$('.search-button').show();
 	});
 });
