@@ -333,9 +333,18 @@ section {
 			}
 		}
 
+		.input-group.search-field {
+			height: 30px;
+			max-width: 250px;
+
+			input {
+				padding: $compact 12px;
+			}
+		}
+
 		&.with-content {
 			button {
-				margin: 0 $cosy;
+				margin: 0;
 
 				&:last-child {
 					margin-right: 0;

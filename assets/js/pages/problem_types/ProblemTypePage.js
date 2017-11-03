@@ -5,8 +5,10 @@
  * the ProblemManager.
  */
 
-class ProblemTypePage {
+class ProblemTypePage extends DynamicPage {
 	constructor(allowProblemTypeCreation = false) {
+		super();
+
 		this.allowProblemTypeCreation = allowProblemTypeCreation;
 	}
 
@@ -194,5 +196,32 @@ class ProblemTypePage {
 		var problemType = makeItAll.problemTypeManager.createProblemType(name, parentProblemTypeId);
 
 		this.loadProblemType($('.type-columns'), problemType.id);
+	}
+
+	search(query) {
+		var $problemTypePicker = $('.problem-type-picker'),
+			$tableSection      = $(this.tableSelector);
+
+		$('#list-view .splash-screen').addClass('block-hidden');
+
+		if (query.length >= 2 || query == parseInt(query)) {
+			$problemTypePicker.hide();
+			$tableSection.show();
+
+			var searchKeys   = ['name'],
+				problemTypes = makeItAll.problemTypeManager.search(query, searchKeys);
+
+			super.search(query, problemTypes, function(problemType) {
+				return {
+					id: problemType.id,
+					name: problemType.name,
+					parent: (problemType.parent !== null ? problemType.parent.name : 'N/A')
+				}
+			}, searchKeys);
+		} else {
+			$('.top-nav h4').text('Problem Types')
+			$problemTypePicker.show();
+			$tableSection.hide();
+		}
 	}
 }

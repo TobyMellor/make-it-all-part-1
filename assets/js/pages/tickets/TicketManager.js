@@ -254,4 +254,8 @@ class TicketManager extends Manager {
 	getRelatedProblems(problemTypeId) {
 		return this.findAllWhere(this.tickets, ticket => ticket._problem_type === problemTypeId);
 	}
+
+	search(query, properties) {
+		return super.search(this.tickets, query, properties);
+	}
 }

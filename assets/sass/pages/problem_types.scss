@@ -21,6 +21,10 @@
 
 #list-view {
 	flex: 2;
+
+	#table-section {
+		display: none;
+	}
 }
 
 #single-view {

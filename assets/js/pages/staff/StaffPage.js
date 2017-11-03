@@ -68,4 +68,29 @@ class StaffPage extends DynamicPage {
 		
 		super.showTableRowDetails(id);
 	}
+
+	search(query) {
+		if (query.length >= 2 || query == parseInt(query)) {
+			var searchKeys = ['id', 'name'],
+				employees  = makeItAll.staffManager.search(query, searchKeys);
+
+			super.search(query, employees, function(employee) {
+				return {
+					id: employee.id,
+					name: employee.name,
+					job: employee.job,
+					department: employee.department,
+					phone: employee.phone,
+					access: {
+						read: employee.access.read,
+						operator: employee.access.operator,
+						analyst: employee.access.analyst,
+						admin: employee.access.admin
+					}
+				}
+			}, searchKeys);
+		} else {
+			this.showStaff();
+		}
+	}
 }

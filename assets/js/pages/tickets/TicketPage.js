@@ -264,4 +264,23 @@ class TicketPage extends DynamicPage {
 
 		this.showTicketView(ticketPage.currentTicket.id); // refresh to get new comment
 	}
+
+	search(query) {
+		if (query.length >= 2 || query == parseInt(query)) {
+			var searchKeys = ['id', 'title'],
+				tickets    = makeItAll.ticketManager.search(query, searchKeys);
+
+			super.search(query, tickets, function(ticket) {
+				return {
+					id: ticket.id,
+					title: ticket.title,
+					filter_name: '<span class="filter">' + ticket.filter.name + '</span>',
+					created_at: ticket.created_at,
+					updated_at: ticket.updated_at
+				}
+			}, searchKeys);
+		} else {
+			this.showFilteredTickets($('.side-nav-bar-nested li.active').data('slug'));
+		}
+	}
 }

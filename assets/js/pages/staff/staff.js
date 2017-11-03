@@ -118,6 +118,10 @@ $(() => {
 	
 	staffPage.showStaff();
 	$(staffPage.navSelector).find("[data-slug]").click(el => {
+		if ($('.search-field input').val() !== '') {
+			$('.search-field input').val('').keyup();
+		}
+		
 		$(el.delegateTarget).addClass("active").siblings().removeClass("active");
 		
 		let slug = el.delegateTarget.dataset.slug;
@@ -135,5 +139,11 @@ $(() => {
 	
 	$(staffPage.tableSelector).on("click", "tbody tr", e => {
 		staffPage.showTableRowDetails(Number(e.currentTarget.dataset.rowid));
+	});
+
+	$('.search-field input').on('keyup', function() {
+		var query = $(this).val();
+
+		staffPage.search(query);
 	});
 });

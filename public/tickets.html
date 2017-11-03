@@ -103,6 +103,12 @@
 			<nav class="top-nav">
 				<i class="fa fa-ticket"></i>
 				<h4>Loading…</h4>
+				<div class="input-group search-field float-right">
+					<span class="input-group-addon">
+						<i class="fa fa-search"></i>
+					</span>
+					<input type="text" class="form-control" placeholder="Search…">
+				</div>
 			</nav>
 			
 			<div class="splash-screen block-hidden">
@@ -1215,6 +1221,12 @@
 					'<p>Department: <strong>' + staffMember.department + '</strong></p>' +
 					'<p>Telephone Number: <strong>' + staffMember.telephone_number + '</strong></p>'
 				);
+			});
+
+			$('.search-field input').on('keyup', function() {
+				var query = $(this).val();
+
+				ticketPage.search(query);
 			});
 		</script>
 	</body>

@@ -82,6 +82,8 @@ $(function () {
 	$(document).on('show.bs.collapse', '#accordion .collapse', function () {
 		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-chevron-up').addClass('fa-chevron-down');
 	});
+
+	$('.search-field input').val('');
 });
 
 // https://stackoverflow.com/a/8407771/2957677
