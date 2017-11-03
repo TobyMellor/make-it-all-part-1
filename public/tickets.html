@@ -58,8 +58,24 @@
 			</h1>
 			<p>Categories</p>
 			<ul>
-				<li class="active" data-slug="new">
+				<li class="active" data-slug="new,pending_awaiting_staff,pending_in_progress,resolved">
 					<i class="fa fa-envelope-o"></i>
+					All
+				</li>
+				<li data-slug="new,pending_awaiting_staff,pending_in_progress">
+					<i class="fa fa-envelope-open-o"></i>
+					All Open
+				</li>
+			</ul>
+			<ul>
+				<li data-slug="assigned_to_me">
+					<i class="fa fa-user-circle-o"></i>
+					Assigned to me
+				</li>
+			</ul>
+			<ul>
+				<li data-slug="new">
+					<i class="fa fa-star-o"></i>
 					New
 				</li>
 				<li data-slug="pending_awaiting_staff">
@@ -861,7 +877,7 @@
 				}
 			});
 
-			ticketPage.showFilteredTickets('new');
+			ticketPage.showFilteredTickets('new,pending_awaiting_staff,pending_in_progress,resolved');
 
 			$('.new-ticket').on('click', function() {
 				$('#new-ticket-modal').find('input, textarea')
