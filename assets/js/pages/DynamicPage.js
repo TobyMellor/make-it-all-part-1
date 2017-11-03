@@ -139,12 +139,24 @@ class DynamicPage {
 		$select.selectpicker('refresh');
 	}
 
-	search(query, elements, objectCallback) {
+	/**
+	 * @param query The search string
+	 * @param elements The elements matching the search to display
+	 * @param objectCallback a callback returning an object (the row structure)
+	 * @param searchKeys the properties in objectCallback to highlight
+	 */
+	search(query, elements, objectCallback, searchKeys = []) {
 		this.clearTable();
 
 		if (elements.length > 0) {
 			for (var i = 0; i < elements.length; i++) {
-				this.appendTableRow(objectCallback(elements[i]));
+				var object = objectCallback(elements[i]);
+
+				for (var j = 0; j < searchKeys.length; j++) {
+					object[searchKeys[j]] = String(object[searchKeys[j]]).replace(new RegExp(query, 'ig'), '<strong>' + query + '</strong>');
+				}
+
+				this.appendTableRow(object);
 			}
 		}
 

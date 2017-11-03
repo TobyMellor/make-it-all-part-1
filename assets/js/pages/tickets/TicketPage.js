@@ -260,7 +260,8 @@ class TicketPage extends DynamicPage {
 
 	search(query) {
 		if (query.length >= 2 || query == parseInt(query)) {
-			var tickets = makeItAll.ticketManager.search(query, ['id', 'title']);
+			var searchKeys = ['id', 'title'],
+				tickets    = makeItAll.ticketManager.search(query, searchKeys);
 
 			super.search(query, tickets, function(ticket) {
 				return {
@@ -270,7 +271,7 @@ class TicketPage extends DynamicPage {
 					created_at: ticket.created_at,
 					updated_at: ticket.updated_at
 				}
-			});
+			}, searchKeys);
 		} else {
 			this.showFilteredTickets($('.side-nav-bar-nested li.active').data('slug'));
 		}
