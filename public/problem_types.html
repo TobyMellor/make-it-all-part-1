@@ -56,6 +56,16 @@
 			<nav class="top-nav">
 				<i class="fa fa-exclamation-triangle"></i>
 				<h4>Problem Types</h4>
+				<button class="btn btn-sm float-right search-button" data-action="search">
+					<i class="fa fa-search"></i>
+					Search
+				</button>
+				<div class="input-group search-field float-right">
+					<input type="text" class="form-control" placeholder="Search…">
+					<span class="input-group-addon">
+						<i class="fa fa-times"></i>
+					</span>
+				</div>
 			</nav>
 			
 			<div class="splash-screen" style="display: none;">
@@ -69,6 +79,19 @@
 			
 			<div class="problem-type-picker">
 				<div class="type-columns"></div>
+			</div>
+			
+			<div id="table-section">
+				<table class="table">
+					<thead>
+						<tr>
+							<th data-slug="id">ID</th>
+							<th data-slug="name">NAME</th>
+							<th data-slug="eye"></th> <!-- If you want the eye when hovering over a table row, keep this -->
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
 			</div>
 		</section>
 		
@@ -382,6 +405,12 @@
 				}
 
 				problemTypePage.createProblemType($(this).parent().siblings('input').val(), parentProblemTypeId);
+			});
+
+			$('.search-field input').on('keyup', function() {
+				var query = $(this).val();
+
+				problemTypePage.search(query);
 			});
 		</script>
 	</body>

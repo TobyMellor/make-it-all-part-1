@@ -118,4 +118,8 @@ class ProblemTypeManager extends Manager {
 
 		return this.problemTypes[this.problemTypes.length - 1];
 	}
+
+	search(query, properties) {
+		return super.search(this.problemTypes, query, properties);
+	}
 }
