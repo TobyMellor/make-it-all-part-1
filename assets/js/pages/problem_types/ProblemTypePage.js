@@ -202,6 +202,8 @@ class ProblemTypePage extends DynamicPage {
 		var $problemTypePicker = $('.problem-type-picker'),
 			$tableSection      = $(this.tableSelector);
 
+		$('#list-view .splash-screen').addClass('block-hidden');
+
 		if (query.length >= 2 || query == parseInt(query)) {
 			$problemTypePicker.hide();
 			$tableSection.show();
@@ -212,10 +214,12 @@ class ProblemTypePage extends DynamicPage {
 			super.search(query, problemTypes, function(problemType) {
 				return {
 					id: problemType.id,
-					name: problemType.name
+					name: problemType.name,
+					parent: problemType.parent
 				}
 			}, searchKeys);
 		} else {
+			$('.top-nav h4').text('Problem Types')
 			$problemTypePicker.show();
 			$tableSection.hide();
 		}

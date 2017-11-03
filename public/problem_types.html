@@ -68,25 +68,21 @@
 				</div>
 			</nav>
 			
-			<div class="splash-screen" style="display: none;">
-				<h1>No tickets</h1>
-				<p>Get started, create a new ticket below.</p>
-				<button class="btn btn-success btn-lg new-ticket" data-toggle="modal" data-target="#create-ticket-modal">
-					<i class="fa fa-plus"></i>
-					New Ticket
-				</button>
+			<div class="splash-screen block-hidden">
+				<h1>No problem types matched</h1>
 			</div>
 			
 			<div class="problem-type-picker">
 				<div class="type-columns"></div>
 			</div>
-			
+
 			<div id="table-section">
 				<table class="table">
 					<thead>
 						<tr>
 							<th data-slug="id">ID</th>
 							<th data-slug="name">NAME</th>
+							<th data-slug="parent">PARENT</th>
 							<th data-slug="eye"></th> <!-- If you want the eye when hovering over a table row, keep this -->
 						</tr>
 					</thead>
@@ -392,8 +388,12 @@
 				problemTypePage.loadSubProblemTypes($('.type-columns'), $(this), parseInt($(this).data('problemTypeId')));
 			});
 
-			$(document).on('click', '#problem-types-table tbody tr:not(.highlight)', function() {
+			$(document).on('click', '#problem-types-table tbody tr:not(.highlight), #table-section tbody tr:not(.highlight)', function() {
 				problemTypePage.loadProblemType($('.type-columns'), parseInt($(this).data('rowid')));
+			});
+
+			$(document).on('click', '#table-section tbody tr:not(.highlight)', function() {
+				$('.search-field input').val('').keyup();
 			});
 
 			$(document).on('click', '.create-problem-type', function() {
