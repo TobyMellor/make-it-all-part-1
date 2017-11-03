@@ -87,6 +87,7 @@ $(function () {
 		$(this).hide();
 		$('.search-field').css('display', 'flex');
 		$('.search-field input').focus();
+		$('.search-field input').val('');
 	});
 
 	$('.search-field .input-group-addon').on('click', function() {
