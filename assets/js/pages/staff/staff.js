@@ -118,7 +118,10 @@ $(() => {
 	
 	staffPage.showStaff();
 	$(staffPage.navSelector).find("[data-slug]").click(el => {
-		$('.search-field input').val('').keyup();
+		if ($('.search-field input').val() !== '') {
+			$('.search-field input').val('').keyup();
+		}
+		
 		$(el.delegateTarget).addClass("active").siblings().removeClass("active");
 		
 		let slug = el.delegateTarget.dataset.slug;
