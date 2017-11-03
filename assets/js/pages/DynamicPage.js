@@ -32,7 +32,7 @@ class DynamicPage {
 	 *
 	 * You should call this function after using "appendTable"
 	 */
-	updateSplashScreen() {
+	updateSplashScreen(navText = null) {
 		var $table = $(this.tableSelector),
 		    resultsCount = $table.find('tbody tr').filter((i, el) => !$(el).hasClass("row-hidden")).length,
 		    $splashScreen = $('.splash-screen');
@@ -41,8 +41,11 @@ class DynamicPage {
 		$hide.addClass("block-hidden");
 		$show.removeClass("block-hidden");
 		
-		// Set navbar text as number of items in table then append currently selected filter
-		var navText = resultsCount + " " + $(this.navSelector).find("li.active").first().text().replace("All ", "");
+		if (!navText) {
+			// Set navbar text as number of items in table then append currently selected filter
+			navText = resultsCount + " " + $(this.navSelector).find("li.active").first().text().replace("All ", "");
+		}
+
 		// If unable to obtain rows count, show "Loading…"
 		$(this.sectionSelector).closest("section").find(".top-nav h4").text(resultsCount !== undefined ? navText : "Loading…");
 	}
@@ -134,5 +137,17 @@ class DynamicPage {
 		}
 
 		$select.selectpicker('refresh');
+	}
+
+	search(query, elements, objectCallback) {
+		this.clearTable();
+
+		if (elements.length > 0) {
+			for (var i = 0; i < elements.length; i++) {
+				this.appendTableRow(objectCallback(elements[i]));
+			}
+		}
+
+		this.updateSplashScreen(elements.length + ' search ' + (elements.length === 1 ? 'result' : 'results') + ' for \'' + query + '\'');
 	}
 }

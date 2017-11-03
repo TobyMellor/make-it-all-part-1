@@ -68,4 +68,8 @@ class StaffPage extends DynamicPage {
 		
 		super.showTableRowDetails(id);
 	}
+
+	search(query) {
+		//
+	}
 }

@@ -1210,6 +1210,12 @@
 					'<p>Telephone Number: <strong>' + staffMember.telephone_number + '</strong></p>'
 				);
 			});
+
+			$('.search-field input').on('keyup', function() {
+				var query = $(this).val();
+
+				ticketPage.search(query);
+			});
 		</script>
 	</body>
 </html>
