@@ -153,7 +153,7 @@ class DynamicPage {
 				var object = objectCallback(elements[i]);
 
 				for (var j = 0; j < searchKeys.length; j++) {
-					object[searchKeys[j]] = String(object[searchKeys[j]]).replace(new RegExp(query, 'ig'), '<strong>' + query + '</strong>');
+					object[searchKeys[j]] = String(object[searchKeys[j]]).replace(new RegExp('(' + query + ')', 'ig'), '<strong>$1</strong>');
 				}
 
 				this.appendTableRow(object);
