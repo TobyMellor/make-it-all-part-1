@@ -30,7 +30,7 @@ gulp.task('scripts', function() {
         .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest('./public/js/'));
     
-    for (var pagetype of ['tickets', 'staff', 'hardware', 'software', 'global_metrics', 'problem_types']) {
+    for (var pagetype of ['tickets', 'staff', 'hardware', 'software', 'global_metrics', 'problem_types', 'settings']) {
         gulp.src(['assets/js/pages/' + pagetype + '/**/*.js'])
             .pipe(plumber())
             .pipe(sourcemaps.init())

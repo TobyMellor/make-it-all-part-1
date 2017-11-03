@@ -1,0 +1,63 @@
+@import "../main";
+
+.side-nav-bar-nested {
+	width: 230px;
+	min-width: 230px;
+}
+
+.section {
+	margin-top: $comfortable;
+	display: none;
+}
+
+#general-section {
+	display: block;
+}
+
+.html-input {
+	height: 40px;
+	padding: 8px 12px;
+	border-radius: 0;
+	border: 1px solid $silver;
+	border-bottom: 2px solid $silver;
+	background-color: #e9ecef;
+	line-height: 21px;
+
+	i:not(:first-child) {
+		margin-left: $cosy;
+	}
+}
+
+.card {
+	border: 0;
+
+	img {
+		border-radius: 0;
+	}
+
+	.card-title {
+		font-size: 25px;
+	    font-weight: 600;
+	    margin: 0;
+	    display: inline-block;
+	    color: $black;
+
+	    p {
+	    	text-align: right;
+		    line-height: 15px;
+		    font-size: 10px;
+		    color: $grey;
+	    }
+	}
+
+	.card-body {
+		border-radius: 0;
+		border: 1px solid $silver;
+		border-bottom: 2px solid $silver;
+		padding: 12px;
+	}
+}
+
+.save-changes {
+	margin-top: $comfortable;
+}

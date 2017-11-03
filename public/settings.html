@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Settings - Make-It-All</title>
+	<link rel="stylesheet" type="text/css" href="css/plugins/plugins.min.css">
+	<link rel="stylesheet" type="text/css" href="css/pages/settings.min.css">
+	<link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+	<nav class="side-nav-bar">
+		<a class="btn btn-info">
+			Logout
+			<i class="fa fa-sign-out"></i>
+		</a>
+		
+		<div class="side-nav-bar-menu">
+			<ul>
+				<li>
+					<i class="fa fa-line-chart fa-2x"></i>
+					<p>Global Metrics</p>
+				</li>
+				<li>
+					<i class="fa fa-ticket fa-2x"></i>
+					<p>Tickets</p>
+				</li>
+				<li>
+					<i class="fa fa-file-code-o fa-2x"></i>
+					<p>Software</p>
+				</li>
+				<li>
+					<i class="fa fa-laptop fa-2x"></i>
+					<p>Hardware</p>
+				</li>
+				<li>
+					<i class="fa fa-question fa-2x"></i>
+					<p>Help</p>
+				</li>
+				<li>
+					<i class="fa fa-user-circle-o fa-2x"></i>
+					<p>Staff</p>
+				</li>
+				<li>
+					<i class="fa fa-line-chart fa-2x"></i>
+					<p>My Metrics</p>
+				</li>
+
+				<div class="breaker"></div>
+
+				<li class="active">
+					<i class="fa fa-cog fa-2x"></i>
+					<p>Settings</p>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	
+	<nav class="side-nav-bar-nested" id="staff-nav">
+		<h1>
+			<i class="fa fa-cogs"></i>
+			Settings
+		</h1>
+		<p>
+			Options
+		</p>
+		<ul>				
+			<li class="active" data-slug="general">
+				<i class="fa fa-cog"></i>
+				General
+			</li>
+			<li data-slug="security">
+				<i class="fa fa-shield"></i>
+				Security
+			</li>
+		</ul>
+	</nav>
+	
+	<section id="list-view">
+		<nav class="top-nav">
+			<i class="fa fa-cogs"></i>
+			<h4 class="main-content-title">General</h4>
+		</nav>
+		<div class="section" id="general-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-9">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="required">Name</label>
+									<div class="input-group">
+										<span class="input-group-addon"><i class="fa fa-user"></i></span>
+										<input class="form-control" name="staff.name" disabled="disabled" value="Toby Mellor" title="Requires admin permission">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="required">Permissions</label>
+									<div class="html-input" title="Requires admin permission">
+										<i class="fa fa-eye"></i> Read Only 
+										<i class="fa fa-user-secret"></i> Operator
+										<i class="fa fa-line-chart"></i> Analyst
+										<!-- <i class="fa fa-shield"></i> Admin -->
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label>Job Title</label>
+								<input class="form-control" name="staff.job" disabled="disabled" value="Developer" title="Requires admin permission">
+							</div>
+							<div class="col-md-6 form-group">
+								<label>Department</label>
+								<input class="form-control" name="staff.department" disabled="disabled" value="Loughborough" title="Requires admin permission">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label>Phone Number</label>
+								<input class="form-control" name="staff.phone" type="tel" value="0123456789">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<div class="card text-center">
+								<img class="card-img-top" src="images/portraits/portrait-1.jpg" alt="User profile photo">
+								<div class="card-body">
+									<h4 class="card-title" data-slug="name">
+										Bex Howell
+										<p class="card-text" data-slug="job">Designer</p>
+									</h4>
+								</div>
+							</div>
+							<br />
+
+							<label>Change your Photo</label>
+							<label class="custom-file">
+								<input class="custom-file-input" name="staff.photo" type="file">
+								<span class="custom-file-control"></span>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="breaker"></div>
+				<div class="row">
+					<div class="col-md-12">
+						<button class="btn btn-success save-changes">
+							<i class="fa fa-floppy-o"></i> Save Changes
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="section" id="security-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<h4>Change your Email</h4>
+						<br />
+						<div class="form-group">
+							<label class="required">Work Email</label>
+							<input class="form-control" name="staff.email" type="email">
+						</div>
+						<div class="form-group">
+							<label class="required">Confirm Work Email</label>
+							<input class="form-control" name="staff.email" type="email">
+						</div>
+
+						<button class="btn btn-success save-changes">
+							<i class="fa fa-floppy-o"></i> Change Email
+						</button>
+					</div>
+					<div class="col-md-6">
+						<h4>Change your Password</h4>
+						<br />
+						<div class="form-group">
+							<label class="required">Old Password</label>
+							<input class="form-control" name="staff.email" type="password">
+						</div>
+						<div class="form-group">
+							<label class="required">New Password</label>
+							<input class="form-control" name="staff.email" type="password">
+						</div>
+						<div class="form-group">
+							<label class="required">Confirm New Password</label>
+							<input class="form-control" name="staff.email" type="password">
+						</div>
+
+						<button class="btn btn-success save-changes">
+							<i class="fa fa-floppy-o"></i> Change Password
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="js/plugins/plugins.min.js"></script>
+	<script>
+		$('.side-nav-bar-nested ul li').on('click', function() {
+			if (!$(this).hasClass('active')) {
+				var slug = $(this).data('slug');
+
+				$('.section:visible').hide();
+				$('#' + slug + '-section').show();
+
+				$(this).siblings().removeClass('active');
+				$(this).addClass('active');
+
+				$('.top-nav h4').text($(this).text());
+			}
+		});
+
+		$('input[disabled], .html-input').tooltip(); 
+	</script>
+</body>
+</html>
