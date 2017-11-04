@@ -30,7 +30,7 @@ gulp.task('scripts', function() {
         .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest('./public/js/'));
     
-    for (var pagetype of ['tickets', 'staff', 'hardware', 'software', 'global_metrics', 'problem_types', 'settings']) {
+    for (var pagetype of ['tickets', 'staff', 'hardware', 'software', 'metrics', 'problem_types', 'settings', 'login']) {
         gulp.src(['assets/js/pages/' + pagetype + '/**/*.js'])
             .pipe(plumber())
             .pipe(sourcemaps.init())
@@ -49,13 +49,6 @@ gulp.task('scripts', function() {
             .pipe(sourcemaps.write('maps'))
             .pipe(gulp.dest('./public/js/pages/'));
     }
-
-    //Software
-    gulp.src(['assets/js/pages/software/**/*.js'])
-        .pipe(plumber())
-        // .pipe(uglify())
-        .pipe(concat('software.min.js'))
-        .pipe(gulp.dest('./public/js/pages/'));
 });
 
 gulp.task('styles', function() {
@@ -75,7 +68,7 @@ gulp.task('plugins', function() {
 	  // Minify plugins once on first run of gulp
 	  // Separated from watch to speed up recompilation
 	  // Re-run gulp in Terminal after making changes to plugins
-    gulp.src(['assets/js/plugins/jquery.js', 'assets/js/plugins/jquery-ui.js', 'assets/js/plugins/jquery-ui-timepicker-addon.js', 'assets/js/plugins/popper.js', 'assets/js/plugins/bootstrap.js', 'assets/js/plugins/bootstrap-select.js'])
+    gulp.src(['assets/js/plugins/jquery.js', 'assets/js/plugins/jquery-ui.js', 'assets/js/plugins/jquery-ui-timepicker-addon.js', 'assets/js/plugins/popper.js', 'assets/js/plugins/bootstrap.js', 'assets/js/plugins/bootstrap-select.js', 'assets/js/plugins/chart.js'])
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(concat('plugins.min.js'))

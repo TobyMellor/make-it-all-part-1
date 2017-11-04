@@ -9,22 +9,23 @@ $('#StaffNameSearch').change(function(){
 	var index = $(this)[0].selectedIndex;
 	if (index > 0) {
 		$(".collapsible").css("display","block");
-		$("#customers-served").prop('disabled', false);
-		$("#name-text").text("Joe Bloggs");
-		$("#phone-text").text("01234567890");
-		$("#role-text").text("Staff");
+		$(".form-control").css("background-color","#ffffff")
+		$("#name").val("Joe Bloggs");
+		$("#phone").val("01234567890");
+		$("#role").val("Staff");
 		$("#customers-served").val("32");
 		$("#no-of-tickets").val("12");
 		$("#avg-replies-per-ticket").val("5");
 	} else {
 		$(".collapsible").css("display","none");
-		$("#customers-served").prop('disabled', true);
+		$(".form-control").css("background-color","#e9ecef")
+		$("#name").val("");
+		$("#phone").val("");
+		$("#role").val("");
 		$("#customers-served").val("");
 		$("#no-of-tickets").val("");
 		$("#avg-replies-per-ticket").val("");
-		$("#name-text").text("");
-		$("#phone-text").text("");
-		$("#role-text").text("");
+
 	}
 });
 
@@ -36,7 +37,7 @@ class MetricsPage extends DynamicPage {
 	}
 
 	updateTopNavBar() {
-		this.updateTopNavBar('Global Metrics of Staff');
+		this.updateTopNavBar('Metrics of Staff');
 	}
 
 	createLineGraph() {
