@@ -6,10 +6,11 @@
  */
 
 class ProblemTypePage extends DynamicPage {
-	constructor(allowProblemTypeCreation = false) {
+	constructor(allowProblemTypeCreation = false, isPage = false) {
 		super();
 
 		this.allowProblemTypeCreation = allowProblemTypeCreation;
+		this.isPage                   = isPage;
 	}
 
 	loadSubProblemTypes($typeColumns, $li = null, problemTypeId = null) {
@@ -98,7 +99,9 @@ class ProblemTypePage extends DynamicPage {
 		$splashScreen.hide();
 		$problemTypeView.fadeIn();
 
-		$navBar.text(this.getProblemTypeBreadcrum(problemType));
+		if (this.isPage) {
+			$navBar.text(this.getProblemTypeBreadcrum(problemType));
+		}
 		
 		var problemTypeChain = makeItAll.problemTypeManager.getProblemTypeChain(problemType),
 			specialists      = makeItAll.staffManager.getSpecialists(problemType.id),
