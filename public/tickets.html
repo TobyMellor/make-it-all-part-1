@@ -279,11 +279,7 @@
 															<div class="form-group">
 																<label class="required">Assigned To</label>
 																<br />
-																<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="tickets[1][assigned_to]">
-																	<option value="0">Example Operator 1</option>
-																	<option value="1">Example Operator 2</option>
-																	<option value="2">Example Operator 3</option>
-																</select>
+																<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="tickets[1][assigned_to]"></select>
 															</div>
 														</div>
 													</div>
@@ -364,11 +360,7 @@
 											<div class="form-group">
 												<label class="required">Caller</label>
 												<br />
-												<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="caller">
-													<option value="0">Example Caller 1</option>
-													<option value="1">Example Caller 2</option>
-													<option value="2">Example Caller 3</option>
-												</select>
+												<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="caller"></select>
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -1259,7 +1251,7 @@
 				ticketPage.search(query);
 			});
 
-			
+
 			$(document).on('click', '.create-problem-type', function() {
 				var $parentProblemType  = $(this).closest('.type-column').prev().find('.active'),
 					parentProblemTypeId = parseInt($parentProblemType.data('problemTypeId'));
