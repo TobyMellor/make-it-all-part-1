@@ -902,7 +902,7 @@
 		</script>
 		<script type="text/javascript">
 			var ticketPage      = new TicketPage(),
-				problemTypePage = new ProblemTypePage();
+				problemTypePage = new ProblemTypePage(true);
 
 			$('.side-nav-bar-nested ul li[data-slug]').on('click', function() {
 				if (ticketPage.currentlyShowing !== this.dataset.slug) {
@@ -1257,6 +1257,18 @@
 				var query = $(this).val();
 
 				ticketPage.search(query);
+			});
+
+			
+			$(document).on('click', '.create-problem-type', function() {
+				var $parentProblemType  = $(this).closest('.type-column').prev().find('.active'),
+					parentProblemTypeId = parseInt($parentProblemType.data('problemTypeId'));
+
+				if ($parentProblemType.length === 0) {
+					parentProblemTypeId = null;
+				}
+
+				problemTypePage.createProblemType($(this).parent().siblings('input').val(), parentProblemTypeId);
 			});
 		</script>
 	</body>
