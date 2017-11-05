@@ -96,8 +96,8 @@ class ProblemTypePage extends DynamicPage {
 			$noSpecialistsData = $singleView.find('#no-specialists-data'),
 			$noTicketsData     = $singleView.find('#no-tickets-data');
 
-		$splashScreen.hide();
-		$problemTypeView.fadeIn();
+		$splashScreen.addClass('block-hidden');
+		$problemTypeView.removeClass('block-hidden');
 
 		if (this.isPage) {
 			$navBar.text(this.getProblemTypeBreadcrum(problemType));
