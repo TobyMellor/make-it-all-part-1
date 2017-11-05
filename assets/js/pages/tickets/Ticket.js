@@ -49,7 +49,7 @@ class Ticket {
 	}
 
 	get caller() {
-		return makeItAll.staffManager.getStaffMember(this._caller);
+		return makeItAll.staffManager.getEmployee(this._caller);
 	}
 
 	set caller(caller) {
@@ -57,7 +57,7 @@ class Ticket {
 	}
 
 	get assigned_to() {
-		return makeItAll.staffManager.getStaffMember(this._assigned_to);
+		return makeItAll.staffManager.getEmployee(this._assigned_to);
 	}
 
 	set assigned_to(assignedTo) {

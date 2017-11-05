@@ -20,7 +20,7 @@ class Call {
 	}
 
 	get caller() {
-		return makeItAll.staffManager.getStaffMember(this._caller);
+		return makeItAll.staffManager.getEmployee(this._caller);
 	}
 
 	set caller(caller) {

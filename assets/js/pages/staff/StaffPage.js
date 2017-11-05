@@ -35,27 +35,7 @@ class StaffPage extends DynamicPage {
 			switch (el.dataset.customslug) {
 			
 				case "access":
-					el.innerHTML = "";
-					let icons = {read: "eye", operator: "user-secret", analyst: "line-chart", admin: "shield"};
-					
-					for (let permission of ["read", "operator", "analyst", "admin"]) {
-						
-						if (this.employee.access[permission]) {
-							
-							let elIcon = document.createElement("i");
-							elIcon.classList.add("fa", "fa-" + icons[permission]);
-							
-							let elText = document.createElement("span");
-							elText.textContent = permission.charAt(0).toUpperCase() + permission.slice(1);
-							
-							let elPermission = document.createElement("span");
-							elPermission.appendChild(elIcon);
-							elPermission.appendChild(elText);
-							
-							el.appendChild(elPermission);
-						}
-						
-					}
+					this.showPermissions(el, this.employee);
 					
 					break;
 				default:
@@ -67,6 +47,30 @@ class StaffPage extends DynamicPage {
 		staffProblemTypePage.loadSpecialistProblemTypes($('.type-columns'));
 		
 		super.showTableRowDetails(id);
+	}
+
+	showPermissions(el, employee) {
+		el.innerHTML = "";
+		let icons = {read: "eye", operator: "user-secret", analyst: "line-chart", admin: "shield"};
+		
+		for (let permission of ["read", "operator", "analyst", "admin"]) {
+			
+			if (employee.access[permission]) {
+				
+				let elIcon = document.createElement("i");
+				elIcon.classList.add("fa", "fa-" + icons[permission]);
+				
+				let elText = document.createElement("span");
+				elText.textContent = permission.charAt(0).toUpperCase() + permission.slice(1);
+				
+				let elPermission = document.createElement("span");
+				elPermission.appendChild(elIcon);
+				elPermission.appendChild(elText);
+				
+				el.appendChild(elPermission);
+			}
+			
+		}
 	}
 
 	search(query) {

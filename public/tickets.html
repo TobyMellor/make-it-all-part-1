@@ -1018,7 +1018,7 @@
 
 				problemTypePage.loadSubProblemTypes($card.find('.type-columns'));
 
-				ticketPage.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
+				ticketPage.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staff);
 
 				$card.find('.view-accordion').click();
 				$('.selectpicker').selectpicker('refresh');
@@ -1178,11 +1178,11 @@
 			});
 
 			$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
-				ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller...', makeItAll.staffManager.staffMembers);
+				ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller...', makeItAll.staffManager.staff);
 			});
 
 			$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
-				ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
+				ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staff);
 
 				$(this).find('.staff-information').text('No staff member has been selected yet!');
 
@@ -1193,7 +1193,7 @@
 				var $editTicketModal = $('#edit-ticket-modal');
 
 				ticketPage.populateTicketModal($editTicketModal, ticketPage.currentTicket);
-				ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers, ticketPage.currentTicket._assigned_to);
+				ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staff, ticketPage.currentTicket._assigned_to);
 
 				problemTypePage.loadProblemType($editTicketModal.find('.type-columns'), ticketPage.currentTicket._problem_type);
 			});
@@ -1212,15 +1212,18 @@
 
 			$('#new-ticket-modal select[name="caller"], #follow-up-call-modal select[name="caller"]').on('change', function() {
 				var $staffInformation = $(this).closest('.modal').find('.staff-information'),
-					staffMember       = makeItAll.staffManager.getStaffMember($(this).val());
+					employee          = makeItAll.staffManager.getEmployee(parseInt($(this).val()));
 
 				$staffInformation.html(
-					'<p>ID Number: <strong>' + staffMember.id + '</strong></p>' +
-					'<p>Name: <strong>' + staffMember.name + '</strong></p>' +
-					'<p>Job Title: <strong>' + staffMember.job_title + '</strong></p>' +
-					'<p>Department: <strong>' + staffMember.department + '</strong></p>' +
-					'<p>Telephone Number: <strong>' + staffMember.telephone_number + '</strong></p>'
+					'<p>ID Number: <strong>' + employee.id + '</strong></p>' +
+					'<p>Name: <strong>' + employee.name + '</strong></p>' +
+					'<p>Job: <strong>' + employee.job + '</strong></p>' +
+					'<p>Department: <strong>' + employee.department + '</strong></p>' +
+					'<p>Phone: <strong>' + employee.phone + '</strong></p>' +
+					'<p><strong>' + employee.phone + '</strong></p>'
 				);
+
+				staffPage.showPermissions($staffInformation.find('p:last-child strong').get(0), employee);
 			});
 
 			$('.search-field input').on('keyup', function() {
