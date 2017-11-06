@@ -107,8 +107,8 @@ nav ul {
 
 			&.active {
 				background-color: $dark-blue-hover;
-				border-left: $thin $blue solid;
-				padding-right: $thin; // Offset $thin border indentation
+				border-left: 3px $blue solid;
+				padding-right: 3px; // Offset $thin border indentation
 
 				.fa {
 					color: $blue;
