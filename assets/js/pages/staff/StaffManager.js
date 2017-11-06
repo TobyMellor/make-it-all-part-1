@@ -28,6 +28,10 @@ class StaffManager extends Manager {
 	getEmployee(id) {
 		return this.staff.find(e => e.id === id);
 	}
+
+	getEmployees(ids) {
+		return this.findAllWhere(this.staff, employee => ids.indexOf(employee.id) > -1);
+	}
 	
 	updateEmployee(employee) {
 		let oldEmployee = this.staff.find(e => e.id === employee.id);
@@ -51,16 +55,6 @@ class StaffManager extends Manager {
 
 	search(query, properties) {
 		return super.search(this.staff, query, properties);
-	}
-	
-	// Deprecated
-	get staffMembers() {
-		console.warn("Use of StaffManager property staffMembers is deprecated, use staff");
-		return this.staff;
-	}
-	getStaffMember(id) {
-		console.warn("Use of StaffManager method getStaffMember(id) is deprecated, use getEmployee(id)");
-		return this.getEmployee(id);
 	}
 }
 

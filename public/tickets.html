@@ -275,11 +275,7 @@
 															<div class="form-group">
 																<label class="required">Assigned To</label>
 																<br />
-																<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="tickets[1][assigned_to]">
-																	<option value="0">Example Operator 1</option>
-																	<option value="1">Example Operator 2</option>
-																	<option value="2">Example Operator 3</option>
-																</select>
+																<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="tickets[1][assigned_to]"></select>
 															</div>
 														</div>
 													</div>
@@ -360,11 +356,7 @@
 											<div class="form-group">
 												<label class="required">Caller</label>
 												<br />
-												<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="caller">
-													<option value="0">Example Caller 1</option>
-													<option value="1">Example Caller 2</option>
-													<option value="2">Example Caller 3</option>
-												</select>
+												<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="caller"></select>
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -593,72 +585,99 @@
 			</div>
 		</div>
 
-		<div class="modal fade" id="new-staff-modal" tabindex="-1" role="dialog" aria-labelledby="new-staff-modal" aria-hidden="true">
+		<div class="modal fade" id="new-staff-modal" tabindex="-1" role="dialog" aria-labelledby="new-staff-modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">Create a new Staff Member</h5>
+						<h5 class="modal-title">Create a new Employee</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
 						<form>
-							<input type="text" class="no-clear-on-show" name="event_target" hidden />
+							<input type="text" class="no-clear-on-show" name="event_target" hidden>
 							<div class="row">
 								<div class="col-md-8">
 									<div class="form-group">
-										<label class="required">Staff Name</label>
-										<div class="row">
-											<div class="col-md-6">
-												<input class="form-control no-clear-on-show" name="staff[first_name]" placeholder="First Name" />
-											</div>
-											<div class="col-md-6">
-												<input class="form-control no-clear-on-show" name="staff[last_name]" placeholder="Last Name" />
-											</div>
+										<label class="required">Employee Name</label>
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-user"></i></span>
+											<input class="form-control" name="staff.name">
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="required">Staff Email</label>
-										<input class="form-control" name="staff[email]" />
+										<label class="required">Work Email</label>
+										<input type="email" class="form-control" name="staff.email">
+									</div>
+									<div class="row">
+										<div class="col-md-6 form-group">
+											<label>Job Title</label>
+											<input class="form-control" name="staff.job">
+										</div>
+										<div class="col-md-6 form-group">
+											<label>Department</label>
+											<input class="form-control" name="staff.department">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6 form-group">
+											<label>Phone Number</label>
+											<input type="tel" class="form-control" name="staff.phone">
+										</div>
+										<div class="col-md-6 form-group">
+											<label>Staff Photo</label>
+											<label class="custom-file">
+												<input type="file" class="custom-file-input" name="staff.photo">
+												<span class="custom-file-control"></span>
+											</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="required">Specialism</label>
+										<input name="staff[specialism]" hidden>
+										<span class="subtle pull-right"></span>
+										<div class="problem-type-picker">
+											<div class="type-columns"></div>
+										</div>
 									</div>
 								</div>
 								<div class="col-md-4">
-									<label class="required">Staff Permissions</label>
+									<label>Staff Permissions</label>
 									<div class="staff-permissions">
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="staff[permissions][ticket_read_only]" checked="checked">
+											<input type="checkbox" class="custom-control-input" name="staff.access.read" checked>
 											<span class="custom-control-indicator"></span>
-											<span class="custom-control-description">Ticket Read Only</span>
+											<span class="custom-control-description"><i class="fa fa-eye"></i> Ticket Read Only</span>
 											<span class="help-text">
 												Can VIEW <a href="/tickets" target="_blank">tickets</a> and RECIEVE email status updates.
 											</span>
 										</label>
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="staff[permissions][helpdesk_operator]">
+											<input type="checkbox" class="custom-control-input" name="staff.access.operator">
 											<span class="custom-control-indicator"></span>
-											<span class="custom-control-description">Helpdesk Operator</span>
+											<span class="custom-control-description"><i class="fa fa-user-secret"></i> Helpdesk Operator</span>
 											<span class="help-text">
-												All permissions from 'Ticket Read Access'.<br />
-												They can also CREATE, UPDATE and DELETE <a href="/tickets" target="_blank">tickets</a> and VIEW <a href="/staff" target="_blank">staff</a>
+												CREATE, UPDATE and DELETE <a href="/tickets" target="_blank">tickets</a> and VIEW <a href="/staff" target="_blank">staff</a><br>
+												Implies Read access to tickets.
 											</span>
 										</label>
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="staff[permissions][analyst]">
+											<input type="checkbox" class="custom-control-input" name="staff.access.analyst">
 											<span class="custom-control-indicator"></span>
-											<span class="custom-control-description">Analyst</span>
+											<span class="custom-control-description"><i class="fa fa-line-chart"></i> Analyst</span>
 											<span class="help-text">
-												All permissions from 'Ticket Read Access' and 'Helpdesk Operator'.<br />
-												They can also VIEW <a href="/metrics" target="_blank">metrics</a>.
+												VIEW <a href="/metrics" target="_blank">metrics</a><br>
+												Implies Read access to tickets.
 											</span>
 										</label>
 										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" name="staff[permissions][super_admin]">
+											<input type="checkbox" class="custom-control-input" name="staff.access.admin">
 											<span class="custom-control-indicator"></span>
-											<span class="custom-control-description">Super Admin</span>
+											<span class="custom-control-description"><i class="fa fa-shield"></i> Administrator</span>
 											<span class="help-text">
-												All permissions from 'Ticket Read Access', 'Helpdesk Operator' and 'Analyst'<br />
-												They can also CREATE, UPDATE and DELETE <a href="/staff">staff</a>.
+												Implies Operator and Analyst access<br>
+												Also CREATE, UPDATE and DELETE <a href="/staff">staff</a>.
 											</span>
 										</label>
 									</div>
@@ -667,7 +686,7 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 						<button type="button" class="btn btn-success" id="create-new-staff">Create Staff Member</button>
 					</div>
 				</div>
@@ -871,7 +890,7 @@
 		</script>
 		<script type="text/javascript">
 			var ticketPage      = new TicketPage(),
-				problemTypePage = new ProblemTypePage();
+				problemTypePage = new ProblemTypePage(true);
 
 			$('.side-nav-bar-nested ul li[data-slug]').on('click', function() {
 				if (ticketPage.currentlyShowing !== this.dataset.slug) {
@@ -1014,7 +1033,7 @@
 
 				problemTypePage.loadSubProblemTypes($card.find('.type-columns'));
 
-				ticketPage.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
+				ticketPage.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staff);
 
 				$card.find('.view-accordion').click();
 				$('.selectpicker').selectpicker('refresh');
@@ -1174,11 +1193,11 @@
 			});
 
 			$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
-				ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller...', makeItAll.staffManager.staffMembers);
+				ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller...', makeItAll.staffManager.staff);
 			});
 
 			$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
-				ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers);
+				ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staff);
 
 				$(this).find('.staff-information').text('No staff member has been selected yet!');
 
@@ -1189,7 +1208,7 @@
 				var $editTicketModal = $('#edit-ticket-modal');
 
 				ticketPage.populateTicketModal($editTicketModal, ticketPage.currentTicket);
-				ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staffMembers, ticketPage.currentTicket._assigned_to);
+				ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staff, ticketPage.currentTicket._assigned_to);
 
 				problemTypePage.loadProblemType($editTicketModal.find('.type-columns'), ticketPage.currentTicket._problem_type);
 			});
@@ -1208,21 +1227,36 @@
 
 			$('#new-ticket-modal select[name="caller"], #follow-up-call-modal select[name="caller"]').on('change', function() {
 				var $staffInformation = $(this).closest('.modal').find('.staff-information'),
-					staffMember       = makeItAll.staffManager.getStaffMember($(this).val());
+					employee          = makeItAll.staffManager.getEmployee(parseInt($(this).val()));
 
 				$staffInformation.html(
-					'<p>ID Number: <strong>' + staffMember.id + '</strong></p>' +
-					'<p>Name: <strong>' + staffMember.name + '</strong></p>' +
-					'<p>Job Title: <strong>' + staffMember.job_title + '</strong></p>' +
-					'<p>Department: <strong>' + staffMember.department + '</strong></p>' +
-					'<p>Telephone Number: <strong>' + staffMember.telephone_number + '</strong></p>'
+					'<p>ID Number: <strong>' + employee.id + '</strong></p>' +
+					'<p>Name: <strong>' + employee.name + '</strong></p>' +
+					'<p>Job: <strong>' + employee.job + '</strong></p>' +
+					'<p>Department: <strong>' + employee.department + '</strong></p>' +
+					'<p>Phone: <strong>' + employee.phone + '</strong></p>' +
+					'<p><strong>' + employee.phone + '</strong></p>'
 				);
+
+				staffPage.showPermissions($staffInformation.find('p:last-child strong').get(0), employee);
 			});
 
 			$('.search-field input').on('keyup', function() {
 				var query = $(this).val();
 
 				ticketPage.search(query);
+			});
+
+
+			$(document).on('click', '.create-problem-type', function() {
+				var $parentProblemType  = $(this).closest('.type-column').prev().find('.active'),
+					parentProblemTypeId = parseInt($parentProblemType.data('problemTypeId'));
+
+				if ($parentProblemType.length === 0) {
+					parentProblemTypeId = null;
+				}
+
+				problemTypePage.createProblemType($(this).parent().siblings('input').val(), parentProblemTypeId);
 			});
 		</script>
 	</body>

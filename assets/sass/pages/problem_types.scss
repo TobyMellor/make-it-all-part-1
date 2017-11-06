@@ -3,20 +3,6 @@
 .problem-type-picker {
 	height: 100%;
 	border: none;
-
-	.input-group {
-		padding: $cosy;
-		z-index: 0;
-
-		input {
-			padding: $thin $cosy;
-		}
-
-		button {
-			width: 30px;
-			height: 30px;
-		}
-	}
 }
 
 #list-view {
@@ -30,13 +16,8 @@
 #single-view {
 	flex: 1;
 
-	.splash-screen {
-		height: 75%;
-	}
-
 	#problem-type-view {
 		padding: $comfortable;
-		display: none;
 	}
 }
 
