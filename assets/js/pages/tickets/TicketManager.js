@@ -11,6 +11,168 @@
 class TicketManager extends Manager {
 	constructor(calls, filters, tickets, events) {
 		super();
+		
+		this.calls = [
+			{
+				id: 0,
+				date_of_call: '21/04/2017 12:32',
+				caller: 0,
+				tickets: [0, 1]
+			},
+			{
+				id: 1,
+				date_of_call: '21/04/2017 12:32',
+				caller: 0,
+				tickets: [2]
+			},
+			{
+				id: 2,
+				date_of_call: '21/04/2017 12:32',
+				caller: 0,
+				tickets: [3]
+			},
+			{
+				id: 3,
+				date_of_call: '21/04/2017 12:32',
+				caller: 0,
+				tickets: [4]
+			},
+			{
+				id: 4,
+				date_of_call: '21/04/2017 12:32',
+				caller: 0,
+				tickets: [4]
+			},
+		];
+		this.filters = [
+			{
+				id: 0,
+				slug: 'new',
+				name: 'New',
+				tickets: [0, 1, 2]
+			},
+			{
+				id: 1,
+				slug: 'pending_awaiting_staff',
+				name: 'Pending - Awaiting Staff',
+				tickets: []
+			},
+			{
+				id: 2,
+				slug: 'pending_in_progress',
+				name: 'Pending - In Progress',
+				tickets: [3]
+			},
+			{
+				id: 3,
+				slug: 'resolved',
+				name: 'Resolved',
+				tickets: [4]
+			}
+		];
+		this.tickets = [
+			{
+				id: 0,
+				calls: [0],
+				filter: 'new',
+				title: 'Printer Queue not working',
+				description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
+				assigned_to: 0,
+				devices: [],
+				created_at: 'Yesterday',
+				updated_at: '1 hour ago',
+				events: [0, 1, 2],
+				problem_type: 5
+			},
+			{
+				id: 1,
+				calls: [0],
+				filter: 'new',
+				title: 'Coffee machine needs refilling',
+				description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
+				assigned_to: 1,
+				devices: [],
+				created_at: '4 days ago',
+				updated_at: '4 days ago',
+				events: [3],
+				problem_type: 1
+			},
+			{
+				id: 2,
+				calls: [1],
+				filter: 'new',
+				title: 'Squeeky chair',
+				description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
+				assigned_to: 0,
+				devices: [],
+				created_at: '1 day ago',
+				updated_at: 'Just now',
+				events: [],
+				problem_type: 3
+			},
+			{
+				id: 3,
+				calls: [2],
+				filter: 'pending_in_progress',
+				title: 'Spilt water on macbook',
+				description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
+				assigned_to: 1,
+				devices: [],
+				created_at: '23 hours ago',
+				updated_at: '3 minutes ago',
+				events: [],
+				problem_type: 5
+			},
+			{
+				id: 4,
+				calls: [3, 4],
+				filter: 'resolved',
+				title: 'Computer wont turn on',
+				description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
+				assigned_to: 0,
+				devices: [],
+				created_at: '4 hours ago',
+				updated_at: '4 hours ago',
+				events: [],
+				problem_type: 4
+			}
+		];
+		this.events = [
+			{
+				id: 0,
+				ticket_id: 0,
+				author: 0,
+				type: 'comment',
+				content: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
+				created_at: '1 hour ago'
+			},
+			{
+				id: 1,
+				ticket_id: 0,
+				author: 0,
+				type: 'event',
+				content: 'Pending - Awaiting Review',
+				created_at: '1 hour ago'
+			},
+			{
+				id: 2,
+				ticket_id: 0,
+				author: 1,
+				type: 'comment',
+				content: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
+				created_at: 'Just now'
+			},
+			{
+				id: 3,
+				ticket_id: 1,
+				author: 0,
+				type: 'comment',
+				content: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
+				created_at: '1 hour ago'
+			}
+		];
+		
+		return;
 
 		this.calls   = [];
 		this.filters = [];
