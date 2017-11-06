@@ -1200,7 +1200,8 @@
 				ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staff);
 
 				$(this).find('.staff-information').text('No staff member has been selected yet!');
-
+				$(this).find('#accordion .card .type-columns').empty();
+				
 				problemTypePage.loadSubProblemTypes($(this).find('.type-columns'));
 			});
 
