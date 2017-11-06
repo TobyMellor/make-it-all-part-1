@@ -1,5 +1,10 @@
+@import "../main";
+
 .listbox {
-	height:85vh;
+	height: 85vh;
+	@media (max-width: $small) {
+		height: 30vh;
+	}
 }
 
 .hardware-info {
