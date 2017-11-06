@@ -17,35 +17,48 @@
 		<div class="side-nav-bar-menu">
 			<ul>
 				<li>
-					<i class="fa fa-ticket fa-2x"></i>
-					<p>Tickets</p>
+					<a href="metrics.html">
+						<i class="fa fa-line-chart fa-2x"></i>
+						<p>Metrics</p>
+					</a>
 				</li>
-				<li>
-					<i class="fa fa-file-code-o fa-2x"></i>
-					<p>Software</p>
-				</li>
-				<li>
-					<i class="fa fa-laptop fa-2x"></i>
-					<p>Hardware</p>
-				</li>
-				<li>
-					<i class="fa fa-question fa-2x"></i>
-					<p>Help</p>
-				</li>
-				<li>
-					<i class="fa fa-user-circle-o fa-2x"></i>
-					<p>Staff</p>
-				</li>
-				<li>
-					<i class="fa fa-line-chart fa-2x"></i>
-					<p>Metrics</p>
-				</li>
-
-				<div class="breaker"></div>
-
 				<li class="active">
-					<i class="fa fa-cog fa-2x"></i>
-					<p>Settings</p>
+					<a href="tickets.html">
+						<i class="fa fa-ticket fa-2x"></i>
+						<p>Tickets</p>
+					</a>
+				</li>
+				<li>
+					<a href="software.html">
+						<i class="fa fa-file-code-o fa-2x"></i>
+						<p>Software</p>
+					</a>
+				</li>
+				<li>
+					<a href="hardware.html">
+						<i class="fa fa-laptop fa-2x"></i>
+						<p>Hardware</p>
+					</a>
+				</li>
+				<li>
+					<a href="problem_types.html">
+						<i class="fa fa-question fa-2x"></i>
+						<p>Problem Types</p>
+					</a>
+				</li>
+				<li>
+					<a href="staff.html">
+						<i class="fa fa-user-circle-o fa-2x"></i>
+						<p>Staff</p>
+					</a>
+				</li>
+
+				<li>
+					<div class="breaker"></div>
+					<a href="settings.html">
+						<i class="fa fa-cog fa-2x"></i>
+						<p>Settings</p>
+					</a>
 				</li>
 			</ul>
 		</div>
@@ -56,9 +69,7 @@
 			<i class="fa fa-cogs"></i>
 			Settings
 		</h1>
-		<p>
-			Options
-		</p>
+		<p>Options</p>
 		<ul>				
 			<li class="active" data-slug="general">
 				<i class="fa fa-cog"></i>
@@ -67,6 +78,12 @@
 			<li data-slug="security">
 				<i class="fa fa-shield"></i>
 				Security
+			</li>
+			<li>
+				<button class="btn btn-info">
+					Logout
+					<i class="fa fa-sign-out"></i>
+				</button>
 			</li>
 		</ul>
 	</nav>
@@ -150,7 +167,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="section" id="security-section">
+		<div class="section block-hidden" id="security-section">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6">
@@ -200,8 +217,8 @@
 			if (!$(this).hasClass('active')) {
 				var slug = $(this).data('slug');
 
-				$('.section:visible').hide();
-				$('#' + slug + '-section').show();
+				$('.section:visible').addClass("block-hidden");
+				$('#' + slug + '-section').removeClass("block-hidden");
 
 				$(this).siblings().removeClass('active');
 				$(this).addClass('active');
