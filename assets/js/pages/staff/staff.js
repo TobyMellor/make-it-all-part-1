@@ -50,7 +50,7 @@ $(() => {
 	});
 	
 	$("#new-staff-modal").on("show.bs.modal", e => {
-		let isEditing = e.relatedTarget.dataset.action === "edit";
+		let isEditing = e.relatedTarget && e.relatedTarget.dataset.action === "edit";
 		$(e.target).find(".modal-title").text(isEditing ? "Edit Employee" : "Create a new Employee");
 		$("#create-new-staff").text(isEditing ? "Save Changes" : "Create a new Employee")[0].dataset.action = isEditing ? "save" : "create";
 		if (isEditing) {

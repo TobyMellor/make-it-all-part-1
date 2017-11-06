@@ -12,7 +12,7 @@ class TicketManager extends Manager {
 	constructor(calls, filters, tickets, events) {
 		super();
 		
-		this.calls = [
+		var calls = [
 			{
 				id: 0,
 				date_of_call: '21/04/2017 12:32',
@@ -44,7 +44,7 @@ class TicketManager extends Manager {
 				tickets: [4]
 			},
 		];
-		this.filters = [
+		var filters = [
 			{
 				id: 0,
 				slug: 'new',
@@ -70,7 +70,7 @@ class TicketManager extends Manager {
 				tickets: [4]
 			}
 		];
-		this.tickets = [
+		var tickets = [
 			{
 				id: 0,
 				calls: [0],
@@ -137,7 +137,7 @@ class TicketManager extends Manager {
 				problem_type: 4
 			}
 		];
-		this.events = [
+		var events = [
 			{
 				id: 0,
 				ticket_id: 0,
@@ -172,8 +172,6 @@ class TicketManager extends Manager {
 			}
 		];
 		
-		return;
-
 		this.calls   = [];
 		this.filters = [];
 		this.tickets = [];
