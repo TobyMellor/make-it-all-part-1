@@ -275,7 +275,7 @@
 															<div class="form-group">
 																<label class="required">Assigned To</label>
 																<br />
-																<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="tickets[1][assigned_to]"></select>
+																<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators..." name="tickets[1][assigned_to]"></select>
 															</div>
 														</div>
 													</div>
@@ -486,11 +486,7 @@
 											<div class="form-group">
 												<label class="required">Assigned To</label>
 												<br />
-												<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="assigned_to">
-													<option value="0">Example Operator 1</option>
-													<option value="1">Example Operator 2</option>
-													<option value="2">Example Operator 3</option>
-												</select>
+												<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators..." name="assigned_to"></select>
 											</div>
 										</div>
 									</div>
@@ -987,7 +983,7 @@
 										'<div class="form-group">' +
 											'<label class="required">Assigned To</label>' +
 											'<br />' +
-											'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="tickets[' + cardId + '][assigned_to]"></select>' +
+											'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators..." name="tickets[' + cardId + '][assigned_to]"></select>' +
 										'</div>' +
 									'</div>' +
 								'</div>' +
@@ -1033,7 +1029,7 @@
 
 				problemTypePage.loadSubProblemTypes($card.find('.type-columns'));
 
-				ticketPage.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose a staff member...', makeItAll.staffManager.staff);
+				ticketPage.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose an operator...', makeItAll.staffManager.getEmployeesWithPermission('operator', true));
 
 				$card.find('.view-accordion').click();
 				$('.selectpicker').selectpicker('refresh');
@@ -1197,11 +1193,11 @@
 			});
 
 			$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
-				ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staff);
+				ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose an operator...', makeItAll.staffManager.getEmployeesWithPermission('operator', true));
 
 				$(this).find('.staff-information').text('No staff member has been selected yet!');
 				$(this).find('#accordion .card .type-columns').empty();
-				
+
 				problemTypePage.loadSubProblemTypes($(this).find('.type-columns'));
 			});
 
@@ -1209,7 +1205,7 @@
 				var $editTicketModal = $('#edit-ticket-modal');
 
 				ticketPage.populateTicketModal($editTicketModal, ticketPage.currentTicket);
-				ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose a staff member...', makeItAll.staffManager.staff, ticketPage.currentTicket._assigned_to);
+				ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose an operator...', makeItAll.staffManager.getEmployeesWithPermission('operator', true), ticketPage.currentTicket._assigned_to);
 
 				problemTypePage.loadProblemType($editTicketModal.find('.type-columns'), ticketPage.currentTicket._problem_type);
 			});

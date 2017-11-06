@@ -29,6 +29,10 @@ class StaffManager extends Manager {
 		return this.staff.find(e => e.id === id);
 	}
 
+	getEmployeesWithPermission(permission, value) {
+		return this.findAllWhere(this.staff, employee => employee.access[permission] === value);
+	}
+
 	getEmployees(ids) {
 		return this.findAllWhere(this.staff, employee => ids.indexOf(employee.id) > -1);
 	}
