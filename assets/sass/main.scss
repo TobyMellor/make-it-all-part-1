@@ -96,8 +96,8 @@ nav ul {
 
 			&:hover:not(:last-child) {
 				background-color: $dark-blue-hover;
-				border-left: $thin $blue-hover solid;
-				padding-right: $thin; // Offset $thin border indentation
+				border-left: 3px $blue-hover solid;
+				padding-right: 3px; // Offset $thin border indentation
 			}
 
 			.fa {
@@ -119,7 +119,8 @@ nav ul {
 				}
 
 				&:hover {
-					border-left: $thin $blue solid;
+					border-left: 3px $blue solid;
+					padding-right: 3px; // Offset $thin border indentation
 
 					.fa {
 						color: $blue;
