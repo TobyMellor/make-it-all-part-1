@@ -14,16 +14,19 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/TobyMellorTeam/make-it-all#readme",
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
     "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-babel-minify": "^0.2.0",
+    "gulp-cli": "^1.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-minify-css": "^1.2.4",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.0",
     "path": "^0.12.7"
-  },
-  "dependencies": {
-    "gulp-cli": "^1.4.0"
   }
 }
