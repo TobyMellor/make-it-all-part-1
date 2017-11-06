@@ -68,7 +68,7 @@ gulp.task('plugins', function() {
 	  // Minify plugins once on first run of gulp
 	  // Separated from watch to speed up recompilation
 	  // Re-run gulp in Terminal after making changes to plugins
-    gulp.src(['assets/js/plugins/jquery.js', 'assets/js/plugins/jquery-ui.js', 'assets/js/plugins/jquery-ui-timepicker-addon.js', 'assets/js/plugins/popper.js', 'assets/js/plugins/bootstrap.js', 'assets/js/plugins/bootstrap-select.js'])
+    gulp.src(['assets/js/plugins/jquery.js', 'assets/js/plugins/jquery-ui.js', 'assets/js/plugins/jquery-ui-timepicker-addon.js', 'assets/js/plugins/popper.js', 'assets/js/plugins/bootstrap.js', 'assets/js/plugins/bootstrap-select.js', 'assets/js/plugins/chart.js'])
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(concat('plugins.min.js'))

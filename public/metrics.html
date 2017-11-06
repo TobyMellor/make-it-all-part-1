@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Tickets - Make-It-All</title>
+	<link rel="stylesheet" type="text/css" href="css/plugins/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/plugins/bootstrap-select.min.css">
+	<link rel="stylesheet" type="text/css" href="css/plugins/jquery-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="css/plugins/jquery-ui-timepicker-addon.min.css">
+	<link rel="stylesheet" type="text/css" href="css/main.min.css">
+	<link rel="stylesheet" type="text/css" href="css/pages/metrics.min.css">
+	<link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
+</head>
+
+<body>
+	<nav class="side-nav-bar">
+		<a class="btn btn-info">
+			Logout
+			<i class="fa fa-sign-out"></i>
+		</a>
+		<div class="side-nav-bar-menu">
+			<ul>
+				<li>
+					<i class="fa fa-ticket fa-2x"></i>
+					<p>Tickets</p>
+				</li>
+				<li>
+					<i class="fa fa-file-code-o fa-2x"></i>
+					<p>Software</p>
+				</li>
+				<li>
+					<i class="fa fa-laptop fa-2x"></i>
+					<p>Hardware</p>
+				</li>
+				<li>
+					<i class="fa fa-question fa-2x"></i>
+					<p>Help</p>
+				</li>
+				<li>
+					<i class="fa fa-user-circle-o fa-2x"></i>
+					<p>Staff</p>
+				</li>
+				<li>
+					<i class="fa fa-line-chart fa-2x"></i>
+					<p>Metrics</p>
+				</li>
+				<li>
+					<div class="breaker"></div>
+					<i class="fa fa-cog fa-2x"></i>
+					<p>Settings</p>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<section>
+		<nav class="top-nav">
+			<i class="fa fa-line-chart"></i>
+			<h4 class="main-content-title">Metrics of Staff</h4>
+		</nav>
+		<div class="main-content">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<select class="selectpicker" style="z-index:100!important" data-live-search="true" id="StaffNameSearch" name="StaffNameSearch">
+									<option>-Search-</option>
+									<option>Joe Bloggs</option>
+									<option>Richard Branson</option>
+									<option>Steve Jobs</option>
+									<option>Bill Gates</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label> Name: </label>
+								<input disabled="disabled" class="form-control" id="name">
+							</div>
+							<div class="form-group collapsible">
+								<label> Number Of Customers Served</label>
+								<input disabled="disabled" class="form-control" id="customers-served">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label> Phone</label>
+								<input disabled="disabled" class="form-control" id="phone">
+							</div>
+							<div class="form-group collapsible">
+								<label> Number Of Tickets</label>
+								<input disabled="disabled" class="form-control" id="no-of-tickets">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label> Role</label>
+								<input disabled="disabled" class="form-control" id="role">
+							</div>
+							<div class="form-group collapsible">
+								<label> Average Replies per Ticket</label>
+								<input disabled="disabled" class="form-control" id="avg-replies-per-ticket">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card mb-3">
+						<div class="card-header">
+							<h4 class="main-content-title">Tickets Solved</h4>
+						</div>
+						<div class="card-body" style="position:relative; margin:auto; height:20vh; width:90vw;">
+							<canvas id="operatorStatistics"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="main-content-title">Problem Type</h4>
+						</div>
+						<div class="card-body" style="position:relative; width:30vw;">
+							<canvas id="problemTypeSolved"></canvas>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="main-content-title">Top Operators</h4>
+						</div>
+						<div class="card-body">
+							<p>Operators Here</p>
+							<p>Operators Here</p>
+							<p>Operators Here</p>
+							<p>Operators Here</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<script src="js/plugins/plugins.min.js"></script>
+	<script src="js/main.min.js"></script>
+	<script src="js/pages/tickets.min.js"></script>
+	<script src="js/pages/metrics.min.js"></script>
+	<script>
+		var makeItAll = new MakeItAll;
+
+		makeItAll.ticketManager = new TicketManager();
+	</script>
+</body>
+
+</html>
