@@ -108,9 +108,8 @@ class DynamicPage {
 		
 		// No need to set style using JS here, CSS handles flex
 		$(this.detailSelector).unwrap("div")
-		
-		// Close button on hide
-		.find("[data-action=\"close\"]").click(() => this.hideTableRowDetails());
+			// Close button on hide
+			.find("[data-action=\"close\"]").click(() => this.hideTableRowDetails());
 	}
 	
 	/**
@@ -124,17 +123,15 @@ class DynamicPage {
 	}
 
 	populateSelectField($select, defaultText, elements, defaultOptionId = null, property = 'name') {
-		$select.html('<option selected disabled>' + defaultText + '</option>');
-
-		for (var i = 0; i < elements.length; i++) {
-			if (defaultOptionId !== null && elements[i].id === defaultOptionId) {
-				$select.append('<option selected value="' + elements[i].id + '">' + elements[i][property] + '</option>');
-				
-				continue;
-			}
-
-			$select.append('<option value="' + elements[i].id + '">' + elements[i][property] + '</option>');
-		}
+		// Default empty content for input
+		let option = new Option(defaultText, null, true, true);
+		option.disabled = true;
+		$select.empty().append(option);
+		
+		// Each option to be selected from
+		elements.forEach(e => {
+			$select.append(new Option(e.name, e.id, false, e.id === defaultOptionId));
+		});
 
 		$select.selectpicker('refresh');
 	}
@@ -145,21 +142,19 @@ class DynamicPage {
 	 * @param objectCallback a callback returning an object (the row structure)
 	 * @param searchKeys the properties in objectCallback to highlight
 	 */
-	search(query, elements, objectCallback, searchKeys = []) {
+	search(query, elements = [], objectCallback, searchKeys = []) {
 		this.clearTable();
+		
+		elements.forEach(el => {
+			var object = objectCallback(el);
+			
+			searchKeys.forEach(key => {
+				object[key] = String(object[key]).replace(new RegExp('(' + query + ')', 'ig'), '<strong>$1</strong>');
+			});
+			
+			this.appendTableRow(object);
+		});
 
-		if (elements.length > 0) {
-			for (var i = 0; i < elements.length; i++) {
-				var object = objectCallback(elements[i]);
-
-				for (var j = 0; j < searchKeys.length; j++) {
-					object[searchKeys[j]] = String(object[searchKeys[j]]).replace(new RegExp('(' + query + ')', 'ig'), '<strong>$1</strong>');
-				}
-
-				this.appendTableRow(object);
-			}
-		}
-
-		this.updateSplashScreen(elements.length + ' search ' + (elements.length === 1 ? 'result' : 'results') + ' for \'' + query + '\'');
+		this.updateSplashScreen(`${elements.length} result${elements.length !== 1 ? "s" : ""} for ‘${query}’`);
 	}
 }
