@@ -107,12 +107,7 @@ $wide: 1600px;
 	#list-view {
 		width: 100vw;
 		min-width: unset;
-		
-		.search-field {
-			float: none !important;
-			margin: $compact (-$compact) (-$thin) auto;
-		}
-		
+				
 		.splash-screen:not(.block-hidden) {
 			padding-top: $comfortable;
 		}
@@ -167,5 +162,17 @@ $wide: 1600px;
 		position: absolute;
 		z-index: 2;
 		background: white;
+	}
+}
+
+@media (max-width: $display) {
+	#table-section {
+		white-space: nowrap;
+		overflow-x: scroll;
+	}
+	
+	.search-field {
+		float: none !important;
+		margin: $compact (-$compact) (-$thin) auto;
 	}
 }

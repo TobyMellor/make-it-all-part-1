@@ -367,7 +367,7 @@ section {
 
 #list-view {
 	border-right: 1px solid #bdc3c7;
-	min-width: 640px;
+	flex-shrink: 0;
 	
 	.table {
 		th:first-child, td:first-child {
@@ -647,6 +647,17 @@ label {
 	}
 }
 
+.row.tables {
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: flex-start;
+	> div {
+		flex-grow: 1;
+		padding: 0 $comfortable;
+		flex-basis: 280px;
+	}
+}
+
 .row-hidden {
 	line-height: 0;
 }
@@ -772,14 +783,19 @@ span.subtle {
 
 span.filter {
 	display: inline-block; // don't break on wrap
-	padding: 4px 8px;
+	padding: $compact $cosy;
 	background-color: $blue;
-	border-radius: 2px;
+	border-radius: $thin;
 	border: 0;
 	color: $white;
 	font-weight: 600;
-	font-size: 15px;
+	font-size: $comfortable;
 
+	table & {
+		padding: 1px $cosy;
+		margin: -$compact 0;
+	}
+	
 	&.filter-green {
 		background-color: $green;
 	}

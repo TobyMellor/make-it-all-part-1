@@ -44,12 +44,25 @@ body > div:not([class]) {
 // Hide columns when showing detail
 @mixin colhide($columns) {
 	#list-view:not(:last-of-type) table {
-		th:nth-last-child(-n+#{$columns}), td:nth-last-child(-n+#{$columns}) {
+		@mixin _colhide() { // mixin workaround for https://github.com/sass/sass/issues/1050
 			width: 0 !important;
 			font-size: 0;
 			padding: 0;
 			opacity: 0;
 			transition: $duration $ease colhide, font-size ($duration / 1) $ease;
+		}
+		th:nth-last-child(-n+#{$columns}), td:nth-last-child(-n+#{$columns}) {
+			@include _colhide();
+		}
+		@media (max-width: $display) {
+			th:nth-last-child(-n+#{$columns + 1}), td:nth-last-child(-n+#{$columns + 1}) {
+				@include _colhide();
+			}
+		}
+	}
+	@media (max-width: $display - 160px) {
+		#list-view {
+			flex-shrink: 1;
 		}
 	}
 }
