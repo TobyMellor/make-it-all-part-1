@@ -35,8 +35,8 @@
 		position: unset;
 		border-top: 1px solid $silver;
 	}
-	.splash-screen {
-		padding: $comfortable;
+	.splash-screen h1 {
+		padding-top: $comfortable;
 	}
 	#problem-type-view {
 		.table-container {
@@ -45,6 +45,7 @@
 		.table {
 			white-space: nowrap;
 			width: unset;
+			min-width: 100%;
 			max-width: unset;
 		}
 	}
