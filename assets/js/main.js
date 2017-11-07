@@ -1,38 +1,6 @@
 $(function () {
 	$('[data-toggle="tooltip"]').tooltip();
 
-	$('.staff-permissions .custom-checkbox').on('click', function(e) {
-		e.preventDefault();
-
-		var $input    = $(this).find('input'),
-			fieldName = $input.attr('name'),
-			isChecked = $input.prop('checked');
-
-		if (isChecked) {
-			switch (fieldName) {
-				case 'staff[permissions][ticket_read_only]':
-					$("input[name*=ticket_read_only]").prop('checked', false);
-				case 'staff[permissions][helpdesk_operator]':
-					$("input[name*=helpdesk_operator]").prop('checked', false);
-				case 'staff[permissions][analyst]':
-					$("input[name*=analyst]").prop('checked', false);
-				case 'staff[permissions][super_admin]':
-					$("input[name*=super_admin]").prop('checked', false);
-			}
-		} else {
-			switch (fieldName) {
-				case 'staff[permissions][super_admin]':
-					$("input[name*=super_admin]").prop('checked', true);
-				case 'staff[permissions][analyst]':
-					$("input[name*=analyst]").prop('checked', true);
-				case 'staff[permissions][helpdesk_operator]':
-					$("input[name*=helpdesk_operator]").prop('checked', true);
-				case 'staff[permissions][ticket_read_only]':
-					$("input[name*=ticket_read_only]").prop('checked', true);
-			}
-		}
-	});
-
 	$('.timepicker').datetimepicker();
 
 	$(document).on('click', 'li.no-results', function() {
