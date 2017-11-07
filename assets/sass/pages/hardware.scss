@@ -7,8 +7,9 @@
 	}
 }
 
-.hardware-info {
+div.card.mb-3.hardware-info {
 	margin-top:30px;
+	border-color: $silver!important;
 }
 
 .hardware-info > .card-body {

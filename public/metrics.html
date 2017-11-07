@@ -25,40 +25,39 @@
 				</li>
 				<li>
 					<a href="tickets.html">
-						<i class="fa fa-ticket fa-2x"></i>
-						<p>Tickets</p>
+					<i class="fa fa-ticket fa-2x"></i>
+					<p>Tickets</p>
 					</a>
 				</li>
 				<li>
 					<a href="software.html">
-						<i class="fa fa-file-code-o fa-2x"></i>
-						<p>Software</p>
+					<i class="fa fa-file-code-o fa-2x"></i>
+					<p>Software</p>
 					</a>
 				</li>
 				<li>
 					<a href="hardware.html">
-						<i class="fa fa-laptop fa-2x"></i>
-						<p>Hardware</p>
+					<i class="fa fa-laptop fa-2x"></i>
+					<p>Hardware</p>
 					</a>
 				</li>
 				<li>
 					<a href="problem_types.html">
-						<i class="fa fa-question fa-2x"></i>
+					<i class="fa fa-question fa-2x"></i>
 						<p>Problem Types</p>
 					</a>
 				</li>
 				<li>
 					<a href="staff.html">
-						<i class="fa fa-user-circle-o fa-2x"></i>
-						<p>Staff</p>
+					<i class="fa fa-user-circle-o fa-2x"></i>
+					<p>Staff</p>
 					</a>
 				</li>
 
-				<li>
 					<div class="breaker"></div>
 					<a href="settings.html">
-						<i class="fa fa-cog fa-2x"></i>
-						<p>Settings</p>
+					<i class="fa fa-cog fa-2x"></i>
+					<p>Settings</p>
 					</a>
 				</li>
 			</ul>
@@ -69,58 +68,50 @@
 		<nav class="top-nav">
 			<i class="fa fa-line-chart"></i>
 			<h4 class="main-content-title">Metrics of Staff</h4>
+			<div class="form-group pull-right">
+				<select class="selectpicker" data-live-search="true" id="StaffNameSearch" name="StaffNameSearch">
+					<option>Search...</option>
+					<option>Joe Bloggs</option>
+					<option>Richard Branson</option>
+					<option>Steve Jobs</option>
+					<option>Bill Gates</option>
+				</select>
+			</div>
 		</nav>
 		<div class="main-content">
 			<div class="row">
-				<div class="col-md-12">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="form-group">
-								<select class="selectpicker" style="z-index:100!important" data-live-search="true" id="StaffNameSearch" name="StaffNameSearch">
-									<option>-Search-</option>
-									<option>Joe Bloggs</option>
-									<option>Richard Branson</option>
-									<option>Steve Jobs</option>
-									<option>Bill Gates</option>
-								</select>
-							</div>
-						</div>
+				<div class="col-md-4 collapsible">
+					<div class="form-group">
+						<label> Name </label>
+						<input disabled="disabled" class="form-control" id="name">
 					</div>
-					<div class="row">
-						<div class="col-md-4">
-							<div class="form-group">
-								<label> Name: </label>
-								<input disabled="disabled" class="form-control" id="name">
-							</div>
-							<div class="form-group collapsible">
-								<label> Number Of Customers Served</label>
-								<input disabled="disabled" class="form-control" id="customers-served">
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<label> Phone</label>
-								<input disabled="disabled" class="form-control" id="phone">
-							</div>
-							<div class="form-group collapsible">
-								<label> Number Of Tickets</label>
-								<input disabled="disabled" class="form-control" id="no-of-tickets">
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<label> Role</label>
-								<input disabled="disabled" class="form-control" id="role">
-							</div>
-							<div class="form-group collapsible">
-								<label> Average Replies per Ticket</label>
-								<input disabled="disabled" class="form-control" id="avg-replies-per-ticket">
-							</div>
-						</div>
+					<div class="form-group">
+						<label> Number Of Customers Served</label>
+						<input disabled="disabled" class="form-control" id="customers-served">
 					</div>
 				</div>
+				<div class="col-md-4 collapsible">
+					<div class="form-group">
+						<label> Phone</label>
+						<input disabled="disabled" class="form-control" id="phone">
+					</div>
+					<div class="form-group">
+						<label> Number Of Tickets</label>
+						<input disabled="disabled" class="form-control" id="no-of-tickets">
+					</div>
+				</div>
+				<div class="col-md-4 collapsible">
+					<div class="form-group">
+						<label> Role</label>
+						<input disabled="disabled" class="form-control" id="role">
+					</div>
+					<div class="form-group">
+						<label> Average Replies per Ticket</label>
+						<input disabled="disabled" class="form-control" id="avg-replies-per-ticket">
+					</div>
+				</div>
+				<div class="breaker collapsible"></div>
 			</div>
-
 
 			<div class="row">
 				<div class="col-md-12">

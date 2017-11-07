@@ -9,7 +9,6 @@ $('#StaffNameSearch').change(function(){
 	var index = $(this)[0].selectedIndex;
 	if (index > 0) {
 		$(".collapsible").css("display","block");
-		$(".form-control").css("background-color","#ffffff")
 		$("#name").val("Joe Bloggs");
 		$("#phone").val("01234567890");
 		$("#role").val("Staff");
@@ -18,7 +17,6 @@ $('#StaffNameSearch').change(function(){
 		$("#avg-replies-per-ticket").val("5");
 	} else {
 		$(".collapsible").css("display","none");
-		$(".form-control").css("background-color","#e9ecef")
 		$("#name").val("");
 		$("#phone").val("");
 		$("#role").val("");

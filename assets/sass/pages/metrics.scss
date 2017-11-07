@@ -1,5 +1,17 @@
 @import "../main";
 
 .collapsible {
-	display: none;
+	display:none;
+}
+
+input.form-control[disabled=disabled] {
+	background-color:#ffffff;
+}
+
+.breaker {
+	margin-bottom:25px;
+}
+
+div.form-group.pull-right{
+	width:200px;
 }
