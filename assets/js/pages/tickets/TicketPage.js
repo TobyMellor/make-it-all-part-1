@@ -274,7 +274,7 @@ class TicketPage extends DynamicPage {
 				return {
 					id: ticket.id,
 					title: ticket.title,
-					filter_name: '<span class="filter">' + ticket.filter.name + '</span>',
+					filter_name: '<span class="filter filter-' + ticket.filter.slug.split('_')[0] + '">' + ticket.filter.name + '</span>',
 					created_at: ticket.created_at,
 					updated_at: ticket.updated_at
 				}
