@@ -381,7 +381,11 @@ section {
 }
 
 #single-view .top-nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
 	text-align: center;
+	padding-bottom: 0;
 }
 
 .splash-screen {
@@ -767,6 +771,7 @@ span.subtle {
 }
 
 span.filter {
+	display: inline-block; // don't break on wrap
 	padding: 4px 8px;
 	background-color: $blue;
 	border-radius: 2px;
