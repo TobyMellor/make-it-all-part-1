@@ -22,6 +22,7 @@ $wide: 1600px;
 	.side-nav-bar {		
 		.btn-info {
 			width: unset;
+			max-width: 32px;
 			font-size: 0.9em;
 			writing-mode: vertical-lr;
 			padding: $compact $cosy;
@@ -38,9 +39,10 @@ $wide: 1600px;
 		li {
 			display: flex;
 			align-items: flex-end;
-			padding: 8px !important;
+			padding: $cosy !important;
 			border-left: none !important;
 			white-space: nowrap;
+			border-top: $thin solid transparent;
 			&:hover {
 				border-top: $thin $blue solid;
 				padding-right: initial;
@@ -71,6 +73,7 @@ $wide: 1600px;
 		ul {
 			margin-left: $cosy;
 			display: flex;
+			margin-bottom: 0;
 			
 			li {
 				white-space: nowrap;
@@ -78,11 +81,7 @@ $wide: 1600px;
 				margin-left: $compact;
 				border-bottom: none;
 				border-left: 1px solid $silver;
-				padding: $compact $cosy;
-				
-				&:nth-last-child(2) {
-					padding-right: 80px;
-				}
+				padding: $compact $cosy !important;
 				
 				&:last-child {
 					padding: 0;
@@ -92,10 +91,15 @@ $wide: 1600px;
 					right: 0;
 					> .btn {
 						width: ($comfortable * 4) + 1px;
+						overflow: hidden;
 						margin: 0;
 						padding: ($cosy - $compact) $cosy;
 					}
 				}
+			}
+			
+			&:last-of-type li:nth-last-child(2) {
+				padding-right: 100px !important;
 			}
 		}
 	}
@@ -103,6 +107,15 @@ $wide: 1600px;
 	#list-view {
 		width: 100vw;
 		min-width: unset;
+		
+		.search-field {
+			float: none !important;
+			margin: $compact (-$compact) (-$thin) auto;
+		}
+		
+		.splash-screen:not(.block-hidden) {
+			padding-top: $comfortable;
+		}
 	}
 	
 	#table-section {
@@ -145,14 +158,12 @@ $wide: 1600px;
 	body > div:not([class]) {
 		display: none;
 		transform: none;
-		transition: none;
 		width: 100vw;
 	}
 	
 	#single-view {
 		width: 100vw;
 		animation: none !important;
-		transform: none !important;
 		position: absolute;
 		z-index: 2;
 		background: white;

@@ -166,13 +166,14 @@ span.filter {
 		}
 	}
 
-	.col-md-6 {
-		&:first-child {
-			padding-right: $cosy;
-		}
-
-		&:last-child {
-			padding-left: $cosy;
+	@media (min-width: $small + 1px) {
+		.col-md-6 {
+			&:first-child {
+				padding-right: $cosy;
+			}
+			&:last-child {
+				padding-left: $cosy;
+			}
 		}
 	}
 

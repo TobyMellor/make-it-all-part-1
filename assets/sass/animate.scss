@@ -15,7 +15,7 @@ body > div:not([class]) {
 	overflow: visible;
 	transform: translateX(100%);
 	width: 0;
-	transition: $duration $ease slideout;
+	animation: $duration $ease slideout;
 }
 @keyframes slidein {
 	from {
@@ -80,9 +80,9 @@ body > div:not([class]) {
 	}
 }
 #table-section {
-	transition: $duration $ease blockhidden reverse;
+	animation: $duration $ease blockhidden reverse;
 	.block-hidden {
-		transition: $duration $ease blockhidden;
+		animation: $duration $ease blockhidden;
 	}
 }
 @keyframes blockhidden() {
