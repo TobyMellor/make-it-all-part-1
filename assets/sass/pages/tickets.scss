@@ -13,25 +13,16 @@
 
 			i {
 				margin-left: 8px;
-    			margin-right: 4px;
-    		}
+				margin-right: 4px;
+			}
 		}
 	}
 }
 
 span.filter {
-	padding: 4px 8px;
-	background-color: $blue;
-	border-radius: 2px;
-	border: 0;
-	color: $white;
-	font-weight: 600;
-	font-size: 15px;
-
 	&.filter-green, &.filter-resolved {
 		background-color: $green;
 	}
-
 	&.filter-pending {
 		background-color: $orange;
 	}
@@ -163,16 +154,6 @@ span.filter {
 		.btn {
 			float: right;
 			margin-top: $cosy;
-		}
-	}
-
-	.col-md-6 {
-		&:first-child {
-			padding-right: $cosy;
-		}
-
-		&:last-child {
-			padding-left: $cosy;
 		}
 	}
 

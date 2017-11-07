@@ -7,6 +7,8 @@
 
 #list-view {
 	flex: 2;
+	display: flex;
+	flex-direction: column;
 
 	#table-section {
 		display: none;
@@ -23,4 +25,31 @@
 
 .problem-type-details {
 	margin-bottom: 5px;
+}
+
+@media (max-width: $small) {
+	#list-view {
+		height: 40vh;
+	}
+	#single-view {
+		position: unset;
+		border-top: 1px solid $silver;
+	}
+	.splash-screen h1 {
+		padding-top: $comfortable;
+	}
+	#problem-type-view {
+		.table-container {
+			overflow-x: scroll;
+		}
+		.table {
+			white-space: nowrap;
+			width: unset;
+			min-width: 100%;
+			max-width: unset;
+		}
+	}
+	.truncate {
+		max-width: unset !important;
+	}
 }

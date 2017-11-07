@@ -52,7 +52,7 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('styles', function() {
-    gulp.src(['assets/sass/**/*.scss', '!assets/sass/plugins/*.scss'])
+    gulp.src(['assets/sass/main.scss', 'assets/sass/*/*.scss', '!assets/sass/plugins/*.scss'])
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass())

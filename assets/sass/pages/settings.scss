@@ -1,17 +1,11 @@
 @import "../main";
 
-.side-nav-bar-nested {
-	width: 230px;
-	min-width: 230px;
-}
-
 .section {
 	margin-top: $comfortable;
-	display: none;
 }
 
-#general-section {
-	display: block;
+.form-control:disabled {
+	color: unset;
 }
 
 .html-input {
@@ -37,17 +31,17 @@
 
 	.card-title {
 		font-size: 25px;
-	    font-weight: 600;
-	    margin: 0;
-	    display: inline-block;
-	    color: $black;
-
-	    p {
-	    	text-align: right;
-		    line-height: 15px;
-		    font-size: 10px;
-		    color: $grey;
-	    }
+		font-weight: 600;
+		margin: 0;
+		display: inline-block;
+		color: $black;
+		
+		p {
+			text-align: right;
+		  line-height: 15px;
+		  font-size: 10px;
+		  color: $grey;
+		}
 	}
 
 	.card-body {
@@ -60,4 +54,18 @@
 
 .save-changes {
 	margin-top: $comfortable;
+}
+
+@media (max-width: $small) {
+	.side-nav-bar-nested ul li:last-child > .btn {
+		width: unset;
+	}
+	.card {
+		margin: 0 auto;
+		width: 256px;
+		max-width: 100%;
+	}
+	.custom-file {
+		width: 100%;
+	}
 }

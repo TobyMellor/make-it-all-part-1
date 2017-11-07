@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Staff - Make-It-All</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/plugins/plugins.min.css">
 	<link rel="stylesheet" type="text/css" href="css/pages/staff.min.css">
 	<link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
@@ -17,34 +18,48 @@
 		<div class="side-nav-bar-menu">
 			<ul>
 				<li>
-					<i class="fa fa-ticket fa-2x"></i>
-					<p>Tickets</p>
+					<a href="metrics.html">
+						<i class="fa fa-line-chart fa-2x"></i>
+						<p>Metrics</p>
+					</a>
 				</li>
 				<li>
-					<i class="fa fa-file-code-o fa-2x"></i>
-					<p>Software</p>
+					<a href="tickets.html">
+						<i class="fa fa-ticket fa-2x"></i>
+						<p>Tickets</p>
+					</a>
 				</li>
 				<li>
-					<i class="fa fa-laptop fa-2x"></i>
-					<p>Hardware</p>
+					<a href="software.html">
+						<i class="fa fa-file-code-o fa-2x"></i>
+						<p>Software</p>
+					</a>
 				</li>
 				<li>
-					<i class="fa fa-question fa-2x"></i>
-					<p>Help</p>
+					<a href="hardware.html">
+						<i class="fa fa-laptop fa-2x"></i>
+						<p>Hardware</p>
+					</a>
+				</li>
+				<li>
+					<a href="problem_types.html">
+						<i class="fa fa-question fa-2x"></i>
+						<p>Problem Types</p>
+					</a>
 				</li>
 				<li class="active">
-					<i class="fa fa-user-circle-o fa-2x"></i>
-					<p>Staff</p>
-				</li>
-				<li>
-					<i class="fa fa-line-chart fa-2x"></i>
-					<p>Metrics</p>
+					<a href="staff.html">
+						<i class="fa fa-user-circle-o fa-2x"></i>
+						<p>Staff</p>
+					</a>
 				</li>
 
 				<li>
 					<div class="breaker"></div>
-					<i class="fa fa-cog fa-2x"></i>
-					<p>Settings</p>
+					<a href="settings.html">
+						<i class="fa fa-cog fa-2x"></i>
+						<p>Settings</p>
+					</a>
 				</li>
 			</ul>
 		</div>
@@ -160,7 +175,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-6 staff-info">
 						<span class="subtle">#<span data-slug="id"></span></span>
 						<div class="row">
 							<label>Email</label>
@@ -174,19 +189,19 @@
 								<span data-slug="job"></span>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row">
 							<label>Department</label>
 							<div class="col-sm-12">
 								<span data-slug="department"></span>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row">
 							<label>Phone No</label>
 							<div class="col-sm-12">
 								<span data-slug="phone"></span>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row">
 							<label>Access Permissions</label>
 							<div class="col-sm-12">
 								<span data-customslug="access"></span>

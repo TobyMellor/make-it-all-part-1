@@ -41,11 +41,6 @@ body {
 		overflow-x: hidden;
 		overflow-y: scroll;
 	}
-	
-	// I think this looks better with a 1px border, to discuss
-	// > nav, > section {
-	// 	box-shadow: 1px 0 5px rgba(0, 0, 0, 0.26);
-	// }
 }
 
 code {
@@ -69,6 +64,13 @@ nav ul {
 		width: 100%;
 		border-radius: 0;
 		border: 0;
+	}
+	
+	a {
+		color: unset;
+		&:hover {
+			text-decoration: none;
+		}
 	}
 
 	ul {
@@ -103,6 +105,11 @@ nav ul {
 			.fa {
 				width: 100%;
 				-webkit-text-stroke: 0.5px $dark-blue; // Make icons a bit thinner
+			}
+			
+			// Smaller icons need larger font size to match others
+			&:nth-child(4) .fa, &:nth-child(5) .fa {
+				font-size: 2.5em;
 			}
 
 			&.active {
@@ -296,7 +303,6 @@ section {
 	}
 
 	.top-nav {
-		// box-shadow: 0px 5px 5px -5px rgba(0,0,0,0.26);
 		border-bottom: 1px solid $silver;
 		padding: 7px $standard 9px $standard;
 		top: 0;
@@ -361,7 +367,7 @@ section {
 
 #list-view {
 	border-right: 1px solid #bdc3c7;
-	min-width: 640px;
+	flex-shrink: 0;
 	
 	.table {
 		th:first-child, td:first-child {
@@ -375,7 +381,11 @@ section {
 }
 
 #single-view .top-nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
 	text-align: center;
+	padding-bottom: 0;
 }
 
 .splash-screen {
@@ -637,6 +647,17 @@ label {
 	}
 }
 
+.row.tables {
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: flex-start;
+	> div {
+		flex-grow: 1;
+		padding: 0 $comfortable;
+		flex-basis: 280px;
+	}
+}
+
 .row-hidden {
 	line-height: 0;
 }
@@ -761,17 +782,25 @@ span.subtle {
 }
 
 span.filter {
-	padding: 4px 8px;
+	display: inline-block; // don't break on wrap
+	padding: $compact $cosy;
 	background-color: $blue;
-	border-radius: 2px;
+	border-radius: $thin;
 	border: 0;
 	color: $white;
 	font-weight: 600;
-	font-size: 15px;
+	font-size: $comfortable;
 
+	table & {
+		padding: 1px $cosy;
+		margin: -$compact 0;
+	}
+	
 	&.filter-green {
 		background-color: $green;
 	}
 }
 
 @import "animate";
+
+@import "responsive";
