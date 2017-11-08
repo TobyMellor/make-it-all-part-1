@@ -268,10 +268,12 @@ class TicketManager extends Manager {
 		return filters;
 	}
 
-	getMyTickets() {
-		var currentUser = makeItAll.staffManager.currentUser();
+	getTicketsAssignedTo(id) {
+		return this.tickets.filter(ticket => ticket._assigned_to === id);
+	}
 
-		return this.tickets.filter(ticket => ticket._assigned_to === currentUser);
+	getMyTickets() {
+		return this.getTicketsAssignedTo(makeItAll.staffManager.currentUser());
 	}
 
 	updateFilter(oldFilterSlug, newFilterSlug, ticketId) {

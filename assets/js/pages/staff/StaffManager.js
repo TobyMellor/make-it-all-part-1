@@ -44,9 +44,14 @@ class StaffManager extends Manager {
 		Object.assign(oldEmployee, employee);
 	}
 	
+	/**
+	 * Get the currently logged in user
+	 *
+	 * @param asEmployee Method returns ID by default or Employee if truthy
+	 */
 	currentUser(asEmployee = false) {
 		let id = 1;
-		
+		// Get Employee with ID
 		if (asEmployee) {
 			return this.getEmployee(id);
 		}

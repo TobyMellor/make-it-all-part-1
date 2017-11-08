@@ -156,12 +156,28 @@ $(() => {
 	});
 	
 	$(staffPage.tableSelector).on("click", "tbody tr", e => {
-		staffPage.showTableRowDetails(Number(e.currentTarget.dataset.rowid));
+		staffPage.showTableRowDetails(parseInt(e.currentTarget.dataset.rowid));
 	});
 
 	$('.search-field input').on('keyup', function() {
 		var query = $(this).val();
 
 		staffPage.search(query);
+	});
+	
+	// Get number of tickets assigned
+	makeItAll.staffManager.staff.forEach(employee => {
+		// Set tickets.assigned property for employee
+		employee.tickets = employee.tickets || {};
+		employee.tickets.assigned = makeItAll.ticketManager.getTicketsAssignedTo(employee.id).length;
+	});
+	// Update UI
+	let colIndex = -1;
+	$(staffPage.tableSelector).find("tr").each((i, el) => {
+		if (i === 0) {
+			colIndex = $(el).children("[data-slug=\"tickets.assigned\"]").index();
+			return;
+		}
+		el.children[colIndex].textContent = makeItAll.staffManager.getEmployee(parseInt(el.dataset.rowid)).tickets.assigned;
 	});
 });
