@@ -8,16 +8,20 @@
 class Device {
 	constructor(
 		id,
-		serialNumber,
-		name,
-		operatingSystem,
-		programs
+		type,
+		manufacturer,
+		serial_number,
+		programs,
+		created_at,
+		updated_at
 	) {
 		this.id                = id;
-		this.serial_number     = serialNumber; // TODO: Turn into uppercase serial number
-		this.name              = name;
-		this.operating_system  = operatingSystem;
-		this.programs          = programs; // ID of programs, get method returns instances of Program
+		this.type 			   = type;
+		this.manufacturer              = manufacturer;
+		this.programs		   = programs;
+		this.serial_number     = serial_number;
+		this.created_at        = created_at;
+		this.updated_at        = updated_at;
 	}
 
 	get programs() {

@@ -1,35 +1,14 @@
 @import "../main";
 
-.listbox {
-	height: 85vh;
-	@media (max-width: $small) {
-		height: 30vh;
-	}
-}
-
-div.card.mb-3.hardware-info {
-	margin-top:30px;
-	border-color: $silver!important;
-}
-
-.hardware-info > .card-body {
-	padding-top:10px;
-	padding-bottom:10px;
-}
-
-.hardware-info > * > p {
-	margin-bottom:5px;
-}
-
-.badge {
-	margin-top:2px;
-	margin-left:10px;
-}
-
 .card-list {
 	overflow-y:auto; 
 	padding:0px;
-	max-height: 31vh;
+	max-height: 35vh;
+}
+
+span.filter {
+	font-size: 12px;
+	margin-left: 10px;
 }
 
 .card-header {
@@ -45,8 +24,33 @@ div.card.mb-3.hardware-info {
 	border-bottom:0;
 }
 
-#ticket-total {
+.list-total {
 	font-size:14px;
-	float:right;
 	margin-top:2px;
+}
+
+div.card.mb-3 {
+	border:0;
+}
+
+#selectorLists {
+	display:flex;
+	flex-wrap:nowrap;
+	height:100%;
+}
+
+#selectorLists > div {
+	flex-grow:1;
+	border-right:1px solid $silver;
+	height:100%;
+	box-sizing:content-box;
+}
+
+.selectorList th {
+	text-align:left!important;
+}
+
+.selectorList td {
+	text-align:left!important;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif!important;
 }
