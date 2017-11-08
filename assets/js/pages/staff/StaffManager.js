@@ -29,16 +29,16 @@ class StaffManager extends Manager {
 		return this.staff.find(e => e.id === id);
 	}
 
+	getEmployees(ids) {
+		return this.staff.filter(employee => ids.indexOf(employee.id) > -1);
+	}
+
 	getEmployeesWithPermission(permission, value) {
 		return this.staff.filter(employee => employee.access[permission] === value);
 	}
 
-	getEmployees(ids) {
-		return this.staff.filter(employee => ids.indexOf(employee.id) > -1);
-	}
-	
 	updateEmployee(employee) {
-		let oldEmployee = this.staff.find(e => e.id === employee.id);
+		let oldEmployee = this.getEmployee(employee.id);
 		
 		Object.assign(oldEmployee.access, employee.access);
 		Object.assign(oldEmployee, employee);
