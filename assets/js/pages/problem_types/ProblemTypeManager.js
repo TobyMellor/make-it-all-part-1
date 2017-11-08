@@ -72,27 +72,27 @@ class ProblemTypeManager extends Manager {
 	}
 
 	getRootProblemTypes() {
-		return this.findAllWhere(this.problemTypes, problemType => problemType.parent === null);
+		return this.problemTypes.filter(problemType => problemType.parent == null);
 	}
 
 	getProblemType(problemTypeId) {
-		return this.findFirstWhere(this.problemTypes, problemType => problemType.id === problemTypeId);
+		return this.problemTypes.find(problemType => problemType.id === problemTypeId);
 	}
 
 	getProblemTypes(problemTypeIds) {
 		// TODO: return problemTypes with the ids
 
-		return this.findAllWhere(this.problemTypes, problemType => problemTypeIds.indexOf(problemType.id) > -1);
+		return this.problemTypes.filter(problemType => problemTypeIds.indexOf(problemType.id) > -1);
 	}
 
 	getProblemTypeChain(problemType) {
 		var problemTypeParent = problemType,
 			problemTypes      = [problemTypeParent];
 
-		while (problemTypeParent !== null) {
+		while (problemTypeParent != null) {
 			problemTypeParent = problemTypeParent.parent;
 
-			if (problemTypeParent !== null) {
+			if (problemTypeParent != null) {
 				problemTypes.push(problemTypeParent);
 			}
 		}

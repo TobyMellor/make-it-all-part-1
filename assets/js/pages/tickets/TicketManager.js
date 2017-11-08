@@ -247,15 +247,15 @@ class TicketManager extends Manager {
 	}
 
 	getCalls(ticketId) {
-		return this.findAllWhere(this.calls, call => call._tickets.indexOf(ticketId) > -1);
+		return this.calls.filter(call => call._tickets.indexOf(ticketId) > -1);
 	}
 
 	getCall(callId) {
-		return this.findFirstWhere(this.calls, call => call.id === callId);
+		return this.calls.find(call => call.id === callId);
 	}
 
 	getFilter(filterSlug) {
-		return this.findFirstWhere(this.filters, filter => filter.slug === filterSlug);
+		return this.filters.find(filter => filter.slug === filterSlug);
 	}
 
 	getFilters(filterSlugs) {
@@ -271,7 +271,7 @@ class TicketManager extends Manager {
 	getMyTickets() {
 		var currentUser = makeItAll.staffManager.currentUser();
 
-		return this.findAllWhere(this.tickets, ticket => ticket._assigned_to === currentUser);
+		return this.tickets.filter(ticket => ticket._assigned_to === currentUser);
 	}
 
 	updateFilter(oldFilterSlug, newFilterSlug, ticketId) {
@@ -355,15 +355,15 @@ class TicketManager extends Manager {
 	}
 
 	getTickets(filterSlug) {
-		return this.findAllWhere(this.tickets, ticket => ticket.filter.slug === filterSlug);
+		return this.tickets.filter(ticket => ticket.filter.slug === filterSlug);
 	}
 
 	getTicket(ticketId) {
-		return this.findFirstWhere(this.tickets, ticket => ticket.id === ticketId);
+		return this.tickets.find(ticket => ticket.id === ticketId);
 	}
 
 	getTicketsFromCall(callId) {
-		return this.findAllWhere(this.tickets, ticket => ticket._calls.indexOf(callId) > -1);
+		return this.tickets.filter(ticket => ticket._calls.indexOf(callId) > -1);
 	}
 
 	editTicket(ticketId, filterSlug, title, description, assignedTo, devices, programs = [], operatingSystem, problemType) {
@@ -429,11 +429,11 @@ class TicketManager extends Manager {
 	}
 
 	getEvents(ticketId) {
-		return this.findAllWhere(this.events, event => event.ticket.id === ticketId);
+		return this.events.filter(event => event.ticket.id === ticketId);
 	}
 
 	getRelatedProblems(problemTypeId) {
-		return this.findAllWhere(this.tickets, ticket => ticket._problem_type === problemTypeId);
+		return this.tickets.filter(ticket => ticket._problem_type === problemTypeId);
 	}
 
 	search(query, properties) {

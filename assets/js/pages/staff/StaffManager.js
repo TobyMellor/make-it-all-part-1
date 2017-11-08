@@ -30,11 +30,11 @@ class StaffManager extends Manager {
 	}
 
 	getEmployeesWithPermission(permission, value) {
-		return this.findAllWhere(this.staff, employee => employee.access[permission] === value);
+		return this.staff.filter(employee => employee.access[permission] === value);
 	}
 
 	getEmployees(ids) {
-		return this.findAllWhere(this.staff, employee => ids.indexOf(employee.id) > -1);
+		return this.staff.filter(employee => ids.indexOf(employee.id) > -1);
 	}
 	
 	updateEmployee(employee) {
@@ -54,7 +54,7 @@ class StaffManager extends Manager {
 	}
 
 	getSpecialists(problemTypeId) {
-		return this.findAllWhere(this.staff, employee => employee._specialisms.indexOf(problemTypeId) > -1);
+		return this.staff.filter(employee => employee._specialisms.indexOf(problemTypeId) > -1);
 	}
 
 	hasSpecialism(employee, problemTypeId) {

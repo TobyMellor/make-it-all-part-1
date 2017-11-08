@@ -87,7 +87,7 @@ class HardwareManager extends Manager {
 	}
 
 	getDevices(ids) {
-		return this.findAllWhere(this.devices, device => ids.indexOf(device.id) > -1);
+		return this.devices.filter(device => ids.indexOf(device.id) > -1);
 	}
 
 	getDevice(id) {
