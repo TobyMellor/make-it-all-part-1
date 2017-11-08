@@ -72,6 +72,7 @@ class DynamicPage {
 
 		// Set ID on row to reference later
 		$newRow[0].dataset.rowid = object.id;
+		$newRow.toggleClass("highlight", object.id == parseInt(location.hash.substring(1)));
 
 		$tableHead.children('th').each(function() {
 			var slug = this.dataset.slug, td = document.createElement("td");
@@ -110,6 +111,8 @@ class DynamicPage {
 		$(this.detailSelector).unwrap("div")
 			// Close button on hide
 			.find("[data-action=\"close\"]").click(() => this.hideTableRowDetails());
+		
+		if (id > -1) location.hash = parseInt(id);
 	}
 	
 	/**
@@ -120,6 +123,8 @@ class DynamicPage {
 		$(this.tableSelector).find("tbody tr").removeClass("highlight");
 		// Filter to check if already hidden, don't hide again
 		$(this.detailSelector).filter((i, el) => $(el).parent("div").length === 0).wrap(document.createElement("div"));
+		
+		location.hash = "";
 	}
 
 	populateSelectField($select, defaultText, elements, defaultOptionId = null, property = 'name') {

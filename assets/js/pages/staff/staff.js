@@ -165,6 +165,8 @@ $(() => {
 		staffPage.search(query);
 	});
 	
+	if (location.hash) staffPage.showTableRowDetails(parseInt(location.hash.substring(1)));
+	
 	// Get number of tickets assigned
 	makeItAll.staffManager.staff.forEach(employee => {
 		// Set tickets.assigned property for employee
