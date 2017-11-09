@@ -139,7 +139,7 @@ class TicketManager extends Manager {
 				problem_type: 4
 			}
 		];
-		
+
 		var events = [
 			{
 				id: 0,
@@ -356,7 +356,7 @@ class TicketManager extends Manager {
 		if (ticket.filter.slug !== filterSlug) {
 			this.createEvent(
 				ticketId,
-				0, // TODO: Replace with logged in user
+				staffManager.currentUser(),
 				'event',
 				this.getFilter(filterSlug).name,
 				'Just now'
@@ -368,7 +368,7 @@ class TicketManager extends Manager {
 		if (ticket._assigned_to !== assignedTo) {
 			this.createEvent(
 				ticketId,
-				0,
+				staffManager.currentUser(),
 				'event',
 				'Assigned to ' + makeItAll.staffManager.getStaffMember(assignedTo).name,
 				'Just now'

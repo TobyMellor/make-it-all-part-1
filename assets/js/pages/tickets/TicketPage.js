@@ -126,7 +126,7 @@ class TicketPage extends DynamicPage {
 							'<img class="d-flex mr-3" src="images/portraits/portrait-1.jpg" alt="Portrait 1">' +
 							'<div class="media-body">' +
 								'<h5 class="mt-0 mb-1">' +
-									'Toby Mellor <span class="ticket-comment-date">' + event.created_at + '</span>' + // TODO: Replace 'Toby Mellor' with staff name
+									event.author.name + ' <span class="ticket-comment-date">' + event.created_at + '</span>' +
 								'</h5>' +
 								'<div class="breaker"></div>' +
 								event.content +
@@ -262,7 +262,7 @@ class TicketPage extends DynamicPage {
 	appendNewComment($commentBox) {
 		var event = makeItAll.ticketManager.createEvent(
 				ticketPage.currentTicket.id,
-				'Toby Mellor', // TODO: Replace with ID of logged in user
+				makeItAll.staffManager.currentUser(),
 				'comment',
 				$commentBox.val(),
 				'Just Now'
