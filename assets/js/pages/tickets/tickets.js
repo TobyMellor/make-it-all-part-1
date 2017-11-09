@@ -169,12 +169,22 @@ $(() => {
 		$(this).find('.staff-information').text('No staff member has been selected yet!');
 	});
 
-	$(document).on('click', '.type-column li', function() {
+	$(document).on('click', '.problem-type-picker:not(.problem-type-checkboxes) .type-column li', function() {
 		var problemTypeId = Number($(this).data('problemTypeId'));
 
 		problemTypePage.loadSubProblemTypes($(this).closest('.type-columns'), $(this), problemTypeId);
 
 		$(this).closest('.problem-type-picker').siblings('input[name*=problem_type]').val(problemTypeId);
+	});
+
+	$(document).on('click', '.problem-type-checkboxes .type-column li', function() {
+		if (!$(this).hasClass('no-children')) {
+			staffProblemTypePage.loadSpecialistProblemTypes($(this).closest('.type-columns'), $(this), parseInt($(this).data('problemTypeId')));
+		}
+	});
+
+	$(document).on('click', '.problem-type-checkboxes:not(.readonly) .type-column li .specialism-checkbox', function() {
+		staffProblemTypePage.toggleSpecialism($(this));
 	});
 
 	$('#new-ticket-modal select[name="caller"], #follow-up-call-modal select[name="caller"]').on('change', function() {

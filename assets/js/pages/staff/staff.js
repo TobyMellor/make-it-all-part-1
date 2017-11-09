@@ -62,7 +62,13 @@ $(() => {
 					el.value = Object.resolve(key, staffPage.employee) || "";
 				}
 			});
+
+			staffProblemTypePage.currentSpecialisms = staffPage.employee._specialisms;
+		} else {
+			staffProblemTypePage.currentSpecialisms = [];
 		}
+
+		staffProblemTypePage.loadSpecialistProblemTypes($(e.target).find('.type-columns'));
 	});
 	
 	$("#new-staff-modal").on("shown.bs.modal", e => {
@@ -99,12 +105,12 @@ $(() => {
 	// Page-specific follows
 	if (!isPage) return;
 
-	$('#new-staff-modal').on('show.bs.modal', function() {
-		var $typeColumns = $(this).find('.type-columns');
+	// $('#new-staff-modal').on('show.bs.modal', function() {
+	// 	var $typeColumns = $(this).find('.type-columns');
 
-		staffProblemTypePage.currentSpecialisms = []; // TODO: for the edit modal, set this to Employee._specialisms
-		staffProblemTypePage.loadSpecialistProblemTypes($typeColumns);
-	});
+	// 	staffProblemTypePage.currentSpecialisms = []; // TODO: for the edit modal, set this to Employee._specialisms
+	// 	staffProblemTypePage.loadSpecialistProblemTypes($typeColumns);
+	// });
 
 	$(document).on('click', '.type-column li', function() {
 		if (!$(this).hasClass('no-children')) {

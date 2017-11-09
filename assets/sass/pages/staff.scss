@@ -84,40 +84,4 @@
 			}
 		}
 	}
-
-	li {
-		&:hover:not(.no-children), &.last-active:not(.no-children) {
-			.specialism-checkbox {
-				border: 2px solid $white;
-			}
-		}
-
-		&.no-children {
-			cursor: initial !important;
-
-			&:hover {
-				background-color: $white !important;
-				color: $black !important;
-			}
-		}
-
-		.specialism-checkbox {
-			width: 15px;
-			height: 15px;
-			border: 2px solid $black;
-			margin-top: $compact;
-			cursor: pointer;
-
-			i {
-				position: absolute;
-				right: 10px;
-				top: 6px;
-				font-size: 11px;
-
-				&.fa-times {
-					display: none;
-				}
-			}
-		}
-	}
 }
