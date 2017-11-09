@@ -79,11 +79,10 @@ gulp.task('plugins', function() {
         }))
         .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest('./public/js/plugins/'));
-    gulp.src(['assets/sass/plugins/*.scss'])
+    gulp.src(['assets/sass/plugins/*.css'])
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(concat('plugins.min.css'))
-        .pipe(sass())
         .pipe(minifyCSS())
         .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest('./public/css/plugins/'));
