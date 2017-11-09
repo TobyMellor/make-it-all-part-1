@@ -44,6 +44,7 @@ class TicketManager extends Manager {
 				tickets: [4]
 			},
 		];
+
 		var filters = [
 			{
 				id: 0,
@@ -70,6 +71,7 @@ class TicketManager extends Manager {
 				tickets: [4]
 			}
 		];
+
 		var tickets = [
 			{
 				id: 0,
@@ -137,6 +139,7 @@ class TicketManager extends Manager {
 				problem_type: 4
 			}
 		];
+		
 		var events = [
 			{
 				id: 0,
