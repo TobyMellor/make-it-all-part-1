@@ -82,8 +82,8 @@ gulp.task('plugins', function() {
     gulp.src(['assets/sass/plugins/*.scss'])
         .pipe(plumber())
         .pipe(sourcemaps.init())
-        .pipe(sass())
         .pipe(concat('plugins.min.css'))
+        .pipe(sass())
         .pipe(minifyCSS())
         .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest('./public/css/plugins/'));
