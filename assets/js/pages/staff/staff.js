@@ -29,7 +29,7 @@ $(() => {
 					addItemToPicker(
 						$('.selectpicker.staff-picker[name="' + formData.event_target + '"]'),
 						employee.id,
-						formData.name
+						formData.staff.name
 					); // formData and staffId to be retrieved by AJAX call
 					
 					break;
