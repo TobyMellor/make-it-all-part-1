@@ -123,17 +123,17 @@ class DynamicPage {
 		$(this.detailSelector).filter((i, el) => $(el).parent("div").length === 0).wrap(document.createElement("div"));
 	}
 
-	populateSelectField($select, defaultText, elements, defaultOptionId = null) {
+	populateSelectField($select, defaultText, elements, defaultOptionId = null, property = 'name') {
 		$select.html('<option selected disabled hidden>' + defaultText + '</option>');
 
 		for (var i = 0; i < elements.length; i++) {
 			if (defaultOptionId !== null && elements[i].id === defaultOptionId) {
-				$select.append('<option selected value="' + elements[i].id + '">' + elements[i].name + '</option>');
+				$select.append('<option selected value="' + elements[i].id + '">' + elements[i][property] + '</option>');
 				
 				continue;
 			}
 
-			$select.append('<option value="' + elements[i].id + '">' + elements[i].name + '</option>');
+			$select.append('<option value="' + elements[i].id + '">' + elements[i][property] + '</option>');
 		}
 
 		$select.selectpicker('refresh');

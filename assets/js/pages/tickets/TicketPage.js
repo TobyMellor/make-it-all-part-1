@@ -165,36 +165,40 @@ class TicketPage extends DynamicPage {
 		}
 	}
 
-	appendHardwareDevice($hardwareList, serialNumber, cardId = null) {
-		serialNumber = serialNumber.toUpperCase();
+	appendHardwareDevice($affectedItems, serialNumber, cardId) {
+		var device = makeItAll.hardwareManager.getDevice(serialNumber);
 
-		var existingSerialNumbers = [];
+		$affectedItems.append(
+			' <li serial_number="' + device.serial_number + '"">' +
+				'<input type="text" name="tickets[' + cardId + '].devices" value="' + device.id + '" hidden />' +
+				'<h4>' + device.name + '</h4>' +
+				'<p>(Hardware)</p>' +
+				'<a class="btn btn-danger remove-affected-item" href="javascript: void(0);">' +
+					'<i class="fa fa-laptop"></i> ' +
+					'Remove' +
+				'</a>' +
+			'</li>'
+		);
+	}
 
-		$hardwareList.children().each(function() {
-			existingSerialNumbers.push($(this).attr('serial-number'));
-		});
+	appendSoftwareProgram($affectedItems, programId, cardId) {
+		var program = makeItAll.softwareManager.getProgram(programId);
 
-		if (existingSerialNumbers.indexOf(serialNumber) === -1) {
-			var device = makeItAll.hardwareManager.getDevice(serialNumber);
+		$affectedItems.append(
+			' <li program-id="' + programId + '"">' +
+				'<input type="text" name="tickets[' + cardId + '].programs" value="' + program.id + '" hidden />' +
+				'<h4>' + program.name + '</h4>' +
+				'<p>(Software)</p>' +
+				'<a class="btn btn-danger remove-affected-item" href="javascript: void(0);">' +
+					'<i class="fa fa-file-code-o"></i> ' +
+					'Remove' +
+				'</a>' +
+			'</li>'
+		);
+	}
 
-			if (device !== null) {
-				$hardwareList.append(
-					' <li serial-number="' + serialNumber + '"">' +
-						'<input type="text" name="' + (cardId !== null ? 'tickets[' + cardId + '][devices]' : 'devices') + '" value="' + device.id + '" hidden />' +
-						'<h4>' + device.name + '</h4>' +
-						'<p>' + device.programs[0].name + '</p>' +
-						'<a class="btn btn-danger remove-hardware-device" href="javascript: void(0);">' +
-							'<i class="fa fa-minus"></i> ' +
-							'Remove' +
-						'</a>' +
-					'</li>'
-				);
-
-				return true;
-			}
-		}
-
-		return false;
+	appendAffectedItem($affectedItems, item, cardId = null) {
+		
 	}
 
 	showCallTicketsModal(callId) {

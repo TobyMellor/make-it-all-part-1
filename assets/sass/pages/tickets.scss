@@ -183,10 +183,10 @@ span.filter {
 	}
 }
 
-.hardware-list {
+.affected-items {
 	list-style: none;
 	padding: 0;
-	margin: $comfortable 0 0 0;
+	margin: $cosy 0;
 
 	li {
 		width: 152px;
@@ -243,11 +243,11 @@ span.filter {
 		}
 	}
 
-	.card.existing .hardware-list {
+	.card.existing .affected-items {
 		li {
 			height: 90px;
 			
-			.remove-hardware-device {
+			.remove-affected-item {
 				display: none;
 			}
 		}
