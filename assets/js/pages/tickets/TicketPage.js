@@ -157,11 +157,17 @@ class TicketPage extends DynamicPage {
 		this.refreshPage(ticket.filter.slug, ticketId);
 	}
 
-	appendHardwareDevices($hardwareList, ticket, cardId) {
+	appendAffectedItems($affectedItems, ticket, cardId) {
 		for (var i = 0; i < ticket.devices.length; i++) {
 			var device = ticket.devices[i];
 
-			this.appendHardwareDevice($hardwareList, device.serial_number, cardId);
+			this.appendHardwareDevice($affectedItems, device.serial_number, cardId);
+		}
+
+		for (var i = 0; i < ticket.programs.length; i++) {
+			var program = ticket.programs[i];
+
+			this.appendSoftwareProgram($affectedItems, program.id, cardId);
 		}
 	}
 
@@ -195,10 +201,6 @@ class TicketPage extends DynamicPage {
 				'</a>' +
 			'</li>'
 		);
-	}
-
-	appendAffectedItem($affectedItems, item, cardId = null) {
-		
 	}
 
 	showCallTicketsModal(callId) {
@@ -260,7 +262,7 @@ class TicketPage extends DynamicPage {
 			$modal.find('input[name*="' + key + '"], textarea[name*="' + key + '"]').val(value);
 		}
 
-		this.appendHardwareDevices($modal.find('.hardware-list'), ticket, cardId);
+		this.appendAffectedItems($modal.find('.affected-items'), ticket, cardId);
 	}
 
 	appendNewComment($commentBox) {

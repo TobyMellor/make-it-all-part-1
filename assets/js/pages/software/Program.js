@@ -2,7 +2,6 @@
  * Program
  *
  * Holds information about a piece of Software.
- * Contains all hardware that runs the software.
  */
 
 class Program {
@@ -13,6 +12,7 @@ class Program {
 		created_at,
 		updated_at
 	) {
+<<<<<<< HEAD
 		this.id      = id;
 		this.name    = name;
 		this.devices = devices; // ID of devices, get method returns instances of Device
@@ -26,5 +26,9 @@ class Program {
 
 	set devices(devices) {
 		this._devices = devices;
+=======
+		this.id   = id;
+		this.name = name;
+>>>>>>> Design for all modals, outline for removed program/software/operating_system
 	}
 }

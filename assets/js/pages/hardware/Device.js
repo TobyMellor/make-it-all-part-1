@@ -8,6 +8,7 @@
 class Device {
 	constructor(
 		id,
+		name,
 		type,
 		manufacturer,
 		serial_number,
@@ -16,8 +17,9 @@ class Device {
 		updated_at
 	) {
 		this.id                = id;
+		this.name              = name;
 		this.type 			   = type;
-		this.manufacturer              = manufacturer;
+		this.manufacturer      = manufacturer;
 		this.programs		   = programs;
 		this.serial_number     = serial_number;
 		this.created_at        = created_at;

@@ -225,6 +225,7 @@ nav ul {
 	&:hover {
 		background-color: $silver;
 		color: $black-hover;
+		border-bottom: 2px solid $black;
 	}
 
 	&.btn-success {
@@ -234,6 +235,7 @@ nav ul {
 
 		&:hover {
 			background-color: $green-hover;
+			border-bottom: 2px solid $black;
 		}
 	}
 
@@ -244,6 +246,7 @@ nav ul {
 
 		&:hover {
 			background-color: $orange-hover;
+			border-bottom: 2px solid $black;
 		}
 	}
 
@@ -255,6 +258,7 @@ nav ul {
 		&:hover {
 			color: $white;
 			background-color: $red-hover;
+			border-bottom: 2px solid $black;
 		}
 	}
 
@@ -266,7 +270,14 @@ nav ul {
 
 		&:hover {
 			background-color: $blue-hover;
+			border-bottom: 2px solid $black;
 		}
+	}
+}
+
+a.btn {
+	&:hover {
+		border-bottom: 2px solid $blue-hover;
 	}
 }
 
@@ -702,6 +713,10 @@ label {
 	display: flex;
 	border: 1px solid $silver;
 
+	& * {
+		transition: none;
+	}
+
 	.type-columns {
 		display: flex;
 		flex: 2;
@@ -838,5 +853,4 @@ span.filter {
 }
 
 @import "animate";
-
 @import "responsive";

@@ -81,6 +81,8 @@ class TicketManager extends Manager {
 				description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
 				assigned_to: 0,
 				devices: [],
+				programs: [],
+				operating_system: 'macOS 12.4',
 				created_at: 'Yesterday',
 				updated_at: '1 hour ago',
 				events: [0, 1, 2],
@@ -94,6 +96,8 @@ class TicketManager extends Manager {
 				description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
 				assigned_to: 1,
 				devices: [],
+				programs: [],
+				operating_system: 'macOS 12.4',
 				created_at: '4 days ago',
 				updated_at: '4 days ago',
 				events: [3],
@@ -107,6 +111,8 @@ class TicketManager extends Manager {
 				description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
 				assigned_to: 0,
 				devices: [],
+				programs: [],
+				operating_system: 'macOS 12.4',
 				created_at: '1 day ago',
 				updated_at: 'Just now',
 				events: [],
@@ -120,6 +126,8 @@ class TicketManager extends Manager {
 				description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
 				assigned_to: 1,
 				devices: [],
+				programs: [],
+				operating_system: 'macOS 12.4',
 				created_at: '23 hours ago',
 				updated_at: '3 minutes ago',
 				events: [],
@@ -133,6 +141,8 @@ class TicketManager extends Manager {
 				description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
 				assigned_to: 0,
 				devices: [],
+				programs: [],
+				operating_system: 'macOS 12.4',
 				created_at: '4 hours ago',
 				updated_at: '4 hours ago',
 				events: [],
@@ -213,6 +223,8 @@ class TicketManager extends Manager {
 				ticket.description,
 				ticket.assigned_to,
 				ticket.devices,
+				ticket.programs,
+				ticket.operating_system,
 				ticket.created_at,
 				ticket.updated_at,
 				ticket.events,
@@ -301,6 +313,8 @@ class TicketManager extends Manager {
 				tickets[i].description,
 				tickets[i].assigned_to,
 				tickets[i].devices,
+				tickets[i].programs,
+				tickets[i].operating_system,
 				tickets[i].problem_type
 			);
 
@@ -314,7 +328,7 @@ class TicketManager extends Manager {
 		return call;
 	}
 
-	createTicket(callId, filterSlug, title, description, assignedTo, devices, problemType) {
+	createTicket(callId, filterSlug, title, description, assignedTo, devices, programs, operatingSystem, problemType) {
 		// AJAX call here, which returns a ticketId
 		// validation here
 		var ticketId = Math.floor(Math.random() * (10000 + 1));
@@ -327,6 +341,8 @@ class TicketManager extends Manager {
 			description,
 			parseInt(assignedTo),
 			devices,
+			programs,
+			operatingSystem,
 			'Just now',
 			'Just now',
 			[],
@@ -375,12 +391,14 @@ class TicketManager extends Manager {
 			);
 		}
 
-		ticket.filter       = filterSlug;
-		ticket.title        = title;
-		ticket.description  = description;
-		ticket.assigned_to  = assignedTo;
-		ticket.devices      = devices;
-		ticket.problem_type = problemType;
+		ticket.filter           = filterSlug;
+		ticket.title            = title;
+		ticket.description      = description;
+		ticket.assigned_to      = assignedTo;
+		ticket.devices          = devices;
+		ticket.programs         = programs;
+		ticket.operating_system = operating_system;
+		ticket.problem_type     = problemType;
 
 		return ticket;
 	}

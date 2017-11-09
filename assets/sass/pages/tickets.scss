@@ -177,12 +177,6 @@ span.filter {
 	}
 }
 
-#new-ticket-modal {
-	.add-another-ticket {
-		float: right;
-	}
-}
-
 .affected-items {
 	list-style: none;
 	padding: 0;
@@ -231,18 +225,6 @@ span.filter {
 }
 
 #accordion {
-	.assigned-to-options > *:not(:first-child) {
-		display: none;
-	}
-	
-	.form-check {
-		margin-top: -5px;
-		
-		.form-check-label:not(:first-child) {
-			margin-top: $compact;
-		}
-	}
-
 	.card.existing .affected-items {
 		li {
 			height: 90px;
@@ -250,6 +232,22 @@ span.filter {
 			.remove-affected-item {
 				display: none;
 			}
+		}
+	}
+}
+
+.assigned-to-options > *:not(:first-child) {
+	display: none;
+}
+
+.form-check {
+	margin-top: -5px;
+	
+	.form-check-label {
+		display: block;
+		
+		&:not(:first-child) {
+			margin-top: $compact;
 		}
 	}
 }
