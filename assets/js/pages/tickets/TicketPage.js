@@ -58,16 +58,16 @@ class TicketPage extends DynamicPage {
 
 			$('#ticket-view #ticket-overview').text('#' + ticket.id + ' | ' + ticket.created_at);
 			$('#ticket-view #ticket-description p').text(ticket.description);
-
+			$('#ticket-view #ticket-operating-system').text(ticket.operating_system);
 
 			var $ticketComments           = $('#ticket-comments'),
 				$ticketHardwareSoftware   = $('#ticket-view #hardware-software-table'),
 				$ticketNoHardwareSoftware = $('#ticket-view #no-hardware-software'),
 				$ticketCallHistoryBody    = $('#ticket-view #call-history-table tbody'),
-				devices	                  = ticket.devices,
+				affectedItems	          = ticket.devices.concat(ticket.programs),
 				calls                     = ticket.calls;
 
-			if (devices.length === 0) {
+			if (affectedItems.length === 0) {
 				$ticketHardwareSoftware.hide();
 				$ticketNoHardwareSoftware.show();
 			} else {
@@ -78,14 +78,14 @@ class TicketPage extends DynamicPage {
 
 				$ticketHardwareSoftwareBody.html('');
 
-				for (var i = 0; i < devices.length; i++) {
-					var device = devices[i];
+				for (var i = 0; i < affectedItems.length; i++) {
+					var affectedItem = affectedItems[i];
 
 					$ticketHardwareSoftwareBody.append(
-						'<tr data-rowid="' + device.id + '">' +
-							'<td class="truncate">' + device.serial_number + '</td>' +
-							'<td class="truncate">' + device.name + '</td>' +
-							'<td class="truncate">' + device.operating_system + '</td>' +
+						'<tr data-rowid="' + affectedItem.id + '">' +
+							'<td class="truncate">' + affectedItem.name + '</td>' +
+							'<td class="truncate">' + (affectedItem.serial_number || '—') + '</td>' +
+							'<td class="truncate">' + (affectedItem.hasOwnProperty('serial_number') ? 'Hardware' : 'Software') + '</td>' +
 							'<td>' +
 								'<i class="fa fa-eye"></i>' +
 							'</td>' +

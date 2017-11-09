@@ -163,7 +163,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<p class="ticket-details">
-							<strong>Description:</strong>
+							<strong>Description</strong>
 							<span id="ticket-overview" class="subtle"></span>
 						</p>
 						<div id="ticket-description">
@@ -175,14 +175,15 @@
 				<div class="row tables">
 					<div>
 						<p class="ticket-details">
-							<strong>Hardware/Software:</strong>
+							<strong>Affected Hardware & Software</strong>
+							<span id="ticket-operating-system" class="subtle"></span>
 						</p>
 						<table class="table compact" id="hardware-software-table">
 							<thead>
 								<tr>
-									<th>SERIAL</th>
 									<th>NAME</th>
-									<th>OS</th>
+									<th>SERIAL</th>
+									<th>TYPE</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -191,7 +192,7 @@
 					</div>
 					<div>
 						<p class="ticket-details">
-							<strong>Call History:</strong>
+							<strong>Call History</strong>
 							<span class="subtle" id="show-new-call-modal" data-toggle="modal" data-target="#follow-up-call-modal">Register follow-up call</span>
 						</p>
 						<table class="table compact" id="call-history-table">
@@ -208,7 +209,7 @@
 					</div>
 				</div>
 
-				<h4>Updates:</h4>
+				<h4>Updates</h4>
 
 				<ul class="list-unstyled" id="ticket-comments"></ul>
 
@@ -328,7 +329,7 @@
 															<div class="col-md-4">
 																<div class="form-group">
 																	<label>Operating System</label>
-																	<input class="form-control no-clear-on-show" name="tickets[1].operating_system" value="(prototype)" disabled />
+																	<input class="form-control no-clear-on-show" name="tickets[1].operating_system" />
 																</div>
 															</div>
 															<div class="col-md-4">
@@ -485,7 +486,7 @@
 																</div>
 															</div>
 															<div class="col-md-8">
-																<label>Affected Hardware and Software</label>
+																<label>Affected Hardware & Software</label>
 																<ul class="affected-items"></ul>
 															</div>
 														</div>
@@ -597,7 +598,7 @@
 								
 								<div class="form-group">
 									<label class="required">Operating System</label>
-									<input class="form-control" name="operating_system" value="(prototype)" disabled />
+									<input class="form-control" name="tickets[this].operating_system" />
 								</div>
 
 								<div class="row">
@@ -866,6 +867,8 @@
 				formData.description,
 				parseInt(formData.assigned_to),
 				formData.devices,
+				formData.programs,
+				formData.operating_system,
 				parseInt(formData.problem_type)
 			);
 
@@ -1084,7 +1087,7 @@
 												'</div>' +
 											'</div>' +
 											'<div class="col-md-8">' +
-												'<label>Affected Hardware and Software</label>' +
+												'<label>Affected Hardware & Software</label>' +
 												'<ul class="affected-items"></ul>' +
 											'</div>' +
 										'</div>' +
