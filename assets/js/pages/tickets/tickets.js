@@ -10,7 +10,7 @@ $(() => {
 
 	ticketPage.showFilteredTickets('new,pending_awaiting_staff,pending_in_progress,resolved');
 	
-	if (location.hash) ticketPage.showTableRowDetails(parseInt(location.hash.substring(1)));
+	if (location.hash) ticketPage.showTicketView(parseInt(location.hash.substring(1)));
 
 	$('.new-ticket').on('click', function() {
 		$('#new-ticket-modal').find('input, textarea')

@@ -8,10 +8,10 @@ $(function () {
 		var newValue = $(this).closest(".dropdown-menu.open").children(".bs-searchbox").children("input").val(),
 		    $modal   = $('#new-staff-modal');
 
+		$modal.modal('show');
+
 		$modal.find('input[name="staff.name"]').val(newValue);
 		$modal.find('input[name="event_target"]').val($(this).closest('.bootstrap-select').find('select').attr('name')); // when the staff member is created, this is the input field it'll update
-
-		$modal.modal('show');
 	});
 
 	$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
