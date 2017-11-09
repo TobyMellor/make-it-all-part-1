@@ -230,12 +230,26 @@ span.filter {
 	}
 }
 
-#accordion .card.existing .hardware-list {
-	li {
-		height: 90px;
+#accordion {
+	.assigned-to-options > *:not(:first-child) {
+		display: none;
+	}
+	
+	.form-check {
+		margin-top: -5px;
 		
-		.remove-hardware-device {
-			display: none;
+		.form-check-label:not(:first-child) {
+			margin-top: $compact;
+		}
+	}
+
+	.card.existing .hardware-list {
+		li {
+			height: 90px;
+			
+			.remove-hardware-device {
+				display: none;
+			}
 		}
 	}
 }

@@ -12,8 +12,8 @@ $(() => {
 
 	$('.new-ticket').on('click', function() {
 		$('#new-ticket-modal').find('input, textarea')
-			   .not('.no-clear-on-show')
-			   .val('');
+			.not('.no-clear-on-show')
+			.val('');
 	});
 
 	$('#new-ticket-modal #create-new-ticket').on('click', function (e) {
@@ -153,6 +153,10 @@ $(() => {
 		$(this).find('.staff-information').text('No staff member has been selected yet!');
 		$(this).find('#accordion .card .type-columns').empty();
 
+		$(this).find('input[name*="assigned_to.self"]').val('Me');
+		$(this).find('input[name*="assigned_to.specialist"]').val('Problem Type not yet chosen');
+		$(this).find('.form-check .form-check-input[value="self"]').click();
+
 		problemTypePage.loadSubProblemTypes($(this).find('.type-columns'));
 	});
 
@@ -205,5 +209,19 @@ $(() => {
 		}
 
 		problemTypePage.createProblemType($(this).parent().siblings('input').val(), parentProblemTypeId);
+	});
+
+	$(document).on('click', '#accordion .form-check input', function() {
+		$assignedToOptions = $('.assigned-to-options');
+
+		$assignedToOptions.find('> *').hide();
+
+		if ($(this).val() === 'self') {
+			$assignedToOptions.find('> :first-child').show();
+		} else if ($(this).val() === 'operator') {
+			$assignedToOptions.find('> :nth-child(2)').show();
+		} else {
+			$assignedToOptions.find('> :last-child').show();
+		}
 	});
 });

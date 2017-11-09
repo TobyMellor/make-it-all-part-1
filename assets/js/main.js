@@ -51,8 +51,8 @@ $(function () {
 
 	$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
 		$(this).find('input, textarea')
-			   .not('.no-clear-on-show')
-			   .val('');
+			.not('.no-clear-on-show')
+			.val('');
 
 		$(this).find('#accordion .card:not(:first-child)').remove();
 
