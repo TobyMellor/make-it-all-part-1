@@ -44,7 +44,7 @@ $(() => {
 				$(staffPage.navSelector).find("[data-slug=\"all\"]").addClass("active").siblings().removeClass("active");
 				staffPage.hideTableRowDetails();
 				staffPage.showStaff();
-				staffPage.showTableRowDetails(staffPage.employee.id);
+				staffPage.showTableRowDetails(employee.id);
 			}
 			
 			$('#new-staff-modal').modal('hide');
