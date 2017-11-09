@@ -356,7 +356,7 @@ class TicketManager extends Manager {
 		if (ticket.filter.slug !== filterSlug) {
 			this.createEvent(
 				ticketId,
-				staffManager.currentUser(),
+				makeItAll.staffManager.currentUser(),
 				'event',
 				this.getFilter(filterSlug).name,
 				'Just now'
@@ -364,13 +364,13 @@ class TicketManager extends Manager {
 
 			this.updateFilter(ticket.filter.slug, filterSlug, ticketId);
 		}
-
+		
 		if (ticket._assigned_to !== assignedTo) {
 			this.createEvent(
 				ticketId,
-				staffManager.currentUser(),
+				makeItAll.staffManager.currentUser(),
 				'event',
-				'Assigned to ' + makeItAll.staffManager.getStaffMember(assignedTo).name,
+				'Assigned to ' + makeItAll.staffManager.getEmployee(assignedTo).name,
 				'Just now'
 			);
 		}
