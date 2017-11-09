@@ -1,5 +1,5 @@
-let staffPage            = new StaffPage();
-let staffProblemTypePage = new StaffProblemTypePage();
+let staffPage            = new StaffPage(),
+	staffProblemTypePage = new StaffProblemTypePage();
 
 $(() => {
 	let isPage = document.getElementById(staffPage.sectionSelector.substring(1)).dataset.page === "staff";
