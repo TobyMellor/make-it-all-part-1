@@ -227,7 +227,7 @@ span.filter {
 #accordion {
 	.card.existing .affected-items {
 		margin: 0;
-		
+
 		li {
 			height: 90px;
 			
@@ -238,8 +238,10 @@ span.filter {
 	}
 }
 
-.assigned-to-options > *:not(:first-child) {
-	display: none;
+.form-group {
+	.assigned-to-options > *:not(:first-child) {
+		display: none;
+	}
 }
 
 .form-check {
