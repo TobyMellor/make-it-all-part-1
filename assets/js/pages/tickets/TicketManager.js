@@ -305,7 +305,7 @@ class TicketManager extends Manager {
 			this.getTicket(ticketId)._calls.push(callId);
 		}
 
-		for (var i in tickets) {
+		for (var i = 0; i < tickets.length; i++) {
 			var ticket = this.createTicket(
 				callId,
 				tickets[i].filter,

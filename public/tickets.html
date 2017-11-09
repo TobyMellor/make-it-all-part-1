@@ -175,7 +175,7 @@
 				<div class="row tables">
 					<div>
 						<p class="ticket-details">
-							<strong>Affected Hardware & Software</strong>
+							<strong>Hardware & Software</strong>
 							<span id="ticket-operating-system" class="subtle"></span>
 						</p>
 						<table class="table compact" id="hardware-software-table">
@@ -296,9 +296,11 @@
 															<label class="required">Assigned To</label>
 															<br />
 															<div class="assigned-to-options">
-																<input class="form-control no-clear-on-show" name="tickets[1].assigned_to.self" value="Me" disabled />
+																<input class="form-control no-clear-on-show" name="tickets[1].assigned_to.self_showcase" readonly />
+																<input class="form-control no-clear-on-show" name="tickets[1].assigned_to.self" readonly hidden />
 																<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators…" name="tickets[1].assigned_to.operator"></select>
-																<input class="form-control no-clear-on-show" name="tickets[1].assigned_to.specialist" value="Problem Type not yet chosen" disabled />
+																<input class="form-control no-clear-on-show" name="tickets[1].assigned_to.specialist" readonly hidden />
+																<input class="form-control no-clear-on-show" name="tickets[1].assigned_to.specialist_showcase" value="Problem Type not yet chosen" readonly />
 															</div>
 														</div>
 
@@ -849,8 +851,17 @@
 		$('#new-ticket-modal #create-new-ticket').on('click', function (e) {
 			e.preventDefault();
 
-			var formData = $('#new-ticket-modal form').serializeObject(),
-				call     = makeItAll.ticketManager.createCall(formData.date_of_call, formData.caller, formData.tickets);
+			var formData = $('#new-ticket-modal form').serializeObject();
+				tickets  = [];
+
+			for (var i in formData.tickets) {
+				var ticket = formData.tickets[i];
+
+				ticket.assigned_to = ticket.assigned_to[ticket.assigned_to_type];
+				tickets.push(ticket);
+			}
+
+			var call = makeItAll.ticketManager.createCall(formData.date_of_call, Number(formData.caller), tickets);
 
 			ticketPage.refreshPage(call.tickets[0].filter.slug);
 
@@ -1205,9 +1216,10 @@
 
 			$(this).find('.staff-information').text('No staff member has been selected yet!');
 			$(this).find('#accordion .card .type-columns').empty();
-
-			$(this).find('input[name*="assigned_to.self"]').val('Me');
-			$(this).find('input[name*="assigned_to.specialist"]').val('Problem Type not yet chosen');
+			$(this).find('input[name*="assigned_to.self"]').val(makeItAll.staffManager.currentUser());
+			$(this).find('input[name*="assigned_to.self_showcase"]').val(makeItAll.staffManager.currentUser(true).name);
+			$(this).find('input[name*="assigned_to.specialist"]').val('');
+			$(this).find('input[name*="assigned_to.specialist_showcase"]').val('Problem Type not yet chosen');
 			$(this).find('.form-check .form-check-input[value="self"]').click();
 
 			problemTypePage.loadSubProblemTypes($(this).find('.type-columns'));
@@ -1255,7 +1267,6 @@
 
 			ticketPage.search(query);
 		});
-
 
 		$(document).on('click', '.create-problem-type', function() {
 			var $parentProblemType  = $(this).closest('.type-column').prev().find('.active'),
