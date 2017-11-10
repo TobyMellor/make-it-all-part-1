@@ -39,14 +39,14 @@ $(() => {
 	});
 
 	$('#edit-ticket-modal #edit-existing-ticket').on('click', function () {
-		var formData = $('#edit-ticket-modal form').serializeObject();
+		var formData = $('#edit-ticket-modal form').serializeObject().tickets.this;
 
 		makeItAll.ticketManager.editTicket(
 			Number(formData.id),
 			formData.filter,
 			formData.title,
 			formData.description,
-			Number(formData.assigned_to),
+			Number(formData.assigned_to[formData.assigned_to_type]),
 			formData.devices,
 			formData.programs,
 			formData.operating_system,
@@ -70,10 +70,6 @@ $(() => {
 
 	$('.ticket-close-button').on('click', function() {
 		ticketPage.hideTableRowDetails();
-	});
-
-	$('.ticket-edit-button').on('click', function() {
-		ticketPage.populateTicketModal($('#edit-ticket-modal'), ticketPage.currentTicket);
 	});
 
 	$('.add-another-ticket').on('click', function() {
@@ -165,7 +161,7 @@ $(() => {
 		var $editTicketModal = $('#edit-ticket-modal'),
 			currentTicket    = ticketPage.currentTicket;
 
-		ticketPage.populateTicketModal($editTicketModal, currentTicket);
+		ticketPage.populateTicketModal($editTicketModal, currentTicket, 'this');
 		ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true), (ticketPage.getAssignedToType(currentTicket) === 'operator' ? currentTicket._assigned_to : null));
 				
 		$editTicketModal.find('.form-check .form-check-label input[value="' + ticketPage.getAssignedToType(currentTicket) + '"]').click();

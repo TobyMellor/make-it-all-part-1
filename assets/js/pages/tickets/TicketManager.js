@@ -366,7 +366,7 @@ class TicketManager extends Manager {
 		return this.findAllWhere(this.tickets, ticket => ticket._calls.indexOf(callId) > -1);
 	}
 
-	editTicket(ticketId, filterSlug, title, description, assignedTo, devices, problemType) {
+	editTicket(ticketId, filterSlug, title, description, assignedTo, devices, programs, operatingSystem, problemType) {
 		var ticket = this.getTicket(ticketId);
 
 		if (ticket.filter.slug !== filterSlug) {
@@ -397,7 +397,7 @@ class TicketManager extends Manager {
 		ticket.assigned_to      = assignedTo;
 		ticket.devices          = devices;
 		ticket.programs         = programs;
-		ticket.operating_system = operating_system;
+		ticket.operating_system = operatingSystem;
 		ticket.problem_type     = problemType;
 
 		return ticket;

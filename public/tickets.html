@@ -486,7 +486,7 @@
 															<div class="col-md-12">
 																<div class="form-group">
 																	<label>Problem Type</label>
-																	<input class="form-control" name="tickets.this.problem_type" disabled>
+																	<input class="form-control" name="tickets.this.problem_type_showcase" disabled>
 																</div>
 															</div>
 														</div>
@@ -545,7 +545,7 @@
 				</div>
 				<div class="modal-body">
 					<form>
-						<input type="text" name="id" hidden />
+						<input type="text" name="tickets.this.id" hidden />
 						<div class="row">
 							<div class="col-md-12">
 								<div class="row">
@@ -553,7 +553,7 @@
 										<div class="form-group">
 											<label class="required">Status</label>
 											<br />
-											<select class="selectpicker" name="filter">
+											<select class="selectpicker" name="tickets.this.filter">
 												<option value="new">New</option>
 												<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
 												<option value="pending_in_progress">Pending - In Progress</option>
@@ -593,16 +593,16 @@
 								</div>
 								<div class="form-group">
 									<label class="required">Ticket Title</label>
-									<input class="form-control" name="title" />
+									<input class="form-control" name="tickets.this.title" />
 								</div>
 								<div class="form-group">
 									<label class="required">Ticket Description</label>
-									<textarea class="form-control" name="description"></textarea>
+									<textarea class="form-control" name="tickets.this.description"></textarea>
 								</div>
 
 								<div class="form-group">
 									<label class="required">Problem Type</label>
-									<input name="problem_type" hidden>
+									<input name="tickets.this.problem_type" hidden>
 									<span class="subtle pull-right"></span>
 									<div class="problem-type-picker">
 										<div class="type-columns"></div>

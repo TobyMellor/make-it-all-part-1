@@ -244,7 +244,7 @@ class TicketPage extends DynamicPage {
 		this.showTicketView(ticketId);
 	}
 
-	populateTicketModal($modal, ticket, cardId = null) {
+	populateTicketModal($modal, ticket, cardId) {
 		for (var key in ticket) {
 			var value = ticket[key];
 
@@ -269,8 +269,10 @@ class TicketPage extends DynamicPage {
 					$modal.find('.form-check-input').attr('disabled', true);
 				}
 			} else if (key === '_problem_type') {
-				key = 'problem_type';
+				key = 'problem_type_showcase';
 				value = problemTypePage.getProblemTypeBreadcrum(ticket.problem_type);
+
+				$modal.find('input[name*=problem_type]').val(ticket._problem_type);
 			}
 			
 			$modal.find('input[name*="' + key + '"], textarea[name*="' + key + '"]').val(value);
@@ -412,7 +414,7 @@ class TicketPage extends DynamicPage {
 							'<div class="col-md-12">' +
 								'<div class="form-group">' +
 									'<label class="required">Problem Type</label>' +
-									'<input name="tickets[' + cardId + '].problem_type" hidden>' +
+									'<input name="tickets[' + cardId + '].problem_type_showcase" hidden>' +
 									'<span class="subtle pull-right"></span>' +
 									'<div class="problem-type-picker">' +
 										'<div class="type-columns"></div>' +
