@@ -255,8 +255,6 @@ class TicketPage extends DynamicPage {
 				var assignedToType = this.getAssignedToType(ticket),
 					currentUser    = makeItAll.staffManager.currentUser(true);
 
-				this.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true), (assignedToType === 'operator' ? ticket._assigned_to : null));
-				
 				$modal.find('input[name*="assigned_to"]').not('.form-check-input').val(ticket.assigned_to.name);
 
 				$modal.find('input[name*="assigned_to.self"]').val(currentUser.id);
@@ -348,8 +346,8 @@ class TicketPage extends DynamicPage {
 									'<label class="required">Assigned To</label>' +
 									'<br />' +
 									'<div class="assigned-to-options">' +
-										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.self_showcase" readonly />' +
-										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.self" readonly hidden />' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.self_showcase" value="' + makeItAll.staffManager.currentUser(true).name + '" readonly />' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.self" value="' + makeItAll.staffManager.currentUser() + '" readonly hidden />' +
 										'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators…" name="tickets[' + cardId + '].assigned_to.operator"></select>' +
 										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.specialist" readonly hidden />' +
 										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.specialist_showcase" value="Problem Type not yet chosen" readonly />' +
@@ -381,7 +379,7 @@ class TicketPage extends DynamicPage {
 									'<div class="col-md-4">' +
 										'<div class="form-group">' +
 											'<label>Operating System</label>' +
-											'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].operating_system" value="(prototype)" disabled />' +
+											'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].operating_system" />' +
 										'</div>' +
 									'</div>' +
 									'<div class="col-md-4">' +
@@ -498,7 +496,7 @@ class TicketPage extends DynamicPage {
 									'<div class="col-md-4">' +
 										'<div class="form-group">' +
 											'<label>Operating System</label>' +
-											'<input class="form-control" name="tickets[' + cardId + '].operating_system" value="(prototype)" disabled />' +
+											'<input class="form-control" name="tickets[' + cardId + '].operating_system" value="' + ticket.operating_system + '" disabled />' +
 										'</div>' +
 									'</div>' +
 									'<div class="col-md-8">' +
@@ -545,7 +543,7 @@ class TicketPage extends DynamicPage {
 	getAssignedToType(ticket) {
 		if (ticket._assigned_to === makeItAll.staffManager.currentUser()) {
 			return 'self';
-		} else if (ticket.assigned_to.access.operator) {
+		} else if (ticket.assigned_to.isOperator) {
 			return 'operator';
 		}
 

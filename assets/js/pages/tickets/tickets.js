@@ -164,8 +164,10 @@ $(() => {
 			currentTicket    = ticketPage.currentTicket;
 
 		ticketPage.populateTicketModal($editTicketModal, currentTicket);
+		ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true), (ticketPage.getAssignedToType(currentTicket) === 'operator' ? currentTicket._assigned_to : null));
+				
 
-		$editTicketModal.find('.form-check .form-check-label input[name="tickets.this.assigned_to.' + ticketPage.getAssignedToType(currentTicket) + '"]').click();
+		$editTicketModal.find('.form-check .form-check-label input[value="' + ticketPage.getAssignedToType(currentTicket) + '"]').click();
 
 		problemTypePage.loadProblemType($editTicketModal.find('.type-columns'), currentTicket._problem_type);
 	});
@@ -216,7 +218,6 @@ $(() => {
 		var $assignedToOptions = $(this).closest('.assigned-to-section').find('.assigned-to-options');
 
 		$assignedToOptions.find('> *').hide();
-
 		if ($(this).val() === 'self') {
 			$assignedToOptions.find('> :first-child').show();
 		} else if ($(this).val() === 'operator') {
