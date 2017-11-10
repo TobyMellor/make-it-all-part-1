@@ -433,8 +433,9 @@ class TicketPage extends DynamicPage {
 	}
 
 	addExistingAccordionCard($accordion, ticketId) {
-		var ticket = makeItAll.ticketManager.getTicket(ticketId),
-			cardId = Math.floor(Math.random() * (10000 + 1));
+		var $addExistingTicket = $accordion.closest('.modal').find('#add-existing-ticket'),
+			ticket             = makeItAll.ticketManager.getTicket(ticketId),
+			cardId             = Math.floor(Math.random() * (10000 + 1));
 
 		$accordion.append(
 			'<div class="card existing" data-cardid="' + cardId + '">' +
@@ -521,8 +522,8 @@ class TicketPage extends DynamicPage {
 
 		ticketPage.appendAffectedItems($accordion.find('.card[data-cardid="' + cardId + '"] .affected-items'), ticket, cardId);
 
-		$(this).find('option[value="' + ticketId + '"]').remove();
-		$(this).selectpicker('refresh');
+		$addExistingTicket.find('option[value="' + ticketId + '"]').remove();
+		$addExistingTicket.selectpicker('refresh');
 	}
 
 	showStaffInformation($staffInformation, employeeId) {

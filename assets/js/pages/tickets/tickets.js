@@ -133,7 +133,7 @@ $(() => {
 				continue;
 			}
 
-			$addExistingTicket.append('<option value="' + ticket.id + '">' + '#' + ticket.id + ' ' + ticket.title.substring(0, 17) + '…</option>');
+			$addExistingTicket.append('<option value="' + ticket.id + '">' + '#' + ticket.id + ' ' + ticket.title.substring(0, 17) + '</option>');
 		}
 
 		$addExistingTicket.selectpicker('refresh');
@@ -225,5 +225,14 @@ $(() => {
 		} else {
 			$assignedToOptions.find('> :last-child').show();
 		}
+	});
+
+	$(document).on('click', '.card.existing .remove-accordion', function() {
+		var $addExistingTicket = $(this).closest('.modal').find('#add-existing-ticket'),
+			ticketId           = Number($(this).closest('.card-header').siblings('input[name*="id"]').val()),
+			ticket             = makeItAll.ticketManager.getTicket(ticketId);
+
+		$addExistingTicket.prepend('<option value="' + ticketId + '">' + '#' + ticketId + ' ' + ticket.title.substring(0, 17) + '</option>');
+		$addExistingTicket.selectpicker('refresh');
 	});
 });
