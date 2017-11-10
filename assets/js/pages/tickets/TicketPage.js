@@ -56,7 +56,7 @@ class TicketPage extends DynamicPage {
 
 			this.updateSingleViewNavbar(ticket.title + '<span class="filter filter-' + ticket.filter.slug.split('_')[0] + '">' + ticket.filter.name + '</span>');
 
-			$('#ticket-view #ticket-overview').text('#' + ticket.id + ' | ' + ticket.created_at);
+			$('#ticket-view #ticket-overview').text('#' + ticket.id + ' | ' + ticket.created_at + ' | ' + ticket.assigned_to.name);
 			$('#ticket-view #ticket-description p').text(ticket.description);
 			$('#ticket-view #ticket-operating-system').text(ticket.operating_system);
 

@@ -28,19 +28,19 @@ class TicketManager extends Manager {
 			{
 				id: 2,
 				date_of_call: '21/04/2017 12:32',
-				caller: 0,
+				caller: 1,
 				tickets: [3]
 			},
 			{
 				id: 3,
 				date_of_call: '21/04/2017 12:32',
-				caller: 0,
+				caller: 3,
 				tickets: [4]
 			},
 			{
 				id: 4,
 				date_of_call: '21/04/2017 12:32',
-				caller: 0,
+				caller: 5,
 				tickets: [4]
 			},
 		];
@@ -109,7 +109,7 @@ class TicketManager extends Manager {
 				filter: 'new',
 				title: 'Squeeky chair',
 				description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
-				assigned_to: 0,
+				assigned_to: 3,
 				devices: [],
 				programs: [],
 				operating_system: 'macOS 12.4',
@@ -139,7 +139,7 @@ class TicketManager extends Manager {
 				filter: 'resolved',
 				title: 'Computer wont turn on',
 				description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
-				assigned_to: 0,
+				assigned_to: 5,
 				devices: [],
 				programs: [],
 				operating_system: 'macOS 12.4',
@@ -154,7 +154,7 @@ class TicketManager extends Manager {
 			{
 				id: 0,
 				ticket_id: 0,
-				author: 0,
+				author: 5,
 				type: 'comment',
 				content: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
 				created_at: '1 hour ago'
@@ -162,15 +162,15 @@ class TicketManager extends Manager {
 			{
 				id: 1,
 				ticket_id: 0,
-				author: 0,
+				author: 4,
 				type: 'event',
-				content: 'Pending - Awaiting Review',
+				content: 'Pending - Awaiting Staff',
 				created_at: '1 hour ago'
 			},
 			{
 				id: 2,
 				ticket_id: 0,
-				author: 1,
+				author: 3,
 				type: 'comment',
 				content: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
 				created_at: 'Just now'
@@ -178,7 +178,7 @@ class TicketManager extends Manager {
 			{
 				id: 3,
 				ticket_id: 1,
-				author: 0,
+				author: 3,
 				type: 'comment',
 				content: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.',
 				created_at: '1 hour ago'
