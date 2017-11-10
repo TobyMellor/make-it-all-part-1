@@ -519,7 +519,7 @@ class TicketPage extends DynamicPage {
 			'</div>'
 		);
 
-		ticketPage.appendAffectedItems($accordion.find('.card[data-cardid="' + cardId + '"] affected-items'), ticket, cardId);
+		ticketPage.appendAffectedItems($accordion.find('.card[data-cardid="' + cardId + '"] .affected-items'), ticket, cardId);
 
 		$(this).find('option[value="' + ticketId + '"]').remove();
 		$(this).selectpicker('refresh');
