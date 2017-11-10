@@ -261,6 +261,10 @@ class TicketPage extends DynamicPage {
 				$modal.find('input[name*="assigned_to.self_showcase"]').val(currentUser.name);
 
 				this.setSpecialist(ticket._problem_type, $modal.find('.assigned-to-options'), assignedTo);
+
+				$modal.find('.form-check-input').attr('disabled', false);
+				$modal.find('.form-check-input[value="' + this.getAssignedToType(ticket) + '"]').click();
+				$modal.find('.form-check-input').attr('disabled', true);
 			} else if (key === '_problem_type') {
 				key = 'problem_type';
 				value = problemTypePage.getProblemTypeBreadcrum(ticket.problem_type);
