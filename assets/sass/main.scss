@@ -705,6 +705,10 @@ label {
 			}
 		}
 	}
+
+	&.fade.show {
+		overflow: auto; // resolve scrolling bug when closing one of multiple shown modals
+	}
 }
 
 .problem-type-picker {
