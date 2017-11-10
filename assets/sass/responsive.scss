@@ -123,11 +123,6 @@ $wide: 1600px;
 		
 		th, td {
 			white-space: nowrap;
-			&:nth-child(2) {
-				position: -webkit-sticky;
-				position: sticky;
-				left: 0;
-			}
 		}
 		
 		tr:not(:hover) td:nth-child(2) {
