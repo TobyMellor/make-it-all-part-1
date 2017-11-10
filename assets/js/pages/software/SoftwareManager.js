@@ -10,41 +10,31 @@
 class SoftwareManager extends Manager {
 	constructor(programs) {
 		super();
-		
+
 		this.programs = [];
 
-		// loop through programs, create instances and push to this.programs
-		// TODO: Likely need an "OperatingSystem" class, Michael TODO
+		for (var i = 0; i < programs.length; i++) {
+			var program = programs[i];
+
+			this.programs.push(new Program(
+				program.id,
+				program.name,
+				program.devices,
+				program.created_at,
+				program.updated_at
+			));
+		}
 	}
 
 	createprogram() {
 		//
 	}
 
-	getPrograms(programIds) {
-		// TODO: return all programs with any of the programIds
-
-		return [
-			new Program(
-				Math.floor(Math.random() * (10000 + 1)),
-				'Microsoft Word',
-				[Math.floor(Math.random() * (10000 + 1)), Math.floor(Math.random() * (10000 + 1))]
-			),
-			new Program(
-				Math.floor(Math.random() * (10000 + 1)),
-				'Microsoft Excel',
-				[Math.floor(Math.random() * (10000 + 1))]
-			)
-		];
+	getPrograms(ids) {
+		return this.findAllWhere(this.programs, program => ids.indexOf(program.id) > -1);
 	}
 
-	getProgram(programId) {
-		// TODO: return program with programId
-
-		return new Program(
-			Math.floor(Math.random() * (10000 + 1)),
-			'Microsoft Word',
-			[0, 1]
-		);
+	getProgram(id) {
+		return this.programs.find(p => p.id === id);
 	}
 }

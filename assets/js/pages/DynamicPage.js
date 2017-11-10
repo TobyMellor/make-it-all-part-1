@@ -65,7 +65,7 @@ class DynamicPage {
 	 * splashscreen on your page
 	 */
 	appendTableRow(object) {
-		var $tableSection = $(this.sectionSelector),
+		var $tableSection = $(this.tableSelector),
 		    $tableHead     = $tableSection.find('table thead tr'),
 		    $tableBody     = $tableSection.find('table tbody'),
 		    $newRow       = $(document.createElement("tr"));
@@ -95,7 +95,7 @@ class DynamicPage {
 	 * Clears the data in the table body within #table-section
 	 */
 	clearTable() {
-		$(this.sectionSelector).find('tbody').html('');
+		$(this.tableSelector).find('tbody').html('');
 	}
 	
 	/**
@@ -104,7 +104,7 @@ class DynamicPage {
 	showTableRowDetails(id = null) {
 		// No need to check for null as no rows will match if no ID passed
 		// .siblings does not include the element itself so can be chained after finding highlight row first
-		$(this.sectionSelector).find("tbody tr").filter((i, el) => el.dataset.rowid == id).addClass("highlight").first().siblings().removeClass("highlight");
+		$(this.tableSelector).find("tbody tr").filter((i, el) => el.dataset.rowid == id).addClass("highlight").first().siblings().removeClass("highlight");
 		
 		// No need to set style using JS here, CSS handles flex
 		$(this.detailSelector).unwrap("div")
@@ -118,7 +118,7 @@ class DynamicPage {
 	 */
 	hideTableRowDetails() {
 		// Deselect all rows
-		$(this.sectionSelector).find("tbody tr").removeClass("highlight");
+		$(this.tableSelector).find("tbody tr").removeClass("highlight");
 		// Filter to check if already hidden, don't hide again
 		$(this.detailSelector).filter((i, el) => $(el).parent("div").length === 0).wrap(document.createElement("div"));
 	}

@@ -828,8 +828,12 @@ span.filter {
 		margin: -$compact 0;
 	}
 	
-	&.filter-green {
+	&.filter-green, &.filter-resolved {
 		background-color: $green;
+	}
+
+	&.filter-pending {
+		background-color: $orange;
 	}
 }
 
