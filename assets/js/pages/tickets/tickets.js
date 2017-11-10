@@ -95,10 +95,12 @@ $(() => {
 
 	$(document).on('change', '.selectpicker.add-hardware-device', function() {
 		ticketPage.appendHardwareDevice($(this).closest('.row').next().find('.affected-items'), $(this).val(), $(this).closest('.card').data('cardid'));
+		$(this).closest('.card-block').scrollTop(1E10);
 	});
 
 	$(document).on('change', '.selectpicker.add-software-program', function() {
 		ticketPage.appendSoftwareProgram($(this).closest('.row').next().find('.affected-items'), $(this).val(), $(this).closest('.card').data('cardid'));
+		$(this).closest('.card-block').scrollTop(1E10);
 	});
 
 	$(document).on('click', '.remove-hardware-device', function() {
@@ -177,16 +179,28 @@ $(() => {
 	});
 
 	$(document).on('click', '.problem-type-picker:not(.problem-type-checkboxes) .type-column li', function() {
-		var problemTypeId = Number($(this).data('problemTypeId'));
+		var problemTypeId       = Number($(this).data('problemTypeId')),
+			bestSpecialist      = staffProblemTypePage.getSpecialistForProblemType(problemTypeId),
+			$assignedToOptions  = $(this).closest('.card').find('.assigned-to-options'),
+			$specialistId       = $assignedToOptions.find('input[name*="specialist"]'),
+			$specialistShowcase = $assignedToOptions.find('input[name*="specialist_showcase"]');
 
 		problemTypePage.loadSubProblemTypes($(this).closest('.type-columns'), $(this), problemTypeId);
 
 		$(this).closest('.problem-type-picker').siblings('input[name*=problem_type]').val(problemTypeId);
+
+		if (bestSpecialist !== null) {
+			$specialistId.val(bestSpecialist.id);
+			$specialistShowcase.val(bestSpecialist.name);
+		} else {
+			$specialistId.val('');
+			$specialistShowcase.val('No Specialist for the Problem Type');
+		}
 	});
 
 	$(document).on('click', '.problem-type-checkboxes .type-column li', function() {
 		if (!$(this).hasClass('no-children')) {
-			staffProblemTypePage.loadSpecialistProblemTypes($(this).closest('.type-columns'), $(this), parseInt($(this).data('problemTypeId')));
+			staffProblemTypePage.loadSpecialistProblemTypes($(this).closest('.type-columns'), $(this), Number($(this).data('problemTypeId')));
 		}
 	});
 

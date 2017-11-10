@@ -256,4 +256,21 @@ span.filter {
 	}
 }
 
+.problem-type-picker {
+	.type-columns {
+		.type-column {
+			li {
+				&.no-children {
+	    			cursor: pointer !important;
+
+	    			&:hover {
+	    				background-color: #2980b9 !important;
+						color: #fff !important;
+	    			}
+	    		}
+	    	}
+	    }
+	}
+}
+
 @include colhide(2);
