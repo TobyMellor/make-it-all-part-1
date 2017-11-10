@@ -425,6 +425,10 @@
 
 				problemTypePage.search(query);
 			});
+			
+			$("#tickets-table").on("click", "tr", e => {
+				window.location = window.location.toString().replace("problem_types.html", "tickets.html#" + e.currentTarget.dataset.rowid);
+			});
 		</script>
 	</body>
 </html>

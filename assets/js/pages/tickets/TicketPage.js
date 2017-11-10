@@ -44,7 +44,6 @@ class TicketPage extends DynamicPage {
 			this.currentlyShowing = filterSlugs;
 		}
 
-		this.hideTableRowDetails();
 		this.currentTicket = null;
 	}
 
