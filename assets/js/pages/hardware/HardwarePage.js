@@ -14,7 +14,7 @@ class HardwarePage extends DynamicPage {
 		let uniqueTypes = [...new Set(makeItAll.HardwareManager.devices.map(t => t.type))];
 		for (let type of uniqueTypes) {
 			var row = "<tr><td data-type='"+type+"'>" + type + "</td></tr>";
-			typeList.append(row)
+			typeList.append(row);
 		}
 		hardwarePage.updateSplashScreen("Hardware");
 	}
@@ -30,7 +30,7 @@ class HardwarePage extends DynamicPage {
 		let uniqueManufacturers = [...new Set(devicesByType.map(t => t.manufacturer))];
 		for (let manufacturer of uniqueManufacturers) {
 			var row = "<tr><td data-manufacturer="+manufacturer+">" + manufacturer + "</td></tr>";
-			manufacturerList.append(row)
+			manufacturerList.append(row);
 		}
 	}
 	

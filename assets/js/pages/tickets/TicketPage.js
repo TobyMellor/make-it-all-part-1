@@ -51,6 +51,8 @@ class TicketPage extends DynamicPage {
 	showTicketView(ticketId) {
 		var ticket = makeItAll.ticketManager.getTicket(ticketId);
 
+		console.log(ticketId);
+
 		if (ticket !== null) {
 			this.currentTicket = ticket;
 
@@ -66,6 +68,8 @@ class TicketPage extends DynamicPage {
 				$ticketCallHistoryBody    = $('#ticket-view #call-history-table tbody'),
 				affectedItems	          = ticket.devices.concat(ticket.programs),
 				calls                     = ticket.calls;
+
+				console.log(affectedItems);
 
 			if (affectedItems.length === 0) {
 				$ticketHardwareSoftware.hide();
