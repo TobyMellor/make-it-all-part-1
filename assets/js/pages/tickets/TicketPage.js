@@ -281,7 +281,7 @@ class TicketPage extends DynamicPage {
 
 	createCall(dateOfCall, caller, tickets, existingTicketIds = []) {
 		var call   = makeItAll.ticketManager.createCall(dateOfCall, caller, tickets, existingTicketIds),
-			ticket = call.tickets[0];
+		    ticket = call.tickets[0];
 
 		this.refreshPage(ticket.filter.slug, ticket.id);
 	}
@@ -338,9 +338,11 @@ class TicketPage extends DynamicPage {
 									'<label class="required">Assigned To</label>' +
 									'<br />' +
 									'<div class="assigned-to-options">' +
-										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.self" value="Me" disabled />' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.self_showcase" readonly />' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.self" readonly hidden />' +
 										'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators…" name="tickets[' + cardId + '].assigned_to.operator"></select>' +
-										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.specialist" value="Problem Type not yet chosen" disabled />' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.specialist" readonly hidden />' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.specialist_showcase" value="Problem Type not yet chosen" readonly />' +
 									'</div>' +
 								'</div>' +
 								'<div class="form-check">' +
@@ -428,6 +430,7 @@ class TicketPage extends DynamicPage {
 
 		$accordion.append(
 			'<div class="card existing" data-cardid="' + cardId + '">' +
+				'<input type="text" name="tickets[' + cardId + '].id" value="' + ticketId + '" hidden />' +
 				'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
 					'<h5 class="mb-0">' +
 						'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +

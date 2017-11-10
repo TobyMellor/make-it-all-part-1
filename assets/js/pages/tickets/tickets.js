@@ -16,20 +16,26 @@ $(() => {
 			.val('');
 	});
 
-	$('#new-ticket-modal #create-new-ticket').on('click', function (e) {
-		var formData = $('#new-ticket-modal form').serializeObject(),
-			tickets  = [];
+	$('#new-ticket-modal #create-new-ticket, #create-follow-up-call').on('click', function (e) {
+		var $modal            = $(this).closest('.modal'),
+			formData          = $modal.find('form').serializeObject(),
+			tickets           = formData.tickets,
+			existingTicketIds = []; // an new ticket won't have any of these
+console.log(tickets);
+		for (var cardId in tickets) {
+			var ticket = tickets[cardId];
 
-		for (var i in formData.tickets) {
-			var ticket = formData.tickets[i];
-
-			ticket.assigned_to = ticket.assigned_to[ticket.assigned_to_type];
-			tickets.push(ticket);
+			if (ticket.hasOwnProperty('id')) {
+				existingTicketIds.push(Number(ticket.id));
+				delete tickets[cardId];
+			} else {
+				ticket.assigned_to = ticket.assigned_to[ticket.assigned_to_type];
+			}
 		}
 
-		ticketPage.createCall(formData.date_of_call, Number(formData.caller), tickets);
+		ticketPage.createCall(formData.date_of_call, Number(formData.caller), tickets, existingTicketIds);
 
-		$('#new-ticket-modal').modal('hide');
+		$modal.modal('hide');
 	});
 
 	$('#edit-ticket-modal #edit-existing-ticket').on('click', function () {
@@ -131,25 +137,6 @@ $(() => {
 		}
 
 		$addExistingTicket.selectpicker('refresh');
-	});
-
-	$('#create-follow-up-call').on('click', function() {
-		var formData 		  = $('#follow-up-call-modal form').serializeObject(),
-			formDataTickets   = formData.tickets,
-			existingTicketIds = [];
-
-		for (var cardId in formDataTickets) {
-			var card = formDataTickets[cardId];
-
-			if (card.hasOwnProperty('id')) {
-				existingTicketIds.push(Number(card.id));
-				delete formDataTickets[cardId];
-			}
-		}
-
-		ticketPage.createCall(formData.date_of_call, Number(formData.caller), formDataTickets, existingTicketIds);
-
-		$('#follow-up-call-modal').modal('hide');
 	});
 
 	$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
