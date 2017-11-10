@@ -4,6 +4,10 @@
 	margin-top: $comfortable;
 }
 
+#list-view {
+	flex-shrink: 1;
+}
+
 .form-control:disabled {
 	color: unset;
 }
@@ -20,6 +24,12 @@
 	i:not(:first-child) {
 		margin-left: $cosy;
 	}
+}
+
+.profile-photo-col {
+	min-width: 128px;
+	max-width: 300px;
+	margin: 0 auto;
 }
 
 .card {
