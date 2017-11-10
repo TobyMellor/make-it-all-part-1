@@ -340,29 +340,31 @@
 															</div>
 														</div>
 														
-														<div class="row">
-															<div class="col-md-4">
-																<div class="form-group">
-																	<label>Operating System</label>
-																	<input class="form-control no-clear-on-show" name="tickets[1].operating_system" />
+														<div class="affected-items-section">
+															<div class="row">
+																<div class="col-md-4">
+																	<div class="form-group">
+																		<label>Operating System</label>
+																		<input class="form-control no-clear-on-show" name="tickets[1].operating_system" />
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="form-group">
+																		<label class="required">Hardware Affected</label>
+																		<select class="selectpicker add-hardware-device" data-live-search="true"></select>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="form-group">
+																		<label>Software Affected</label>
+																		<select class="selectpicker add-software-program" data-live-search="true"></select>
+																	</div>
 																</div>
 															</div>
-															<div class="col-md-4">
-																<div class="form-group">
-																	<label class="required">Hardware Affected</label>
-																	<select class="selectpicker add-hardware-device" data-live-search="true"></select>
+															<div class="row">
+																<div class="col-md-12">
+																	<ul class="affected-items"></ul>
 																</div>
-															</div>
-															<div class="col-md-4">
-																<div class="form-group">
-																	<label>Software Affected</label>
-																	<select class="selectpicker add-software-program" data-live-search="true"></select>
-																</div>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-md-12">
-																<ul class="affected-items"></ul>
 															</div>
 														</div>
 													</div>
@@ -613,24 +615,26 @@
 									<label>Operating System</label>
 									<input class="form-control" name="tickets.this.operating_system" />
 								</div>
-
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label class="required">Hardware Affected</label>
-											<select class="selectpicker add-hardware-device" data-live-search="true"></select>
+								
+								<div class="affected-items-section">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="required">Hardware Affected</label>
+												<select class="selectpicker add-hardware-device" data-live-search="true"></select>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Software Affected</label>
+												<select class="selectpicker add-software-program" data-live-search="true"></select>
+											</div>
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>Software Affected</label>
-											<select class="selectpicker add-software-program" data-live-search="true"></select>
+									<div class="row">
+										<div class="col-md-12">
+											<ul class="affected-items"></ul>
 										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<ul class="affected-items"></ul>
 									</div>
 								</div>
 							</div>

@@ -174,10 +174,10 @@ class TicketPage extends DynamicPage {
 	}
 
 	appendHardwareDevice($affectedItems, serialNumber, cardId) {
-		var device = makeItAll.hardwareManager.getDevice(serialNumber);
+		var device = makeItAll.hardwareManager.getDeviceBySerialNumber(serialNumber);
 
 		$affectedItems.append(
-			' <li serial_number="' + device.serial_number + '"">' +
+			' <li data-serial-number="' + device.serial_number + '"" data-type="hardware">' +
 				'<input type="text" name="tickets[' + cardId + '].devices" value="' + device.id + '" hidden />' +
 				'<h4>' + device.name + '</h4>' +
 				'<p>(Hardware)</p>' +
@@ -193,7 +193,7 @@ class TicketPage extends DynamicPage {
 		var program = makeItAll.softwareManager.getProgram(programId);
 
 		$affectedItems.append(
-			' <li program-id="' + programId + '"">' +
+			' <li data-program-id="' + programId + '"" data-type="hardware">' +
 				'<input type="text" name="tickets[' + cardId + '].programs" value="' + program.id + '" hidden />' +
 				'<h4>' + program.name + '</h4>' +
 				'<p>(Software)</p>' +
@@ -203,6 +203,28 @@ class TicketPage extends DynamicPage {
 				'</a>' +
 			'</li>'
 		);
+	}
+
+	removeAffectedItem($removeAffectedItem) {
+		$removeAffectedItem.closest('li').fadeOut(200, function() {
+			var $affectedItems = $(this).closest('.affected-items-section'),
+				item,
+				$selectPicker;
+
+			if ($(this).data('type') === 'hardware') {
+				item = makeItAll.hardwareManager.getDeviceBySerialNumber(Number($(this).data('serialNumber')));
+				$selectPicker = $affectedItems.find('.selectpicker.add-hardware-device');
+				$selectPicker.append('<option value="' + item.id + '">' + item.serial_number + '</option>');
+			} else {
+				item = makeItAll.softwareManager.getProgram(Number($(this).data('programId')));
+				$selectPicker = $affectedItems.find('.selectpicker.add-software-program');
+				$selectPicker.append('<option value="' + item.id + '">' + item.name + '</option>');
+			}
+
+			$selectPicker.selectpicker('refresh');
+
+			$(this).remove();
+		});
 	}
 
 	showCallTicketsModal(callId) {
@@ -380,7 +402,7 @@ class TicketPage extends DynamicPage {
 							'</div>' +
 						'</div>' +
 						'<div class="row">' +
-							'<div class="col-md-12">' +
+							'<div class="col-md-12 affected-items-section">' +
 								'<div class="form-group">' +
 									'<label class="required">Ticket Description</label>' +
 									'<textarea class="form-control" name="tickets[' + cardId + '].description"></textarea>' +

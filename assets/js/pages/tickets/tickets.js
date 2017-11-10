@@ -99,10 +99,15 @@ $(() => {
 		$(this).closest('.card-block').scrollTop(1E10);
 	});
 
-	$(document).on('click', '.remove-hardware-device', function() {
-		$(this).closest('li').fadeOut(200, function() {
-			$(this).remove();
-		});
+	$(document).on('change', '.selectpicker.add-hardware-device, .selectpicker.add-software-program', function() {
+		if ($(this).val() !== "") { // not the default select option
+			$(this).find('option[value="' + $(this).val() + '"]').remove();
+			$(this).val('').selectpicker('refresh');
+		}
+	});
+
+	$(document).on('click', '.remove-affected-item', function() {
+		ticketPage.removeAffectedItem($(this));
 	});
 
 	$(document).on('click', '#ticket-view #call-history-table tbody tr', function() {

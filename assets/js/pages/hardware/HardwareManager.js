@@ -15,32 +15,49 @@ class HardwareManager extends Manager {
 
 		var devices = [
 			{
-				id: 1,
-				name: 'Microsoft Word',
-				devices: null,
-				created_at: '3 minutes ago',
+				id: 0,
+				type: 'GPU',
+				manufacturer: 'ASUS',
+				serial_number: '0123456789',
+				programs: null,
+				created_at: 'Yesterday',
 				updated_at: 'Just now'
 			},
 			{
-				id: 2,
-				name: 'Google Chrome',
-				devices: null,
-				created_at: 'Yesterday',
-				updated_at: '10 minutes ago'
-			},
-			{
-				id: 3,
-				name: 'Microsoft Excel',
-				devices: null,
+				id: 1,
+				type: 'GPU',
+				manufacturer: 'DELL',
+				serial_number: '00000000001',
+				programs: null,
 				created_at: 'Today',
 				updated_at: '2 hours ago'
 			},
 			{
-				id: 4,
-				name: 'Microsoft Powerpoint',
-				devices: null,
-				created_at: 'Yesterday',
+				id: 2,
+				type: 'RAM',
+				manufacturer: 'Corsair',
+				serial_number: '00000000002',
+				programs: null,
+				created_at: 'Today',
 				updated_at: '1 hour ago'
+			},
+			{
+				id: 3,
+				type: 'Monitor',
+				manufacturer: 'Samsung',
+				serial_number: '00000000003',
+				programs: null,
+				created_at: 'Today',
+				updated_at: 'Just now'
+			},
+			{
+				id: 4,
+				type: 'GPU',
+				manufacturer: 'ASUS',
+				serial_number: '00000000004',
+				programs: null,
+				created_at: 'Yesterday',
+				updated_at: '21 hours ago'
 			}
 		];
 
@@ -70,5 +87,9 @@ class HardwareManager extends Manager {
 
 	getDevice(id) {
 		return this.devices.find(d => d.id == id);
+	}
+
+	getDeviceBySerialNumber(serialNumber) {
+		return this.devices.find(d => d.serial_number == seriaNumber);
 	}
 }
