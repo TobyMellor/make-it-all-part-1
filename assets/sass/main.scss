@@ -225,6 +225,7 @@ nav ul {
 	&:hover {
 		background-color: $silver;
 		color: $black-hover;
+		border-bottom: 2px solid $black;
 	}
 
 	&.btn-success {
@@ -234,6 +235,7 @@ nav ul {
 
 		&:hover {
 			background-color: $green-hover;
+			border-bottom: 2px solid $black;
 		}
 	}
 
@@ -244,6 +246,7 @@ nav ul {
 
 		&:hover {
 			background-color: $orange-hover;
+			border-bottom: 2px solid $black;
 		}
 	}
 
@@ -255,6 +258,7 @@ nav ul {
 		&:hover {
 			color: $white;
 			background-color: $red-hover;
+			border-bottom: 2px solid $black;
 		}
 	}
 
@@ -266,7 +270,14 @@ nav ul {
 
 		&:hover {
 			background-color: $blue-hover;
+			border-bottom: 2px solid $black;
 		}
+	}
+}
+
+a.btn {
+	&:hover {
+		border-bottom: 2px solid $blue-hover;
 	}
 }
 
@@ -694,6 +705,10 @@ label {
 			}
 		}
 	}
+
+	&.fade.show {
+		overflow: auto; // resolve scrolling bug when closing one of multiple shown modals
+	}
 }
 
 .problem-type-picker {
@@ -701,6 +716,10 @@ label {
 	height: 152px;
 	display: flex;
 	border: 1px solid $silver;
+
+	& * {
+		transition: none;
+	}
 
 	.type-columns {
 		display: flex;
@@ -838,5 +857,4 @@ span.filter {
 }
 
 @import "animate";
-
 @import "responsive";

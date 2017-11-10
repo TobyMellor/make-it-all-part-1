@@ -10,8 +10,10 @@ class StaffProblemTypePage {
 	}
 
 	loadSpecialistProblemTypes($typeColumns, $li = null, problemTypeId = null) {
+		var problemType = null;
+		
 		if ($li) {
-			var problemType = makeItAll.problemTypeManager.getProblemType(problemTypeId);
+			problemType = makeItAll.problemTypeManager.getProblemType(problemTypeId);
 
 			$li.parent().nextAll().remove();
 			$li.parent().find('li.active').removeClass('active');
@@ -22,7 +24,7 @@ class StaffProblemTypePage {
 				return;
 			}
 		} else {
-			$typeColumns.html('');
+			$typeColumns.empty();
 		}
 
 		var children    = [],
@@ -110,5 +112,43 @@ class StaffProblemTypePage {
 		}
 
 		return true;
+	}
+
+	getSpecialistForProblemType(problemTypeId) {
+		var problemType = makeItAll.problemTypeManager.getProblemType(problemTypeId),
+			specialists = makeItAll.staffManager.getSpecialists(problemTypeId);
+
+		if (specialists.length > 0) {
+			var bestSpecialist = null,
+				bestCount      = null,
+				filters        = makeItAll.ticketManager.getFilters(['new', 'pending_in_progress', 'pending_awaiting_staff']),
+				openTickets    = [].concat(...filters.map(filter => filter.tickets));
+
+			for (let i = 0; i < specialists.length; i++) {
+				var specialist      = specialists[i],
+					assignedToCount = 0;
+
+				for (let j = 0; j < openTickets.length; j++) {
+					if (openTickets[j]._assigned_to === specialist.id) {
+						assignedToCount++;
+					}
+				}
+
+				if (bestSpecialist === null || assignedToCount < bestCount) {
+					bestSpecialist = specialist;
+					bestCount      = assignedToCount;
+					continue;
+				}
+
+			}
+
+			return bestSpecialist;
+		}
+
+		if (problemType._parent !== null) {
+			return this.getSpecialistForProblemType(problemType._parent);
+		}
+
+		return null;
 	}
 }

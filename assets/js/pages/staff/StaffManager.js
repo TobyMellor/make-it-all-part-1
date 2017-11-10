@@ -57,6 +57,10 @@ class StaffManager extends Manager {
 		return this.findAllWhere(this.staff, employee => employee._specialisms.indexOf(problemTypeId) > -1);
 	}
 
+	hasSpecialism(employee, problemTypeId) {
+		return employee._specialisms.indexOf(problemTypeId) > -1;
+	}
+
 	search(query, properties) {
 		return super.search(this.staff, query, properties);
 	}
@@ -70,7 +74,8 @@ var staffData = [
 		phone: "01555516794",
 		department: "Team 5",
 		isAnalyst: true,
-		specialisms: [1]
+		isOperator: true,
+		specialisms: [1, 2]
 	},
 	{
 		id: 1,
@@ -81,7 +86,7 @@ var staffData = [
 		phone: "01555864722",
 		isOperator: true,
 		isAdmin: true,
-		specialisms: [2]
+		specialisms: [2, 3, 4]
 	},
 	{
 		id: 2,
@@ -108,7 +113,7 @@ var staffData = [
 		phone: "01555574667",
 		department: "Team 5",
 		isAnalyst: true,
-		specialisms: [5]
+		specialisms: [5, 8]
 	},
 	{
 		id: 5,
@@ -118,6 +123,6 @@ var staffData = [
 		phone: "01555181056",
 		isOperator: true,
 		isAdmin: true,
-		specialisms: [1, 2, 6, 8]
+		specialisms: [1, 2, 8]
 	}
 ];

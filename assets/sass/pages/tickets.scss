@@ -177,16 +177,10 @@ span.filter {
 	}
 }
 
-#new-ticket-modal {
-	.add-another-ticket {
-		float: right;
-	}
-}
-
-.hardware-list {
+.affected-items {
 	list-style: none;
 	padding: 0;
-	margin: $comfortable 0 0 0;
+	margin: $cosy 0;
 
 	li {
 		width: 152px;
@@ -230,13 +224,52 @@ span.filter {
 	}
 }
 
-#accordion .card.existing .hardware-list {
-	li {
-		height: 90px;
-		
-		.remove-hardware-device {
-			display: none;
+#accordion {
+	.card.existing .affected-items {
+		margin: 0;
+
+		li {
+			height: 90px;
+			
+			.remove-affected-item {
+				display: none;
+			}
 		}
+	}
+}
+
+.form-group {
+	.assigned-to-options > *:not(:first-child) {
+		display: none;
+	}
+}
+
+.form-check {
+	margin-top: -5px;
+	
+	.form-check-label {
+		display: block;
+		
+		&:not(:first-child) {
+			margin-top: $compact;
+		}
+	}
+}
+
+.problem-type-picker {
+	.type-columns {
+		.type-column {
+			li {
+				&.no-children {
+	    			cursor: pointer !important;
+
+	    			&:hover {
+	    				background-color: #2980b9 !important;
+						color: #fff !important;
+	    			}
+	    		}
+	    	}
+	    }
 	}
 }
 

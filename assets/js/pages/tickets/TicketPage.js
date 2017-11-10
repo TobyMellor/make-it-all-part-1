@@ -56,18 +56,18 @@ class TicketPage extends DynamicPage {
 
 			this.updateSingleViewNavbar(ticket.title + '<span class="filter filter-' + ticket.filter.slug.split('_')[0] + '">' + ticket.filter.name + '</span>');
 
-			$('#ticket-view #ticket-overview').text('#' + ticket.id + ' | ' + ticket.created_at);
+			$('#ticket-view #ticket-overview').text('#' + ticket.id + ' | ' + ticket.created_at + ' | ' + ticket.assigned_to.name);
 			$('#ticket-view #ticket-description p').text(ticket.description);
-
+			$('#ticket-view #ticket-operating-system').text(ticket.operating_system);
 
 			var $ticketComments           = $('#ticket-comments'),
 				$ticketHardwareSoftware   = $('#ticket-view #hardware-software-table'),
 				$ticketNoHardwareSoftware = $('#ticket-view #no-hardware-software'),
 				$ticketCallHistoryBody    = $('#ticket-view #call-history-table tbody'),
-				devices	                  = ticket.devices,
+				affectedItems	          = ticket.devices.concat(ticket.programs),
 				calls                     = ticket.calls;
 
-			if (devices.length === 0) {
+			if (affectedItems.length === 0) {
 				$ticketHardwareSoftware.hide();
 				$ticketNoHardwareSoftware.show();
 			} else {
@@ -76,16 +76,16 @@ class TicketPage extends DynamicPage {
 				
 				var $ticketHardwareSoftwareBody = $ticketHardwareSoftware.find('tbody');
 
-				$ticketHardwareSoftwareBody.html('');
+				$ticketHardwareSoftwareBody.empty();
 
-				for (var i = 0; i < devices.length; i++) {
-					var device = devices[i];
+				for (var i = 0; i < affectedItems.length; i++) {
+					var affectedItem = affectedItems[i];
 
 					$ticketHardwareSoftwareBody.append(
-						'<tr data-rowid="' + device.id + '">' +
-							'<td class="truncate">' + device.serial_number + '</td>' +
-							'<td class="truncate">' + device.name + '</td>' +
-							'<td class="truncate">' + device.operating_system + '</td>' +
+						'<tr data-rowid="' + affectedItem.id + '">' +
+							'<td class="truncate">' + affectedItem.name + '</td>' +
+							'<td class="truncate">' + (affectedItem.serial_number || '—') + '</td>' +
+							'<td class="truncate">' + (affectedItem.hasOwnProperty('serial_number') ? 'Hardware' : 'Software') + '</td>' +
 							'<td>' +
 								'<i class="fa fa-eye"></i>' +
 							'</td>' +
@@ -94,9 +94,9 @@ class TicketPage extends DynamicPage {
 				}
 			}
 
-			$ticketCallHistoryBody.html('');
+			$ticketCallHistoryBody.empty();
 
-			for (var i = 0; i < calls.length; i++) {
+			for (let i = 0; i < calls.length; i++) {
 				var call = calls[i];
 
 				$ticketCallHistoryBody.append(
@@ -117,7 +117,7 @@ class TicketPage extends DynamicPage {
 				$ticketComments.text('');
 			}
 
-			for (var index in ticket.events) {
+			for (let index in ticket.events) {
 				var event = ticket.events[index];
 
 				if (event.type === 'comment') {
@@ -157,44 +157,82 @@ class TicketPage extends DynamicPage {
 		this.refreshPage(ticket.filter.slug, ticketId);
 	}
 
-	appendHardwareDevices($hardwareList, ticket, cardId) {
+	appendAffectedItems($affectedItems, ticket, cardId) {
+		$affectedItems.empty();
+
 		for (var i = 0; i < ticket.devices.length; i++) {
 			var device = ticket.devices[i];
 
-			this.appendHardwareDevice($hardwareList, device.serial_number, cardId);
+			this.appendHardwareDevice($affectedItems, device.id, cardId);
+		}
+
+		for (let i = 0; i < ticket.programs.length; i++) {
+			var program = ticket.programs[i];
+
+			this.appendSoftwareProgram($affectedItems, program.id, cardId);
 		}
 	}
 
-	appendHardwareDevice($hardwareList, serialNumber, cardId = null) {
-		serialNumber = serialNumber.toUpperCase();
+	appendHardwareDevice($affectedItems, deviceId, cardId) {
+		var device        = makeItAll.hardwareManager.getDevice(deviceId),
+			$selectPicker = $affectedItems.closest('.affected-items-section').find('.selectpicker.add-hardware-device');
 
-		var existingSerialNumbers = [];
+		$affectedItems.append(
+			' <li data-serial-number="' + device.serial_number + '"" data-type="hardware">' +
+				'<input type="text" name="tickets[' + cardId + '].devices" value="' + device.id + '" hidden />' +
+				'<h4>' + device.name + '</h4>' +
+				'<p>(Hardware)</p>' +
+				'<a class="btn btn-danger remove-affected-item" href="javascript: void(0);">' +
+					'<i class="fa fa-laptop"></i> ' +
+					'Remove' +
+				'</a>' +
+			'</li>'
+		);
 
-		$hardwareList.children().each(function() {
-			existingSerialNumbers.push($(this).attr('serial-number'));
-		});
+		$selectPicker.find('option[value="' + deviceId + '"]').remove();
+		$selectPicker.val('').selectpicker('refresh');
+	}
 
-		if (existingSerialNumbers.indexOf(serialNumber) === -1) {
-			var device = makeItAll.hardwareManager.getDevice(serialNumber);
+	appendSoftwareProgram($affectedItems, programId, cardId) {
+		var program       = makeItAll.softwareManager.getProgram(programId),
+			$selectPicker = $affectedItems.closest('.affected-items-section').find('.selectpicker.add-software-program');
 
-			if (device !== null) {
-				$hardwareList.append(
-					' <li serial-number="' + serialNumber + '"">' +
-						'<input type="text" name="' + (cardId !== null ? 'tickets[' + cardId + '][devices]' : 'devices') + '" value="' + device.id + '" hidden />' +
-						'<h4>' + device.name + '</h4>' +
-						'<p>' + device.programs[0].name + '</p>' +
-						'<a class="btn btn-danger remove-hardware-device" href="javascript: void(0);">' +
-							'<i class="fa fa-minus"></i> ' +
-							'Remove' +
-						'</a>' +
-					'</li>'
-				);
+		$affectedItems.append(
+			' <li data-program-id="' + programId + '"" data-type="hardware">' +
+				'<input type="text" name="tickets[' + cardId + '].programs" value="' + program.id + '" hidden />' +
+				'<h4>' + program.name + '</h4>' +
+				'<p>(Software)</p>' +
+				'<a class="btn btn-danger remove-affected-item" href="javascript: void(0);">' +
+					'<i class="fa fa-file-code-o"></i> ' +
+					'Remove' +
+				'</a>' +
+			'</li>'
+		);
 
-				return true;
+		$selectPicker.find('option[value="' + programId + '"]').remove();
+		$selectPicker.val('').selectpicker('refresh');
+	}
+
+	removeAffectedItem($removeAffectedItem) {
+		$removeAffectedItem.closest('li').fadeOut(200, function() {
+			var $affectedItems = $(this).closest('.affected-items-section'),
+				item,
+				$selectPicker;
+
+			if ($(this).data('type') === 'hardware') {
+				item = makeItAll.hardwareManager.getDeviceBySerialNumber(Number($(this).data('serialNumber')));
+				$selectPicker = $affectedItems.find('.selectpicker.add-hardware-device');
+				$selectPicker.append('<option value="' + item.id + '">' + item.serial_number + '</option>');
+			} else {
+				item = makeItAll.softwareManager.getProgram(Number($(this).data('programId')));
+				$selectPicker = $affectedItems.find('.selectpicker.add-software-program');
+				$selectPicker.append('<option value="' + item.id + '">' + item.name + '</option>');
 			}
-		}
 
-		return false;
+			$selectPicker.selectpicker('refresh');
+
+			$(this).remove();
+		});
 	}
 
 	showCallTicketsModal(callId) {
@@ -207,9 +245,9 @@ class TicketPage extends DynamicPage {
 		$callHistory.find('#call-caller').text(call.caller.name);
 		$callHistory.find('#call-date').text(call.date_of_call);
 
-		$callTicketTable.html('');
+		$callTicketTable.empty();
 
-		for (var i = 0; i < callTickets.length; i++) {
+		for (let i = 0; i < callTickets.length; i++) {
 			var ticket = callTickets[i];
 
 			$callTicketTable.append(
@@ -238,7 +276,7 @@ class TicketPage extends DynamicPage {
 		this.showTicketView(ticketId);
 	}
 
-	populateTicketModal($modal, ticket, cardId = null) {
+	populateTicketModal($modal, ticket, cardId) {
 		for (var key in ticket) {
 			var value = ticket[key];
 
@@ -246,17 +284,33 @@ class TicketPage extends DynamicPage {
 				key   = 'filter';
 				value = ticket.filter.name;
 			} else if (key === '_assigned_to') {
-				key   = 'assigned_to';
-				value = ticket.assigned_to.name;
+				var currentUser = makeItAll.staffManager.currentUser(true),
+					assignedTo  = ticket.assigned_to;
+
+				$modal.find('input[name*="assigned_to"]').not('.form-check-input').val(assignedTo.name);
+
+				$modal.find('input[name*="assigned_to.self"]').val(currentUser.id);
+				$modal.find('input[name*="assigned_to.self_showcase"]').val(currentUser.name);
+
+				this.setSpecialist(ticket._problem_type, $modal.find('.assigned-to-options'), assignedTo);
+
+				$modal.find('.form-check-input').attr('disabled', false);
+				$modal.find('.form-check-input[value="' + this.getAssignedToType(ticket) + '"]').click();
+
+				if (!$modal.is('#edit-ticket-modal')) {
+					$modal.find('.form-check-input').attr('disabled', true);
+				}
 			} else if (key === '_problem_type') {
-				key = 'problem_type';
+				key = 'problem_type_showcase';
 				value = problemTypePage.getProblemTypeBreadcrum(ticket.problem_type);
+
+				$modal.find('input[name*=problem_type]').val(ticket._problem_type);
 			}
 			
 			$modal.find('input[name*="' + key + '"], textarea[name*="' + key + '"]').val(value);
 		}
 
-		this.appendHardwareDevices($modal.find('.hardware-list'), ticket, cardId);
+		this.appendAffectedItems($modal.find('.affected-items'), ticket, cardId);
 	}
 
 	appendNewComment($commentBox) {
@@ -274,9 +328,10 @@ class TicketPage extends DynamicPage {
 	}
 
 	createCall(dateOfCall, caller, tickets, existingTicketIds = []) {
-		makeItAll.ticketManager.createCall(dateOfCall, caller, tickets, existingTicketIds);
+		var call   = makeItAll.ticketManager.createCall(dateOfCall, caller, tickets, existingTicketIds),
+		    ticket = call.tickets[0];
 
-		this.refreshPage(this.currentTicket.filter.slug, this.currentTicket.id);
+		this.refreshPage(ticket.filter.slug, ticket.id);
 	}
 
 	editTicket(id, filter, title, description, assigned_to, devices, problem_type) {
@@ -296,7 +351,7 @@ class TicketPage extends DynamicPage {
 	addNewAccordionCard($accordion) {
 		var cardId = Math.floor(Math.random() * (10000 + 1));
 
-		$card = $(
+		var $card = $(
 			'<div class="card" data-cardid="' + cardId + '">' +
 				'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
 					'<h5 class="mb-0">' +
@@ -321,46 +376,82 @@ class TicketPage extends DynamicPage {
 										'<option value="resolved">Resolved</option>' +
 									'</select>' +
 								'</div>' +
+								'<div class="form-group">' +
+									'<label class="required">Ticket Title</label>' +
+									'<input class="form-control" name="tickets[' + cardId + '].title" />' +
+								'</div>' +
 							'</div>' +
-							'<div class="col-md-6">' +
+							'<div class="col-md-6 assigned-to-section">' +
 								'<div class="form-group">' +
 									'<label class="required">Assigned To</label>' +
 									'<br />' +
-									'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators..." name="tickets[' + cardId + '].assigned_to"></select>' +
+									'<div class="assigned-to-options">' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.self_showcase" value="' + makeItAll.staffManager.currentUser(true).name + '" readonly />' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.self" value="' + makeItAll.staffManager.currentUser() + '" readonly hidden />' +
+										'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators…" name="tickets[' + cardId + '].assigned_to.operator"></select>' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.specialist" readonly hidden />' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.specialist_showcase" value="Problem Type not yet chosen" readonly />' +
+									'</div>' +
+								'</div>' +
+								'<div class="form-check">' +
+									'<label class="form-check-label">' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="self" checked>' +
+										'Assign to myself' +
+									'</label>' +
+									'<label class="form-check-label">' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="operator">' +
+										'Assign to another Operator' +
+									'</label>' +
+									'<label class="form-check-label">' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="specialist">' +
+										'Assign to Specialist of Problem Type' +
+									'</label>' +
 								'</div>' +
 							'</div>' +
 						'</div>' +
-						'<div class="form-group">' +
-							'<label class="required">Ticket Title</label>' +
-							'<input class="form-control" name="tickets[' + cardId + '].title" />' +
-						'</div>' +
-						'<div class="form-group">' +
-							'<label class="required">Ticket Description</label>' +
-							'<textarea class="form-control" name="tickets[' + cardId + '].description"></textarea>' +
-						'</div>' +
-						'<div class="form-group">' +
-							'<label>Serial Number of Hardware Affected</label>' +
-							'<div class="input-group">' +
-								'<input class="form-control" name="tickets[' + cardId + '].hardware.serial_number" />' +
-								'<span class="input-group-btn">' +
-									'<button class="btn btn-success add-hardware-device" type="button">' +
-										'<i class="fa fa-plus"></i> ' +
-										'Add' +
-									'</button>' +
-								'</span>' +
-							'</div>' +
-							'<div class="row">' +
-								'<div class="col-md-12">' +
-									'<ul class="hardware-list"></ul>' +
+						'<div class="row">' +
+							'<div class="col-md-12 affected-items-section">' +
+								'<div class="form-group">' +
+									'<label class="required">Ticket Description</label>' +
+									'<textarea class="form-control" name="tickets[' + cardId + '].description"></textarea>' +
+								'</div>' +
+								'<div class="row">' +
+									'<div class="col-md-4">' +
+										'<div class="form-group">' +
+											'<label>Operating System</label>' +
+											'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].operating_system" />' +
+										'</div>' +
+									'</div>' +
+									'<div class="col-md-4">' +
+										'<div class="form-group">' +
+											'<label class="required">Hardware Affected</label>' +
+											'<select class="selectpicker add-hardware-device" data-live-search="true"></select>' +
+										'</div>' +
+									'</div>' +
+									'<div class="col-md-4">' +
+										'<div class="form-group">' +
+											'<label>Software Affected</label>' +
+											'<select class="selectpicker add-software-program" data-live-search="true"></select>' +
+										'</div>' +
+									'</div>' +
+								'</div>' +
+								'<div class="row">' +
+									'<div class="col-md-12">' +
+										'<ul class="affected-items"></ul>' +
+									'</div>' +
 								'</div>' +
 							'</div>' +
 						'</div>' +
-						'<div class="form-group">' +
-							'<label class="required">Problem Type</label>' +
-							'<input name="tickets[' + cardId + '].problem_type" hidden>' +
-							'<span class="subtle pull-right"></span>' +
-							'<div class="problem-type-picker">' +
-								'<div class="type-columns"></div>' +
+						'<div class="row">' +
+							'<div class="col-md-12">' +
+								'<div class="form-group">' +
+									'<label class="required">Problem Type</label>' +
+									'<input name="tickets[' + cardId + '].problem_type_showcase" hidden>' +
+									'<span class="subtle pull-right"></span>' +
+									'<div class="problem-type-picker">' +
+										'<div class="type-columns"></div>' +
+									'</div>' +
+								'</div>' +
 							'</div>' +
 						'</div>' +
 					'</div>' +
@@ -372,15 +463,20 @@ class TicketPage extends DynamicPage {
 
 		problemTypePage.loadSubProblemTypes($card.find('.type-columns'));
 
-		ticketPage.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose an operator...', makeItAll.staffManager.getEmployeesWithPermission('operator', true));
+		this.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true));
+		this.populateSelectField($card.find('.selectpicker.add-hardware-device'), 'Type a serial number…', makeItAll.hardwareManager.devices, null, 'serial_number');
+		this.populateSelectField($card.find('.selectpicker.add-software-program'), 'Choose a program…', makeItAll.softwareManager.programs);
 
+		$accordion.find('.fa-chevron-down.view-accordion').click();
 		$card.find('.view-accordion').click();
 		$('.selectpicker').selectpicker('refresh');
 	}
 
 	addExistingAccordionCard($accordion, ticketId) {
-		var ticket = makeItAll.ticketManager.getTicket(ticketId),
-			cardId = Math.floor(Math.random() * (10000 + 1));
+		var $addExistingTicket = $accordion.closest('.modal').find('#add-existing-ticket'),
+			ticket             = makeItAll.ticketManager.getTicket(ticketId),
+			cardId             = Math.floor(Math.random() * (10000 + 1)),
+			assignedToType     = this.getAssignedToType(ticket);
 
 		$accordion.append(
 			'<div class="card existing" data-cardid="' + cardId + '">' +
@@ -401,46 +497,74 @@ class TicketPage extends DynamicPage {
 								'<div class="form-group">' +
 									'<label>Status</label>' +
 									'<br />' +
-									'<input class="form-control" value="' + ticket.filter.name + '" disabled>' +
+									'<input class="form-control" type="text" name="tickets[' + cardId + '].filter" value="' + ticket.filter.name + '" disabled>' +
+								'</div>' +
+								'<div class="form-group">' +
+									'<label>Ticket Title</label>' +
+									'<input class="form-control" name="tickets[' + cardId + '].title" value="' + ticket.title + '" disabled />' +
 								'</div>' +
 							'</div>' +
 							'<div class="col-md-6">' +
 								'<div class="form-group">' +
 									'<label>Assigned To</label>' +
 									'<br />' +
-									'<input class="form-control" value="' + ticket.assigned_to.name + '" disabled>' +
+									'<div class="assigned-to-options">' +
+										'<input class="form-control" name="tickets[' + cardId + '].assigned_to" value="' + ticket.assigned_to.name + '" disabled />' +
+									'</div>' +
+								'</div>' +
+								'<div class="form-check">' +
+									'<label class="form-check-label">' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="self" ' + (assignedToType === 'self' ? 'checked' : '') + ' disabled>' +
+										'Assign to myself' +
+									'</label>' +
+									'<label class="form-check-label">' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="operator" ' + (assignedToType === 'operator' ? 'checked' : '') + ' disabled>' +
+										'Assign to another Operator' +
+									'</label>' +
+									'<label class="form-check-label">' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="specialist" ' + (assignedToType === 'specialist' ? 'checked' : '') + ' disabled>' +
+										'Assign to Specialist of Problem Type' +
+									'</label>' +
 								'</div>' +
 							'</div>' +
 						'</div>' +
-						'<div class="form-group">' +
-							'<label>Ticket Title</label>' +
-							'<input class="form-control" value="' + ticket.title + '" disabled>' +
-						'</div>' +
-						'<div class="form-group">' +
-							'<label>Ticket Description</label>' +
-							'<textarea class="form-control" disabled>' + ticket.description + '</textarea>' +
-						'</div>' +
-						'<div class="form-group">' +
-							'<label>Serial Numbers of Hardware Affected</label>' +
-							'<div class="row">' +
-								'<div class="col-md-12">' +
-									'<ul class="hardware-list"></ul>' +
+						'<div class="row">' +
+							'<div class="col-md-12">' +
+								'<div class="form-group">' +
+									'<label>Ticket Description</label>' +
+									'<textarea class="form-control" name="tickets[' + cardId + '].description" value="' + ticket.description + '" disabled></textarea>' +
+								'</div>' +
+								'<div class="row">' +
+									'<div class="col-md-12">' +
+										'<div class="form-group">' +
+											'<label>Problem Type</label>' + 
+											'<input class="form-control" value="' + problemTypePage.getProblemTypeBreadcrum(ticket.problem_type) + '" disabled>' +
+										'</div>' +
+									'</div>' +
+								'</div>' +
+								'<div class="row">' +
+									'<div class="col-md-4">' +
+										'<div class="form-group">' +
+											'<label>Operating System</label>' +
+											'<input class="form-control" name="tickets[' + cardId + '].operating_system" value="' + ticket.operating_system + '" disabled />' +
+										'</div>' +
+									'</div>' +
+									'<div class="col-md-8">' +
+										'<label>Affected Hardware & Software</label>' +
+										'<ul class="affected-items"></ul>' +
+									'</div>' +
 								'</div>' +
 							'</div>' +
-						'</div>' +
-						'<div class="form-group">' +
-							'<label>Problem Type</label>' + 
-							'<input class="form-control" value="' + problemTypePage.getProblemTypeBreadcrum(ticket.problem_type) + '" disabled>' +
 						'</div>' +
 					'</div>' +
 				'</div>' +
 			'</div>'
 		);
 
-		ticketPage.appendHardwareDevices($accordion.find('.card[data-cardid="' + cardId + '"] .hardware-list'), ticket, cardId);
+		ticketPage.appendAffectedItems($accordion.find('.card[data-cardid="' + cardId + '"] .affected-items'), ticket, cardId);
 
-		$(this).find('option[value="' + ticketId + '"]').remove();
-		$(this).selectpicker('refresh');
+		$addExistingTicket.find('option[value="' + ticketId + '"]').remove();
+		$addExistingTicket.selectpicker('refresh');
 	}
 
 	showStaffInformation($staffInformation, employeeId) {
@@ -458,6 +582,33 @@ class TicketPage extends DynamicPage {
 		staffPage.showPermissions($staffInformation.find('p:last-child strong').get(0), employee);
 	}
 
+	getAssignedToType(ticket) {
+		if (ticket._assigned_to === makeItAll.staffManager.currentUser()) {
+			return 'self';
+		} else if (makeItAll.staffManager.hasSpecialism(ticket.assigned_to, ticket._problem_type)) {
+			return 'specialist';
+		}
+
+		return 'operator';
+	}
+
+	setSpecialist(problemTypeId, $assignedToOptions, bestSpecialist = null) {
+		if (bestSpecialist === null || !makeItAll.staffManager.hasSpecialism(bestSpecialist, problemTypeId)) {
+			bestSpecialist = staffProblemTypePage.getSpecialistForProblemType(problemTypeId);
+		}
+
+		var $specialistId       = $assignedToOptions.find('input[name*="specialist"]'),
+			$specialistShowcase = $assignedToOptions.find('input[name*="specialist_showcase"]');
+
+		if (bestSpecialist !== null) {
+			$specialistId.val(bestSpecialist.id);
+			$specialistShowcase.val(bestSpecialist.name);
+		} else {
+			$specialistId.val('');
+			$specialistShowcase.val('No Specialist for the Problem Type');
+		}
+	}
+
 	search(query) {
 		if (query.length >= 2 || query == parseInt(query)) {
 			var searchKeys = ['id', 'title'],
@@ -470,7 +621,7 @@ class TicketPage extends DynamicPage {
 					filter_name: '<span class="filter filter-' + ticket.filter.slug.split('_')[0] + '">' + ticket.filter.name + '</span>',
 					created_at: ticket.created_at,
 					updated_at: ticket.updated_at
-				}
+				};
 			}, searchKeys);
 		} else {
 			this.showFilteredTickets($('.side-nav-bar-nested li.active').data('slug'));

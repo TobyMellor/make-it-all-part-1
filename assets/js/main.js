@@ -51,14 +51,14 @@ $(function () {
 
 	$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
 		$(this).find('input, textarea')
-			   .not('.no-clear-on-show')
-			   .val('');
+			.not('.no-clear-on-show')
+			.val('');
 
 		$(this).find('#accordion .card:not(:first-child)').remove();
 
 		var currentTime = new Date();
 
-		$(this).find('.timepicker').val(('0' + (currentTime.getMonth() + 1)).slice(-2) + '/' + ('0' + currentTime.getDate()).slice(-2) + '/' + currentTime.getFullYear() + ' ' + currentTime.getHours() + ':' + currentTime.getMinutes());
+		$(this).find('.timepicker').val(('0' + (currentTime.getMonth() + 1)).slice(-2) + '/' + ('0' + currentTime.getDate()).slice(-2) + '/' + currentTime.getFullYear() + ' ' + ('0' + currentTime.getHours()).slice(-2) + ':' + ('0' + currentTime.getMinutes()).slice(-2));
 	});
 
 	$(document).on('click', '#accordion .card .card-header .view-accordion', function() {

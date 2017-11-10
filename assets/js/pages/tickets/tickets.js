@@ -12,30 +12,48 @@ $(() => {
 
 	$('.new-ticket').on('click', function() {
 		$('#new-ticket-modal').find('input, textarea')
-			   .not('.no-clear-on-show')
-			   .val('');
+			.not('.no-clear-on-show')
+			.val('');
 	});
 
-	$('#new-ticket-modal #create-new-ticket').on('click', function (e) {
-		var formData = $('#new-ticket-modal form').serializeObject();
+	$('#new-ticket-modal #create-new-ticket, #create-follow-up-call').on('click', function (e) {
+		var $modal            = $(this).closest('.modal'),
+			formData          = $modal.find('form').serializeObject(),
+			tickets           = formData.tickets,
+			existingTicketIds = []; // an new ticket won't have any of these
 
-		ticketPage.createCall(formData.date_of_call, formData.caller, formData.tickets);
+		for (var cardId in tickets) {
+			var ticket = tickets[cardId];
 
-		$('#new-ticket-modal').modal('hide');
+			if (ticket.hasOwnProperty('id')) {
+				existingTicketIds.push(Number(ticket.id));
+				delete tickets[cardId];
+			} else {
+				ticket.assigned_to = ticket.assigned_to[ticket.assigned_to_type];
+			}
+		}
+
+		ticketPage.createCall(formData.date_of_call, Number(formData.caller), tickets, existingTicketIds);
+
+		$modal.modal('hide');
 	});
 
 	$('#edit-ticket-modal #edit-existing-ticket').on('click', function () {
-		var formData = $('#edit-ticket-modal form').serializeObject();
+		var formData = $('#edit-ticket-modal form').serializeObject().tickets.this;
 
-		ticketPage.editTicket(
+		makeItAll.ticketManager.editTicket(
 			Number(formData.id),
 			formData.filter,
 			formData.title,
 			formData.description,
-			Number(formData.assigned_to),
+			Number(formData.assigned_to[formData.assigned_to_type]),
 			formData.devices,
+			formData.programs,
+			formData.operating_system,
 			Number(formData.problem_type)
 		);
+
+		ticketPage.refreshPage(formData.filter, Number(formData.id));
 
 		$('#edit-ticket-modal').modal('hide');
 	});
@@ -52,10 +70,6 @@ $(() => {
 
 	$('.ticket-close-button').on('click', function() {
 		ticketPage.hideTableRowDetails();
-	});
-
-	$('.ticket-edit-button').on('click', function() {
-		ticketPage.populateTicketModal($('#edit-ticket-modal'), ticketPage.currentTicket);
 	});
 
 	$('.add-another-ticket').on('click', function() {
@@ -75,21 +89,22 @@ $(() => {
 		$cardHeader.text(headerText);
 	});
 
-	$(document).on('click', '.add-hardware-device', function() {
-		var $inputField       = $(this).closest('.form-group').find('input'),
-			successfullyAdded = ticketPage.appendHardwareDevice($(this).closest('.form-group').find('.hardware-list'), $inputField.val(), $(this).closest('card').data('cardid'));
-
-		if (successfullyAdded) {
-			$inputField.val('');
-		} else {
-			alert('Already exists or can\'t find device in system with serial number');
+	$(document).on('change', '.selectpicker.add-hardware-device', function() {
+		if ($(this).val() !== "") { // not the default select option
+			ticketPage.appendHardwareDevice($(this).closest('.row').next().find('.affected-items'), $(this).val(), $(this).closest('.card').data('cardid'));
+			$(this).closest('.card-block').scrollTop(1E10);
 		}
 	});
 
-	$(document).on('click', '.remove-hardware-device', function() {
-		$(this).closest('li').fadeOut(200, function() {
-			$(this).remove();
-		});
+	$(document).on('change', '.selectpicker.add-software-program', function() {
+		if ($(this).val() !== "") { // not the default select option
+			ticketPage.appendSoftwareProgram($(this).closest('.row').next().find('.affected-items'), $(this).val(), $(this).closest('.card').data('cardid'));
+			$(this).closest('.card-block').scrollTop(1E10);
+		}
+	});
+
+	$(document).on('click', '.remove-affected-item', function() {
+		ticketPage.removeAffectedItem($(this));
 	});
 
 	$(document).on('click', '#ticket-view #call-history-table tbody tr', function() {
@@ -118,51 +133,50 @@ $(() => {
 				continue;
 			}
 
-			$addExistingTicket.append('<option value="' + ticket.id + '">' + '#' + ticket.id + ' ' + ticket.title.substring(0, 17) + '...</option>');
+			$addExistingTicket.append('<option value="' + ticket.id + '">' + '#' + ticket.id + ' ' + ticket.title.substring(0, 17) + '</option>');
 		}
 
 		$addExistingTicket.selectpicker('refresh');
 	});
 
-	$('#create-follow-up-call').on('click', function() {
-		var formData 		  = $('#follow-up-call-modal form').serializeObject(),
-			formDataTickets   = formData.tickets,
-			existingTicketIds = [];
-
-		for (var cardId in formDataTickets) {
-			var card = formDataTickets[cardId];
-
-			if (card.hasOwnProperty('id')) {
-				existingTicketIds.push(Number(card.id));
-				delete formDataTickets[cardId];
-			}
-		}
-
-		ticketPage.createCall(formData.date_of_call, formData.caller, formDataTickets, existingTicketIds);
-
-		$('#follow-up-call-modal').modal('hide');
+	$('#new-ticket-modal').on('show.bs.modal', function () {
+		ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller…', makeItAll.staffManager.staff);
 	});
 
-	$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
-		ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller...', makeItAll.staffManager.staff);
+	$('#follow-up-call-modal').on('show.bs.modal', function() {
+		var lastCallerId = ticketPage.currentTicket.calls[ticketPage.currentTicket.calls.length - 1].caller.id;
+
+		ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller…', makeItAll.staffManager.staff, lastCallerId);
 	});
 
 	$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
-		ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose an operator...', makeItAll.staffManager.getEmployeesWithPermission('operator', true));
+		ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true));
 
 		$(this).find('.staff-information').text('No staff member has been selected yet!');
 		$(this).find('#accordion .card .type-columns').empty();
+		$(this).find('input[name*="assigned_to.self"]').val(makeItAll.staffManager.currentUser());
+		$(this).find('input[name*="assigned_to.self_showcase"]').val(makeItAll.staffManager.currentUser(true).name);
+		$(this).find('input[name*="assigned_to.specialist"]').val('');
+		$(this).find('input[name*="assigned_to.specialist_showcase"]').val('Problem Type not yet chosen');
+		$(this).find('.form-check .form-check-input[value="self"]').click();
 
 		problemTypePage.loadSubProblemTypes($(this).find('.type-columns'));
 	});
 
-	$('#single-view [data-action="edit"]').on('click', function() {
-		var $editTicketModal = $('#edit-ticket-modal');
+	$('#new-ticket-modal, #follow-up-call-modal, #edit-ticket-modal').on('show.bs.modal', function() {
+		ticketPage.populateSelectField($(this).find('.selectpicker.add-hardware-device'), 'Type a serial number…', makeItAll.hardwareManager.devices, null, 'serial_number');
+		ticketPage.populateSelectField($(this).find('.selectpicker.add-software-program'), 'Choose a program…', makeItAll.softwareManager.programs);
+	});
 
-		ticketPage.populateTicketModal($editTicketModal, ticketPage.currentTicket);
-		ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose an operator...', makeItAll.staffManager.getEmployeesWithPermission('operator', true), ticketPage.currentTicket._assigned_to);
+	$('#edit-ticket-modal').on('show.bs.modal', function() {
+		var currentTicket = ticketPage.currentTicket;
 
-		problemTypePage.loadProblemType($editTicketModal.find('.type-columns'), ticketPage.currentTicket._problem_type);
+		ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true), (ticketPage.getAssignedToType(currentTicket) === 'operator' ? currentTicket._assigned_to : null));
+		ticketPage.populateTicketModal($(this), currentTicket, 'this');
+				
+		$(this).find('.form-check .form-check-label input[value="' + ticketPage.getAssignedToType(currentTicket) + '"]').click();
+
+		problemTypePage.loadProblemType($(this).find('.type-columns'), currentTicket._problem_type);
 	});
 
 	$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
@@ -175,11 +189,13 @@ $(() => {
 		problemTypePage.loadSubProblemTypes($(this).closest('.type-columns'), $(this), problemTypeId);
 
 		$(this).closest('.problem-type-picker').siblings('input[name*=problem_type]').val(problemTypeId);
+
+		ticketPage.setSpecialist(problemTypeId, $(this).closest('.card').find('.assigned-to-options'));
 	});
 
 	$(document).on('click', '.problem-type-checkboxes .type-column li', function() {
 		if (!$(this).hasClass('no-children')) {
-			staffProblemTypePage.loadSpecialistProblemTypes($(this).closest('.type-columns'), $(this), parseInt($(this).data('problemTypeId')));
+			staffProblemTypePage.loadSpecialistProblemTypes($(this).closest('.type-columns'), $(this), Number($(this).data('problemTypeId')));
 		}
 	});
 
@@ -205,5 +221,27 @@ $(() => {
 		}
 
 		problemTypePage.createProblemType($(this).parent().siblings('input').val(), parentProblemTypeId);
+	});
+
+	$(document).on('click', '.assigned-to-section .form-check input', function() {
+		var $assignedToOptions = $(this).closest('.assigned-to-section').find('.assigned-to-options');
+
+		$assignedToOptions.find('> *').hide();
+		if ($(this).val() === 'self') {
+			$assignedToOptions.find('> :first-child').show();
+		} else if ($(this).val() === 'operator') {
+			$assignedToOptions.find('> :nth-child(3)').show();
+		} else {
+			$assignedToOptions.find('> :last-child').show();
+		}
+	});
+
+	$(document).on('click', '.card.existing .remove-accordion', function() {
+		var $addExistingTicket = $(this).closest('.modal').find('#add-existing-ticket'),
+			ticketId           = Number($(this).closest('.card-header').siblings('input[name*="id"]').val()),
+			ticket             = makeItAll.ticketManager.getTicket(ticketId);
+
+		$addExistingTicket.prepend('<option value="' + ticketId + '">' + '#' + ticketId + ' ' + ticket.title.substring(0, 17) + '</option>');
+		$addExistingTicket.selectpicker('refresh');
 	});
 });

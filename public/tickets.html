@@ -163,7 +163,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<p class="ticket-details">
-							<strong>Description:</strong>
+							<strong>Description</strong>
 							<span id="ticket-overview" class="subtle"></span>
 						</p>
 						<div id="ticket-description">
@@ -175,14 +175,15 @@
 				<div class="row tables">
 					<div>
 						<p class="ticket-details">
-							<strong>Hardware/Software:</strong>
+							<strong>Hardware & Software</strong>
+							<span id="ticket-operating-system" class="subtle"></span>
 						</p>
 						<table class="table compact" id="hardware-software-table">
 							<thead>
 								<tr>
-									<th>SERIAL</th>
 									<th>NAME</th>
-									<th>OS</th>
+									<th>SERIAL</th>
+									<th>TYPE</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -191,7 +192,7 @@
 					</div>
 					<div>
 						<p class="ticket-details">
-							<strong>Call History:</strong>
+							<strong>Call History</strong>
 							<span class="subtle" id="show-new-call-modal" data-toggle="modal" data-target="#follow-up-call-modal">Register follow-up call</span>
 						</p>
 						<table class="table compact" id="call-history-table">
@@ -208,7 +209,7 @@
 					</div>
 				</div>
 
-				<h4>Updates:</h4>
+				<h4>Updates</h4>
 
 				<ul class="list-unstyled" id="ticket-comments"></ul>
 
@@ -216,7 +217,7 @@
 					<li class="media">
 						<img class="d-flex mr-3" src="images/portraits/portrait-1.jpg" alt="Portrait 1">
 						<div class="media-body">
-							<textarea class="form-control" placeholder="Reply to the ticket thread here..."></textarea>
+							<textarea class="form-control" placeholder="Reply to the ticket thread here…"></textarea>
 							<button class="btn btn-success" id="create-new-event">
 								<i class="fa fa-paper-plane"></i>
 								Send Reply
@@ -240,22 +241,26 @@
 				<div class="modal-body">
 					<form>
 						<div class="row">
-							<div class="col-md-8">
+							<div class="col-md-12">
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="required">Caller</label>
 											<br />
-											<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="caller"></select>
+											<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search…" name="caller"></select>
 										</div>
-									</div>
-									<div class="col-md-6">
 										<div class="form-group">
 											<label>Date of Call</label>
 											<input class="form-control timepicker" name="date_of_call" />
 										</div>
 									</div>
+									<div class="col-md-6">
+										<h4>Caller Information</h4>
+										<div class="staff-information">No staff member has been selected yet!</div>
+									</div>
 								</div>
+							</div>
+							<div class="col-md-12">
 								<div id="accordion" role="tablist">
 									<div class="card" data-cardid="1">
 										<div class="card-header" role="tab" id="heading-1">
@@ -274,69 +279,109 @@
 														<div class="form-group">
 															<label class="required">Status</label>
 															<br />
-															<select class="selectpicker" name="tickets[1][filter]">
+															<select class="selectpicker" name="tickets[1].filter">
 																<option value="new">New</option>
 																<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
 																<option value="pending_in_progress">Pending - In Progress</option>
 																<option value="resolved">Resolved</option>
 															</select>
 														</div>
+														<div class="form-group">
+															<label class="required">Ticket Title</label>
+															<input class="form-control" name="tickets[1].title" />
+														</div>
 													</div>
-													<div class="col-md-6">
+													<div class="col-md-6 assigned-to-section">
 														<div class="form-group">
 															<label class="required">Assigned To</label>
 															<br />
-															<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators..." name="tickets[1][assigned_to]"></select>
+															<div class="assigned-to-options">
+																<input class="form-control no-clear-on-show" name="tickets[1].assigned_to.self_showcase" readonly />
+																<input class="form-control no-clear-on-show" name="tickets[1].assigned_to.self" readonly hidden />
+																<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators…" name="tickets[1].assigned_to.operator"></select>
+																<input class="form-control no-clear-on-show" name="tickets[1].assigned_to.specialist" readonly hidden />
+																<input class="form-control no-clear-on-show" name="tickets[1].assigned_to.specialist_showcase" value="Problem Type not yet chosen" readonly />
+															</div>
 														</div>
-													</div>
-												</div>
-												<div class="form-group">
-													<label class="required">Ticket Title</label>
-													<input class="form-control" name="tickets[1][title]" />
-												</div>
-												<div class="form-group">
-													<label class="required">Ticket Description</label>
-													<textarea class="form-control" name="tickets[1][description]"></textarea>
-												</div>
-												
-												<div class="form-group">
-													<label>Serial Number of Hardware Affected</label>
-													<div class="input-group">
-														<input class="form-control" name="tickets[1][serial_number]" />
-														<span class="input-group-btn">
-															<button class="btn btn-success add-hardware-device" type="button">
-																<i class="fa fa-plus"></i> 
-																Add
-															</button>
-														</span>
-													</div>
-													<div class="row">
-														<div class="col-md-12">
-															<ul class="hardware-list"></ul>
-														</div>
-													</div>
-												</div>
 
-												<div class="form-group">
-													<label class="required">Problem Type</label>
-													<input name="tickets[1][problem_type]" hidden>
-													<span class="subtle pull-right"></span>
-													<div class="problem-type-picker">
-														<div class="type-columns"></div>
+														<div class="form-check">
+															<label class="form-check-label">
+																<input class="form-check-input no-clear-on-show" type="radio" name="tickets[1].assigned_to_type" value="self" checked>
+																Assign to myself
+															</label>
+															<label class="form-check-label">
+																<input class="form-check-input no-clear-on-show" type="radio" name="tickets[1].assigned_to_type" value="operator">
+																Assign to another Operator
+															</label>
+															<label class="form-check-label">
+																<input class="form-check-input no-clear-on-show" type="radio" name="tickets[1].assigned_to_type" value="specialist">
+																Assign to Specialist of Problem Type
+															</label>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label class="required">Ticket Description</label>
+															<textarea class="form-control" name="tickets[1].description"></textarea>
+														</div>
+
+														<div class="row">
+															<div class="col-md-12">
+																<div class="form-group">
+																	<label class="required">Problem Type</label>
+																	<input name="tickets[1].problem_type" hidden>
+																	<span class="subtle pull-right"></span>
+																	<div class="problem-type-picker">
+																		<div class="type-columns"></div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														
+														<div class="affected-items-section">
+															<div class="row">
+																<div class="col-md-4">
+																	<div class="form-group">
+																		<label>Operating System</label>
+																		<input class="form-control no-clear-on-show" name="tickets[1].operating_system" />
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="form-group">
+																		<label class="required">Hardware Affected</label>
+																		<select class="selectpicker add-hardware-device" data-live-search="true"></select>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="form-group">
+																		<label>Software Affected</label>
+																		<select class="selectpicker add-software-program" data-live-search="true"></select>
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-12">
+																	<ul class="affected-items"></ul>
+																</div>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-								<button type="button" class="btn btn-success add-another-ticket">
-									<i class="fa fa-plus"></i> 
-									Add another Ticket
-								</button>
-							</div>
-							<div class="col-md-4">
-								<h4>Caller Information</h4>
-								<div class="staff-information">No staff member has been selected yet!</div>
+								<div class="row">
+									<div class="col-md-6">
+										<label>Another new issue bought up?</label>
+										<button type="button" class="btn btn-success add-another-ticket">
+											<i class="fa fa-plus"></i> 
+											Reference new Ticket
+										</button>
+									</div>
+								</div>
 							</div>
 						</div>
 					</form>
@@ -361,28 +406,34 @@
 				<div class="modal-body">
 					<form>
 						<div class="row">
-							<div class="col-md-8">
+							<div class="col-md-12">
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="required">Caller</label>
 											<br />
-											<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search..." name="caller"></select>
+											<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search…" name="caller"></select>
 										</div>
-									</div>
-									<div class="col-md-6">
 										<div class="form-group">
 											<label>Date of Call</label>
 											<input class="form-control timepicker" name="date_of_call" />
 										</div>
 									</div>
+									<div class="col-md-6">
+										<h4>Caller Information</h4>
+										<div class="staff-information">No staff member has been selected yet!</div>
+									</div>
 								</div>
+							</div>
+							<div class="col-md-12">
 								<div id="accordion" role="tablist">
-									<div class="card existing" data-cardid="1">
-										<input type="text" name="tickets[this][id]" hidden />
+									<div class="card existing" data-cardid="this-call">
+										<input type="text" name="tickets.this.id" hidden />
 										<div class="card-header highlight" role="tab" id="heading-this-call">
 											<h5 class="mb-0">
-												<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-this-call">Loading…</a>
+												<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-this-call">
+													This Ticket
+												</a>
 												<i class="fa fa-chevron-up view-accordion"></i>
 											</h5>
 										</div>
@@ -394,38 +445,67 @@
 														<div class="form-group">
 															<label>Status</label>
 															<br />
-															<input class="form-control" name="tickets[this][filter]" disabled />
+															<input class="form-control" type="text" name="tickets.this.filter" disabled>
+														</div>
+														<div class="form-group">
+															<label>Ticket Title</label>
+															<input class="form-control" name="tickets.this.title" disabled />
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Assigned To</label>
 															<br />
-															<input class="form-control" name="tickets[this][assigned_to]" disabled />
+															<div class="assigned-to-options">
+																<input class="form-control" name="tickets.this.assigned_to" value="Me" disabled />
+															</div>
 														</div>
-													</div>
-												</div>
-												<div class="form-group">
-													<label>Ticket Title</label>
-													<input class="form-control" name="tickets[this][title]" disabled />
-												</div>
-												<div class="form-group">
-													<label>Ticket Description</label>
-													<textarea class="form-control" name="tickets[this][description]" disabled></textarea>
-												</div>
-												
-												<div class="form-group">
-													<label>Serial Numbers of Hardware Affected</label>
-													<div class="row">
-														<div class="col-md-12">
-															<ul class="hardware-list"></ul>
-														</div>
-													</div>
-												</div>
 
-												<div class="form-group">
-													<label>Problem Type</label>
-													<input class="form-control" name="tickets[this][problem_type]" disabled />
+														<div class="form-check">
+															<label class="form-check-label">
+																<input class="form-check-input no-clear-on-show" type="radio" name="tickets.this.assigned_to_type" value="self" checked disabled>
+																Assign to myself
+															</label>
+															<label class="form-check-label">
+																<input class="form-check-input no-clear-on-show" type="radio" name="tickets.this.assigned_to_type" value="operator" disabled>
+																Assign to another Operator
+															</label>
+															<label class="form-check-label">
+																<input class="form-check-input no-clear-on-show" type="radio" name="tickets.this.assigned_to_type" value="specialist" disabled>
+																Assign to Specialist of Problem Type
+															</label>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label>Ticket Description</label>
+															<textarea class="form-control" name="tickets.this.description" disabled></textarea>
+														</div>
+
+														<div class="row">
+															<div class="col-md-12">
+																<div class="form-group">
+																	<label>Problem Type</label>
+																	<input class="form-control" name="tickets.this.problem_type_showcase" disabled>
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-md-4">
+																<div class="form-group">
+																	<label>Operating System</label>
+																	<input class="form-control" name="tickets.this.operating_system" disabled />
+																</div>
+															</div>
+															<div class="col-md-8">
+																<label>Affected Hardware & Software</label>
+																<ul class="affected-items"></ul>
+															</div>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -434,7 +514,7 @@
 								<div class="row">
 									<div class="col-md-6">
 										<label>Another Ticket referenced?</label>
-										<select class="selectpicker" data-live-search="true" data-live-search-placeholder="Search..." id="add-existing-ticket"></select>
+										<select class="selectpicker" data-live-search="true" data-live-search-placeholder="Search…" id="add-existing-ticket"></select>
 									</div>
 									<div class="col-md-6">
 										<label>New issue bought up?</label>
@@ -443,16 +523,6 @@
 											Reference new Ticket
 										</button>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<h4>Caller Information</h4>
-								<div class="staff-information">
-									<p>ID Number: <strong id="staff-id">B619693</strong></p>
-									<p>Name: <strong id="staff-name">Toby Mellor</strong></p>
-									<p>Job Title: <strong id="staff-job-title">Student</strong></p>
-									<p>Department: <strong id="staff-department">Lboro</strong></p>
-									<p>Telephone Number: <strong id="staff-telephone-number">01234567890</strong></p>
 								</div>
 							</div>
 						</div>
@@ -477,15 +547,15 @@
 				</div>
 				<div class="modal-body">
 					<form>
-						<input type="text" name="id" hidden />
+						<input type="text" name="tickets.this.id" hidden />
 						<div class="row">
 							<div class="col-md-12">
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-12">
 										<div class="form-group">
 											<label class="required">Status</label>
 											<br />
-											<select class="selectpicker" name="filter">
+											<select class="selectpicker" name="tickets.this.filter">
 												<option value="new">New</option>
 												<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
 												<option value="pending_in_progress">Pending - In Progress</option>
@@ -493,47 +563,78 @@
 											</select>
 										</div>
 									</div>
-									<div class="col-md-6">
+								</div>
+								<div class="row">
+									<div class="col-md-12 assigned-to-section">
 										<div class="form-group">
-											<label class="required">Assigned To</label>
+											<label>Assigned To</label>
 											<br />
-											<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators..." name="assigned_to"></select>
+											<div class="assigned-to-options">
+												<input class="form-control no-clear-on-show" name="tickets.this.assigned_to.self_showcase" readonly />
+												<input class="form-control no-clear-on-show" name="tickets.this.assigned_to.self" readonly hidden />
+												<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators…" name="tickets.this.assigned_to.operator"></select>
+												<input class="form-control no-clear-on-show" name="tickets.this.assigned_to.specialist" readonly hidden />
+												<input class="form-control no-clear-on-show" name="tickets.this.assigned_to.specialist_showcase" value="Problem Type not yet chosen" readonly />
+											</div>
+										</div>
+										<div class="form-check">
+											<label class="form-check-label">
+												<input class="form-check-input no-clear-on-show" type="radio" name="tickets.this.assigned_to_type" value="self" checked>
+												Assign to myself
+											</label>
+											<label class="form-check-label">
+												<input class="form-check-input no-clear-on-show" type="radio" name="tickets.this.assigned_to_type" value="operator">
+												Assign to another Operator
+											</label>
+											<label class="form-check-label">
+												<input class="form-check-input no-clear-on-show" type="radio" name="tickets.this.assigned_to_type" value="specialist">
+												Assign to Specialist of Problem Type
+											</label>
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="required">Ticket Title</label>
-									<input class="form-control" name="title" />
+									<input class="form-control" name="tickets.this.title" />
 								</div>
 								<div class="form-group">
 									<label class="required">Ticket Description</label>
-									<textarea class="form-control" name="description"></textarea>
-								</div>
-								
-								<div class="form-group">
-									<label>Serial Number of Hardware Affected</label>
-									<div class="input-group">
-										<input class="form-control" name="serial_number" />
-										<span class="input-group-btn">
-											<button class="btn btn-success add-hardware-device" type="button">
-												<i class="fa fa-plus"></i> 
-												Add
-											</button>
-										</span>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
-											<ul class="hardware-list"></ul>
-										</div>
-									</div>
+									<textarea class="form-control" name="tickets.this.description"></textarea>
 								</div>
 
 								<div class="form-group">
 									<label class="required">Problem Type</label>
-									<input name="problem_type" hidden>
+									<input name="tickets.this.problem_type" hidden>
 									<span class="subtle pull-right"></span>
 									<div class="problem-type-picker">
 										<div class="type-columns"></div>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label>Operating System</label>
+									<input class="form-control" name="tickets.this.operating_system" />
+								</div>
+								
+								<div class="affected-items-section">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="required">Hardware Affected</label>
+												<select class="selectpicker add-hardware-device" data-live-search="true"></select>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Software Affected</label>
+												<select class="selectpicker add-software-program" data-live-search="true"></select>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<ul class="affected-items"></ul>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -718,22 +819,13 @@
 		 * If you use a manager, make sure you include the relevant
 		 * JS files after main. e.g. tickets.min.js for TicketManager
 		 */
-		var makeItAll = new MakeItAll;
+		var makeItAll = new MakeItAll();
 
-		// TicketManager(filters, tickets, events)
-		makeItAll.ticketManager = new TicketManager();
-
-		// StaffManager()
-		makeItAll.staffManager = new StaffManager();
-
-		// HardwareManager(devices)
-		makeItAll.hardwareManager = new HardwareManager(null); // TODO: Pass in some fake data
-
-		// SoftwareManager(programs)
-		makeItAll.softwareManager = new SoftwareManager(null); // TODO: Pass in some fake data
-
-		// ProblemTypeManager(problemTypes)
-		makeItAll.problemTypeManager = new ProblemTypeManager(null); // TODO: Pass in some fake data
+		makeItAll.ticketManager      = new TicketManager();
+		makeItAll.staffManager       = new StaffManager();
+		makeItAll.hardwareManager    = new HardwareManager();
+		makeItAll.softwareManager    = new SoftwareManager();
+		makeItAll.problemTypeManager = new ProblemTypeManager();
 	</script>
 </body>
 </html>
