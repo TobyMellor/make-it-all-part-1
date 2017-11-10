@@ -280,9 +280,10 @@ class TicketPage extends DynamicPage {
 	}
 
 	createCall(dateOfCall, caller, tickets, existingTicketIds = []) {
-		makeItAll.ticketManager.createCall(dateOfCall, caller, tickets, existingTicketIds);
+		var call   = makeItAll.ticketManager.createCall(dateOfCall, caller, tickets, existingTicketIds),
+			ticket = call.tickets[0];
 
-		this.refreshPage(this.currentTicket.filter.slug, this.currentTicket.id);
+		this.refreshPage(ticket.filter.slug, ticket.id);
 	}
 
 	editTicket(id, filter, title, description, assigned_to, devices, problem_type) {

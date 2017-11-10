@@ -17,7 +17,7 @@ $(() => {
 	});
 
 	$('#new-ticket-modal #create-new-ticket').on('click', function (e) {
-		var formData = $('#new-ticket-modal form').serializeObject();
+		var formData = $('#new-ticket-modal form').serializeObject(),
 			tickets  = [];
 
 		for (var i in formData.tickets) {
@@ -27,7 +27,7 @@ $(() => {
 			tickets.push(ticket);
 		}
 
-		ticketPage.createCall(formData.date_of_call, formData.caller, tickets);
+		ticketPage.createCall(formData.date_of_call, Number(formData.caller), tickets);
 
 		$('#new-ticket-modal').modal('hide');
 	});
@@ -147,7 +147,7 @@ $(() => {
 			}
 		}
 
-		ticketPage.createCall(formData.date_of_call, formData.caller, formDataTickets, existingTicketIds);
+		ticketPage.createCall(formData.date_of_call, Number(formData.caller), formDataTickets, existingTicketIds);
 
 		$('#follow-up-call-modal').modal('hide');
 	});
