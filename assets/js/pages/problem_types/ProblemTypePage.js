@@ -87,7 +87,7 @@ class ProblemTypePage extends DynamicPage {
 		var ptm              = makeItAll.problemTypeManager,
 			problemTypeChain = ptm.getProblemTypeChain(ptm.getProblemType(problemTypeId));
 
-		$typeColumns.html('');
+		$typeColumns.empty();
 
 		this.loadSubProblemTypes($typeColumns);
 
@@ -118,9 +118,9 @@ class ProblemTypePage extends DynamicPage {
 			specialists      = makeItAll.staffManager.getSpecialists(problemType.id),
 			tickets          = makeItAll.ticketManager.getRelatedProblems(problemType.id);
 
-		$problemTypeTable.html('');
-		$specialistsTable.html('');
-		$ticketsTable.html('');
+		$problemTypeTable.empty();
+		$specialistsTable.empty();
+		$ticketsTable.empty();
 
 		// Should probably move these to DynamicPage
 		for (let i = 0; i < problemTypeChain.length; i++) {

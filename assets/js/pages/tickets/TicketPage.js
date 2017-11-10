@@ -76,7 +76,7 @@ class TicketPage extends DynamicPage {
 				
 				var $ticketHardwareSoftwareBody = $ticketHardwareSoftware.find('tbody');
 
-				$ticketHardwareSoftwareBody.html('');
+				$ticketHardwareSoftwareBody.empty();
 
 				for (var i = 0; i < affectedItems.length; i++) {
 					var affectedItem = affectedItems[i];
@@ -94,7 +94,7 @@ class TicketPage extends DynamicPage {
 				}
 			}
 
-			$ticketCallHistoryBody.html('');
+			$ticketCallHistoryBody.empty();
 
 			for (let i = 0; i < calls.length; i++) {
 				var call = calls[i];
@@ -158,6 +158,8 @@ class TicketPage extends DynamicPage {
 	}
 
 	appendAffectedItems($affectedItems, ticket, cardId) {
+		$affectedItems.empty();
+
 		for (var i = 0; i < ticket.devices.length; i++) {
 			var device = ticket.devices[i];
 
@@ -213,7 +215,7 @@ class TicketPage extends DynamicPage {
 		$callHistory.find('#call-caller').text(call.caller.name);
 		$callHistory.find('#call-date').text(call.date_of_call);
 
-		$callTicketTable.html('');
+		$callTicketTable.empty();
 
 		for (let i = 0; i < callTickets.length; i++) {
 			var ticket = callTickets[i];

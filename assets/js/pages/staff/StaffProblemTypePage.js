@@ -24,7 +24,7 @@ class StaffProblemTypePage {
 				return;
 			}
 		} else {
-			$typeColumns.html('');
+			$typeColumns.empty();
 		}
 
 		var children    = [],
