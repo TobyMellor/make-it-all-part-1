@@ -144,8 +144,6 @@ $(() => {
 
 	$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
 		ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller…', makeItAll.staffManager.staff);
-		ticketPage.populateSelectField($(this).find('.selectpicker.add-hardware-device'), 'Type a serial number…', makeItAll.hardwareManager.devices, null, 'serial_number');
-		ticketPage.populateSelectField($(this).find('.selectpicker.add-software-program'), 'Choose a program…', makeItAll.softwareManager.programs);
 	});
 
 	$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
@@ -160,6 +158,11 @@ $(() => {
 		$(this).find('.form-check .form-check-input[value="self"]').click();
 
 		problemTypePage.loadSubProblemTypes($(this).find('.type-columns'));
+	});
+
+	$('#new-ticket-modal, #follow-up-call-modal, #edit-ticket-modal').on('show.bs.modal', function() {
+		ticketPage.populateSelectField($(this).find('.selectpicker.add-hardware-device'), 'Type a serial number…', makeItAll.hardwareManager.devices, null, 'serial_number');
+		ticketPage.populateSelectField($(this).find('.selectpicker.add-software-program'), 'Choose a program…', makeItAll.softwareManager.programs);
 	});
 
 	$('#single-view [data-action="edit"]').on('click', function() {

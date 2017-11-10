@@ -124,8 +124,8 @@ class DynamicPage {
 	}
 
 	populateSelectField($select, defaultText, elements, defaultOptionId = null, property = 'name') {
-		$select.html('<option selected disabled hidden>' + defaultText + '</option>');
-
+		$select.html('<option selected disabled>' + defaultText + '</option>');
+		
 		for (var i = 0; i < elements.length; i++) {
 			if (defaultOptionId !== null && elements[i].id === defaultOptionId) {
 				$select.append('<option selected value="' + elements[i].id + '">' + elements[i][property] + '</option>');
