@@ -139,8 +139,14 @@ $(() => {
 		$addExistingTicket.selectpicker('refresh');
 	});
 
-	$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
+	$('#new-ticket-modal').on('show.bs.modal', function () {
 		ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller…', makeItAll.staffManager.staff);
+	});
+
+	$('#follow-up-call-modal').on('show.bs.modal', function() {
+		var lastCallerId = ticketPage.currentTicket.calls[ticketPage.currentTicket.calls.length - 1].caller.id;
+
+		ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller…', makeItAll.staffManager.staff, lastCallerId);
 	});
 
 	$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
