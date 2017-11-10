@@ -91,7 +91,7 @@ class StaffPage extends DynamicPage {
 						analyst: employee.access.analyst,
 						admin: employee.access.admin
 					}
-				}
+				};
 			}, searchKeys);
 		} else {
 			this.showStaff();

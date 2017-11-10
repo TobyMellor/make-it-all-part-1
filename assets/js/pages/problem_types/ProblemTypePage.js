@@ -14,8 +14,10 @@ class ProblemTypePage extends DynamicPage {
 	}
 
 	loadSubProblemTypes($typeColumns, $li = null, problemTypeId = null) {
+		var problemType = null;
+
 		if ($li) {
-			var problemType = makeItAll.problemTypeManager.getProblemType(problemTypeId);
+			problemType = makeItAll.problemTypeManager.getProblemType(problemTypeId);
 			this.loadProblemTypeInfo(problemType);
 
 			$li.closest('.form-group').find('span.subtle').text(this.getProblemTypeBreadcrum(problemType));
@@ -40,7 +42,7 @@ class ProblemTypePage extends DynamicPage {
 			children = makeItAll.problemTypeManager.getProblemTypes(problemType._children);
 		}
 
-		for (var i = 0; i < children.length; i++) {
+		for (let i = 0; i < children.length; i++) {
 			var child           = children[i],
 				specialistCount = makeItAll.staffManager.getSpecialists(child.id).length;
 
@@ -89,7 +91,7 @@ class ProblemTypePage extends DynamicPage {
 
 		this.loadSubProblemTypes($typeColumns);
 
-		for (var i = problemTypeChain.length - 2; i >= -1; i--) {
+		for (let i = problemTypeChain.length - 2; i >= -1; i--) {
 			this.loadSubProblemTypes($typeColumns, $typeColumns.find('.type-column li[data-problem-type-id="' + problemTypeChain[i + 1].id + '"]'), problemTypeChain[i + 1].id);
 		}
 	}
@@ -121,8 +123,8 @@ class ProblemTypePage extends DynamicPage {
 		$ticketsTable.html('');
 
 		// Should probably move these to DynamicPage
-		for (var i = 0; i < problemTypeChain.length; i++) {
-			var problemType = problemTypeChain[i];
+		for (let i = 0; i < problemTypeChain.length; i++) {
+			let problemType = problemTypeChain[i];
 
 			$problemTypeTable.prepend(
 				'<tr ' + (i === 0 ? 'class="highlight"' : '') + ' data-rowid="' + problemType.id + '">' +
@@ -140,7 +142,7 @@ class ProblemTypePage extends DynamicPage {
 			$specialistsTable.parent().show();
 			$noSpecialistsData.hide();
 
-			for (var i = 0; i < specialists.length; i++) {
+			for (let i = 0; i < specialists.length; i++) {
 				var specialist = specialists[i];
 
 				$specialistsTable.append(
@@ -164,7 +166,7 @@ class ProblemTypePage extends DynamicPage {
 			$ticketsTable.parent().show();
 			$noTicketsData.hide();
 
-			for (var i = 0; i < tickets.length; i++) {
+			for (let i = 0; i < tickets.length; i++) {
 				var ticket = tickets[i];
 
 				$ticketsTable.append(
@@ -228,10 +230,10 @@ class ProblemTypePage extends DynamicPage {
 					id: problemType.id,
 					name: problemType.name,
 					parent: (problemType.parent !== null ? problemType.parent.name : 'N/A')
-				}
+				};
 			}, searchKeys);
 		} else {
-			$('.top-nav h4').text('Problem Types')
+			$('.top-nav h4').text('Problem Types');
 			$problemTypePicker.show();
 			$tableSection.hide();
 		}

@@ -26,9 +26,9 @@ $(() => {
 				employee._specialisms = staffProblemTypePage.currentSpecialisms;
 				
 				addItemToPicker(
-					$('.selectpicker.staff-picker[name="' + formData['event_target'] + '"]'),
+					$('.selectpicker.staff-picker[name="' + formData.event_target + '"]'),
 					employee.id,
-					formData['staff[first_name]'] + ' ' + formData['staff[last_name]']
+					formData.staff.first_name + ' ' + formData.staff.last_name
 				); // formData and staffId to be retrieved by AJAX call
 				
 				break;

@@ -18,8 +18,16 @@ $(() => {
 
 	$('#new-ticket-modal #create-new-ticket').on('click', function (e) {
 		var formData = $('#new-ticket-modal form').serializeObject();
+			tickets  = [];
 
-		ticketPage.createCall(formData.date_of_call, formData.caller, formData.tickets);
+		for (var i in formData.tickets) {
+			var ticket = formData.tickets[i];
+
+			ticket.assigned_to = ticket.assigned_to[ticket.assigned_to_type];
+			tickets.push(ticket);
+		}
+
+		ticketPage.createCall(formData.date_of_call, formData.caller, tickets);
 
 		$('#new-ticket-modal').modal('hide');
 	});
@@ -27,15 +35,19 @@ $(() => {
 	$('#edit-ticket-modal #edit-existing-ticket').on('click', function () {
 		var formData = $('#edit-ticket-modal form').serializeObject();
 
-		ticketPage.editTicket(
+		makeItAll.ticketManager.editTicket(
 			Number(formData.id),
 			formData.filter,
 			formData.title,
 			formData.description,
 			Number(formData.assigned_to),
 			formData.devices,
+			formData.programs,
+			formData.operating_system,
 			Number(formData.problem_type)
 		);
+
+		ticketPage.refreshPage(formData.filter, Number(formData.id));
 
 		$('#edit-ticket-modal').modal('hide');
 	});
@@ -75,15 +87,12 @@ $(() => {
 		$cardHeader.text(headerText);
 	});
 
-	$(document).on('click', '.add-hardware-device', function() {
-		var $inputField       = $(this).closest('.form-group').find('input'),
-			successfullyAdded = ticketPage.appendHardwareDevice($(this).closest('.form-group').find('.hardware-list'), $inputField.val(), $(this).closest('card').data('cardid'));
+	$(document).on('change', '.selectpicker.add-hardware-device', function() {
+		ticketPage.appendHardwareDevice($(this).closest('.row').next().find('.affected-items'), $(this).val(), $(this).closest('.card').data('cardid'));
+	});
 
-		if (successfullyAdded) {
-			$inputField.val('');
-		} else {
-			alert('Already exists or can\'t find device in system with serial number');
-		}
+	$(document).on('change', '.selectpicker.add-software-program', function() {
+		ticketPage.appendSoftwareProgram($(this).closest('.row').next().find('.affected-items'), $(this).val(), $(this).closest('.card').data('cardid'));
 	});
 
 	$(document).on('click', '.remove-hardware-device', function() {
@@ -118,7 +127,7 @@ $(() => {
 				continue;
 			}
 
-			$addExistingTicket.append('<option value="' + ticket.id + '">' + '#' + ticket.id + ' ' + ticket.title.substring(0, 17) + '...</option>');
+			$addExistingTicket.append('<option value="' + ticket.id + '">' + '#' + ticket.id + ' ' + ticket.title.substring(0, 17) + '…</option>');
 		}
 
 		$addExistingTicket.selectpicker('refresh');
@@ -144,17 +153,20 @@ $(() => {
 	});
 
 	$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
-		ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller...', makeItAll.staffManager.staff);
+		ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller…', makeItAll.staffManager.staff);
+		ticketPage.populateSelectField($(this).find('.selectpicker.add-hardware-device'), 'Type a serial number…', makeItAll.hardwareManager.devices, null, 'serial_number');
+		ticketPage.populateSelectField($(this).find('.selectpicker.add-software-program'), 'Choose a program…', makeItAll.softwareManager.programs);
 	});
 
 	$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
-		ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose an operator...', makeItAll.staffManager.getEmployeesWithPermission('operator', true));
+		ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true));
 
 		$(this).find('.staff-information').text('No staff member has been selected yet!');
 		$(this).find('#accordion .card .type-columns').empty();
-
-		$(this).find('input[name*="assigned_to.self"]').val('Me');
-		$(this).find('input[name*="assigned_to.specialist"]').val('Problem Type not yet chosen');
+		$(this).find('input[name*="assigned_to.self"]').val(makeItAll.staffManager.currentUser());
+		$(this).find('input[name*="assigned_to.self_showcase"]').val(makeItAll.staffManager.currentUser(true).name);
+		$(this).find('input[name*="assigned_to.specialist"]').val('');
+		$(this).find('input[name*="assigned_to.specialist_showcase"]').val('Problem Type not yet chosen');
 		$(this).find('.form-check .form-check-input[value="self"]').click();
 
 		problemTypePage.loadSubProblemTypes($(this).find('.type-columns'));
@@ -164,7 +176,7 @@ $(() => {
 		var $editTicketModal = $('#edit-ticket-modal');
 
 		ticketPage.populateTicketModal($editTicketModal, ticketPage.currentTicket);
-		ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose an operator...', makeItAll.staffManager.getEmployeesWithPermission('operator', true), ticketPage.currentTicket._assigned_to);
+		ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true), ticketPage.currentTicket._assigned_to);
 
 		problemTypePage.loadProblemType($editTicketModal.find('.type-columns'), ticketPage.currentTicket._problem_type);
 	});
@@ -212,14 +224,14 @@ $(() => {
 	});
 
 	$(document).on('click', '#accordion .form-check input', function() {
-		$assignedToOptions = $('.assigned-to-options');
+		var $assignedToOptions = $('.assigned-to-options');
 
 		$assignedToOptions.find('> *').hide();
 
 		if ($(this).val() === 'self') {
 			$assignedToOptions.find('> :first-child').show();
 		} else if ($(this).val() === 'operator') {
-			$assignedToOptions.find('> :nth-child(2)').show();
+			$assignedToOptions.find('> :nth-child(3)').show();
 		} else {
 			$assignedToOptions.find('> :last-child').show();
 		}

@@ -9,7 +9,7 @@
  */
 
 class TicketManager extends Manager {
-	constructor(calls, filters, tickets, events) {
+	constructor() {
 		super();
 		
 		var calls = [
@@ -190,7 +190,7 @@ class TicketManager extends Manager {
 		this.tickets = [];
 		this.events  = [];
 
-		for (var i = 0; i < calls.length; i++) {
+		for (let i = 0; i < calls.length; i++) {
 			var call = calls[i];
 
 			this.calls.push(new Call(
@@ -201,7 +201,7 @@ class TicketManager extends Manager {
 			));
 		}
 
-		for (var i = 0; i < filters.length; i++) {
+		for (let i = 0; i < filters.length; i++) {
 			var filter = filters[i];
 
 			this.filters.push(new Filter(
@@ -212,7 +212,7 @@ class TicketManager extends Manager {
 			));
 		}
 
-		for (var i = 0; i < tickets.length; i++) {
+		for (let i = 0; i < tickets.length; i++) {
 			var ticket = tickets[i];
 
 			this.tickets.push(new Ticket(
@@ -232,7 +232,7 @@ class TicketManager extends Manager {
 			));
 		}
 
-		for (var i = 0; i < events.length; i++) {
+		for (let i = 0; i < events.length; i++) {
 			var event = events[i];
 
 			this.events.push(new Event(
@@ -261,7 +261,7 @@ class TicketManager extends Manager {
 	getFilters(filterSlugs) {
 		var filters = [];
 
-		for (var i = 0; i < filterSlugs.length; i++) {
+		for (let i = 0; i < filterSlugs.length; i++) {
 			filters.push(this.getFilter(filterSlugs[i]));
 		}
 
@@ -275,7 +275,7 @@ class TicketManager extends Manager {
 	}
 
 	updateFilter(oldFilterSlug, newFilterSlug, ticketId) {
-		for (var i in this.filters) {
+		for (let i in this.filters) {
 			var filter         = this.filters[i],
 				filterTickets  = filter._tickets,
 				ticketsIndexOf = filterTickets.indexOf(ticketId);
@@ -299,13 +299,13 @@ class TicketManager extends Manager {
 				[]
 			);
 
-		for (var i = 0; i < ticketIds.length; i++) {
+		for (let i = 0; i < ticketIds.length; i++) {
 			var ticketId = ticketIds[i];
 
 			this.getTicket(ticketId)._calls.push(callId);
 		}
 
-		for (var i = 0; i < tickets.length; i++) {
+		for (let i = 0; i < tickets.length; i++) {
 			var ticket = this.createTicket(
 				callId,
 				tickets[i].filter,

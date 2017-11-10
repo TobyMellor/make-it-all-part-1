@@ -10,8 +10,10 @@ class StaffProblemTypePage {
 	}
 
 	loadSpecialistProblemTypes($typeColumns, $li = null, problemTypeId = null) {
+		var problemType = null;
+		
 		if ($li) {
-			var problemType = makeItAll.problemTypeManager.getProblemType(problemTypeId);
+			problemType = makeItAll.problemTypeManager.getProblemType(problemTypeId);
 
 			$li.parent().nextAll().remove();
 			$li.parent().find('li.active').removeClass('active');

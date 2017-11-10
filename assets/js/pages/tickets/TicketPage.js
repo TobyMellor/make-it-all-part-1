@@ -96,7 +96,7 @@ class TicketPage extends DynamicPage {
 
 			$ticketCallHistoryBody.html('');
 
-			for (var i = 0; i < calls.length; i++) {
+			for (let i = 0; i < calls.length; i++) {
 				var call = calls[i];
 
 				$ticketCallHistoryBody.append(
@@ -117,7 +117,7 @@ class TicketPage extends DynamicPage {
 				$ticketComments.text('');
 			}
 
-			for (var index in ticket.events) {
+			for (let index in ticket.events) {
 				var event = ticket.events[index];
 
 				if (event.type === 'comment') {
@@ -164,7 +164,7 @@ class TicketPage extends DynamicPage {
 			this.appendHardwareDevice($affectedItems, device.serial_number, cardId);
 		}
 
-		for (var i = 0; i < ticket.programs.length; i++) {
+		for (let i = 0; i < ticket.programs.length; i++) {
 			var program = ticket.programs[i];
 
 			this.appendSoftwareProgram($affectedItems, program.id, cardId);
@@ -215,7 +215,7 @@ class TicketPage extends DynamicPage {
 
 		$callTicketTable.html('');
 
-		for (var i = 0; i < callTickets.length; i++) {
+		for (let i = 0; i < callTickets.length; i++) {
 			var ticket = callTickets[i];
 
 			$callTicketTable.append(
@@ -302,7 +302,7 @@ class TicketPage extends DynamicPage {
 	addNewAccordionCard($accordion) {
 		var cardId = Math.floor(Math.random() * (10000 + 1));
 
-		$card = $(
+		var $card = $(
 			'<div class="card" data-cardid="' + cardId + '">' +
 				'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
 					'<h5 class="mb-0">' +
@@ -327,46 +327,80 @@ class TicketPage extends DynamicPage {
 										'<option value="resolved">Resolved</option>' +
 									'</select>' +
 								'</div>' +
+								'<div class="form-group">' +
+									'<label class="required">Ticket Title</label>' +
+									'<input class="form-control" name="tickets[' + cardId + '].title" />' +
+								'</div>' +
 							'</div>' +
 							'<div class="col-md-6">' +
 								'<div class="form-group">' +
 									'<label class="required">Assigned To</label>' +
 									'<br />' +
-									'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators..." name="tickets[' + cardId + '].assigned_to"></select>' +
+									'<div class="assigned-to-options">' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.self" value="Me" disabled />' +
+										'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators…" name="tickets[' + cardId + '].assigned_to.operator"></select>' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.specialist" value="Problem Type not yet chosen" disabled />' +
+									'</div>' +
+								'</div>' +
+								'<div class="form-check">' +
+									'<label class="form-check-label">' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="self" checked>' +
+										'Assign to myself' +
+									'</label>' +
+									'<label class="form-check-label">' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="operator">' +
+										'Assign to another Operator' +
+									'</label>' +
+									'<label class="form-check-label">' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="specialist">' +
+										'Assign to Specialist of Problem Type' +
+									'</label>' +
 								'</div>' +
 							'</div>' +
 						'</div>' +
-						'<div class="form-group">' +
-							'<label class="required">Ticket Title</label>' +
-							'<input class="form-control" name="tickets[' + cardId + '].title" />' +
-						'</div>' +
-						'<div class="form-group">' +
-							'<label class="required">Ticket Description</label>' +
-							'<textarea class="form-control" name="tickets[' + cardId + '].description"></textarea>' +
-						'</div>' +
-						'<div class="form-group">' +
-							'<label>Serial Number of Hardware Affected</label>' +
-							'<div class="input-group">' +
-								'<input class="form-control" name="tickets[' + cardId + '].hardware.serial_number" />' +
-								'<span class="input-group-btn">' +
-									'<button class="btn btn-success add-hardware-device" type="button">' +
-										'<i class="fa fa-plus"></i> ' +
-										'Add' +
-									'</button>' +
-								'</span>' +
-							'</div>' +
-							'<div class="row">' +
-								'<div class="col-md-12">' +
-									'<ul class="hardware-list"></ul>' +
+						'<div class="row">' +
+							'<div class="col-md-12">' +
+								'<div class="form-group">' +
+									'<label class="required">Ticket Description</label>' +
+									'<textarea class="form-control" name="tickets[' + cardId + '].description"></textarea>' +
+								'</div>' +
+								'<div class="row">' +
+									'<div class="col-md-4">' +
+										'<div class="form-group">' +
+											'<label>Operating System</label>' +
+											'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].operating_system" value="(prototype)" disabled />' +
+										'</div>' +
+									'</div>' +
+									'<div class="col-md-4">' +
+										'<div class="form-group">' +
+											'<label class="required">Hardware Affected</label>' +
+											'<select class="selectpicker add-hardware-device" data-live-search="true"></select>' +
+										'</div>' +
+									'</div>' +
+									'<div class="col-md-4">' +
+										'<div class="form-group">' +
+											'<label>Software Affected</label>' +
+											'<select class="selectpicker add-software-program" data-live-search="true"></select>' +
+										'</div>' +
+									'</div>' +
+								'</div>' +
+								'<div class="row">' +
+									'<div class="col-md-12">' +
+										'<ul class="affected-items"></ul>' +
+									'</div>' +
 								'</div>' +
 							'</div>' +
 						'</div>' +
-						'<div class="form-group">' +
-							'<label class="required">Problem Type</label>' +
-							'<input name="tickets[' + cardId + '].problem_type" hidden>' +
-							'<span class="subtle pull-right"></span>' +
-							'<div class="problem-type-picker">' +
-								'<div class="type-columns"></div>' +
+						'<div class="row">' +
+							'<div class="col-md-12">' +
+								'<div class="form-group">' +
+									'<label class="required">Problem Type</label>' +
+									'<input name="tickets[' + cardId + '].problem_type" hidden>' +
+									'<span class="subtle pull-right"></span>' +
+									'<div class="problem-type-picker">' +
+										'<div class="type-columns"></div>' +
+									'</div>' +
+								'</div>' +
 							'</div>' +
 						'</div>' +
 					'</div>' +
@@ -378,8 +412,11 @@ class TicketPage extends DynamicPage {
 
 		problemTypePage.loadSubProblemTypes($card.find('.type-columns'));
 
-		ticketPage.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose an operator...', makeItAll.staffManager.getEmployeesWithPermission('operator', true));
+		ticketPage.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true));
+		ticketPage.populateSelectField($card.find('.selectpicker.add-hardware-device'), 'Type a serial number…', makeItAll.hardwareManager.devices, null, 'serial_number');
+		ticketPage.populateSelectField($card.find('.selectpicker.add-software-program'), 'Choose a program…', makeItAll.softwareManager.programs);
 
+		$accordion.find('.fa-chevron-down.view-accordion').click();
 		$card.find('.view-accordion').click();
 		$('.selectpicker').selectpicker('refresh');
 	}
@@ -390,7 +427,6 @@ class TicketPage extends DynamicPage {
 
 		$accordion.append(
 			'<div class="card existing" data-cardid="' + cardId + '">' +
-				'<input type="text" name="tickets[' + cardId + '].id" value="' + ticketId + '" hidden />' +
 				'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
 					'<h5 class="mb-0">' +
 						'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
@@ -407,43 +443,71 @@ class TicketPage extends DynamicPage {
 								'<div class="form-group">' +
 									'<label>Status</label>' +
 									'<br />' +
-									'<input class="form-control" value="' + ticket.filter.name + '" disabled>' +
+									'<input class="form-control" type="text" name="tickets[' + cardId + '].filter" value="' + ticket.filter.name + '" disabled>' +
+								'</div>' +
+								'<div class="form-group">' +
+									'<label>Ticket Title</label>' +
+									'<input class="form-control" name="tickets[' + cardId + '].title" value="' + ticket.title + '" disabled />' +
 								'</div>' +
 							'</div>' +
 							'<div class="col-md-6">' +
 								'<div class="form-group">' +
 									'<label>Assigned To</label>' +
 									'<br />' +
-									'<input class="form-control" value="' + ticket.assigned_to.name + '" disabled>' +
+									'<div class="assigned-to-options">' +
+										'<input class="form-control" name="tickets[' + cardId + '].assigned_to" value="' + ticket.assigned_to.name + '" disabled />' +
+									'</div>' +
+								'</div>' +
+								'<div class="form-check">' +
+									'<label class="form-check-label">' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="self" checked disabled>' +
+										'Assign to myself' +
+									'</label>' +
+									'<label class="form-check-label">' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="operator" disabled>' +
+										'Assign to another Operator' +
+									'</label>' +
+									'<label class="form-check-label">' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="specialist" disabled>' +
+										'Assign to Specialist of Problem Type' +
+									'</label>' +
 								'</div>' +
 							'</div>' +
 						'</div>' +
-						'<div class="form-group">' +
-							'<label>Ticket Title</label>' +
-							'<input class="form-control" value="' + ticket.title + '" disabled>' +
-						'</div>' +
-						'<div class="form-group">' +
-							'<label>Ticket Description</label>' +
-							'<textarea class="form-control" disabled>' + ticket.description + '</textarea>' +
-						'</div>' +
-						'<div class="form-group">' +
-							'<label>Serial Numbers of Hardware Affected</label>' +
-							'<div class="row">' +
-								'<div class="col-md-12">' +
-									'<ul class="hardware-list"></ul>' +
+						'<div class="row">' +
+							'<div class="col-md-12">' +
+								'<div class="form-group">' +
+									'<label>Ticket Description</label>' +
+									'<textarea class="form-control" name="tickets[' + cardId + '].description" value="' + ticket.description + '" disabled></textarea>' +
+								'</div>' +
+								'<div class="row">' +
+									'<div class="col-md-4">' +
+										'<div class="form-group">' +
+											'<label>Operating System</label>' +
+											'<input class="form-control" name="tickets[' + cardId + '].operating_system" value="(prototype)" disabled />' +
+										'</div>' +
+									'</div>' +
+									'<div class="col-md-8">' +
+										'<label>Affected Hardware & Software</label>' +
+										'<ul class="affected-items"></ul>' +
+									'</div>' +
 								'</div>' +
 							'</div>' +
 						'</div>' +
-						'<div class="form-group">' +
-							'<label>Problem Type</label>' + 
-							'<input class="form-control" value="' + problemTypePage.getProblemTypeBreadcrum(ticket.problem_type) + '" disabled>' +
+						'<div class="row">' +
+							'<div class="col-md-12">' +
+								'<div class="form-group">' +
+									'<label>Problem Type</label>' + 
+									'<input class="form-control" value="' + problemTypePage.getProblemTypeBreadcrum(ticket.problem_type) + '" disabled>' +
+								'</div>' +
+							'</div>' +
 						'</div>' +
 					'</div>' +
 				'</div>' +
 			'</div>'
 		);
 
-		ticketPage.appendHardwareDevices($accordion.find('.card[data-cardid="' + cardId + '"] .hardware-list'), ticket, cardId);
+		ticketPage.appendAffectedItems($accordion.find('.card[data-cardid="' + cardId + '"] affected-items'), ticket, cardId);
 
 		$(this).find('option[value="' + ticketId + '"]').remove();
 		$(this).selectpicker('refresh');
@@ -476,7 +540,7 @@ class TicketPage extends DynamicPage {
 					filter_name: '<span class="filter filter-' + ticket.filter.slug.split('_')[0] + '">' + ticket.filter.name + '</span>',
 					created_at: ticket.created_at,
 					updated_at: ticket.updated_at
-				}
+				};
 			}, searchKeys);
 		} else {
 			this.showFilteredTickets($('.side-nav-bar-nested li.active').data('slug'));
