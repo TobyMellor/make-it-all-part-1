@@ -21,7 +21,7 @@ class SoftwarePage extends DynamicPage {
 			return;
 		}
 
-		//Todo generated programmatically
+		//Todo generate programmatically
 		$("#authorised-users").html(`
 		<li class="list-group-item list-group-item-action">
 			#0 Steve

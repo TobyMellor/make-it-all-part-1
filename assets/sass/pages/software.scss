@@ -32,3 +32,7 @@ span.filter {
 	font-size: 12px;
 	margin-left: 10px;
 }
+
+.table tbody tr td:last-child {
+    width: initial;
+}
