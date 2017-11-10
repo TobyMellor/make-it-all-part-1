@@ -163,7 +163,7 @@ class TicketPage extends DynamicPage {
 		for (var i = 0; i < ticket.devices.length; i++) {
 			var device = ticket.devices[i];
 
-			this.appendHardwareDevice($affectedItems, device.serial_number, cardId);
+			this.appendHardwareDevice($affectedItems, device.id, cardId);
 		}
 
 		for (let i = 0; i < ticket.programs.length; i++) {
@@ -174,7 +174,8 @@ class TicketPage extends DynamicPage {
 	}
 
 	appendHardwareDevice($affectedItems, deviceId, cardId) {
-		var device = makeItAll.hardwareManager.getDevice(deviceId);
+		var device        = makeItAll.hardwareManager.getDevice(deviceId),
+			$selectPicker = $affectedItems.closest('.affected-items-section').find('.selectpicker.add-hardware-device');
 
 		$affectedItems.append(
 			' <li data-serial-number="' + device.serial_number + '"" data-type="hardware">' +
@@ -187,10 +188,14 @@ class TicketPage extends DynamicPage {
 				'</a>' +
 			'</li>'
 		);
+
+		$selectPicker.find('option[value="' + deviceId + '"]').remove();
+		$selectPicker.val('').selectpicker('refresh');
 	}
 
 	appendSoftwareProgram($affectedItems, programId, cardId) {
-		var program = makeItAll.softwareManager.getProgram(programId);
+		var program       = makeItAll.softwareManager.getProgram(programId),
+			$selectPicker = $affectedItems.closest('.affected-items-section').find('.selectpicker.add-software-program');
 
 		$affectedItems.append(
 			' <li data-program-id="' + programId + '"" data-type="hardware">' +
@@ -203,6 +208,9 @@ class TicketPage extends DynamicPage {
 				'</a>' +
 			'</li>'
 		);
+
+		$selectPicker.find('option[value="' + programId + '"]').remove();
+		$selectPicker.val('').selectpicker('refresh');
 	}
 
 	removeAffectedItem($removeAffectedItem) {

@@ -90,19 +90,16 @@ $(() => {
 	});
 
 	$(document).on('change', '.selectpicker.add-hardware-device', function() {
-		ticketPage.appendHardwareDevice($(this).closest('.row').next().find('.affected-items'), $(this).val(), $(this).closest('.card').data('cardid'));
-		$(this).closest('.card-block').scrollTop(1E10);
+		if ($(this).val() !== "") { // not the default select option
+			ticketPage.appendHardwareDevice($(this).closest('.row').next().find('.affected-items'), $(this).val(), $(this).closest('.card').data('cardid'));
+			$(this).closest('.card-block').scrollTop(1E10);
+		}
 	});
 
 	$(document).on('change', '.selectpicker.add-software-program', function() {
-		ticketPage.appendSoftwareProgram($(this).closest('.row').next().find('.affected-items'), $(this).val(), $(this).closest('.card').data('cardid'));
-		$(this).closest('.card-block').scrollTop(1E10);
-	});
-
-	$(document).on('change', '.selectpicker.add-hardware-device, .selectpicker.add-software-program', function() {
 		if ($(this).val() !== "") { // not the default select option
-			$(this).find('option[value="' + $(this).val() + '"]').remove();
-			$(this).val('').selectpicker('refresh');
+			ticketPage.appendSoftwareProgram($(this).closest('.row').next().find('.affected-items'), $(this).val(), $(this).closest('.card').data('cardid'));
+			$(this).closest('.card-block').scrollTop(1E10);
 		}
 	});
 
@@ -165,16 +162,15 @@ $(() => {
 		ticketPage.populateSelectField($(this).find('.selectpicker.add-software-program'), 'Choose a program…', makeItAll.softwareManager.programs);
 	});
 
-	$('#single-view [data-action="edit"]').on('click', function() {
-		var $editTicketModal = $('#edit-ticket-modal'),
-			currentTicket    = ticketPage.currentTicket;
+	$('#edit-ticket-modal').on('show.bs.modal', function() {
+		var currentTicket = ticketPage.currentTicket;
 
-		ticketPage.populateTicketModal($editTicketModal, currentTicket, 'this');
-		ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true), (ticketPage.getAssignedToType(currentTicket) === 'operator' ? currentTicket._assigned_to : null));
+		ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true), (ticketPage.getAssignedToType(currentTicket) === 'operator' ? currentTicket._assigned_to : null));
+		ticketPage.populateTicketModal($(this), currentTicket, 'this');
 				
-		$editTicketModal.find('.form-check .form-check-label input[value="' + ticketPage.getAssignedToType(currentTicket) + '"]').click();
+		$(this).find('.form-check .form-check-label input[value="' + ticketPage.getAssignedToType(currentTicket) + '"]').click();
 
-		problemTypePage.loadProblemType($editTicketModal.find('.type-columns'), currentTicket._problem_type);
+		problemTypePage.loadProblemType($(this).find('.type-columns'), currentTicket._problem_type);
 	});
 
 	$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
