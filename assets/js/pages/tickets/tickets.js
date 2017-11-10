@@ -21,7 +21,7 @@ $(() => {
 			formData          = $modal.find('form').serializeObject(),
 			tickets           = formData.tickets,
 			existingTicketIds = []; // an new ticket won't have any of these
-console.log(tickets);
+
 		for (var cardId in tickets) {
 			var ticket = tickets[cardId];
 
@@ -160,12 +160,14 @@ console.log(tickets);
 	});
 
 	$('#single-view [data-action="edit"]').on('click', function() {
-		var $editTicketModal = $('#edit-ticket-modal');
+		var $editTicketModal = $('#edit-ticket-modal'),
+			currentTicket    = ticketPage.currentTicket;
 
-		ticketPage.populateTicketModal($editTicketModal, ticketPage.currentTicket);
-		ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true), ticketPage.currentTicket._assigned_to);
+		ticketPage.populateTicketModal($editTicketModal, currentTicket);
 
-		problemTypePage.loadProblemType($editTicketModal.find('.type-columns'), ticketPage.currentTicket._problem_type);
+		$editTicketModal.find('.form-check .form-check-label input[name="tickets.this.assigned_to.' + ticketPage.getAssignedToType(currentTicket) + '"]').click();
+
+		problemTypePage.loadProblemType($editTicketModal.find('.type-columns'), currentTicket._problem_type);
 	});
 
 	$('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
@@ -210,8 +212,8 @@ console.log(tickets);
 		problemTypePage.createProblemType($(this).parent().siblings('input').val(), parentProblemTypeId);
 	});
 
-	$(document).on('click', '#accordion .form-check input', function() {
-		var $assignedToOptions = $('.assigned-to-options');
+	$(document).on('click', '.assigned-to-section .form-check input', function() {
+		var $assignedToOptions = $(this).closest('.assigned-to-section').find('.assigned-to-options');
 
 		$assignedToOptions.find('> *').hide();
 

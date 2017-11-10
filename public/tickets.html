@@ -291,7 +291,7 @@
 															<input class="form-control" name="tickets[1].title" />
 														</div>
 													</div>
-													<div class="col-md-6">
+													<div class="col-md-6 assigned-to-section">
 														<div class="form-group">
 															<label class="required">Assigned To</label>
 															<br />
@@ -566,12 +566,16 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-12">
+									<div class="col-md-12 assigned-to-section">
 										<div class="form-group">
 											<label>Assigned To</label>
 											<br />
 											<div class="assigned-to-options">
-												<input class="form-control" name="tickets.this.assigned_to" value="Me" disabled />
+												<input class="form-control no-clear-on-show" name="tickets.this.assigned_to.self_showcase" readonly />
+												<input class="form-control no-clear-on-show" name="tickets.this.assigned_to.self" readonly hidden />
+												<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators…" name="tickets.this.assigned_to.operator"></select>
+												<input class="form-control no-clear-on-show" name="tickets.this.assigned_to.specialist" readonly hidden />
+												<input class="form-control no-clear-on-show" name="tickets.this.assigned_to.specialist_showcase" value="Problem Type not yet chosen" readonly />
 											</div>
 										</div>
 										<div class="form-check">
@@ -600,7 +604,7 @@
 								</div>
 								
 								<div class="form-group">
-									<label class="required">Operating System</label>
+									<label>Operating System</label>
 									<input class="form-control" name="tickets.this.operating_system" />
 								</div>
 

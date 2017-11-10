@@ -252,8 +252,18 @@ class TicketPage extends DynamicPage {
 				key   = 'filter';
 				value = ticket.filter.name;
 			} else if (key === '_assigned_to') {
-				key   = 'assigned_to';
-				value = ticket.assigned_to.name;
+				var assignedToType = this.getAssignedToType(ticket),
+					currentUser    = makeItAll.staffManager.currentUser(true);
+
+				this.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true), (assignedToType === 'operator' ? ticket._assigned_to : null));
+				
+				$modal.find('input[name*="assigned_to"]').not('.form-check-input').val(ticket.assigned_to.name);
+
+				$modal.find('input[name*="assigned_to.self"]').val(currentUser.id);
+				$modal.find('input[name*="assigned_to.self_showcase"]').val(currentUser.name);
+
+				$modal.find('input[name*="assigned_to.specialist"]').val('');
+				$modal.find('input[name*="assigned_to.specialist_showcase"]').val('Problem Type not yet chosen'); // TODO: Get from specialist selector
 			} else if (key === '_problem_type') {
 				key = 'problem_type';
 				value = problemTypePage.getProblemTypeBreadcrum(ticket.problem_type);
@@ -333,7 +343,7 @@ class TicketPage extends DynamicPage {
 									'<input class="form-control" name="tickets[' + cardId + '].title" />' +
 								'</div>' +
 							'</div>' +
-							'<div class="col-md-6">' +
+							'<div class="col-md-6 assigned-to-section">' +
 								'<div class="form-group">' +
 									'<label class="required">Assigned To</label>' +
 									'<br />' +
@@ -415,9 +425,9 @@ class TicketPage extends DynamicPage {
 
 		problemTypePage.loadSubProblemTypes($card.find('.type-columns'));
 
-		ticketPage.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true));
-		ticketPage.populateSelectField($card.find('.selectpicker.add-hardware-device'), 'Type a serial number…', makeItAll.hardwareManager.devices, null, 'serial_number');
-		ticketPage.populateSelectField($card.find('.selectpicker.add-software-program'), 'Choose a program…', makeItAll.softwareManager.programs);
+		this.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true));
+		this.populateSelectField($card.find('.selectpicker.add-hardware-device'), 'Type a serial number…', makeItAll.hardwareManager.devices, null, 'serial_number');
+		this.populateSelectField($card.find('.selectpicker.add-software-program'), 'Choose a program…', makeItAll.softwareManager.programs);
 
 		$accordion.find('.fa-chevron-down.view-accordion').click();
 		$card.find('.view-accordion').click();
@@ -530,6 +540,16 @@ class TicketPage extends DynamicPage {
 		);
 
 		staffPage.showPermissions($staffInformation.find('p:last-child strong').get(0), employee);
+	}
+
+	getAssignedToType(ticket) {
+		if (ticket._assigned_to === makeItAll.staffManager.currentUser()) {
+			return 'self';
+		} else if (ticket.assigned_to.access.operator) {
+			return 'operator';
+		}
+
+		return 'specialist';
 	}
 
 	search(query) {
