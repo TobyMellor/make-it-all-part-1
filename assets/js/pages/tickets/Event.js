@@ -34,7 +34,7 @@ class Event {
 	}
 
 	get author() {
-		return makeItAll.staffManager.getEmployees(this._author);
+		return makeItAll.staffManager.getEmployee(this._author);
 	}
 
 	set author(author) {

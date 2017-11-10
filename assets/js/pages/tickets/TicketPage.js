@@ -126,7 +126,7 @@ class TicketPage extends DynamicPage {
 							'<img class="d-flex mr-3" src="images/portraits/portrait-1.jpg" alt="Portrait 1">' +
 							'<div class="media-body">' +
 								'<h5 class="mt-0 mb-1">' +
-									'Toby Mellor <span class="ticket-comment-date">' + event.created_at + '</span>' + // TODO: Replace 'Toby Mellor' with staff name
+									event.author.name + ' <span class="ticket-comment-date">' + event.created_at + '</span>' +
 								'</h5>' +
 								'<div class="breaker"></div>' +
 								event.content +
@@ -147,6 +147,14 @@ class TicketPage extends DynamicPage {
 
 			this.showTableRowDetails(ticket.id);
 		}
+	}
+
+	showCallTicket(ticketId) {
+		var ticket = makeItAll.ticketManager.getTicket(ticketId);
+
+		$('#view-call-history-modal').modal('hide');
+
+		this.refreshPage(ticket.filter.slug, ticketId);
 	}
 
 	appendHardwareDevices($hardwareList, ticket, cardId) {
@@ -254,7 +262,7 @@ class TicketPage extends DynamicPage {
 	appendNewComment($commentBox) {
 		var event = makeItAll.ticketManager.createEvent(
 				ticketPage.currentTicket.id,
-				'Toby Mellor', // TODO: Replace with ID of logged in user
+				makeItAll.staffManager.currentUser(),
 				'comment',
 				$commentBox.val(),
 				'Just Now'
@@ -263,6 +271,191 @@ class TicketPage extends DynamicPage {
 		$commentBox.val('');
 
 		this.showTicketView(ticketPage.currentTicket.id); // refresh to get new comment
+	}
+
+	createCall(dateOfCall, caller, tickets, existingTicketIds = []) {
+		makeItAll.ticketManager.createCall(dateOfCall, caller, tickets, existingTicketIds);
+
+		this.refreshPage(this.currentTicket.filter.slug, this.currentTicket.id);
+	}
+
+	editTicket(id, filter, title, description, assigned_to, devices, problem_type) {
+		makeItAll.ticketManager.editTicket(
+			id,
+			filter,
+			title,
+			description,
+			assigned_to,
+			devices,
+			problem_type
+		);
+
+		ticketPage.refreshPage(filter, id);
+	}
+
+	addNewAccordionCard($accordion) {
+		var cardId = Math.floor(Math.random() * (10000 + 1));
+
+		$card = $(
+			'<div class="card" data-cardid="' + cardId + '">' +
+				'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
+					'<h5 class="mb-0">' +
+						'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
+							'New Ticket' +
+						'</a>' +
+						'<i class="fa fa-chevron-up view-accordion"></i>' +
+						'<i class="fa fa-trash-o remove-accordion"></i>' +
+					'</h5>' +
+				'</div>' +
+				'<div id="collapse-' + cardId + '" class="collapse" role="tabpanel">' +
+					'<div class="card-block">' +
+						'<div class="row">' +
+							'<div class="col-md-6">' +
+								'<div class="form-group">' +
+									'<label class="required">Status</label>' +
+									'<br />' +
+									'<select class="selectpicker" name="tickets[' + cardId + '].filter">' +
+										'<option value="new">New</option>' +
+										'<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>' +
+										'<option value="pending_in_progress">Pending - In Progress</option>' +
+										'<option value="resolved">Resolved</option>' +
+									'</select>' +
+								'</div>' +
+							'</div>' +
+							'<div class="col-md-6">' +
+								'<div class="form-group">' +
+									'<label class="required">Assigned To</label>' +
+									'<br />' +
+									'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators..." name="tickets[' + cardId + '].assigned_to"></select>' +
+								'</div>' +
+							'</div>' +
+						'</div>' +
+						'<div class="form-group">' +
+							'<label class="required">Ticket Title</label>' +
+							'<input class="form-control" name="tickets[' + cardId + '].title" />' +
+						'</div>' +
+						'<div class="form-group">' +
+							'<label class="required">Ticket Description</label>' +
+							'<textarea class="form-control" name="tickets[' + cardId + '].description"></textarea>' +
+						'</div>' +
+						'<div class="form-group">' +
+							'<label>Serial Number of Hardware Affected</label>' +
+							'<div class="input-group">' +
+								'<input class="form-control" name="tickets[' + cardId + '].hardware.serial_number" />' +
+								'<span class="input-group-btn">' +
+									'<button class="btn btn-success add-hardware-device" type="button">' +
+										'<i class="fa fa-plus"></i> ' +
+										'Add' +
+									'</button>' +
+								'</span>' +
+							'</div>' +
+							'<div class="row">' +
+								'<div class="col-md-12">' +
+									'<ul class="hardware-list"></ul>' +
+								'</div>' +
+							'</div>' +
+						'</div>' +
+						'<div class="form-group">' +
+							'<label class="required">Problem Type</label>' +
+							'<input name="tickets[' + cardId + '].problem_type" hidden>' +
+							'<span class="subtle pull-right"></span>' +
+							'<div class="problem-type-picker">' +
+								'<div class="type-columns"></div>' +
+							'</div>' +
+						'</div>' +
+					'</div>' +
+				'</div>' +
+			'</div>'
+		);
+
+		$accordion.append($card);
+
+		problemTypePage.loadSubProblemTypes($card.find('.type-columns'));
+
+		ticketPage.populateSelectField($card.find('select[name*="assigned_to"]'), 'Choose an operator...', makeItAll.staffManager.getEmployeesWithPermission('operator', true));
+
+		$card.find('.view-accordion').click();
+		$('.selectpicker').selectpicker('refresh');
+	}
+
+	addExistingAccordionCard($accordion, ticketId) {
+		var ticket = makeItAll.ticketManager.getTicket(ticketId),
+			cardId = Math.floor(Math.random() * (10000 + 1));
+
+		$accordion.append(
+			'<div class="card existing" data-cardid="' + cardId + '">' +
+				'<input type="text" name="tickets[' + cardId + '].id" value="' + ticketId + '" hidden />' +
+				'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
+					'<h5 class="mb-0">' +
+						'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
+							'Existing Ticket: ' + ticket.title +
+						'</a>' +
+						'<i class="fa fa-chevron-up view-accordion"></i>' +
+						'<i class="fa fa-trash-o remove-accordion"></i>' +
+					'</h5>' +
+				'</div>' +
+				'<div id="collapse-' + cardId + '" class="collapse" role="tabpanel">' +
+					'<div class="card-block">' +
+						'<div class="row">' +
+							'<div class="col-md-6">' +
+								'<div class="form-group">' +
+									'<label>Status</label>' +
+									'<br />' +
+									'<input class="form-control" value="' + ticket.filter.name + '" disabled>' +
+								'</div>' +
+							'</div>' +
+							'<div class="col-md-6">' +
+								'<div class="form-group">' +
+									'<label>Assigned To</label>' +
+									'<br />' +
+									'<input class="form-control" value="' + ticket.assigned_to.name + '" disabled>' +
+								'</div>' +
+							'</div>' +
+						'</div>' +
+						'<div class="form-group">' +
+							'<label>Ticket Title</label>' +
+							'<input class="form-control" value="' + ticket.title + '" disabled>' +
+						'</div>' +
+						'<div class="form-group">' +
+							'<label>Ticket Description</label>' +
+							'<textarea class="form-control" disabled>' + ticket.description + '</textarea>' +
+						'</div>' +
+						'<div class="form-group">' +
+							'<label>Serial Numbers of Hardware Affected</label>' +
+							'<div class="row">' +
+								'<div class="col-md-12">' +
+									'<ul class="hardware-list"></ul>' +
+								'</div>' +
+							'</div>' +
+						'</div>' +
+						'<div class="form-group">' +
+							'<label>Problem Type</label>' + 
+							'<input class="form-control" value="' + problemTypePage.getProblemTypeBreadcrum(ticket.problem_type) + '" disabled>' +
+						'</div>' +
+					'</div>' +
+				'</div>' +
+			'</div>'
+		);
+
+		ticketPage.appendHardwareDevices($accordion.find('.card[data-cardid="' + cardId + '"] .hardware-list'), ticket, cardId);
+
+		$(this).find('option[value="' + ticketId + '"]').remove();
+		$(this).selectpicker('refresh');
+	}
+
+	showStaffInformation($staffInformation, employeeId) {
+		var employee = makeItAll.staffManager.getEmployee(employeeId);
+
+		$staffInformation.html(
+			'<p>ID Number: <strong>' + employee.id + '</strong></p>' +
+			'<p>Name: <strong>' + employee.name + '</strong></p>' +
+			'<p>Job: <strong>' + employee.job + '</strong></p>' +
+			'<p>Department: <strong>' + employee.department + '</strong></p>' +
+			'<p>Phone: <strong>' + employee.phone + '</strong></p>' +
+			'<p><strong></strong></p>'
+		);
+
+		staffPage.showPermissions($staffInformation.find('p:last-child strong').get(0), employee);
 	}
 
 	search(query) {

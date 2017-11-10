@@ -44,6 +44,7 @@ class TicketManager extends Manager {
 				tickets: [4]
 			},
 		];
+
 		var filters = [
 			{
 				id: 0,
@@ -70,6 +71,7 @@ class TicketManager extends Manager {
 				tickets: [4]
 			}
 		];
+
 		var tickets = [
 			{
 				id: 0,
@@ -137,6 +139,7 @@ class TicketManager extends Manager {
 				problem_type: 4
 			}
 		];
+
 		var events = [
 			{
 				id: 0,
@@ -353,7 +356,7 @@ class TicketManager extends Manager {
 		if (ticket.filter.slug !== filterSlug) {
 			this.createEvent(
 				ticketId,
-				0, // TODO: Replace with logged in user
+				makeItAll.staffManager.currentUser(),
 				'event',
 				this.getFilter(filterSlug).name,
 				'Just now'
@@ -361,13 +364,13 @@ class TicketManager extends Manager {
 
 			this.updateFilter(ticket.filter.slug, filterSlug, ticketId);
 		}
-
+		
 		if (ticket._assigned_to !== assignedTo) {
 			this.createEvent(
 				ticketId,
-				0,
+				makeItAll.staffManager.currentUser(),
 				'event',
-				'Assigned to ' + makeItAll.staffManager.getStaffMember(assignedTo).name,
+				'Assigned to ' + makeItAll.staffManager.getEmployee(assignedTo).name,
 				'Just now'
 			);
 		}

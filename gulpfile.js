@@ -15,6 +15,7 @@ gulp.task('scripts', function() {
     gulp.src(['assets/js/main.js', 'assets/js/pages/DynamicPage.js', 'assets/js/pages/Manager.js'])
         .pipe(plumber())
         .pipe(sourcemaps.init())
+        .pipe(concat('main.min.js'))
         .pipe(babel({
             presets: ['env']
         }))
@@ -26,7 +27,6 @@ gulp.task('scripts', function() {
 	        }
 */
         }))
-        .pipe(concat('main.min.js'))
         .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest('./public/js/'));
     
@@ -34,6 +34,7 @@ gulp.task('scripts', function() {
         gulp.src(['assets/js/pages/' + pagetype + '/**/*.js'])
             .pipe(plumber())
             .pipe(sourcemaps.init())
+            .pipe(concat(pagetype + '.min.js'))
             .pipe(babel({
                 presets: ['env']
             }))
@@ -45,7 +46,6 @@ gulp.task('scripts', function() {
     	        }
 */
             }))
-            .pipe(concat(pagetype + '.min.js'))
             .pipe(sourcemaps.write('maps'))
             .pipe(gulp.dest('./public/js/pages/'));
     }
@@ -56,10 +56,10 @@ gulp.task('styles', function() {
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass())
+        .pipe(minifyCSS())
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(minifyCSS())
         .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest('./public/css/'));
 });
@@ -79,10 +79,9 @@ gulp.task('plugins', function() {
         }))
         .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest('./public/js/plugins/'));
-    gulp.src(['assets/sass/plugins/*.scss'])
+    gulp.src(['assets/sass/plugins/*.css'])
         .pipe(plumber())
         .pipe(sourcemaps.init())
-        .pipe(sass())
         .pipe(concat('plugins.min.css'))
         .pipe(minifyCSS())
         .pipe(sourcemaps.write('maps'))

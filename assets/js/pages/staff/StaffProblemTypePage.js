@@ -52,7 +52,7 @@ class StaffProblemTypePage {
 	}
 
 	toggleSpecialism($specialismCheckbox) {
-		var clickedSpecialismId       = parseInt($specialismCheckbox.parent().data('problemTypeId')),
+		var clickedSpecialismId       = Number($specialismCheckbox.parent().data('problemTypeId')),
 			currentSpecialismsIndexOf = this.currentSpecialisms.indexOf(clickedSpecialismId),
 			$icon                     = $specialismCheckbox.find('i'),
 			children                  = makeItAll.problemTypeManager.getProblemType(clickedSpecialismId).children;
