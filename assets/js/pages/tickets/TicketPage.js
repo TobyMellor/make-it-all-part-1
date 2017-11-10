@@ -497,6 +497,14 @@ class TicketPage extends DynamicPage {
 									'<textarea class="form-control" name="tickets[' + cardId + '].description" value="' + ticket.description + '" disabled></textarea>' +
 								'</div>' +
 								'<div class="row">' +
+									'<div class="col-md-12">' +
+										'<div class="form-group">' +
+											'<label>Problem Type</label>' + 
+											'<input class="form-control" value="' + problemTypePage.getProblemTypeBreadcrum(ticket.problem_type) + '" disabled>' +
+										'</div>' +
+									'</div>' +
+								'</div>' +
+								'<div class="row">' +
 									'<div class="col-md-4">' +
 										'<div class="form-group">' +
 											'<label>Operating System</label>' +
@@ -507,14 +515,6 @@ class TicketPage extends DynamicPage {
 										'<label>Affected Hardware & Software</label>' +
 										'<ul class="affected-items"></ul>' +
 									'</div>' +
-								'</div>' +
-							'</div>' +
-						'</div>' +
-						'<div class="row">' +
-							'<div class="col-md-12">' +
-								'<div class="form-group">' +
-									'<label>Problem Type</label>' + 
-									'<input class="form-control" value="' + problemTypePage.getProblemTypeBreadcrum(ticket.problem_type) + '" disabled>' +
 								'</div>' +
 							'</div>' +
 						'</div>' +
