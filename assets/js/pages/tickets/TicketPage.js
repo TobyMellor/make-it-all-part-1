@@ -264,7 +264,10 @@ class TicketPage extends DynamicPage {
 
 				$modal.find('.form-check-input').attr('disabled', false);
 				$modal.find('.form-check-input[value="' + this.getAssignedToType(ticket) + '"]').click();
-				$modal.find('.form-check-input').attr('disabled', true);
+
+				if (!$modal.is('#edit-ticket-modal')) {
+					$modal.find('.form-check-input').attr('disabled', true);
+				}
 			} else if (key === '_problem_type') {
 				key = 'problem_type';
 				value = problemTypePage.getProblemTypeBreadcrum(ticket.problem_type);
@@ -556,7 +559,7 @@ class TicketPage extends DynamicPage {
 	}
 
 	setSpecialist(problemTypeId, $assignedToOptions, bestSpecialist = null) {
-		if (bestSpecialist === null) {
+		if (bestSpecialist === null || !makeItAll.staffManager.hasSpecialism(bestSpecialist, problemTypeId)) {
 			bestSpecialist = staffProblemTypePage.getSpecialistForProblemType(problemTypeId);
 		}
 
