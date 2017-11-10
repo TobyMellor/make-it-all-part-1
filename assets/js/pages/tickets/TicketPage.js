@@ -438,7 +438,8 @@ class TicketPage extends DynamicPage {
 	addExistingAccordionCard($accordion, ticketId) {
 		var $addExistingTicket = $accordion.closest('.modal').find('#add-existing-ticket'),
 			ticket             = makeItAll.ticketManager.getTicket(ticketId),
-			cardId             = Math.floor(Math.random() * (10000 + 1));
+			cardId             = Math.floor(Math.random() * (10000 + 1)),
+			assignedToType     = this.getAssignedToType(ticket);
 
 		$accordion.append(
 			'<div class="card existing" data-cardid="' + cardId + '">' +
@@ -476,15 +477,15 @@ class TicketPage extends DynamicPage {
 								'</div>' +
 								'<div class="form-check">' +
 									'<label class="form-check-label">' +
-										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="self" checked disabled>' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="self" ' + (assignedToType === 'self' ? 'checked' : '') + ' disabled>' +
 										'Assign to myself' +
 									'</label>' +
 									'<label class="form-check-label">' +
-										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="operator" disabled>' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="operator" ' + (assignedToType === 'operator' ? 'checked' : '') + ' disabled>' +
 										'Assign to another Operator' +
 									'</label>' +
 									'<label class="form-check-label">' +
-										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="specialist" disabled>' +
+										'<input class="form-check-input no-clear-on-show" type="radio" name="tickets[' + cardId + '].assigned_to_type" value="specialist" ' + (assignedToType === 'specialist' ? 'checked' : '') + ' disabled>' +
 										'Assign to Specialist of Problem Type' +
 									'</label>' +
 								'</div>' +
