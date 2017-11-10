@@ -252,16 +252,15 @@ class TicketPage extends DynamicPage {
 				key   = 'filter';
 				value = ticket.filter.name;
 			} else if (key === '_assigned_to') {
-				var assignedToType = this.getAssignedToType(ticket),
-					currentUser    = makeItAll.staffManager.currentUser(true);
+				var currentUser = makeItAll.staffManager.currentUser(true),
+					assignedTo  = ticket.assigned_to;
 
-				$modal.find('input[name*="assigned_to"]').not('.form-check-input').val(ticket.assigned_to.name);
+				$modal.find('input[name*="assigned_to"]').not('.form-check-input').val(assignedTo.name);
 
 				$modal.find('input[name*="assigned_to.self"]').val(currentUser.id);
 				$modal.find('input[name*="assigned_to.self_showcase"]').val(currentUser.name);
 
-				$modal.find('input[name*="assigned_to.specialist"]').val('');
-				$modal.find('input[name*="assigned_to.specialist_showcase"]').val('Problem Type not yet chosen'); // TODO: Get from specialist selector
+				this.setSpecialist(ticket._problem_type, $modal.find('.assigned-to-options'), assignedTo);
 			} else if (key === '_problem_type') {
 				key = 'problem_type';
 				value = problemTypePage.getProblemTypeBreadcrum(ticket.problem_type);
@@ -544,11 +543,28 @@ class TicketPage extends DynamicPage {
 	getAssignedToType(ticket) {
 		if (ticket._assigned_to === makeItAll.staffManager.currentUser()) {
 			return 'self';
-		} else if (ticket.assigned_to.isOperator) {
-			return 'operator';
+		} else if (makeItAll.staffManager.hasSpecialism(ticket.assigned_to, ticket._problem_type)) {
+			return 'specialist';
 		}
 
-		return 'specialist';
+		return 'operator';
+	}
+
+	setSpecialist(problemTypeId, $assignedToOptions, bestSpecialist = null) {
+		if (bestSpecialist === null) {
+			bestSpecialist = staffProblemTypePage.getSpecialistForProblemType(problemTypeId);
+		}
+
+		var $specialistId       = $assignedToOptions.find('input[name*="specialist"]'),
+			$specialistShowcase = $assignedToOptions.find('input[name*="specialist_showcase"]');
+
+		if (bestSpecialist !== null) {
+			$specialistId.val(bestSpecialist.id);
+			$specialistShowcase.val(bestSpecialist.name);
+		} else {
+			$specialistId.val('');
+			$specialistShowcase.val('No Specialist for the Problem Type');
+		}
 	}
 
 	search(query) {

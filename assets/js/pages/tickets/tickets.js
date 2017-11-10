@@ -168,7 +168,6 @@ $(() => {
 		ticketPage.populateTicketModal($editTicketModal, currentTicket);
 		ticketPage.populateSelectField($editTicketModal.find('select[name*=assigned_to]'), 'Choose an operator…', makeItAll.staffManager.getEmployeesWithPermission('operator', true), (ticketPage.getAssignedToType(currentTicket) === 'operator' ? currentTicket._assigned_to : null));
 				
-
 		$editTicketModal.find('.form-check .form-check-label input[value="' + ticketPage.getAssignedToType(currentTicket) + '"]').click();
 
 		problemTypePage.loadProblemType($editTicketModal.find('.type-columns'), currentTicket._problem_type);
@@ -179,23 +178,13 @@ $(() => {
 	});
 
 	$(document).on('click', '.problem-type-picker:not(.problem-type-checkboxes) .type-column li', function() {
-		var problemTypeId       = Number($(this).data('problemTypeId')),
-			bestSpecialist      = staffProblemTypePage.getSpecialistForProblemType(problemTypeId),
-			$assignedToOptions  = $(this).closest('.card').find('.assigned-to-options'),
-			$specialistId       = $assignedToOptions.find('input[name*="specialist"]'),
-			$specialistShowcase = $assignedToOptions.find('input[name*="specialist_showcase"]');
+		var problemTypeId = Number($(this).data('problemTypeId'));
 
 		problemTypePage.loadSubProblemTypes($(this).closest('.type-columns'), $(this), problemTypeId);
 
 		$(this).closest('.problem-type-picker').siblings('input[name*=problem_type]').val(problemTypeId);
 
-		if (bestSpecialist !== null) {
-			$specialistId.val(bestSpecialist.id);
-			$specialistShowcase.val(bestSpecialist.name);
-		} else {
-			$specialistId.val('');
-			$specialistShowcase.val('No Specialist for the Problem Type');
-		}
+		ticketPage.setSpecialist(problemTypeId, $(this).closest('.card').find('.assigned-to-options'));
 	});
 
 	$(document).on('click', '.problem-type-checkboxes .type-column li', function() {

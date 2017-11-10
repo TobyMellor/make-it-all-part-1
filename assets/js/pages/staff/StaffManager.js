@@ -57,6 +57,10 @@ class StaffManager extends Manager {
 		return this.findAllWhere(this.staff, employee => employee._specialisms.indexOf(problemTypeId) > -1);
 	}
 
+	hasSpecialism(employee, problemTypeId) {
+		return employee._specialisms.indexOf(problemTypeId) > -1;
+	}
+
 	search(query, properties) {
 		return super.search(this.staff, query, properties);
 	}
