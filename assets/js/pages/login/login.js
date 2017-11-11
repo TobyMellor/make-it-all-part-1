@@ -1,7 +1,7 @@
 $(() => {
-	$('#username').focus();
-	
-	$("#username").keydown(e => {
+	$('#email').focus();
+
+	$("#email").keydown(e => {
 		if (e.key === "Enter") $("#password").focus();
 	});
 	$("#password").keydown(e => {
