@@ -1,4 +1,5 @@
 $(() => {
+	$('#username').focus();
 	
 	$("#username").keydown(e => {
 		if (e.key === "Enter") $("#password").focus();
