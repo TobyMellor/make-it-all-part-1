@@ -165,6 +165,16 @@
 		});
 		
 		if (location.hash) softwarePage.showTableRowDetails(parseInt(location.hash.substring(1)));
+		
+		$("#authorised-users").on("click", "tr[data-rowid]", e => {
+			location.href = location.href.toString().split("#")[0].replace("software.html", "staff.html#" + e.currentTarget.dataset.rowid);
+		});
+		$("#tickets").on("click", "tr[data-rowid]", e => {
+			location.href = location.href.toString().split("#")[0].replace("software.html", "tickets.html#" + e.currentTarget.dataset.rowid);
+		});
+		$("#hardware").on("click", "tr[data-rowid]", e => {
+			location.href = location.href.toString().split("#")[0].replace("software.html", "hardware.html#" + e.currentTarget.dataset.rowid);
+		});
 	</script>
 </body>
 
