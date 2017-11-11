@@ -235,9 +235,13 @@ var validationTimeout = null;
 
     				break;
     			case (rule.match(/not:/) || {}).input:
-    				console.log("NOT: " + (!(value === rule.split(':')[0].split(/'/)[1])));
+    				console.log("NOT: " + (!(value === rule.split(':')[1].split(/'/)[1])));
     				if (value === rule.split(':')[1].split(/'/)[1]) {
     					failedRules.push('This field has an invalid value.');
+    				}
+    			case (rule.match(/requires:/) || {}).input:
+    				if ($(this).closest('form').find('input[name="' + rule.split(':')[1] + '"]').val() === '') {
+    					failedRules.push('This faield is required.');
     				}
 
     				break;

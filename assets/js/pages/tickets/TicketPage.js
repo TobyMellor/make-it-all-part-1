@@ -390,7 +390,7 @@ class TicketPage extends DynamicPage {
 										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.self" value="' + makeItAll.staffManager.currentUser() + '" readonly hidden />' +
 										'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators…" name="tickets[' + cardId + '].assigned_to.operator" validation="nullable|integer"></select>' +
 										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.specialist" readonly hidden />' +
-										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.specialist_showcase" value="Problem Type not yet chosen" readonly validation="required|not:\'No Specialist for the Problem Type\'|not:\'Problem Type not yet chosen\'" />' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.specialist_showcase" value="Problem Type not yet chosen" readonly validation="required|requires:tickets[' + cardId + '].problem_type_showcase" />' +
 									'</div>' +
 								'</div>' +
 								'<div class="form-check">' +
