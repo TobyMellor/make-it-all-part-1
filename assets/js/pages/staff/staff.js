@@ -78,7 +78,17 @@ $(() => {
 		$(e.target).find("input[name=\"staff.name\"]").focus();
 	});
 
-	$(".staff-permissions .custom-checkbox").click(e => {
+	$(".staff-permissions .custom-checkbox:not(.help-text)").click(e => {
+		var $target = $(e.target);
+
+		if ($target.is('.help-text, a')) { // the help text inc. link underneith the checkbox
+			if ($target.is('a')) {
+				window.open($target.attr('href'), '_blank');
+			}
+
+			return;
+		}
+
 		e.preventDefault();
 		
 		var input = e.currentTarget.children[0];
