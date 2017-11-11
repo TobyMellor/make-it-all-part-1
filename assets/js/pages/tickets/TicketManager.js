@@ -328,7 +328,7 @@ class TicketManager extends Manager {
 		return call;
 	}
 
-	createTicket(callId, filterSlug, title, description, assignedTo, devices, programs, operatingSystem, problemType) {
+	createTicket(callId, filterSlug, title, description, assignedTo, devices, programs = [], operatingSystem, problemType) {
 		// AJAX call here, which returns a ticketId
 		// validation here
 		var ticketId = Math.floor(Math.random() * (10000 + 1));
@@ -366,7 +366,7 @@ class TicketManager extends Manager {
 		return this.findAllWhere(this.tickets, ticket => ticket._calls.indexOf(callId) > -1);
 	}
 
-	editTicket(ticketId, filterSlug, title, description, assignedTo, devices, programs, operatingSystem, problemType) {
+	editTicket(ticketId, filterSlug, title, description, assignedTo, devices, programs = [], operatingSystem, problemType) {
 		var ticket = this.getTicket(ticketId);
 
 		if (ticket.filter.slug !== filterSlug) {

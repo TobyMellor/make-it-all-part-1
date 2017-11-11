@@ -20,13 +20,9 @@ $(() => {
 		var $modal   = $(this).closest('.modal'),
 			formData = $modal.find('form').serializeObject(true);
 
-		console.log(formData);
-
 		if (formData.isValid()) {
 			var tickets           = formData.tickets,
 				existingTicketIds = []; // an new ticket won't have any of these
-
-			console.log(formData);
 			
 			for (var cardId in tickets) {
 				var ticket = tickets[cardId];

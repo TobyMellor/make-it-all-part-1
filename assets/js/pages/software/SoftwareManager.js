@@ -62,6 +62,7 @@ class SoftwareManager extends Manager {
 	}
 
 	getPrograms(ids) {
+		console.log(ids);
 		return this.findAllWhere(this.programs, program => ids.indexOf(program.id) > -1);
 	}
 
