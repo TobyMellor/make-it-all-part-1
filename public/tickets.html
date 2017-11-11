@@ -555,7 +555,7 @@
 										<div class="form-group">
 											<label class="required">Status</label>
 											<br />
-											<select class="selectpicker" name="tickets.this.filter">
+											<select class="selectpicker" name="tickets.this.filter" validation="required|in:new,pending_awaiting_staff,pending_in_progress,resolved">
 												<option value="new">New</option>
 												<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>
 												<option value="pending_in_progress">Pending - In Progress</option>
@@ -570,11 +570,11 @@
 											<label>Assigned To</label>
 											<br />
 											<div class="assigned-to-options">
-												<input class="form-control no-clear-on-show" name="tickets.this.assigned_to.self_showcase" readonly />
+												<input class="form-control no-clear-on-show" name="tickets.this.assigned_to.self_showcase" validation="required" readonly />
 												<input class="form-control no-clear-on-show" name="tickets.this.assigned_to.self" readonly hidden />
-												<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators…" name="tickets.this.assigned_to.operator"></select>
+												<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators…" name="tickets.this.assigned_to.operator" validation="nullable|integer"></select>
 												<input class="form-control no-clear-on-show" name="tickets.this.assigned_to.specialist" readonly hidden />
-												<input class="form-control no-clear-on-show" name="tickets.this.assigned_to.specialist_showcase" value="Problem Type not yet chosen" readonly />
+												<input class="form-control no-clear-on-show" name="tickets.this.assigned_to.specialist_showcase" value="Problem Type not yet chosen" readonly  validation="required|not:'No Specialist for the Problem Type'"/>
 											</div>
 										</div>
 										<div class="form-check">
@@ -595,16 +595,16 @@
 								</div>
 								<div class="form-group">
 									<label class="required">Ticket Title</label>
-									<input class="form-control" name="tickets.this.title" />
+									<input class="form-control" name="tickets.this.title" validation="required|min:3|max:255" />
 								</div>
 								<div class="form-group">
 									<label class="required">Ticket Description</label>
-									<textarea class="form-control" name="tickets.this.description"></textarea>
+									<textarea class="form-control" name="tickets.this.description" validation="required|min:3|max:255"></textarea>
 								</div>
 
 								<div class="form-group">
 									<label class="required">Problem Type</label>
-									<input name="tickets.this.problem_type" hidden>
+									<input name="tickets.this.problem_type" validation="required|integer" hidden>
 									<span class="subtle pull-right"></span>
 									<div class="problem-type-picker">
 										<div class="type-columns"></div>
@@ -613,7 +613,7 @@
 								
 								<div class="form-group">
 									<label>Operating System</label>
-									<input class="form-control" name="tickets.this.operating_system" />
+									<input class="form-control" name="tickets.this.operating_system" validation="required|min:3|max:35" />
 								</div>
 								
 								<div class="affected-items-section">
@@ -621,13 +621,13 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="required">Hardware Affected</label>
-												<select class="selectpicker add-hardware-device" data-live-search="true"></select>
+												<select class="selectpicker add-hardware-device" name="tickets.this.hardware_showcase" data-live-search="true" validation="nullable"></select>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Software Affected</label>
-												<select class="selectpicker add-software-program" data-live-search="true"></select>
+												<select class="selectpicker add-software-program" name="tickets.this.software_showcase" data-live-search="true" validation="nullable"></select>
 											</div>
 										</div>
 									</div>

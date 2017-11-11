@@ -85,7 +85,7 @@ $(function () {
 // https://stackoverflow.com/a/8407771/2957677
 // Modified by /1549818 to support dot notation
 (function($){
-    $.fn.serializeObject = function(){
+    $.fn.serializeObject = function(shouldValidate = false) {
         var self = this,
             json = {},
             push_counters = {},
@@ -95,7 +95,9 @@ $(function () {
                 "push":     /^$/,
                 "fixed":    /^\d+$/,
                 "named":    /^[a-zA-Z0-9_]+$/
-            };
+            },
+            isValid = true,
+            $fields = $(this).find('input, select, textarea');
 
         this.build = function(base, key, value){
             base[key] = value;
@@ -109,7 +111,7 @@ $(function () {
             return push_counters[key]++;
         };
 
-        $.each($(this).serializeArray(), function(){
+        $fields.not(':disabled').map(function() {
             // skip invalid keys
             if(!patterns.validate.test(this.name)){
                 return;
@@ -118,7 +120,16 @@ $(function () {
             var k,
                 keys = this.name.match(patterns.key),
                 merge = this.value,
-                reverse_key = this.name;
+                reverse_key = this.name,
+                validation_rules = this.attributes.hasOwnProperty('validation') ? this.attributes.validation.value : null;
+
+            if (shouldValidate && validation_rules !== null) {
+            	var response = $(this).validate();
+
+            	if (isValid) {
+            		isValid = response;
+            	}
+            }
 
             while((k = keys.pop()) !== undefined){
 
@@ -130,13 +141,8 @@ $(function () {
                     merge = self.build({}, self.push_counter(reverse_key), merge);
                 }
 
-                // fixed
-                else if(k.match(patterns.fixed)){
-                    merge = self.build({}, k, merge);
-                }
-
-                // named
-                else if(k.match(patterns.named)){
+                // fixed or named
+                else if(k.match(patterns.fixed) || k.match(patterns.named)){
                     merge = self.build({}, k, merge);
                 }
             }
@@ -144,7 +150,106 @@ $(function () {
             json = $.extend(true, json, merge);
         });
 
+        json.isValid = function() {
+        	return isValid;
+        };
+
+        if (shouldValidate) {
+	    	setTimeout(function() {
+	    		$fields.siblings().addBack().removeClass('is-valid is-invalid');
+	    		$fields.siblings('.invalid-feedback').fadeOut(500, function() {
+	    			$this.remove();
+	    		});
+	    	}, 7500);
+        }
+
         return json;
+    };
+
+    $.fn.validate = function() {
+    	var $this           = $(this),
+    		value           = $this.val(),
+    		validationRules = $this.attr('validation').split('|'),
+    		failedRules     = [];
+
+    	for (let i = 0; i < validationRules.length; i++) {
+    		var rule = validationRules[i];
+
+    		switch (rule) {
+    			case "nullable":
+    				console.log("NULLABLE: " + !(value === null || value === ''));
+    				if (value === null || value === '') {
+    					validationRules = []; // break out of for
+    				}
+
+    				break;
+    			case "required":
+    				console.log("REQUIRED: " + !(value === null || value === ''));
+    				if (value === null || value === '') {
+    					failedRules.push('This field is required.'); validationRules = []; // break out of for
+    				}
+
+    				break;
+    			case "integer":
+    				console.log("INTEGER: " + !(isNaN(parseInt(value)) || !isFinite(value)));
+    				if (value.length > 0 && (isNaN(parseInt(value)) || !isFinite(value))) {
+    					failedRules.push('This field must be an whole number.');
+    				}
+
+    				break;
+    			case (rule.match(/max:/) || {}).input:
+    				console.log("MAX: " + !(value.length > Number(rule.split(':')[1])));
+    				if (value.length > 0 && value.length > Number(rule.split(':')[1])) {
+    					failedRules.push('This field must have less than ' + (Number(rule.split(':')[1]) + 1) + ' characters.');
+    				}
+
+    				break;
+    			case (rule.match(/min:/) || {}).input:
+    				console.log("MIN: " + !(value.length < Number(rule.split(':')[1])));
+    				if (value.length < Number(rule.split(':')[1])) {
+    					failedRules.push('This field must have at least ' + rule.split(':')[1] + ' characters.');
+    				}
+
+    				break;
+    			case (rule.match(/in:/) || {}).input:
+    				console.log("IN: " + !(rule.split(':')[1].split(',').indexOf(value) === -1));
+    				if (value.length > 0 && (rule.split(':')[1].split(',').indexOf(value) === -1)) {
+    					failedRules.push('This field must contain one of the following: ' + rule.split(':')[1].split(',') + '.');
+    				}
+
+    				break;
+    			case (rule.match('/not:/') || {}).input:
+    				console.log("NOT: " + (!(value !== rule.split(':')[0].split(/'/)[1])));
+    				if (value !== rule.split(':')[0].split(/'/)[1]) {
+    					failedRules.push('This field has an invalid value.');
+    				}
+
+    				break;
+    		}
+    	}
+
+		if ($this.is('select')) { // style support for bootstrap-select
+			$this = $this.siblings('button.dropdown-toggle');
+		}
+
+    	if (failedRules.length > 0) {
+    		$this.removeClass('is-valid').addClass('is-invalid');
+    		$this.siblings('.invalid-feedback').remove();
+
+    		var $invalidFeedback = $('<div class="invalid-feedback">');
+
+    		for (var i = 0; i < failedRules.length; i++) {
+    			$invalidFeedback.append(failedRules[i] + (i >= 1 ? '<br />' : ''));
+    		}
+
+    		$invalidFeedback.insertAfter($this);
+
+    		return false;
+    	}
+    	
+    	$this.removeClass('is-invalid').addClass('is-valid');
+
+    	return true;
     };
 })(jQuery);
 
@@ -163,9 +268,9 @@ function addItemToPicker(pickerElement, itemValue, itemName) {
  */
 Object.resolve = function(path, obj) {
 	return path.split('.').reduce(function(prev, curr) {
-		return prev ? prev[curr] : undefined
-	}, obj || self)
-}
+		return prev ? prev[curr] : undefined;
+	}, obj || self);
+};
 
 /**
  * MakeItAll
