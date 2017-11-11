@@ -190,7 +190,7 @@ $(() => {
 
 		$(this).closest('.problem-type-picker').siblings('input[name*=problem_type]').val(problemTypeId);
 
-		ticketPage.setSpecialist(problemTypeId, $(this).closest('.card').find('.assigned-to-options'));
+		ticketPage.setSpecialist(problemTypeId, $(this).closest('.card').length > 0 ? $(this).closest('.card').find('.assigned-to-options') : $(this).closest('.modal').find('.assigned-to-options'));
 	});
 
 	$(document).on('click', '.problem-type-checkboxes .type-column li', function() {
