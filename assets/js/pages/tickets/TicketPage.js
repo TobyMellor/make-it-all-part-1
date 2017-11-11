@@ -178,7 +178,7 @@ class TicketPage extends DynamicPage {
 			$selectPicker = $affectedItems.closest('.affected-items-section').find('.selectpicker.add-hardware-device');
 
 		$affectedItems.append(
-			' <li data-serial-number="' + device.serial_number + '"" data-type="hardware">' +
+			' <li data-serial-number="' + device.serial_number + '" data-type="hardware">' +
 				'<input type="text" name="tickets[' + cardId + '].devices" value="' + device.id + '" hidden />' +
 				'<h4>' + device.name + '</h4>' +
 				'<p>(Hardware)</p>' +
@@ -198,7 +198,7 @@ class TicketPage extends DynamicPage {
 			$selectPicker = $affectedItems.closest('.affected-items-section').find('.selectpicker.add-software-program');
 
 		$affectedItems.append(
-			' <li data-program-id="' + programId + '"" data-type="hardware">' +
+			' <li data-program-id="' + programId + '" data-type="software">' +
 				'<input type="text" name="tickets[' + cardId + '].programs" value="' + program.id + '" hidden />' +
 				'<h4>' + program.name + '</h4>' +
 				'<p>(Software)</p>' +
