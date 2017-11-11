@@ -82,6 +82,8 @@ $(function () {
 	$('.search-field input').val('');
 });
 
+var validationTimeout = null;
+
 // https://stackoverflow.com/a/8407771/2957677
 // Modified by /1549818 to support dot notation
 (function($){
@@ -110,6 +112,19 @@ $(function () {
             }
             return push_counters[key]++;
         };
+
+        if (shouldValidate) {
+			$('.invalid-feedback').remove();
+			$('.is-valid, .is-invalid, .card-header.red-highlight, .card-header.green-highlight').removeClass('is-valid is-invalid red-highlight green-highlight');
+		
+			clearTimeout(validationTimeout);
+	    	validationTimeout = setTimeout(function() {
+	    		$('.is-valid, .is-invalid, .card-header.red-highlight, .card-header.green-highlight').removeClass('is-valid is-invalid red-highlight green-highlight');
+	    		$('.invalid-feedback').fadeOut(250, function() {
+	    			$(this).remove();
+	    		});
+	    	}, 15000);
+        }
 
         $fields.not(':disabled').map(function() {
             // skip invalid keys
@@ -155,12 +170,13 @@ $(function () {
         };
 
         if (shouldValidate) {
-	    	setTimeout(function() {
-	    		$fields.siblings().addBack().removeClass('is-valid is-invalid');
-	    		$fields.siblings('.invalid-feedback').fadeOut(500, function() {
-	    			$(this).remove();
-	    		});
-	    	}, 15000);
+        	$(this).find('.card:not(.existing) .is-valid').closest('.card').find('.card-header').addClass('green-highlight'); // highlight all cards green first
+        	$(this).find('.card:not(.existing) .is-invalid').closest('.card').find('.card-header').removeClass('green-highlight').addClass('red-highlight'); // highlight any cards with errors in them
+        	
+        	// open accordion with error
+        	if ($(this).find('.view-accordion.fa-chevron-down').first().closest('.card-header.green-highlight').length === 1) {
+        		$(this).find('.card-header.red-highlight .view-accordion').click();
+        	}
         }
 
         return json;
@@ -238,10 +254,8 @@ $(function () {
 			$this = $this.siblings('button.dropdown-toggle');
 		}
 
-		$this.siblings('.invalid-feedback').remove();
-
     	if (failedRules.length > 0) {
-    		$this.removeClass('is-valid').addClass('is-invalid');
+    		$this.addClass('is-invalid');
 
     		if (!$(this).parent().is('.assigned-to-options')) {
 	    		var $invalidFeedback = $('<div class="invalid-feedback">');
@@ -256,7 +270,7 @@ $(function () {
     		return false;
     	}
     	
-    	$this.removeClass('is-invalid').addClass('is-valid');
+    	$this.addClass('is-valid');
 
     	return true;
     };
