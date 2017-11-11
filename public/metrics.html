@@ -173,6 +173,10 @@
 		var makeItAll = new MakeItAll();
 
 		makeItAll.ticketManager = new TicketManager();
+		
+		$("[data-rowid]").click(e => {
+			location.href = location.href.toString().split("#")[0].replace("metrics.html", "staff.html#" + e.currentTarget.dataset.rowid);
+		});
 	</script>
 </body>
 
