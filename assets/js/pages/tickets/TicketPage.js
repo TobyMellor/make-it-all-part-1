@@ -415,6 +415,14 @@ class TicketPage extends DynamicPage {
 									'<label class="required">Ticket Description</label>' +
 									'<textarea class="form-control" name="tickets[' + cardId + '].description" validation="required|min:3|max:255"></textarea>' +
 								'</div>' +
+								'<div class="form-group">' +
+									'<label class="required">Problem Type</label>' +
+									'<input name="tickets[' + cardId + '].problem_type_showcase" validation="required|integer" hidden>' +
+									'<span class="subtle pull-right"></span>' +
+									'<div class="problem-type-picker">' +
+										'<div class="type-columns"></div>' +
+									'</div>' +
+								'</div>' +
 								'<div class="row">' +
 									'<div class="col-md-4">' +
 										'<div class="form-group">' +
@@ -438,18 +446,6 @@ class TicketPage extends DynamicPage {
 								'<div class="row">' +
 									'<div class="col-md-12">' +
 										'<ul class="affected-items"></ul>' +
-									'</div>' +
-								'</div>' +
-							'</div>' +
-						'</div>' +
-						'<div class="row">' +
-							'<div class="col-md-12">' +
-								'<div class="form-group">' +
-									'<label class="required">Problem Type</label>' +
-									'<input name="tickets[' + cardId + '].problem_type_showcase" validation="required|integer" hidden>' +
-									'<span class="subtle pull-right"></span>' +
-									'<div class="problem-type-picker">' +
-										'<div class="type-columns"></div>' +
 									'</div>' +
 								'</div>' +
 							'</div>' +
