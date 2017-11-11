@@ -91,14 +91,14 @@ $(() => {
 
 	$(document).on('change', '.selectpicker.add-hardware-device', function() {
 		if ($(this).val() !== "") { // not the default select option
-			ticketPage.appendHardwareDevice($(this).closest('.row').next().find('.affected-items'), $(this).val(), $(this).closest('.card').data('cardid'));
+			ticketPage.appendHardwareDevice($(this).closest('.row').next().find('.affected-items'), Number($(this).val()), $(this).closest('.card').data('cardid'));
 			$(this).closest('.card-block').scrollTop(1E10);
 		}
 	});
 
 	$(document).on('change', '.selectpicker.add-software-program', function() {
 		if ($(this).val() !== "") { // not the default select option
-			ticketPage.appendSoftwareProgram($(this).closest('.row').next().find('.affected-items'), $(this).val(), $(this).closest('.card').data('cardid'));
+			ticketPage.appendSoftwareProgram($(this).closest('.row').next().find('.affected-items'), Number($(this).val()), $(this).closest('.card').data('cardid'));
 			$(this).closest('.card-block').scrollTop(1E10);
 		}
 	});
