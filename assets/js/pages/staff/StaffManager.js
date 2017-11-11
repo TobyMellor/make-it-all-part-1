@@ -70,6 +70,7 @@ var staffData = [
 	{
 		id: 0,
 		name: "Bex Howell",
+		email: "domain@example.com",
 		job: "Designer",
 		phone: "01555516794",
 		department: "Team 5",
@@ -91,6 +92,7 @@ var staffData = [
 	{
 		id: 2,
 		name: "Mike Higson",
+		email: "domain@example.com",
 		job: "Developer",
 		phone: "01555138339",
 		department: "Team 5",
@@ -100,6 +102,7 @@ var staffData = [
 	{
 		id: 3,
 		name: "Ryan Sharp",
+		email: "domain@example.com",
 		job: "Designer",
 		phone: "01555736169",
 		department: "Team 5",
@@ -109,6 +112,7 @@ var staffData = [
 	{
 		id: 4,
 		name: "Toby Beasley",
+		email: "domain@example.com",
 		job: "Designer",
 		phone: "01555574667",
 		department: "Team 5",
@@ -118,6 +122,7 @@ var staffData = [
 	{
 		id: 5,
 		name: "Toby Mellor",
+		email: "me@tobymellor.co.uk",
 		job: "Developer",
 		department: "Team 5",
 		phone: "01555181056",
