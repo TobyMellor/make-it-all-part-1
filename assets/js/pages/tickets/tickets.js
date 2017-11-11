@@ -260,4 +260,8 @@ $(() => {
 		$addExistingTicket.prepend('<option value="' + ticketId + '">' + '#' + ticketId + ' ' + ticket.title.substring(0, 17) + '</option>');
 		$addExistingTicket.selectpicker('refresh');
 	});
+	
+	$("#hardware-software-table").on("click", "tr[data-rowid]", e => {
+		location.href = location.href.toString().split("#")[0].replace("tickets.html", e.currentTarget.dataset.rowtype + ".html#" + e.currentTarget.dataset.rowid);
+	});
 });
