@@ -42,22 +42,24 @@ $(() => {
 	});
 
 	$('#edit-ticket-modal #edit-existing-ticket').on('click', function () {
-		var formData = $('#edit-ticket-modal form').serializeObject().tickets.this;
+		var formData = $('#edit-ticket-modal form').serializeObject(true);
 
 		if (formData.isValid()) {
+			var ticket = formData.tickets.this;
+
 			makeItAll.ticketManager.editTicket(
-				Number(formData.id),
-				formData.filter,
-				formData.title,
-				formData.description,
-				Number(formData.assigned_to[formData.assigned_to_type]),
-				formData.devices,
-				formData.programs,
-				formData.operating_system,
-				Number(formData.problem_type)
+				Number(ticket.id),
+				ticket.filter,
+				ticket.title,
+				ticket.description,
+				Number(ticket.assigned_to[ticket.assigned_to_type]),
+				ticket.devices,
+				ticket.programs,
+				ticket.operating_system,
+				Number(ticket.problem_type)
 			);
 
-			ticketPage.refreshPage(formData.filter, Number(formData.id));
+			ticketPage.refreshPage(ticket.filter, Number(ticket.id));
 
 			$('#edit-ticket-modal').modal('hide');
 		}
