@@ -7,7 +7,7 @@ $(() => {
 	$("#new-staff-modal #create-new-staff").click(e => {
 		e.preventDefault();
 
-		var formData = $("#new-staff-modal form").serializeObject();
+		var formData = $("#new-staff-modal form").serializeObject(true);
 		
 		if (formData.isValid()) {
 			for (let key in formData.staff) {
