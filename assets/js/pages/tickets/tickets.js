@@ -1,14 +1,22 @@
-let ticketPage      = new TicketPage(),
-	problemTypePage = new ProblemTypePage(true);
+let ticketPage      = new TicketPage();
+try {
+	var problemTypePage = new ProblemTypePage(true);
+} catch (e) {
+	console.warn("Missing problem types JS");
+}
 
 $(() => {
+	
+	let isPage = document.getElementById(ticketPage.sectionSelector.substring(1)).dataset.page === "tickets";
+	if (isPage) ticketPage.showFilteredTickets('new,pending_awaiting_staff,pending_in_progress,resolved');
+	
+	if (!isPage) return;
+	
 	$('.side-nav-bar-nested ul li[data-slug]').on('click', function() {
 		if (ticketPage.currentlyShowing !== this.dataset.slug) {
 			ticketPage.refreshPage(this.dataset.slug);
 		}
 	});
-
-	ticketPage.showFilteredTickets('new,pending_awaiting_staff,pending_in_progress,resolved');
 	
 	if (location.hash) ticketPage.showTicketView(parseInt(location.hash.substring(1)));
 
