@@ -319,9 +319,10 @@ Object.resolve = function(path, obj) {
  */
 class MakeItAll {
 	constructor() {
-		this.ticketManager   = null;
-		this.staffManager    = null;
-		this.hardwareManager = null;
-		this.softwareManager = null;
+		this.ticketManager      = null;
+		this.staffManager       = null;
+		this.problemTypeManager = null;
+		this.hardwareManager    = null;
+		this.softwareManager    = null;
 	}
 }
