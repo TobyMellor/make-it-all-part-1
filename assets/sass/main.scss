@@ -662,6 +662,7 @@ label {
 	flex-wrap: wrap;
 	justify-content: space-around;
 	align-items: flex-start;
+
 	> div {
 		flex-grow: 1;
 		padding: 0 $comfortable;
@@ -672,9 +673,11 @@ label {
 .row-hidden {
 	line-height: 0;
 }
+
 .block-hidden {
 	height: 0;
 	opacity: 0;
+
 	&:not(#table-section) {
 		overflow: hidden;
 	}
@@ -721,6 +724,33 @@ label {
 		transition: none;
 	}
 
+	&.problem-type-checkboxes {
+		.type-columns {
+			.type-column {
+				li {
+					&.no-children {
+						cursor: initial !important;
+
+						&:hover {
+							background-color: $white !important;
+							color: $black !important;
+						}
+
+						.fa-caret-right {
+							display: none;
+						}
+					}
+
+					&:hover:not(.no-children), &.last-active:not(.no-children) {
+						.specialism-checkbox {
+							border: 2px solid $white;
+						}
+					}
+				}
+			}
+		}
+	}
+
 	.type-columns {
 		display: flex;
 		flex: 2;
@@ -743,32 +773,21 @@ label {
 					background-color: $cloudy-white;
 				}
 
-				&.last-active {
-					background-color: $blue !important;
-					color: $white;
-					cursor: initial !important;
-				}
-
+				
 				&:hover {
 					background-color: $blue-hover;
 					color: $white;
 					cursor: pointer;
 				}
 
-				&:hover:not(.no-children), &.last-active:not(.no-children) {
-					.specialism-checkbox {
-						border: 2px solid $white;
-					}
+
+				&.last-active {
+					background-color: $blue !important;
+					color: $white;
+					cursor: initial !important;
 				}
 
 				&.no-children {
-					cursor: initial !important;
-
-					&:hover {
-						background-color: $white !important;
-						color: $black !important;
-					}
-
 					.fa-caret-right {
 						display: none;
 					}
