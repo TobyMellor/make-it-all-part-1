@@ -441,6 +441,13 @@
 					$("[data-problem-type-id=\"" + chainType.id + "\"]").click();
 				}
 			}
+			
+			$("#specialists-table").on("click", "tr[data-rowid]", e => {
+				location.href = location.href.toString().split("#")[0].replace("problem_types.html", "staff.html#" + e.currentTarget.dataset.rowid);
+			});
+			$("#tickets-table").on("click", "tr[data-rowid]", e => {
+				location.href = location.href.toString().split("#")[0].replace("problem_types.html", "tickets.html#" + e.currentTarget.dataset.rowid);
+			});
 		</script>
 	</body>
 </html>
