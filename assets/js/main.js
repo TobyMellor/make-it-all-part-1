@@ -240,8 +240,20 @@ var validationTimeout = null;
     					failedRules.push('This field has an invalid value.');
     				}
     			case (rule.match(/requires:/) || {}).input:
-    				if ($(this).closest('form').find('input[name="' + rule.split(':')[1] + '"]').val() === '') {
-    					failedRules.push('This faield is required.');
+    				if ($this.closest('form').find('input[name="' + rule.split(':')[1] + '"]').val() === '') {
+    					failedRules.push('This field is required.');
+    				}
+
+    				break;
+    			case "email":
+    				if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)) {
+    					failedRules.push('This field must be an email.');
+    				}
+
+    				break;
+    			case "phone":
+    				if (!/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(value.replace(' ', ''))) {
+    					failedRules.push('This field must be a phone number.');
     				}
 
     				break;
@@ -261,14 +273,14 @@ var validationTimeout = null;
     	if (failedRules.length > 0) {
     		$this.addClass('is-invalid');
 
-    		if (!$(this).parent().is('.assigned-to-options')) {
+    		if (!$this.parent().is('.assigned-to-options')) {
 	    		var $invalidFeedback = $('<div class="invalid-feedback">');
 
 	    		for (var i = 0; i < failedRules.length; i++) {
 	    			$invalidFeedback.append(failedRules[i] + (i >= 1 ? '<br />' : ''));
 	    		}
 
-	    		$invalidFeedback.insertAfter($this);
+	    		$this.closest('.form-group').append($invalidFeedback);
 	    	}
 
     		return false;
