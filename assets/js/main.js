@@ -193,52 +193,47 @@ var validationTimeout = null;
 
     		switch (rule) {
     			case "nullable":
-    				console.log("NULLABLE: " + !(value === null || value === ''));
     				if (value === null || value === '') {
     					validationRules = []; // break out of for
     				}
 
     				break;
     			case "required":
-    				console.log("REQUIRED: " + !(value === null || value === ''));
     				if (value === null || value === '') {
     					failedRules.push('This field is required.'); validationRules = []; // break out of for
     				}
 
     				break;
     			case "integer":
-    				console.log("INTEGER: " + !(isNaN(parseInt(value)) || !isFinite(value)));
     				if (value.length > 0 && (isNaN(parseInt(value)) || !isFinite(value))) {
     					failedRules.push('This field must be an whole number.');
     				}
 
     				break;
     			case (rule.match(/max:/) || {}).input:
-    				console.log("MAX: " + !(value.length > Number(rule.split(':')[1])));
     				if (value.length > 0 && value.length > Number(rule.split(':')[1])) {
     					failedRules.push('This field must have less than ' + (Number(rule.split(':')[1]) + 1) + ' characters.');
     				}
 
     				break;
     			case (rule.match(/min:/) || {}).input:
-    				console.log("MIN: " + !(value.length < Number(rule.split(':')[1])));
     				if (value.length < Number(rule.split(':')[1])) {
     					failedRules.push('This field must have at least ' + rule.split(':')[1] + ' characters.');
     				}
 
     				break;
     			case (rule.match(/in:/) || {}).input:
-    				console.log("IN: " + !(rule.split(':')[1].split(',').indexOf(value) === -1));
     				if (value.length > 0 && (rule.split(':')[1].split(',').indexOf(value) === -1)) {
     					failedRules.push('This field must contain one of the following: ' + rule.split(':')[1].split(',') + '.');
     				}
 
     				break;
     			case (rule.match(/not:/) || {}).input:
-    				console.log("NOT: " + (!(value === rule.split(':')[1].split(/'/)[1])));
     				if (value === rule.split(':')[1].split(/'/)[1]) {
     					failedRules.push('This field has an invalid value.');
     				}
+
+    				break;
     			case (rule.match(/requires:/) || {}).input:
     				if ($this.closest('form').find('input[name="' + rule.split(':')[1] + '"]').val() === '') {
     					failedRules.push('This field is required.');

@@ -9,44 +9,46 @@ $(() => {
 
 		var formData = $("#new-staff-modal form").serializeObject();
 		
-		for (let key in formData.staff) {
-			if (formData.staff[key] === "") {
-				delete formData.staff[key];
+		if (formData.isValid()) {
+			for (let key in formData.staff) {
+				if (formData.staff[key] === "") {
+					delete formData.staff[key];
+				}
 			}
-		}
-		formData.staff.access = formData.staff.access || {};
-		for (let key of ["read", "operator", "analyst", "admin"]) {
-			formData.staff.access[key] = formData.staff.access[key] !== undefined;
-		}
-		
-		switch (e.currentTarget.dataset.action) {
-			case "create":
-				var employee = makeItAll.staffManager.createEmployee(formData.staff);
+			formData.staff.access = formData.staff.access || {};
+			for (let key of ["read", "operator", "analyst", "admin"]) {
+				formData.staff.access[key] = formData.staff.access[key] !== undefined;
+			}
+			
+			switch (e.currentTarget.dataset.action) {
+				case "create":
+					var employee = makeItAll.staffManager.createEmployee(formData.staff);
 
-				employee._specialisms = staffProblemTypePage.currentSpecialisms;
-				
-				addItemToPicker(
-					$('.selectpicker.staff-picker[name="' + formData.event_target + '"]'),
-					employee.id,
-					formData.staff.first_name + ' ' + formData.staff.last_name
-				); // formData and staffId to be retrieved by AJAX call
-				
-				break;
-				
-			case "save":
-				formData.staff.id = staffPage.employee.id;
-				staffPage.employee._specialisms = staffProblemTypePage.currentSpecialisms;
-				makeItAll.staffManager.updateEmployee(formData.staff);
+					employee._specialisms = staffProblemTypePage.currentSpecialisms;
+					
+					addItemToPicker(
+						$('.selectpicker.staff-picker[name="' + formData.event_target + '"]'),
+						employee.id,
+						formData.staff.first_name + ' ' + formData.staff.last_name
+					); // formData and staffId to be retrieved by AJAX call
+					
+					break;
+					
+				case "save":
+					formData.staff.id = staffPage.employee.id;
+					staffPage.employee._specialisms = staffProblemTypePage.currentSpecialisms;
+					makeItAll.staffManager.updateEmployee(formData.staff);
+			}
+					
+			if (isPage) {
+				$(staffPage.navSelector).find("[data-slug=\"all\"]").addClass("active").siblings().removeClass("active");
+				staffPage.hideTableRowDetails();
+				staffPage.showStaff();
+				staffPage.showTableRowDetails(staffPage.employee.id);
+			}
+			
+			$('#new-staff-modal').modal('hide');
 		}
-				
-		if (isPage) {
-			$(staffPage.navSelector).find("[data-slug=\"all\"]").addClass("active").siblings().removeClass("active");
-			staffPage.hideTableRowDetails();
-			staffPage.showStaff();
-			staffPage.showTableRowDetails(staffPage.employee.id);
-		}
-		
-		$('#new-staff-modal').modal('hide');
 	});
 	
 	$("#new-staff-modal").on("show.bs.modal", e => {

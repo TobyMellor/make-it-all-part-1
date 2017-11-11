@@ -17,45 +17,54 @@ $(() => {
 	});
 
 	$('#new-ticket-modal #create-new-ticket, #create-follow-up-call').on('click', function (e) {
-		var $modal            = $(this).closest('.modal'),
-			formData          = $modal.find('form').serializeObject(),
-			tickets           = formData.tickets,
-			existingTicketIds = []; // an new ticket won't have any of these
+		var $modal   = $(this).closest('.modal'),
+			formData = $modal.find('form').serializeObject(true);
 
-		for (var cardId in tickets) {
-			var ticket = tickets[cardId];
+		console.log(formData);
 
-			if (ticket.hasOwnProperty('id')) {
-				existingTicketIds.push(Number(ticket.id));
-				delete tickets[cardId];
-			} else {
-				ticket.assigned_to = ticket.assigned_to[ticket.assigned_to_type];
+		if (formData.isValid()) {
+			var tickets           = formData.tickets,
+				existingTicketIds = []; // an new ticket won't have any of these
+
+			console.log(formData);
+			
+			for (var cardId in tickets) {
+				var ticket = tickets[cardId];
+
+				if (ticket.hasOwnProperty('id')) {
+					existingTicketIds.push(Number(ticket.id));
+					delete tickets[cardId];
+				} else {
+					ticket.assigned_to = ticket.assigned_to[ticket.assigned_to_type];
+				}
 			}
+
+			ticketPage.createCall(formData.date_of_call, Number(formData.caller), tickets, existingTicketIds);
+
+			$modal.modal('hide');
 		}
-
-		ticketPage.createCall(formData.date_of_call, Number(formData.caller), tickets, existingTicketIds);
-
-		$modal.modal('hide');
 	});
 
 	$('#edit-ticket-modal #edit-existing-ticket').on('click', function () {
 		var formData = $('#edit-ticket-modal form').serializeObject().tickets.this;
 
-		makeItAll.ticketManager.editTicket(
-			Number(formData.id),
-			formData.filter,
-			formData.title,
-			formData.description,
-			Number(formData.assigned_to[formData.assigned_to_type]),
-			formData.devices,
-			formData.programs,
-			formData.operating_system,
-			Number(formData.problem_type)
-		);
+		if (formData.isValid()) {
+			makeItAll.ticketManager.editTicket(
+				Number(formData.id),
+				formData.filter,
+				formData.title,
+				formData.description,
+				Number(formData.assigned_to[formData.assigned_to_type]),
+				formData.devices,
+				formData.programs,
+				formData.operating_system,
+				Number(formData.problem_type)
+			);
 
-		ticketPage.refreshPage(formData.filter, Number(formData.id));
+			ticketPage.refreshPage(formData.filter, Number(formData.id));
 
-		$('#edit-ticket-modal').modal('hide');
+			$('#edit-ticket-modal').modal('hide');
+		}
 	});
 
 	$('#create-new-event').on('click', function(e) {
@@ -210,7 +219,6 @@ $(() => {
 	$('.search-field input').on('keyup', function() {
 		ticketPage.search($(this).val());
 	});
-
 
 	$(document).on('click', '.create-problem-type', function() {
 		var $parentProblemType  = $(this).closest('.type-column').prev().find('.active'),

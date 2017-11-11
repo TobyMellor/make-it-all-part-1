@@ -355,14 +355,14 @@ class TicketPage extends DynamicPage {
 			'<div class="card" data-cardid="' + cardId + '">' +
 				'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
 					'<h5 class="mb-0">' +
-						'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
+						'<a data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
 							'New Ticket' +
 						'</a>' +
-						'<i class="fa fa-chevron-up view-accordion"></i>' +
+						'<i class="fa fa-chevron-down view-accordion"></i>' +
 						'<i class="fa fa-trash-o remove-accordion"></i>' +
 					'</h5>' +
 				'</div>' +
-				'<div id="collapse-' + cardId + '" class="collapse" role="tabpanel">' +
+				'<div id="collapse-' + cardId + '" class="collapse show" role="tabpanel">' +
 					'<div class="card-block">' +
 						'<div class="row">' +
 							'<div class="col-md-6">' +
@@ -455,6 +455,8 @@ class TicketPage extends DynamicPage {
 			'</div>'
 		);
 
+		$accordion.find('.fa-chevron-down.view-accordion').click();
+		
 		$accordion.append($card);
 
 		problemTypePage.loadSubProblemTypes($card.find('.type-columns'));
@@ -463,8 +465,6 @@ class TicketPage extends DynamicPage {
 		this.populateSelectField($card.find('.selectpicker.add-hardware-device'), 'Type a serial number…', makeItAll.hardwareManager.devices, null, 'serial_number');
 		this.populateSelectField($card.find('.selectpicker.add-software-program'), 'Choose a program…', makeItAll.softwareManager.programs);
 
-		$accordion.find('.fa-chevron-down.view-accordion').click();
-		$card.find('.view-accordion').click();
 		$('.selectpicker').selectpicker('refresh');
 	}
 
