@@ -163,6 +163,8 @@
 		$(softwarePage.tableSelector).on("click", "tbody tr", e => {
 			softwarePage.showTableRowDetails(Number(e.currentTarget.dataset.rowid));
 		});
+		
+		if (location.hash) softwarePage.showTableRowDetails(parseInt(location.hash.substring(1)));
 	</script>
 </body>
 
