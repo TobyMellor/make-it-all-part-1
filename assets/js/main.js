@@ -158,9 +158,9 @@ $(function () {
 	    	setTimeout(function() {
 	    		$fields.siblings().addBack().removeClass('is-valid is-invalid');
 	    		$fields.siblings('.invalid-feedback').fadeOut(500, function() {
-	    			$this.remove();
+	    			$(this).remove();
 	    		});
-	    	}, 7500);
+	    	}, 15000);
         }
 
         return json;
@@ -218,9 +218,9 @@ $(function () {
     				}
 
     				break;
-    			case (rule.match('/not:/') || {}).input:
-    				console.log("NOT: " + (!(value !== rule.split(':')[0].split(/'/)[1])));
-    				if (value !== rule.split(':')[0].split(/'/)[1]) {
+    			case (rule.match(/not:/) || {}).input:
+    				console.log("NOT: " + (!(value === rule.split(':')[0].split(/'/)[1])));
+    				if (value === rule.split(':')[1].split(/'/)[1]) {
     					failedRules.push('This field has an invalid value.');
     				}
 
@@ -229,20 +229,29 @@ $(function () {
     	}
 
 		if ($this.is('select')) { // style support for bootstrap-select
+			if ($this.hasClass('add-hardware-device')) {
+				if ($this.closest('.affected-items-section').find('.affected-items').find('li[data-type="hardware"]').length === 0) {
+					failedRules.push('Add at least one hardware device.');
+				}
+			}
+
 			$this = $this.siblings('button.dropdown-toggle');
 		}
 
+		$this.siblings('.invalid-feedback').remove();
+
     	if (failedRules.length > 0) {
     		$this.removeClass('is-valid').addClass('is-invalid');
-    		$this.siblings('.invalid-feedback').remove();
 
-    		var $invalidFeedback = $('<div class="invalid-feedback">');
+    		if (!$(this).parent().is('.assigned-to-options')) {
+	    		var $invalidFeedback = $('<div class="invalid-feedback">');
 
-    		for (var i = 0; i < failedRules.length; i++) {
-    			$invalidFeedback.append(failedRules[i] + (i >= 1 ? '<br />' : ''));
-    		}
+	    		for (var i = 0; i < failedRules.length; i++) {
+	    			$invalidFeedback.append(failedRules[i] + (i >= 1 ? '<br />' : ''));
+	    		}
 
-    		$invalidFeedback.insertAfter($this);
+	    		$invalidFeedback.insertAfter($this);
+	    	}
 
     		return false;
     	}

@@ -196,7 +196,7 @@ class TicketPage extends DynamicPage {
 	appendSoftwareProgram($affectedItems, programId, cardId) {
 		var program       = makeItAll.softwareManager.getProgram(programId),
 			$selectPicker = $affectedItems.closest('.affected-items-section').find('.selectpicker.add-software-program');
-			
+
 		$affectedItems.append(
 			' <li data-program-id="' + programId + '" data-type="software">' +
 				'<input type="text" name="tickets[' + cardId + '].programs" value="' + program.id + '" hidden />' +

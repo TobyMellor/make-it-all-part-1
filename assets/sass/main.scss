@@ -893,5 +893,11 @@ span.filter {
 	}
 }
 
+.invalid-feedback {
+	display: block;
+	font-size: .875rem;
+	color: #dc3545;
+}
+
 @import "animate";
 @import "responsive";
