@@ -53,13 +53,17 @@ class HardwarePage extends DynamicPage {
 		if (!this.device) {
 			this.hideTableRowDetails();
 			alert("No hardware with ID " + id);
-
 			return;
 		}
 
-		this.updateSingleViewNavbar(this.device.type + " / " + this.device.manufacturer + " / " + this.device.serial_number);
+		this.updateSingleViewNavbar(this.device.serial_number);
 		super.showTableRowDetails(id);
 
+		$("#type-text").text(this.device.type);
+		$("#manufacturer-text").text(this.device.manufacturer);
+		$("#model-text").text(this.device.model);
+		$("#serial-text").text(this.device.serial_number);
+		
 		//Todo generated programmatically
 		$("#authorised-users").html(`
 		<li class="list-group-item list-group-item-action">

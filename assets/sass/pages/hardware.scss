@@ -3,7 +3,20 @@
 .card-list {
 	overflow-y:auto; 
 	padding:0px;
-	max-height: 35vh;
+	max-height: 32vh;
+}
+
+div.card.mb-3.hardware-info {
+	border:1px solid $silver!important;
+}
+
+.hardware-info > .card-body {
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+.hardware-info > * > p {
+	margin-bottom:5px;
 }
 
 span.filter {

@@ -16,17 +16,17 @@ class HardwareManager extends Manager {
 		var devices = [
 			{
 				id: 0,
-				name: 'AX7000',
+				model: 'AX7000',
 				type: 'GPU',
 				manufacturer: 'ASUS',
-				serial_number: '0123456789',
+				serial_number: '182930-1237891-AA',
 				programs: null,
 				created_at: 'Yesterday',
 				updated_at: 'Just now'
 			},
 			{
 				id: 1,
-				name: 'JH5333',
+				model: 'JH5333',
 				type: 'GPU',
 				manufacturer: 'DELL',
 				serial_number: '00000000001',
@@ -36,7 +36,7 @@ class HardwareManager extends Manager {
 			},
 			{
 				id: 2,
-				name: 'Vengence',
+				model: 'Vengence',
 				type: 'RAM',
 				manufacturer: 'Corsair',
 				serial_number: '00000000002',
@@ -46,7 +46,7 @@ class HardwareManager extends Manager {
 			},
 			{
 				id: 3,
-				name: 'HDX 500',
+				model: 'HDX 500',
 				type: 'Monitor',
 				manufacturer: 'Samsung',
 				serial_number: '00000000003',
@@ -56,7 +56,7 @@ class HardwareManager extends Manager {
 			},
 			{
 				id: 4,
-				name: 'AX6000',
+				model: 'AX6000',
 				type: 'GPU',
 				manufacturer: 'ASUS',
 				serial_number: '00000000004',
@@ -71,7 +71,7 @@ class HardwareManager extends Manager {
 
 			this.devices.push(new Device(
 				device.id,
-				device.name,
+				device.model,
 				device.type,
 				device.manufacturer,
 				device.serial_number,

@@ -180,7 +180,7 @@ class TicketPage extends DynamicPage {
 		$affectedItems.append(
 			' <li data-serial-number="' + device.serial_number + '"" data-type="hardware">' +
 				'<input type="text" name="tickets[' + cardId + '].devices" value="' + device.id + '" hidden />' +
-				'<h4>' + device.name + '</h4>' +
+				'<h4>' + device.model + '</h4>' +
 				'<p>(Hardware)</p>' +
 				'<a class="btn btn-danger remove-affected-item" href="javascript: void(0);">' +
 					'<i class="fa fa-laptop"></i> ' +

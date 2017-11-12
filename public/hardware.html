@@ -102,6 +102,7 @@
 					<thead>
 						<tr>
 							<th data-slug="id">ID</th>
+							<th data-slug="model">MODEL</th>
 							<th data-slug="serial_number">SERIAL</th>
 							<th data-slug="created_at">CREATED</th>
 							<th data-slug="updated_at">UPDATED</th>
@@ -126,7 +127,28 @@
 				<h4></h4>
 			</nav>
 
-			<div class="main-content">
+			<div class="main-content">			
+				<div class="card mb-3 hardware-info">
+					<div class="card-body ">
+						<p>
+							<strong>Type:</strong>
+							<span id="type-text"></span>
+						</p>
+						<p>
+							<strong>Manufacturer:</strong>
+							<span id="manufacturer-text"></span>
+						</p>
+						<p>
+							<strong>Model:</strong>
+							<span id="model-text"></span>
+						</p>
+						<p>
+							<strong>Serial Number:</strong>
+							<span id="serial-text"></span>
+						</p>
+					</div>
+				</div>
+
 				<div class="card mb-3">
 					<h6 class="card-header main-content-title">
 						<i class="fa fa-ticket"></i> Tickets
