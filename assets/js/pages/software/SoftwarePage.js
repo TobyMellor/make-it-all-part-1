@@ -4,22 +4,23 @@ class SoftwarePage extends DynamicPage {
 		this.program = null;
 	}
 	
+	updateSoftwareTypeText() {
+		var cells = $(this.tableSelector + " tbody tr td:nth-child(4)");
+		for (var i = 0; i < cells.length;i++) {
+			if (cells[i].innerText == "false") {
+				cells[i].innerText = "Program";
+			} else if (cells[i].innerText == "true") {
+				cells[i].innerText = "Operating System";
+			}
+		}
+	}
+
 	showPrograms() {
 		$(this.tableSelector).find("tbody").empty();
 		for (let program of makeItAll.SoftwareManager.programs) {
 			this.appendTableRow(program);
 		}
-		
-		var cells = $(this.tableSelector + " tbody tr td:nth-child(4)");
-		for (var i = 0; i < cells.length;i++) {
-			if (cells[i].innerText == "false") {
-				cells[i].innerText = "Program"
-			} else if (cells[i].innerText == "true") {
-				cells[i].innerText = "Operating System"
-			}
-		}
-
-		softwarePage.updateSplashScreen("Software");
+		this.updateSoftwareTypeText();
 	}
 	
 	showTableRowDetails(id) {

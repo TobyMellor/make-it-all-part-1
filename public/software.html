@@ -65,10 +65,14 @@
 		</div>
 	</nav>
 
-	<section id="list-view">
+	<section id="list-view" data-page="software">
 		<nav class="top-nav">
 			<i class="fa fa-file-code-o"></i>
 			<h4>Software</h4>
+			<button id="new-program" class="btn btn-success pull-right" data-toggle="modal" data-target="#new-software-modal">
+				<i class="fa fa-plus"></i>
+				New
+			</button>
 		</nav>
 
 		<div id="table-section">
@@ -131,27 +135,71 @@
 		</section>
 	</div>
 
+	<div class="modal fade" id="new-software-modal" tabindex="-1" role="dialog" aria-labelledby="new-software-modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Create new Software</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<input type="text" class="no-clear-on-show" name="event_target" hidden>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label class="required">Name</label>
+									<div class="input-group">
+										<span class="input-group-addon"><i class="fa fa-file-code-o"></i></span>
+										<input class="form-control" name="name">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 form-group">
+										<label class="required">Type</label>
+										<div class="form-group search-field input-field">
+												<select class="selectpicker" id="isOS" name="isOS">
+													<option value="false">Program</option>
+													<option value="true">Operating System</option>
+												</select>
+											</div>
+
+									</div>
+									<div class="col-md-6 form-group" id="expiryGroup">
+										<label>Expiry</label>
+										<input class="form-control datepicker" name="expiry" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-success" id="create-new-software">Create New Software</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
 	<script src="js/plugins/plugins.min.js"></script>
 	<script src="js/main.min.js"></script>
-	<script src="js/pages/hardware.min.js"></script>
-	<script src="js/pages/software.min.js"></script>
-	<script src="js/pages/tickets.min.js"></script>
+	<!-- <script src="js/pages/hardware.min.js"></script> -->
+	<!-- <script src="js/pages/software.min.js"></script> -->
+	
+	<script src="c:\Users\Michael\Documents\Loughborough Team Project\make-it-all\assets\js\pages\software\Program.js"></script>
+	<script src="c:\Users\Michael\Documents\Loughborough Team Project\make-it-all\assets\js\pages\software\SoftwareManager.js"></script>
+	<script src="c:\Users\Michael\Documents\Loughborough Team Project\make-it-all\assets\js\pages\software\SoftwarePage.js"></script>
+	<script src="c:\Users\Michael\Documents\Loughborough Team Project\make-it-all\assets\js\pages\software\software.js"></script>
+	<!-- <script src="js/pages/tickets.min.js"></script> -->
 
 	<script>
 		var makeItAll = new MakeItAll();
-
-		makeItAll.ticketManager   = new TicketManager();
-		makeItAll.HardwareManager = new HardwareManager();
 		makeItAll.SoftwareManager = new SoftwareManager();
-	</script>
-
-	<script type="text/javascript">
-		var softwarePage = new SoftwarePage();
-		softwarePage.showPrograms();
-
-		$(softwarePage.tableSelector).on("click", "tbody tr", e => {
-			softwarePage.showTableRowDetails(Number(e.currentTarget.dataset.rowid));
-		});
 	</script>
 </body>
 

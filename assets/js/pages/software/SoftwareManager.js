@@ -86,16 +86,29 @@ class SoftwareManager extends Manager {
 	createProgram(name, expiry, isOS) {
 		var programID = Math.floor(Math.random() * (10000 + 1));
 
-		var prog = new Program(
-			programID,
-			name,
-			expiry,
-			null,
-			isOS,
-			'Just now',
-			'Just now');
-
+		var prog;
+		if (isOS) {
+			prog = new Program(
+				programID,
+				name,
+				undefined,
+				null,
+				isOS,
+				'Just now',
+				'Just now');
+		} else {
+			prog = new Program(
+				programID,
+				name,
+				expiry,
+				null,
+				isOS,
+				'Just now',
+				'Just now');
+		}
+		
 		this.programs.push(prog);
+		return prog;
 	}
 
 	getPrograms(ids) {
