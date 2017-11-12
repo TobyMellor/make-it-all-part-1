@@ -95,6 +95,6 @@ class HardwareManager extends Manager {
 	}
 
 	getDeviceBySerialNumber(serialNumber) {
-		return this.devices.find(d => d.serial_number == serialNumber);
+		return this.devices.find(d => d.serial_number === serialNumber);
 	}
 }

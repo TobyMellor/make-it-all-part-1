@@ -178,7 +178,7 @@ class TicketPage extends DynamicPage {
 			$selectPicker = $affectedItems.closest('.affected-items-section').find('.selectpicker.add-hardware-device');
 
 		$affectedItems.append(
-			' <li data-serial-number="' + device.serial_number + '"" data-type="hardware">' +
+			' <li data-serial-number="' + device.serial_number + '" data-type="hardware">' +
 				'<input type="text" name="tickets[' + cardId + '].devices" value="' + device.id + '" hidden />' +
 				'<h4>' + device.name + '</h4>' +
 				'<p>(Hardware)</p>' +
@@ -198,7 +198,7 @@ class TicketPage extends DynamicPage {
 			$selectPicker = $affectedItems.closest('.affected-items-section').find('.selectpicker.add-software-program');
 
 		$affectedItems.append(
-			' <li data-program-id="' + programId + '"" data-type="hardware">' +
+			' <li data-program-id="' + programId + '" data-type="software">' +
 				'<input type="text" name="tickets[' + cardId + '].programs" value="' + program.id + '" hidden />' +
 				'<h4>' + program.name + '</h4>' +
 				'<p>(Software)</p>' +
@@ -355,21 +355,21 @@ class TicketPage extends DynamicPage {
 			'<div class="card" data-cardid="' + cardId + '">' +
 				'<div class="card-header" role="tab" id="heading-' + cardId + '">' +
 					'<h5 class="mb-0">' +
-						'<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
+						'<a data-toggle="collapse" data-parent="#accordion" href="#collapse-' + cardId + '">' +
 							'New Ticket' +
 						'</a>' +
-						'<i class="fa fa-chevron-up view-accordion"></i>' +
+						'<i class="fa fa-chevron-down view-accordion"></i>' +
 						'<i class="fa fa-trash-o remove-accordion"></i>' +
 					'</h5>' +
 				'</div>' +
-				'<div id="collapse-' + cardId + '" class="collapse" role="tabpanel">' +
+				'<div id="collapse-' + cardId + '" class="collapse show" role="tabpanel">' +
 					'<div class="card-block">' +
 						'<div class="row">' +
 							'<div class="col-md-6">' +
 								'<div class="form-group">' +
 									'<label class="required">Status</label>' +
 									'<br />' +
-									'<select class="selectpicker" name="tickets[' + cardId + '].filter">' +
+									'<select class="selectpicker" name="tickets[' + cardId + '].filter" validation="required|in:new,pending_awaiting_staff,pending_in_progress,resolved">' +
 										'<option value="new">New</option>' +
 										'<option value="pending_awaiting_staff">Pending - Awaiting Staff</option>' +
 										'<option value="pending_in_progress">Pending - In Progress</option>' +
@@ -378,7 +378,7 @@ class TicketPage extends DynamicPage {
 								'</div>' +
 								'<div class="form-group">' +
 									'<label class="required">Ticket Title</label>' +
-									'<input class="form-control" name="tickets[' + cardId + '].title" />' +
+									'<input class="form-control" name="tickets[' + cardId + '].title" validation="required|min:3|max:255" />' +
 								'</div>' +
 							'</div>' +
 							'<div class="col-md-6 assigned-to-section">' +
@@ -386,11 +386,11 @@ class TicketPage extends DynamicPage {
 									'<label class="required">Assigned To</label>' +
 									'<br />' +
 									'<div class="assigned-to-options">' +
-										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.self_showcase" value="' + makeItAll.staffManager.currentUser(true).name + '" readonly />' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.self_showcase" value="' + makeItAll.staffManager.currentUser(true).name + '" validation="required" readonly />' +
 										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.self" value="' + makeItAll.staffManager.currentUser() + '" readonly hidden />' +
-										'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators…" name="tickets[' + cardId + '].assigned_to.operator"></select>' +
+										'<select class="selectpicker staff-picker" data-live-search="true" data-live-search-placeholder="Search operators…" name="tickets[' + cardId + '].assigned_to.operator" validation="nullable|integer"></select>' +
 										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.specialist" readonly hidden />' +
-										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.specialist_showcase" value="Problem Type not yet chosen" readonly />' +
+										'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].assigned_to.specialist_showcase" value="Problem Type not yet chosen" readonly validation="required|requires:tickets[' + cardId + '].problem_type_showcase" />' +
 									'</div>' +
 								'</div>' +
 								'<div class="form-check">' +
@@ -413,25 +413,33 @@ class TicketPage extends DynamicPage {
 							'<div class="col-md-12 affected-items-section">' +
 								'<div class="form-group">' +
 									'<label class="required">Ticket Description</label>' +
-									'<textarea class="form-control" name="tickets[' + cardId + '].description"></textarea>' +
+									'<textarea class="form-control" name="tickets[' + cardId + '].description" validation="required|min:3|max:255"></textarea>' +
+								'</div>' +
+								'<div class="form-group">' +
+									'<label class="required">Problem Type</label>' +
+									'<input name="tickets[' + cardId + '].problem_type_showcase" validation="required|integer" hidden>' +
+									'<span class="subtle pull-right"></span>' +
+									'<div class="problem-type-picker">' +
+										'<div class="type-columns"></div>' +
+									'</div>' +
 								'</div>' +
 								'<div class="row">' +
 									'<div class="col-md-4">' +
 										'<div class="form-group">' +
 											'<label>Operating System</label>' +
-											'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].operating_system" />' +
+											'<input class="form-control no-clear-on-show" name="tickets[' + cardId + '].operating_system" validation="nullable|min:3|max:255" />' +
 										'</div>' +
 									'</div>' +
 									'<div class="col-md-4">' +
 										'<div class="form-group">' +
 											'<label class="required">Hardware Affected</label>' +
-											'<select class="selectpicker add-hardware-device" data-live-search="true"></select>' +
+											'<select name="tickets[' + cardId + '].hardware_showcase" class="selectpicker add-hardware-device" data-live-search="true" validation="nullable"></select>' +
 										'</div>' +
 									'</div>' +
 									'<div class="col-md-4">' +
 										'<div class="form-group">' +
 											'<label>Software Affected</label>' +
-											'<select class="selectpicker add-software-program" data-live-search="true"></select>' +
+											'<select name="tickets[' + cardId + '].software_showcase" class="selectpicker add-software-program" data-live-search="true" validation="nullable"></select>' +
 										'</div>' +
 									'</div>' +
 								'</div>' +
@@ -442,23 +450,13 @@ class TicketPage extends DynamicPage {
 								'</div>' +
 							'</div>' +
 						'</div>' +
-						'<div class="row">' +
-							'<div class="col-md-12">' +
-								'<div class="form-group">' +
-									'<label class="required">Problem Type</label>' +
-									'<input name="tickets[' + cardId + '].problem_type_showcase" hidden>' +
-									'<span class="subtle pull-right"></span>' +
-									'<div class="problem-type-picker">' +
-										'<div class="type-columns"></div>' +
-									'</div>' +
-								'</div>' +
-							'</div>' +
-						'</div>' +
 					'</div>' +
 				'</div>' +
 			'</div>'
 		);
 
+		$accordion.find('.fa-chevron-down.view-accordion').click();
+		
 		$accordion.append($card);
 
 		problemTypePage.loadSubProblemTypes($card.find('.type-columns'));
@@ -467,8 +465,6 @@ class TicketPage extends DynamicPage {
 		this.populateSelectField($card.find('.selectpicker.add-hardware-device'), 'Type a serial number…', makeItAll.hardwareManager.devices, null, 'serial_number');
 		this.populateSelectField($card.find('.selectpicker.add-software-program'), 'Choose a program…', makeItAll.softwareManager.programs);
 
-		$accordion.find('.fa-chevron-down.view-accordion').click();
-		$card.find('.view-accordion').click();
 		$('.selectpicker').selectpicker('refresh');
 	}
 

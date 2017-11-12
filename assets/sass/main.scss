@@ -11,8 +11,10 @@ $blue: #3498db;
 $blue-hover: #2980b9;
 $red: #e74c3c;
 $red-hover: #c0392b;
+$red-highlight: rgba(220, 53, 69, .25);
 $green: #28a745;
 $green-hover: #218838;
+$green-highlight: rgba(40, 167, 69, .25);
 $orange: #f39c12;
 $orange-hover: #e67e22;
 $highlight: rgba(241, 196, 15, 0.2);
@@ -467,6 +469,22 @@ label {
 			background-color: initial;
 		}
 
+		&.is-valid {
+			border-color: $green;
+
+			&:focus {
+				box-shadow: 0 0 0 .2rem $green-highlight;
+			}
+		}
+
+		&.is-invalid {
+			border-color: $red;
+
+			&:focus {
+				box-shadow: 0 0 0 .2rem $red-highlight;
+			}
+		}
+
 		.filter-option {
 			color: $black;
 		}
@@ -521,6 +539,14 @@ label {
 
 			&.highlight {
 				background-color: $highlight;
+			}
+
+			&.red-highlight {
+				background-color: $red-highlight;
+			}
+			
+			&.green-highlight {
+				background-color: $green-highlight;
 			}
 
 			h5 {
@@ -684,6 +710,8 @@ label {
 }
 
 .modal {
+	background-color: rgba(44, 62, 80, 0.25);
+
 	textarea {
 		min-height: 150px;
 	}
@@ -873,6 +901,12 @@ span.filter {
 	&.filter-pending {
 		background-color: $orange;
 	}
+}
+
+.invalid-feedback {
+	display: block;
+	font-size: .875rem;
+	color: #dc3545;
 }
 
 @import "animate";

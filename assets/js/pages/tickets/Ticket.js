@@ -28,7 +28,7 @@ class Ticket {
 		this.description      = description;
 		this.assigned_to      = assignedTo; // ID of caller, get method returns instance of Staff
 		this.devices          = devices; // ID of devices, get method returns instances of Devices
-		this.programs         = devices; // ID of programs, get method returns instances of Programs
+		this.programs         = programs; // ID of programs, get method returns instances of Programs
 		this.operating_system = operating_system;
 		this.created_at       = createdAt;
 		this.updated_at       = updatedAt;

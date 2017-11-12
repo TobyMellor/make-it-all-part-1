@@ -17,45 +17,52 @@ $(() => {
 	});
 
 	$('#new-ticket-modal #create-new-ticket, #create-follow-up-call').on('click', function (e) {
-		var $modal            = $(this).closest('.modal'),
-			formData          = $modal.find('form').serializeObject(),
-			tickets           = formData.tickets,
-			existingTicketIds = []; // an new ticket won't have any of these
+		var $modal   = $(this).closest('.modal'),
+			formData = $modal.find('form').serializeObject(true);
 
-		for (var cardId in tickets) {
-			var ticket = tickets[cardId];
+		if (formData.isValid()) {
+			var tickets           = formData.tickets,
+				existingTicketIds = []; // an new ticket won't have any of these
+			
+			for (var cardId in tickets) {
+				var ticket = tickets[cardId];
 
-			if (ticket.hasOwnProperty('id')) {
-				existingTicketIds.push(Number(ticket.id));
-				delete tickets[cardId];
-			} else {
-				ticket.assigned_to = ticket.assigned_to[ticket.assigned_to_type];
+				if (ticket.hasOwnProperty('id')) {
+					existingTicketIds.push(Number(ticket.id));
+					delete tickets[cardId];
+				} else {
+					ticket.assigned_to = ticket.assigned_to[ticket.assigned_to_type];
+				}
 			}
+
+			ticketPage.createCall(formData.date_of_call, Number(formData.caller), tickets, existingTicketIds);
+
+			$modal.modal('hide');
 		}
-
-		ticketPage.createCall(formData.date_of_call, Number(formData.caller), tickets, existingTicketIds);
-
-		$modal.modal('hide');
 	});
 
 	$('#edit-ticket-modal #edit-existing-ticket').on('click', function () {
-		var formData = $('#edit-ticket-modal form').serializeObject().tickets.this;
+		var formData = $('#edit-ticket-modal form').serializeObject(true);
 
-		makeItAll.ticketManager.editTicket(
-			Number(formData.id),
-			formData.filter,
-			formData.title,
-			formData.description,
-			Number(formData.assigned_to[formData.assigned_to_type]),
-			formData.devices,
-			formData.programs,
-			formData.operating_system,
-			Number(formData.problem_type)
-		);
+		if (formData.isValid()) {
+			var ticket = formData.tickets.this;
 
-		ticketPage.refreshPage(formData.filter, Number(formData.id));
+			makeItAll.ticketManager.editTicket(
+				Number(ticket.id),
+				ticket.filter,
+				ticket.title,
+				ticket.description,
+				Number(ticket.assigned_to[ticket.assigned_to_type]),
+				ticket.devices,
+				ticket.programs,
+				ticket.operating_system,
+				Number(ticket.problem_type)
+			);
 
-		$('#edit-ticket-modal').modal('hide');
+			ticketPage.refreshPage(ticket.filter, Number(ticket.id));
+
+			$('#edit-ticket-modal').modal('hide');
+		}
 	});
 
 	$('#create-new-event').on('click', function(e) {
@@ -91,14 +98,14 @@ $(() => {
 
 	$(document).on('change', '.selectpicker.add-hardware-device', function() {
 		if ($(this).val() !== "") { // not the default select option
-			ticketPage.appendHardwareDevice($(this).closest('.row').next().find('.affected-items'), $(this).val(), $(this).closest('.card').data('cardid'));
+			ticketPage.appendHardwareDevice($(this).closest('.row').next().find('.affected-items'), Number($(this).val()), $(this).closest('.card').data('cardid'));
 			$(this).closest('.card-block').scrollTop(1E10);
 		}
 	});
 
 	$(document).on('change', '.selectpicker.add-software-program', function() {
 		if ($(this).val() !== "") { // not the default select option
-			ticketPage.appendSoftwareProgram($(this).closest('.row').next().find('.affected-items'), $(this).val(), $(this).closest('.card').data('cardid'));
+			ticketPage.appendSoftwareProgram($(this).closest('.row').next().find('.affected-items'), Number($(this).val()), $(this).closest('.card').data('cardid'));
 			$(this).closest('.card-block').scrollTop(1E10);
 		}
 	});
@@ -190,7 +197,7 @@ $(() => {
 
 		$(this).closest('.problem-type-picker').siblings('input[name*=problem_type]').val(problemTypeId);
 
-		ticketPage.setSpecialist(problemTypeId, $(this).closest('.card').find('.assigned-to-options'));
+		ticketPage.setSpecialist(problemTypeId, $(this).closest('.card').length > 0 ? $(this).closest('.card').find('.assigned-to-options') : $(this).closest('.modal').find('.assigned-to-options'));
 	});
 
 	$(document).on('click', '.problem-type-checkboxes .type-column li', function() {
@@ -210,7 +217,6 @@ $(() => {
 	$('.search-field input').on('keyup', function() {
 		ticketPage.search($(this).val());
 	});
-
 
 	$(document).on('click', '.create-problem-type', function() {
 		var $parentProblemType  = $(this).closest('.type-column').prev().find('.active'),

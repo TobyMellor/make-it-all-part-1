@@ -140,7 +140,7 @@ class TicketManager extends Manager {
 				title: 'Computer wont turn on',
 				description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum metus dui. Vivamus laoreet et nulla sed lobortis. Cras varius posuere feugiat. Nunc ultricies eros a lorem viverra semper.',
 				assigned_to: 5,
-				devices: [],
+				devices: [1],
 				programs: [],
 				operating_system: 'macOS 12.4',
 				created_at: '4 hours ago',
@@ -328,7 +328,7 @@ class TicketManager extends Manager {
 		return call;
 	}
 
-	createTicket(callId, filterSlug, title, description, assignedTo, devices, programs, operatingSystem, problemType) {
+	createTicket(callId, filterSlug, title, description, assignedTo, devices, programs = [], operatingSystem, problemType) {
 		// AJAX call here, which returns a ticketId
 		// validation here
 		var ticketId = Math.floor(Math.random() * (10000 + 1));
@@ -366,7 +366,7 @@ class TicketManager extends Manager {
 		return this.findAllWhere(this.tickets, ticket => ticket._calls.indexOf(callId) > -1);
 	}
 
-	editTicket(ticketId, filterSlug, title, description, assignedTo, devices, programs, operatingSystem, problemType) {
+	editTicket(ticketId, filterSlug, title, description, assignedTo, devices, programs = [], operatingSystem, problemType) {
 		var ticket = this.getTicket(ticketId);
 
 		if (ticket.filter.slug !== filterSlug) {
