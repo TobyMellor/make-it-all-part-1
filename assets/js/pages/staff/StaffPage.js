@@ -9,11 +9,11 @@ class StaffPage extends DynamicPage {
 		for (let employee of makeItAll.staffManager.staff) {
 			this.appendTableRow(employee);
 		}
-		staffPage.updateSplashScreen();
+		this.updateSplashScreen();
 	}
 	
 	showTableRowDetails(id) {
-		// Get employee with IDå
+		// Get employee with ID
 		this.employee = makeItAll.staffManager.getEmployee(id);
 		if (!this.employee) {
 			this.hideTableRowDetails();
@@ -75,24 +75,8 @@ class StaffPage extends DynamicPage {
 
 	search(query) {
 		if (query.length >= 2 || query == parseInt(query)) {
-			var searchKeys = ['id', 'name'],
-				employees  = makeItAll.staffManager.search(query, searchKeys);
-
-			super.search(query, employees, function(employee) {
-				return {
-					id: employee.id,
-					name: employee.name,
-					job: employee.job,
-					department: employee.department,
-					phone: employee.phone,
-					access: {
-						read: employee.access.read,
-						operator: employee.access.operator,
-						analyst: employee.access.analyst,
-						admin: employee.access.admin
-					}
-				};
-			}, searchKeys);
+			var properties = ["id", "name", "job", "department", "phone"];
+			super.search(query, makeItAll.staffManager.search(query, properties), obj => Object.assign({}, obj), properties);
 		} else {
 			this.showStaff();
 		}

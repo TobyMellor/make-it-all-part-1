@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Software - Make-It-All</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/plugins/plugins.min.css">
 	<link rel="stylesheet" type="text/css" href="css/pages/software.min.css">
 	<link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
@@ -72,7 +73,7 @@
 		</nav>
 
 		<div id="table-section">
-			<table class="table">
+			<table class="table data">
 				<thead>
 					<tr>
 						<th data-slug="id">ID</th>
@@ -161,6 +162,18 @@
 
 		$(softwarePage.tableSelector).on("click", "tbody tr", e => {
 			softwarePage.showTableRowDetails(Number(e.currentTarget.dataset.rowid));
+		});
+		
+		if (location.hash) softwarePage.showTableRowDetails(parseInt(location.hash.substring(1)));
+		
+		$("#authorised-users").on("click", "tr[data-rowid]", e => {
+			location.href = location.href.toString().split("#")[0].replace("software.html", "staff.html#" + e.currentTarget.dataset.rowid);
+		});
+		$("#tickets").on("click", "tr[data-rowid]", e => {
+			location.href = location.href.toString().split("#")[0].replace("software.html", "tickets.html#" + e.currentTarget.dataset.rowid);
+		});
+		$("#hardware").on("click", "tr[data-rowid]", e => {
+			location.href = location.href.toString().split("#")[0].replace("software.html", "hardware.html#" + e.currentTarget.dataset.rowid);
 		});
 	</script>
 </body>

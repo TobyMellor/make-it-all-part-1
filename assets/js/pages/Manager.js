@@ -2,55 +2,26 @@
  * Manager
  *
  * Abstract class extended by all managers,
- * contains methods that may be useful to the
- * managers.
+ * contains methods that may be useful to the managers.
  */
-
- class Manager {
- 	constructor() {
- 		//
- 	}
-
- 	findAllWhere(elements, condition) {
- 		var matched = [];
-
- 		for (var i = 0; i < elements.length; i++) {
- 			var element = elements[i];
-
- 			if (condition(element)) {
- 				matched.push(element);
- 			}
- 		}
-
- 		return matched;
- 	}
-
- 	findFirstWhere(elements, condition) {
- 		for (var i = 0; i < elements.length; i++) {
-			var element = elements[i];
-
-			if (condition(element)) {
-				return element;
-			}
-		}
-
-		return null;
- 	}
-
- 	search(elements, query, properties) {
- 		query = query.toLowerCase();
-
- 		return this.findAllWhere(elements, function(element) {
- 			for (var i = 0; i < properties.length; i++) {
- 				var property = properties[i],
- 					value    = String(element[property]).toLowerCase();
-
- 				if (value.indexOf(query) > -1) {
- 					return true;
- 				}
- 			}
-
- 			return false;
- 		});
- 	}
- }
+class Manager {
+	constructor() {
+		//
+	}
+	
+	/**
+	 * Search array of elements for query in given property names
+	 * 
+	 * @param elements Array of objects to be searched through
+	 * @param query Case insensitive string to search elements
+	 * @param properties Array of strings representing elements property names to search through
+	 */
+	search(elements = [], query = "", properties = []) {
+		query = query.toLowerCase(); // Normalise query (and properties individually later)
+		return elements.filter(el => { // Get all elements
+			return properties.some(prop => { // Check properties until match is found
+				if (String(el[prop]).toLowerCase().includes(query)) return true; // Determine if property is a match for query
+			});
+		});
+	}
+}

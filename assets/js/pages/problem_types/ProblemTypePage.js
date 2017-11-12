@@ -193,12 +193,12 @@ class ProblemTypePage extends DynamicPage {
 		var problemTypeParent = problemType,
 			breadcrum         = '';
 
-		while (problemTypeParent !== null) {
+		while (problemTypeParent != null) {
 			breadcrum = problemTypeParent.name + breadcrum;
 
 			problemTypeParent = problemTypeParent.parent;
 
-			if (problemTypeParent !== null) {
+			if (problemTypeParent != null) {
 				breadcrum = ' / ' + breadcrum;
 			}
 		}

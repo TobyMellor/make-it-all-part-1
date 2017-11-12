@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Settings - Make-It-All</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/plugins/plugins.min.css">
 	<link rel="stylesheet" type="text/css" href="css/pages/settings.min.css">
 	<link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
@@ -96,18 +97,20 @@
 		<div class="section" id="general-section">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-9">
+					<div class="col-xl-8">
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-lg-12">
 								<div class="form-group">
 									<label class="required">Name</label>
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-user"></i></span>
-										<input class="form-control" name="staff.name" disabled="disabled" value="Toby Mellor" title="Requires admin permission">
+										<input class="form-control" name="staff.name" disabled="disabled" value="Bex Howell" title="Requires admin permission">
 									</div>
 								</div>
-							</div>
-							<div class="col-md-6">
+								<div class="form-group">
+									<label class="required">Email</label>
+									<input class="form-control" name="staff.email" disabled="disabled" value="bex@makeitall.com" title="Requires admin permission">
+								</div>
 								<div class="form-group">
 									<label class="required">Permissions</label>
 									<div class="html-input" title="Requires admin permission">
@@ -136,7 +139,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-xl-4 profile-photo-col">
 						<div class="form-group">
 							<div class="card text-center">
 								<img class="card-img-top" src="images/portraits/portrait-1.jpg" alt="User profile photo">
@@ -169,10 +172,10 @@
 		</div>
 		<div class="section block-hidden" id="security-section">
 			<div class="container">
-				<div class="row">
-					<div class="col-md-6">
+				<div class="row justify-content-between">
+					<div class="col-xl-6">
 						<h4>Change your Email</h4>
-						<br />
+						<br>
 						<div class="form-group">
 							<label class="required">Work Email</label>
 							<input class="form-control" name="staff.email" type="email">
@@ -182,13 +185,13 @@
 							<input class="form-control" name="staff.email" type="email">
 						</div>
 
-						<button class="btn btn-success save-changes">
+						<button class="btn btn-success save-changes float-right">
 							<i class="fa fa-floppy-o"></i> Change Email
 						</button>
 					</div>
-					<div class="col-md-6">
+					<div class="col-xl-5">
 						<h4>Change your Password</h4>
-						<br />
+						<br>
 						<div class="form-group">
 							<label class="required">Old Password</label>
 							<input class="form-control" name="staff.email" type="password">
@@ -202,7 +205,7 @@
 							<input class="form-control" name="staff.email" type="password">
 						</div>
 
-						<button class="btn btn-success save-changes">
+						<button class="btn btn-success save-changes float-right">
 							<i class="fa fa-floppy-o"></i> Change Password
 						</button>
 					</div>

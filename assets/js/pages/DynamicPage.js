@@ -72,6 +72,7 @@ class DynamicPage {
 
 		// Set ID on row to reference later
 		$newRow[0].dataset.rowid = object.id;
+		$newRow.toggleClass("highlight", object.id == parseInt(location.hash.substring(1)));
 
 		$tableHead.children('th').each(function() {
 			var slug = this.dataset.slug, td = document.createElement("td");
@@ -82,7 +83,7 @@ class DynamicPage {
 				// Boolean value support
 				td.innerHTML = Object.resolve(slug, object) ? this.innerHTML : "·";
 			} else {
-				td.innerHTML = object[slug] !== undefined ? object[slug] : "—";
+				td.innerHTML = Object.resolve(slug, object) !== undefined ? object[slug] : "—";
 			}
 			
 			$newRow.append(td);
@@ -108,9 +109,10 @@ class DynamicPage {
 		
 		// No need to set style using JS here, CSS handles flex
 		$(this.detailSelector).unwrap("div")
+			// Close button on hide
+			.find("[data-action=\"close\"]").click(() => this.hideTableRowDetails());
 		
-		// Close button on hide
-		.find("[data-action=\"close\"]").click(() => this.hideTableRowDetails());
+		if (id > -1) location.hash = parseInt(id);
 	}
 	
 	/**
@@ -121,20 +123,20 @@ class DynamicPage {
 		$(this.tableSelector).find("tbody tr").removeClass("highlight");
 		// Filter to check if already hidden, don't hide again
 		$(this.detailSelector).filter((i, el) => $(el).parent("div").length === 0).wrap(document.createElement("div"));
+		
+		location.hash = "";
 	}
 
 	populateSelectField($select, defaultText, elements, defaultOptionId = null, property = 'name') {
-		$select.html('<option selected disabled>' + defaultText + '</option>');
-
-		for (var i = 0; i < elements.length; i++) {
-			if (defaultOptionId !== null && elements[i].id === defaultOptionId) {
-				$select.append('<option selected value="' + elements[i].id + '">' + elements[i][property] + '</option>');
-				
-				continue;
-			}
-
-			$select.append('<option value="' + elements[i].id + '">' + elements[i][property] + '</option>');
-		}
+		// Default empty content for input
+		let option = new Option(defaultText, null, true, true);
+		option.disabled = true;
+		$select.empty().append(option);
+		
+		// Each option to be selected from
+		elements.forEach(e => {
+			$select.append(new Option(e.name, e.id, false, e.id === defaultOptionId));
+		});
 
 		$select.selectpicker('refresh');
 	}
@@ -145,21 +147,19 @@ class DynamicPage {
 	 * @param objectCallback a callback returning an object (the row structure)
 	 * @param searchKeys the properties in objectCallback to highlight
 	 */
-	search(query, elements, objectCallback, searchKeys = []) {
+	search(query, elements = [], objectCallback, searchKeys = []) {
 		this.clearTable();
+		
+		elements.forEach(el => {
+			var object = objectCallback(el);
+			
+			searchKeys.forEach(key => {
+				object[key] = String(object[key]).replace(new RegExp('(' + query + ')', 'ig'), '<strong>$1</strong>');
+			});
+			
+			this.appendTableRow(object);
+		});
 
-		if (elements.length > 0) {
-			for (var i = 0; i < elements.length; i++) {
-				var object = objectCallback(elements[i]);
-
-				for (var j = 0; j < searchKeys.length; j++) {
-					object[searchKeys[j]] = String(object[searchKeys[j]]).replace(new RegExp('(' + query + ')', 'ig'), '<strong>$1</strong>');
-				}
-
-				this.appendTableRow(object);
-			}
-		}
-
-		this.updateSplashScreen(elements.length + ' search ' + (elements.length === 1 ? 'result' : 'results') + ' for \'' + query + '\'');
+		this.updateSplashScreen(`${elements.length} result${elements.length !== 1 ? "s" : ""} for ‘${query}’`);
 	}
 }

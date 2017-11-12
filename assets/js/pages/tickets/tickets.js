@@ -1,14 +1,24 @@
-let ticketPage      = new TicketPage(),
-	problemTypePage = new ProblemTypePage(true);
+let ticketPage      = new TicketPage();
+try {
+	var problemTypePage = new ProblemTypePage(true);
+} catch (e) {
+	console.warn("Missing problem types JS");
+}
 
 $(() => {
+	
+	let isPage = document.getElementById(ticketPage.sectionSelector.substring(1)).dataset.page === "tickets";
+	if (isPage) ticketPage.showFilteredTickets('new,pending_awaiting_staff,pending_in_progress,resolved');
+	
+	if (!isPage) return;
+	
 	$('.side-nav-bar-nested ul li[data-slug]').on('click', function() {
 		if (ticketPage.currentlyShowing !== this.dataset.slug) {
 			ticketPage.refreshPage(this.dataset.slug);
 		}
 	});
-
-	ticketPage.showFilteredTickets('new,pending_awaiting_staff,pending_in_progress,resolved');
+	
+	if (location.hash) ticketPage.showTicketView(parseInt(location.hash.substring(1)));
 
 	$('.new-ticket').on('click', function() {
 		$('#new-ticket-modal').find('input, textarea')
@@ -249,5 +259,9 @@ $(() => {
 
 		$addExistingTicket.prepend('<option value="' + ticketId + '">' + '#' + ticketId + ' ' + ticket.title.substring(0, 17) + '</option>');
 		$addExistingTicket.selectpicker('refresh');
+	});
+	
+	$("#hardware-software-table").on("click", "tr[data-rowid]", e => {
+		location.href = location.href.toString().split("#")[0].replace("tickets.html", e.currentTarget.dataset.rowtype + ".html#" + e.currentTarget.dataset.rowid);
 	});
 });

@@ -1,52 +1,17 @@
 $(function () {
 	$('[data-toggle="tooltip"]').tooltip();
 
-	$('.staff-permissions .custom-checkbox').on('click', function(e) {
-		e.preventDefault();
-
-		var $input    = $(this).find('input'),
-			fieldName = $input.attr('name'),
-			isChecked = $input.prop('checked');
-
-		if (isChecked) {
-			switch (fieldName) {
-				case 'staff[permissions][ticket_read_only]':
-					$("input[name*=ticket_read_only]").prop('checked', false);
-				case 'staff[permissions][helpdesk_operator]':
-					$("input[name*=helpdesk_operator]").prop('checked', false);
-				case 'staff[permissions][analyst]':
-					$("input[name*=analyst]").prop('checked', false);
-				case 'staff[permissions][super_admin]':
-					$("input[name*=super_admin]").prop('checked', false);
-			}
-		} else {
-			switch (fieldName) {
-				case 'staff[permissions][super_admin]':
-					$("input[name*=super_admin]").prop('checked', true);
-				case 'staff[permissions][analyst]':
-					$("input[name*=analyst]").prop('checked', true);
-				case 'staff[permissions][helpdesk_operator]':
-					$("input[name*=helpdesk_operator]").prop('checked', true);
-				case 'staff[permissions][ticket_read_only]':
-					$("input[name*=ticket_read_only]").prop('checked', true);
-			}
-		}
-	});
-
 	$('.timepicker').datetimepicker();
 
-	$(document).on('click', 'li.no-results', function() {
-		var $newStaffName  = $('.bs-searchbox input').val(),
-			firstName      = $newStaffName.split(" ")[0],
-			lastName       = $newStaffName.split(firstName + " ")[1],
-			$newStaffModal = $('#new-staff-modal');
+	// Create new employee when searching for non-existent assignee
+	$(document).on('click', 'li.no-results', function(e) {
+		var newValue = $(this).closest(".dropdown-menu.open").children(".bs-searchbox").children("input").val(),
+		    $modal   = $('#new-staff-modal');
 
-		$newStaffModal.find('input[name="staff[first_name]"]').val(firstName);
-		$newStaffModal.find('input[name="staff[last_name]"]').val(lastName);
+		$modal.modal('show');
 
-		$newStaffModal.find('input[name="event_target"]').val($(this).closest('.bootstrap-select').find('select').attr('name')); // when the staff member is created, this is the input field it'll update
-
-		$newStaffModal.modal('show');
+		$modal.find('input[name="staff.name"]').val(newValue);
+		$modal.find('input[name="event_target"]').val($(this).closest('.bootstrap-select').find('select').attr('name')); // when the staff member is created, this is the input field it'll update
 	});
 
 	$('#new-staff-modal, #new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function () {
@@ -71,16 +36,17 @@ $(function () {
 		});
 	});
 
-	$(document).on('hide.bs.collapse', '#accordion .collapse', function () {
-		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-chevron-down').addClass('fa-chevron-up');
-	});
-
-	$(document).on('show.bs.collapse', '#accordion .collapse', function () {
-		$(this).siblings('.card-header').find('.view-accordion').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+	$(document).on('hide.bs.collapse show.bs.collapse', '#accordion .collapse', function(e) {
+		let isShow = e.type.split(".")[0] === "show";
+		$(this).siblings('.card-header').find('.view-accordion').toggleClass('fa-chevron-up', !isShow).toggleClass('fa-chevron-down', isShow);
 	});
 
 	$('.search-field input').val('');
 });
+
+function addItemToPicker(pickerElement, value, name) {
+	$(pickerElement).append(new Option(name, value)).selectpicker('refresh').selectpicker('val', name);
+}
 
 var validationTimeout = null;
 
@@ -286,15 +252,6 @@ var validationTimeout = null;
 		return true;
 	};
 })(jQuery);
-
-function addItemToPicker(pickerElement, itemValue, itemName) {
-	$('.selectpicker.staff-picker').append('<option val="' + itemValue + '">' + itemName + '</option>');
-	$('.selectpicker.staff-picker').selectpicker('refresh'); 
-
-	if (pickerElement.length !== 0) {
-		pickerElement.selectpicker('val', itemName);
-	}
-}
 
 /**
  * Resolve a dot notation path string through an object

@@ -3,7 +3,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Tickets - Make-It-All</title>
+	<title>Hardware - Make-It-All</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/plugins/plugins.min.css">
 	<link rel="stylesheet" type="text/css" href="css/pages/hardware.min.css">
 	<link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
@@ -98,7 +99,7 @@
 				</table>
 			</div>
 			<div id="table-section">
-				<table class="table">
+				<table class="table data">
 					<thead>
 						<tr>
 							<th data-slug="id">ID</th>
@@ -188,6 +189,19 @@
 			var id = Number(e.currentTarget.dataset.rowid);
 			hardwarePage.showTableRowDetails(id);
 		});
+		
+		if (location.hash) {
+			// Show details
+			hardwarePage.showTableRowDetails(parseInt(location.hash.substring(1)));
+			// Set type
+			hardwarePage.type = hardwarePage.device.type;
+			$("#typeList td").filter((i, el) => el.dataset.type === hardwarePage.type).parent().addClass("highlight");
+			hardwarePage.populateManufacturers();
+			// Set manufacturer
+			hardwarePage.manufacturer = hardwarePage.device.manufacturer;
+			$("#manufacturerList td").filter((i, el) => el.dataset.manufacturer === hardwarePage.manufacturer).parent().addClass("highlight");
+			hardwarePage.showDevices();
+		}
 	</script>
 </body>
 

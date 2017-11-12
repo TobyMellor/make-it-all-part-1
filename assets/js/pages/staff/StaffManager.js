@@ -29,24 +29,29 @@ class StaffManager extends Manager {
 		return this.staff.find(e => e.id === id);
 	}
 
-	getEmployeesWithPermission(permission, value) {
-		return this.findAllWhere(this.staff, employee => employee.access[permission] === value);
+	getEmployees(ids) {
+		return this.staff.filter(employee => ids.indexOf(employee.id) > -1);
 	}
 
-	getEmployees(ids) {
-		return this.findAllWhere(this.staff, employee => ids.indexOf(employee.id) > -1);
+	getEmployeesWithPermission(permission, value) {
+		return this.staff.filter(employee => employee.access[permission] === value);
 	}
-	
+
 	updateEmployee(employee) {
-		let oldEmployee = this.staff.find(e => e.id === employee.id);
+		let oldEmployee = this.getEmployee(employee.id);
 		
 		Object.assign(oldEmployee.access, employee.access);
 		Object.assign(oldEmployee, employee);
 	}
 	
+	/**
+	 * Get the currently logged in user
+	 *
+	 * @param asEmployee Method returns ID by default or Employee if truthy
+	 */
 	currentUser(asEmployee = false) {
 		let id = 1;
-		
+		// Get Employee with ID
 		if (asEmployee) {
 			return this.getEmployee(id);
 		}
@@ -54,7 +59,7 @@ class StaffManager extends Manager {
 	}
 
 	getSpecialists(problemTypeId) {
-		return this.findAllWhere(this.staff, employee => employee._specialisms.indexOf(problemTypeId) > -1);
+		return this.staff.filter(employee => employee._specialisms.indexOf(problemTypeId) > -1);
 	}
 
 	hasSpecialism(employee, problemTypeId) {

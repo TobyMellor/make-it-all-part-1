@@ -131,6 +131,7 @@
 						<th data-slug="job">JOB</th>
 						<th data-slug="department">DEPARTMENT</th>
 						<th data-slug="phone">PHONE #</th>
+						<th data-slug="tickets.assigned" data-toggle="tooltip" title="Number of tickets assigned">ASSIGNED</th>
 						<th data-toggle="tooltip" title="Read" data-slug="access.read">
 							<i class="fa fa-eye"></i>
 						</th>
@@ -165,8 +166,8 @@
 				</button>
 			</nav>
 			<div class="container">
-				<div class="row">
-					<div class="col-md-6">
+				<div class="row m-0">
+					<div class="col-lg-6">
 						<div class="card text-center">
 							<img class="card-img-top" src="images/portraits/portrait-1.jpg" alt="User profile photo">
 							<div class="card-body">
@@ -175,7 +176,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6 staff-info">
+					<div class="col-lg-6 staff-info">
 						<span class="subtle">#<span data-slug="id"></span></span>
 						<div class="row">
 							<label>Email</label>
@@ -212,8 +213,8 @@
 				<div class="row">
 					<p class="col-md-9 text-right">
 						<strong class="table-compact-heading">Find <span data-slug="name"></span>'s</strong>
-						<a type="button" class="btn btn-primary"><i class="fa fa-ticket"></i> Tickets</a>
-						<a type="button" class="btn btn-primary"><i class="fa fa-file-code-o"></i> Software</a>
+						<a class="btn btn-primary"><i class="fa fa-ticket"></i> Tickets (<span data-slug="tickets.assigned"></span>)</a>
+						<a class="btn btn-primary"><i class="fa fa-file-code-o"></i> Software</a>
 					</p>
 				</div>
 				<div class="row thin">
@@ -227,7 +228,7 @@
 				<div class="row">
 					<p class="col-md-9 text-right">
 						<strong class="table-compact-heading">Administrate <span data-slug="name"></span></strong>
-						<a type="button" class="btn btn-outline-warning"><i class="fa fa-key"></i> Reset Password</a>
+						<a class="btn btn-outline-warning"><i class="fa fa-key"></i> Reset Password</a>
 						<button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i> Delete</button>
 					</p>
 				</div>
@@ -283,7 +284,7 @@
 										</label>
 									</div>
 								</div>
-								<div class="form-group">
+								<div class="form-group specialism-picker">
 									<label>Specialism</label>
 									<input name="staff[specialism]" hidden>
 									<span class="subtle pull-right"></span>
@@ -347,11 +348,17 @@
 	<script src="js/main.min.js"></script>
 	<script src="js/pages/staff.min.js"></script>
 	<script src="js/pages/problem_types.min.js"></script>
+	<script src="js/pages/tickets.min.js"></script>
+	<script src="js/pages/hardware.min.js"></script>
+	<script src="js/pages/software.min.js"></script>
 	<script>
 		let makeItAll = new MakeItAll();
 
 		makeItAll.staffManager       = new StaffManager();
 		makeItAll.problemTypeManager = new ProblemTypeManager();
+		makeItAll.ticketManager      = new TicketManager();
+		makeItAll.hardwareManager    = new HardwareManager();
+		makeItAll.softwareManager    = new SoftwareManager();
 	</script>
 </body>
 </html>

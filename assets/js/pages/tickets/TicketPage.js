@@ -44,7 +44,6 @@ class TicketPage extends DynamicPage {
 			this.currentlyShowing = filterSlugs;
 		}
 
-		this.hideTableRowDetails();
 		this.currentTicket = null;
 	}
 
@@ -82,7 +81,7 @@ class TicketPage extends DynamicPage {
 					var affectedItem = affectedItems[i];
 
 					$ticketHardwareSoftwareBody.append(
-						'<tr data-rowid="' + affectedItem.id + '">' +
+						'<tr data-rowid="' + affectedItem.id + '" data-rowtype="' + (affectedItem.hasOwnProperty('serial_number') ? 'hardware' : 'software') + '">' +
 							'<td class="truncate">' + affectedItem.name + '</td>' +
 							'<td class="truncate">' + (affectedItem.serial_number || '—') + '</td>' +
 							'<td class="truncate">' + (affectedItem.hasOwnProperty('serial_number') ? 'Hardware' : 'Software') + '</td>' +

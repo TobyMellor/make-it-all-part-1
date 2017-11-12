@@ -378,18 +378,24 @@ section {
 	}
 }
 
+.table.data {
+	th:first-child, td:first-child {
+		text-align: right;
+	}
+	td:first-child {
+		@extend code;
+	}
+	&.compact td:first-child {
+		padding-right: 8px;
+	}
+}
+
 #list-view {
 	border-right: 1px solid #bdc3c7;
 	flex-shrink: 0;
 	
 	.table {
-		th:first-child, td:first-child {
-			text-align: right;
-			width: 64px;
-		}
-		td:first-child {
-			@extend code;
-		}
+		@extend .table.data;
 	}
 }
 
@@ -872,6 +878,22 @@ label {
 				}
 			}
 		}
+	}
+}
+
+.specialism-picker.disabled {
+	> label:first-of-type::after {
+		content: "Requires Operator permission";
+		display: inline-block;
+		color: grey;
+		margin-left: 16px;
+		font-weight: normal;
+	}
+	
+	> div {
+		filter: grayscale(100%);
+		opacity: .5;
+		pointer-events: none;
 	}
 }
 

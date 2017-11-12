@@ -398,7 +398,9 @@
 			problemTypePage.loadSubProblemTypes($('.type-columns'));
 
 			$(document).on('click', '.type-column li', function() {
-				problemTypePage.loadSubProblemTypes($('.type-columns'), $(this), parseInt($(this).data('problemTypeId')));
+				let id = parseInt($(this).data('problemTypeId'));
+				problemTypePage.loadSubProblemTypes($('.type-columns'), $(this), id);
+				location.hash = id;
 			});
 
 			$(document).on('click', '#problem-types-table tbody tr:not(.highlight), #table-section tbody tr:not(.highlight)', function() {
@@ -424,6 +426,27 @@
 				var query = $(this).val();
 
 				problemTypePage.search(query);
+			});
+			
+			$("#tickets-table").on("click", "tr", e => {
+				window.location = window.location.toString().replace("problem_types.html", "tickets.html#" + e.currentTarget.dataset.rowid);
+			});
+			
+			if (location.hash) {
+				// Show details
+				let type = makeItAll.problemTypeManager.getProblemType(parseInt(location.hash.substring(1)));
+				problemTypePage.loadProblemTypeInfo(type);
+				// Load hierarchy
+				for (let chainType of makeItAll.problemTypeManager.getProblemTypeChain(type).reverse()) {
+					$("[data-problem-type-id=\"" + chainType.id + "\"]").click();
+				}
+			}
+			
+			$("#specialists-table").on("click", "tr[data-rowid]", e => {
+				location.href = location.href.toString().split("#")[0].replace("problem_types.html", "staff.html#" + e.currentTarget.dataset.rowid);
+			});
+			$("#tickets-table").on("click", "tr[data-rowid]", e => {
+				location.href = location.href.toString().split("#")[0].replace("problem_types.html", "tickets.html#" + e.currentTarget.dataset.rowid);
 			});
 		</script>
 	</body>

@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Tickets - Make-It-All</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/plugins/plugins.min.css">
 	<link rel="stylesheet" type="text/css" href="css/pages/metrics.min.css">
 	<link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
@@ -143,10 +144,19 @@
 							<h4 class="main-content-title">Top Operators</h4>
 						</div>
 						<div class="card-body">
-							<p>Operators Here</p>
-							<p>Operators Here</p>
-							<p>Operators Here</p>
-							<p>Operators Here</p>
+							<table class="table table-hover table-responsive data">
+								<thead>
+									<tr>
+										<th data-slug="id">ID</th>
+										<th data-slug="name">NAME</th>
+										<th data-slug="job">JOB</th>
+										<th data-slug="department">DEPARTMENT</th>
+										<th data-slug="tickets.assigned" data-toggle="tooltip" title="" data-original-title="Number of tickets assigned">ASSIGNED</th>
+										<th data-slug="eye"></th>
+									</tr>
+								</thead>
+								<tbody><tr data-rowid="0"><td>0</td><td>Bex Howell</td><td>Designer</td><td>Team 5</td><td>1</td><td><i class="fa fa-eye"></i></td></tr><tr data-rowid="1"><td>1</td><td>George Garside</td><td>Developer</td><td>Team 5</td><td>2</td><td><i class="fa fa-eye"></i></td></tr><tr data-rowid="2"><td>2</td><td>Mike Higson</td><td>Developer</td><td>Team 5</td><td>0</td><td><i class="fa fa-eye"></i></td></tr><tr data-rowid="3"><td>3</td><td>Ryan Sharp</td><td>Designer</td><td>Team 5</td><td>1</td><td><i class="fa fa-eye"></i></td></tr></tbody>
+							</table>
 						</div>
 					</div>
 				</div>
@@ -163,6 +173,10 @@
 		var makeItAll = new MakeItAll();
 
 		makeItAll.ticketManager = new TicketManager();
+		
+		$("[data-rowid]").click(e => {
+			location.href = location.href.toString().split("#")[0].replace("metrics.html", "staff.html#" + e.currentTarget.dataset.rowid);
+		});
 	</script>
 </body>
 

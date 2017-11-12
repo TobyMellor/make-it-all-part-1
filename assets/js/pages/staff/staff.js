@@ -29,7 +29,7 @@ $(() => {
 					addItemToPicker(
 						$('.selectpicker.staff-picker[name="' + formData.event_target + '"]'),
 						employee.id,
-						formData.staff.first_name + ' ' + formData.staff.last_name
+						formData.staff.name
 					); // formData and staffId to be retrieved by AJAX call
 					
 					break;
@@ -44,7 +44,7 @@ $(() => {
 				$(staffPage.navSelector).find("[data-slug=\"all\"]").addClass("active").siblings().removeClass("active");
 				staffPage.hideTableRowDetails();
 				staffPage.showStaff();
-				staffPage.showTableRowDetails(staffPage.employee.id);
+				staffPage.showTableRowDetails(employee.id);
 			}
 			
 			$('#new-staff-modal').modal('hide');
@@ -76,6 +76,9 @@ $(() => {
 	$("#new-staff-modal").on("shown.bs.modal", e => {
 		// Focus name input
 		$(e.target).find("input[name=\"staff.name\"]").focus();
+		
+		// Disable specialisms when employee is not operator
+		$(".specialism-picker").toggleClass("disabled", !$("input[name=\"staff.access.operator\"]").prop("checked"));
 	});
 
 	$(".staff-permissions .custom-checkbox:not(.help-text)").click(e => {
@@ -108,6 +111,9 @@ $(() => {
 				$("input[name*=\"staff.access\"]").prop("checked", false);
 			}
 		}
+		
+		// Disable specialisms when employee is not operator
+		$(".specialism-picker").toggleClass("disabled", !$("input[name=\"staff.access.operator\"]").prop("checked"));
 	});
 
 	$('.staff-picker').selectpicker({
@@ -156,12 +162,30 @@ $(() => {
 	});
 	
 	$(staffPage.tableSelector).on("click", "tbody tr", e => {
-		staffPage.showTableRowDetails(Number(e.currentTarget.dataset.rowid));
+		staffPage.showTableRowDetails(parseInt(e.currentTarget.dataset.rowid));
 	});
 
 	$('.search-field input').on('keyup', function() {
 		var query = $(this).val();
 
 		staffPage.search(query);
+	});
+	
+	if (location.hash) staffPage.showTableRowDetails(parseInt(location.hash.substring(1)));
+	
+	// Get number of tickets assigned
+	makeItAll.staffManager.staff.forEach(employee => {
+		// Set tickets.assigned property for employee
+		employee.tickets = employee.tickets || {};
+		employee.tickets.assigned = makeItAll.ticketManager.getTicketsAssignedTo(employee.id).length;
+	});
+	// Update UI
+	let colIndex = -1;
+	$(staffPage.tableSelector).find("tr").each((i, el) => {
+		if (i === 0) {
+			colIndex = $(el).children("[data-slug=\"tickets.assigned\"]").index();
+			return;
+		}
+		el.children[colIndex].textContent = makeItAll.staffManager.getEmployee(parseInt(el.dataset.rowid)).tickets.assigned;
 	});
 });
