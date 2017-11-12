@@ -23,11 +23,22 @@ class Program {
 		this.updated_at = updated_at;
 	}
 
-	// get devices() {
-	// 	return makeItAll.hardwareManager.getDevices(this._devices);
-	// }
+	get devices() {
+		return makeItAll.hardwareManager.getDevices(this._devices);
+	}
 
-	// set devices(devices) {
-	// 	this._devices = devices;
-	// }
+	set devices(devices) {
+		this._devices = devices;
+	}
+
+	hasExpired() {
+		var stringSections = this.expiry.split(" ");
+		var dateSections = stringSections[0].split("/");
+		var timeSections = stringSections[1].split(":");
+		var expiry = new Date(dateSections[2], dateSections[1], dateSections[0], timeSections[1], timeSections[0], 0);
+		if ( new Date() > expiry ) {
+			return true;
+		}
+		return false;
+	}
 }

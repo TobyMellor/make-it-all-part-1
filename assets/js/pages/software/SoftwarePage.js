@@ -36,14 +36,11 @@ class SoftwarePage extends DynamicPage {
 			typetext = "Operating System";
 		} else {
 			typetext = "Program";
-			var stringSections = this.program.expiry.split(" ");
-			var dateSections = stringSections[0].split("/");
-			var timeSections = stringSections[1].split(":");
-			var expiry = new Date(dateSections[2], dateSections[1], dateSections[0], timeSections[1], timeSections[0], 0);
-			if ( new Date() > expiry ) {
-				$(".main-content").prepend("<div class='alert alert-danger'><p><strong> This program's licence is not valid. Expiry Date: </strong> " + expiry.toDateString() + "</p></div>");
+			
+			if (this.program.hasExpired()) {
+				$(".main-content").prepend("<div class='alert alert-danger'><p><strong> This program's licence is not valid. Expiry Date: </strong> " + this.program.expiry + "</p></div>");
 			} else {
-				$(".main-content").prepend("<div class='alert alert-success'><p><strong> This program has a valid licence. Expiry Date: </strong>" + expiry.toDateString() + "</p></div>");
+				$(".main-content").prepend("<div class='alert alert-success'><p><strong> This program has a valid licence. Expiry Date: </strong>" + this.program.expiry + "</p></div>");
 			}
 			
 		}
