@@ -76,6 +76,9 @@ $(() => {
 	$("#new-staff-modal").on("shown.bs.modal", e => {
 		// Focus name input
 		$(e.target).find("input[name=\"staff.name\"]").focus();
+		
+		// Disable specialisms when employee is not operator
+		$(".specialism-picker").toggleClass("disabled", !$("input[name=\"staff.access.operator\"]").prop("checked"));
 	});
 
 	$(".staff-permissions .custom-checkbox:not(.help-text)").click(e => {
@@ -108,6 +111,9 @@ $(() => {
 				$("input[name*=\"staff.access\"]").prop("checked", false);
 			}
 		}
+		
+		// Disable specialisms when employee is not operator
+		$(".specialism-picker").toggleClass("disabled", !$("input[name=\"staff.access.operator\"]").prop("checked"));
 	});
 
 	$('.staff-picker').selectpicker({

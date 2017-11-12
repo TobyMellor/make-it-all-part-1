@@ -881,6 +881,22 @@ label {
 	}
 }
 
+.specialism-picker.disabled {
+	> label:first-of-type::after {
+		content: "Requires Operator permission";
+		display: inline-block;
+		color: grey;
+		margin-left: 16px;
+		font-weight: normal;
+	}
+	
+	> div {
+		filter: grayscale(100%);
+		opacity: .5;
+		pointer-events: none;
+	}
+}
+
 span.subtle {
 	color: $grey;
 }
