@@ -42,6 +42,43 @@ $(function () {
 	});
 
 	$('.search-field input').val('');
+	
+	// Keyboard shortcuts
+	$(document).keyup(e => {
+		// Ignore if in input
+		if (["input", "textarea"].includes(document.activeElement.nodeName.toLowerCase())) {
+			return;
+		}
+		
+		if (document.getElementById("list-view")) {
+			var pagename = document.getElementById("list-view").dataset.page;
+		}
+		if (!pagename) return; // ignore pages without name
+		if (pagename.endsWith("s")) pagename = pagename.slice(0, -1);
+		let page = window[pagename + "Page"];
+		switch (e.keyCode) {
+			case 38: // up
+			case 40: // down
+				if (location.hash.length === 0) {
+					location.hash = -1;
+					e.keyCode = 40;
+				}
+				let id = parseInt(location.hash.substring(1));
+				id = id + (e.keyCode === 38 ? -1 : 1); // up or down
+				let $row = $(page.tableSelector).find("[data-rowid=\"" + id + "\"]");
+				// Does row with ID exist
+				if ($row.length === 0) return;
+				$(page.tableSelector).find("[data-rowid=\"" + id + "\"]").addClass("highlight").siblings().removeClass("highlight");
+				page.showTableRowDetails(id);
+				break;
+			case 27: // esc
+				page.hideTableRowDetails();
+				break;
+			default:
+				break;
+		}
+		console.log(e.keyCode, e.delegateTarget.activeElement);
+	});
 });
 
 function addItemToPicker(pickerElement, value, name) {

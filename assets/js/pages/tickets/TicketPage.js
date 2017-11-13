@@ -48,9 +48,14 @@ class TicketPage extends DynamicPage {
 	}
 
 	showTicketView(ticketId) {
+		console.warn("TicketPage showTicketView is deprecated, use showTableRowDetails");
+		this.showTableRowDetails(ticketId);
+	}
+
+	showTableRowDetails(ticketId) {
 		var ticket = makeItAll.ticketManager.getTicket(ticketId);
 
-		if (ticket !== null) {
+		if (ticket != null) {
 			this.currentTicket = ticket;
 
 			this.updateSingleViewNavbar(ticket.title + '<span class="filter filter-' + ticket.filter.slug.split('_')[0] + '">' + ticket.filter.name + '</span>');
@@ -144,7 +149,7 @@ class TicketPage extends DynamicPage {
 				}
 			}
 
-			this.showTableRowDetails(ticket.id);
+			super.showTableRowDetails(ticket.id);
 		}
 	}
 
