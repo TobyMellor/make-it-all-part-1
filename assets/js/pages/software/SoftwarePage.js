@@ -21,25 +21,32 @@ class SoftwarePage extends DynamicPage {
 			return;
 		}
 
+		$('.alert').remove();
+		if (Math.round(Math.random()) == 1) {
+			$(".main-content").prepend("<div class='alert alert-danger'><p style='margin:0'><strong> This program's licence is not valid. Expiry Date: </strong> 20/07/2016 </p></div>");
+		} else {
+			$(".main-content").prepend("<div class='alert alert-success'><p style='margin:0'><strong> This program has a valid licence. Expiry Date: </strong> 05/12/2020 </p></div>");
+		}
+
 		//Todo generate programmatically
-		$("#authorised-users").html(`
-		<li class="list-group-item list-group-item-action" data-rowid="0">
-			#0 Steve
-			<span class="pull-right text-muted">Operator</span>
-		</li>
-		<li class="list-group-item list-group-item-action" data-rowid="1">
-			#1 Andy
-			<span class="pull-right text-muted">Admin</span>
-		</li>
-		<li class="list-group-item list-group-item-action" data-rowid="2">
-			#2 Claire
-			<span class="pull-right text-muted">Analyst</span>
-		</li>
-		<li class="list-group-item list-group-item-action" data-rowid="3">
-			#3 Mary
-			<span class="pull-right text-muted">Specialist</span>
-		</li>
-		`);
+		// $("#authorised-users").html(`
+		// <li class="list-group-item list-group-item-action" data-rowid="0">
+		// 	#0 Steve
+		// 	<span class="pull-right text-muted">Operator</span>
+		// </li>
+		// <li class="list-group-item list-group-item-action" data-rowid="1">
+		// 	#1 Andy
+		// 	<span class="pull-right text-muted">Admin</span>
+		// </li>
+		// <li class="list-group-item list-group-item-action" data-rowid="2">
+		// 	#2 Claire
+		// 	<span class="pull-right text-muted">Analyst</span>
+		// </li>
+		// <li class="list-group-item list-group-item-action" data-rowid="3">
+		// 	#3 Mary
+		// 	<span class="pull-right text-muted">Specialist</span>
+		// </li>
+		// `);
 
 
 		$("#tickets").html(`
