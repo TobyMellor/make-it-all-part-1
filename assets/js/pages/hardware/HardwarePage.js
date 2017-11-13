@@ -62,19 +62,19 @@ class HardwarePage extends DynamicPage {
 
 		//Todo generated programmatically
 		$("#authorised-users").html(`
-		<li class="list-group-item list-group-item-action">
+		<li class="list-group-item list-group-item-action" data-rowid="0">
 			#0 Steve
 			<span class="pull-right text-muted">Operator</span>
 		</li>
-		<li class="list-group-item list-group-item-action">
+		<li class="list-group-item list-group-item-action" data-rowid="1">
 			#1 Andy
 			<span class="pull-right text-muted">Admin</span>
 		</li>
-		<li class="list-group-item list-group-item-action">
+		<li class="list-group-item list-group-item-action" data-rowid="2">
 			#2 Claire
 			<span class="pull-right text-muted">Analyst</span>
 		</li>
-		<li class="list-group-item list-group-item-action">
+		<li class="list-group-item list-group-item-action" data-rowid="3">
 			#3 Mary
 			<span class="pull-right text-muted">Specialist</span>
 		</li>
@@ -82,27 +82,27 @@ class HardwarePage extends DynamicPage {
 
 
 		$("#tickets").html(`
-		<li class="list-group-item list-group-item-action">
+		<li class="list-group-item list-group-item-action" data-rowid="0">
 			#0: Printer Queue not working
 			<span class="filter filter-new">New</span>
 			<span class="pull-right text-muted">12/10/2017</span>
 		</li>
-		<li class="list-group-item list-group-item-action">
+		<li class="list-group-item list-group-item-action" data-rowid="1">
 			#1: Coffee machine needs refilling
 			<span class="filter filter-new">New</span>
 			<span class="pull-right text-muted">12/10/2017</span>
 		</li>
-		<li class="list-group-item list-group-item-action">
+		<li class="list-group-item list-group-item-action" data-rowid="2">
 			#2: Squeeky chair
 			<span class="filter filter-new">New</span>
 			<span class="pull-right text-muted">12/10/2017</span>
 		</li>
-		<li class="list-group-item list-group-item-action">
+		<li class="list-group-item list-group-item-action" data-rowid="3">
 			#3: Spilt water on macbook
 			<span class="filter filter-pending">Pending - In Progress</span>
 			<span class="pull-right text-muted">12/10/2017</span>
 		</li>
-		<li class="list-group-item list-group-item-action">
+		<li class="list-group-item list-group-item-action" data-rowid="4">
 			#4: Computer wont turn on
 			<span class="filter filter-resolved">Resolved</span>
 			<span class="pull-right text-muted">12/10/2017</span>
@@ -110,13 +110,13 @@ class HardwarePage extends DynamicPage {
 		`);
 
 		$("#software").html(`
-			<li class="list-group-item list-group-item-action">
+			<li class="list-group-item list-group-item-action" data-rowid="1">
 				Microsoft Word
 			</li>
-			<li class="list-group-item list-group-item-action">
+			<li class="list-group-item list-group-item-action" data-rowid="2">
 				Google Chrome
 			</li>
-			<li class="list-group-item list-group-item-action">
+			<li class="list-group-item list-group-item-action" data-rowid="3">
 				Microsoft Excel
 			</li>
 		`);

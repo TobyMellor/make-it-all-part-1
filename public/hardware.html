@@ -202,6 +202,13 @@
 			$("#manufacturerList td").filter((i, el) => el.dataset.manufacturer === hardwarePage.manufacturer).parent().addClass("highlight");
 			hardwarePage.showDevices();
 		}
+		
+		$("#tickets").on("click", "li[data-rowid]", e => {
+			location.href = location.href.toString().split("#")[0].replace("hardware.html", "tickets.html#" + e.currentTarget.dataset.rowid);
+		});
+		$("#software").on("click", "li[data-rowid]", e => {
+			location.href = location.href.toString().split("#")[0].replace("hardware.html", "software.html#" + e.currentTarget.dataset.rowid);
+		});
 	</script>
 </body>
 
