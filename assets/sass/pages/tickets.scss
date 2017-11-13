@@ -181,9 +181,13 @@ span.filter {
 	list-style: none;
 	padding: 0;
 	margin: $cosy 0;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
 
 	li {
 		width: 152px;
+		flex-basis: 152px;
 		height: 152px;
 		border: 1px solid $silver;
 		border-bottom: 2px solid $silver;
