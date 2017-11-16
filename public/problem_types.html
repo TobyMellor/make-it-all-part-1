@@ -448,6 +448,54 @@
 			$("#tickets-table").on("click", "tr[data-rowid]", e => {
 				location.href = location.href.toString().split("#")[0].replace("problem_types.html", "tickets.html#" + e.currentTarget.dataset.rowid);
 			});
+			
+			// Keyboard shortcuts
+			$(document).keyup(e => {
+				// Ignore if in input
+				if (document.activeElement.nodeName.toLowerCase() === "input") {
+					if (e.key === "Enter") {
+						e.target.nextElementSibling.children[0].click();
+						return;
+					}
+					if (e.keyCode === 38) {
+						e.target.parentElement.previousElementSibling.click();
+						return;
+					}
+					if (e.keyCode === 37 && e.target.value === "") {
+						document.activeElement.blur();
+					}
+					return;
+				}
+				// If no selection, select first item regardless of keypress
+				if ($(".problem-type-picker .last-active").length === 0) {
+					$(".problem-type-picker [data-problem-type-id=\"1\"]").first().click();
+					return;
+				}
+				switch (e.keyCode) {
+					case 38: // up
+					case 40: // down
+						// Get row to select
+						var $row = $(".problem-type-picker .last-active").first()[e.keyCode === 38 ? "prev" : "next"]();
+						if (e.keyCode === 40 && $row.is(".input-group")) {
+							$row.children("input").focus();
+						} else {
+							$row.click();
+						}
+						break;
+					case 37: // left
+					case 39: // right
+						// Get column if exists to left or right
+						let $column = $(".problem-type-picker .last-active").first().closest(".type-column")[e.keyCode === 37 ? "prev" : "next"]();
+						// Get row to be selected
+						var $row = $column.find(e.keyCode === 37 ? ".active" : "li").first();
+						if (e.keyCode === 39 && $row.length === 0) {
+							$column.find("input").focus();
+						} else {
+							$row.click();
+						}
+						break;
+				}
+			});
 		</script>
 	</body>
 </html>

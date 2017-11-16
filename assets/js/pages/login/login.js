@@ -1,10 +1,10 @@
 $(() => {
 	$('#email').focus();
 
-	$("#email").keydown(e => {
+	$("#email").keyup(e => {
 		if (e.key === "Enter") $("#password").focus();
 	});
-	$("#password").keydown(e => {
+	$("#password").keyup(e => {
 		if (e.key === "Enter") login();
 	});
 	$("[data-action=\"login\"]").click(login);
